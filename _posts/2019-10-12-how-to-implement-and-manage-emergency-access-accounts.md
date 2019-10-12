@@ -182,4 +182,6 @@ AuditLogs
 ```
 
 Filtered out activities by security-critical operations as you can see in this example:
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
+![](./2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
+<br>
+<span style="color:silver;font-style:italic;font-size:small">Cover Image contains modified version of the following image [CGP Grey from Wikipedia](https://de.wikipedia.org/wiki/Datei:Sign_-_Key_-_Glass_(4891398099).jpg)</span>
