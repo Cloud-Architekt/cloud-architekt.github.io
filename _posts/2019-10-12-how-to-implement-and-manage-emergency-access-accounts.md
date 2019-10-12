@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to implement and manage emergency access accounts"
+title:  "How to implement and manage "emergency access accounts""
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
