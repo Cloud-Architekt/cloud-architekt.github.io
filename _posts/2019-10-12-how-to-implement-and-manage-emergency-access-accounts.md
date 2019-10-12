@@ -167,7 +167,7 @@ Microsoft Cloud App Security (MCAS) can also be used to monitor activities of br
 
 At the end you are able to investigate incidents as in the following example:
 
-![](images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
+![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
 
 
 Internal brute-force attack of emergency access account and successful sign-in (after several attempts) with administrative activity from a non-compliant device. Suspicious granting of permissions to an account was detected. 
@@ -182,6 +182,6 @@ AuditLogs
 ```
 
 Filtered out activities by security-critical operations as you can see in this example:
-![](./2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
 <br>
 <span style="color:silver;font-style:italic;font-size:small">Cover Image contains modified version of the following image [CGP Grey from Wikipedia](https://de.wikipedia.org/wiki/Datei:Sign_-_Key_-_Glass_(4891398099).jpg)</span>
