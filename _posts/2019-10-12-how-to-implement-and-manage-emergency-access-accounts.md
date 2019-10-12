@@ -114,7 +114,7 @@ SigninLogs
 	3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
 	4. The following analytic rule will be generated finally:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
+![](./2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
 
 
 
