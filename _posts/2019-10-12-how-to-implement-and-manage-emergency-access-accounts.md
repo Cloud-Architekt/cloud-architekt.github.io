@@ -121,7 +121,7 @@ Use the “Rule creation wizard” in Azure Sentinel to create a simple analytic
 ### Incident case based on created custom rule
 You will see the incident case in Azure Sentinel in case of any sign-in attempt (successful or unsuccessful):
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
 
 ### Alerting by Log Analytics / Azure Monitor Alerts
 You are able use the same KQL query in Log Analytics if you aren’t using Azure Sentinel. More details on how to implement Azure AD logs to Logs Analytics are available here:  [Stream Azure Active Directory logs to Azure Monitor logs | Microsoft Docs](http://aka.ms/AzureADLogAnalytics)
@@ -183,6 +183,3 @@ AuditLogs
 
 Filtered out activities by security-critical operations as you can see in this example:
 ![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
-<br>
-<br>
-<span style="color:silver;font-style:italic;font-size:small">Cover Image by [CGP Grey / Wikipedia](https://de.wikipedia.org/wiki/Datei:Sign_-_Key_-_Glass_(4891398099).jpg)</span>
