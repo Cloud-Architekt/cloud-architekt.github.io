@@ -6,7 +6,7 @@ categories: [ Azure, Architecture, Tools ]
 tags: [azure, architecture]
 image: assets/images/document-and-visualize-your-azure-env.png
 description: "Shapes, icons, tools and recommendations to document your Azure Environment!"
-featured: true
+featured: false
 hidden: false
 ---
 
