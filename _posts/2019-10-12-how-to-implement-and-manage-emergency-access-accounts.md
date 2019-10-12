@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How to implement and manage "emergency access accounts""
+title:  "How to implement and manage Emergency Access Accounts / Break Glass"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
@@ -73,7 +73,6 @@ $BreakGlassAccount = New-AzureADUser `
 4. Assign permanent Global Admin role assignment to account:
 ```
 $DirectoryRole = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
-
 Add-AzureADDirectoryRoleMember -ObjectId $DirectoryRole.ObjectId -RefObjectId $BreakGlassAccount.ObjectId
 ```
 
