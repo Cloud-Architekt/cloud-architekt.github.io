@@ -53,7 +53,10 @@ Set “other mail address” to a non-privileged account mailbox:
 3. Create a security groups with all emergency access accounts as members to exclude them from Conditional Access Policies and MFA Registration:
 	```
 	$BreakGlassAccountGroup = “<Your Naming convention>”
-	New-AzureADGroup -DisplayName $BreakGlassAccountGroup -MailEnabled $false -Description “All accounts for emergency access which are configured on internal policies” -SecurityEnabled $true -MailNickName “NotSet”
+	New-AzureADGroup -DisplayName $BreakGlassAccountGroup `
+		-MailEnabled $false `
+		-Description “All accounts for emergency access, configured on internal policies” `
+		-SecurityEnabled $true -MailNickName “NotSet”
 	```
 
 	_Advice: Use Azure AD Access Review to set-up a regular review in addition to auditing. Only the related accounts should be member of this security group._
