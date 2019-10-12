@@ -114,7 +114,7 @@ Use the “Rule creation wizard” in Azure Sentinel to create a simple analytic
 3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
 4. The following analytic rule will be generated finally:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
 
 
 
@@ -128,7 +128,7 @@ You are able use the same KQL query in Log Analytics if you aren’t using Azure
 
 Run the query in your “Logs” blade to validate the results and click on “New alert rule”.
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitor.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitor.png)
 
 
 Configure your existing or a new action group to trigger Logic apps or other notify the Operations Team. 
@@ -150,7 +150,7 @@ _Note: OperationName must be set to “Add member to role” if you are not usin
 
 By the end of the configuration you will get the following custom analytic rule:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AddMemberOutsideOfPIM.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AddMemberOutsideOfPIM.png)
 
 
 ## Investigation of account activity with Azure Sentinel
@@ -158,7 +158,7 @@ Identity Protection is essential for your emergency access accounts even if you 
 
 Get an overview of all incidents which may be linked to an emergency access account by implementing default or custom rule templates in Azure Sentinel:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
 
 _Note: Learn more about the out-of-box threat detections in Azure Sentinel on Microsoft Docs:_
 /[Investigate alerts with Azure Sentinel](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)/
@@ -167,7 +167,7 @@ Microsoft Cloud App Security (MCAS) can also be used to monitor activities of br
 
 At the end you are able to investigate incidents as in the following example:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
 
 
 Internal brute-force attack of emergency access account and successful sign-in (after several attempts) with administrative activity from a non-compliant device. Suspicious granting of permissions to an account was detected. 
