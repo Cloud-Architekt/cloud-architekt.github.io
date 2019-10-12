@@ -93,7 +93,7 @@ Set “other mail address” to a non-privileged account mailbox:
 7. Verify that all related accounts are not covered by your “Self Service Password Reset (SSPR)” assignment.
 
 	_Note: Currently there is no option to exclude users by a group:_
-	/[Disable SSPR by group (exclude group from SSPR) – Customer Feedback for Microsoft Azure](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/35797822-disable-sspr-by-group-exclude-group-from-sspr)/
+	_[Disable SSPR by group (exclude group from SSPR) – Customer Feedback for Microsoft Azure](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/35797822-disable-sspr-by-group-exclude-group-from-sspr)_
 
 
 # Sign-in Alerting und Auditing
