@@ -103,12 +103,12 @@ Use the “Rule creation wizard” in Azure Sentinel to create a simple analytic
 
 1. Start with a simple KQL query to get all sign-in activities from your emergency access accounts (filtered by your naming convention) as you can see in this example:
 
-```
-SigninLogs
-| where Identity startswith “<BreakGlassNamingConvention>”
-| extend IPCustomEntity = IPAddress
-| extend AccountCustomEntity = UserPrincipalName
-```
+	```
+	SigninLogs
+	| where Identity startswith “<BreakGlassNamingConvention>”
+	| extend IPCustomEntity = IPAddress
+	| extend AccountCustomEntity = UserPrincipalName
+	```
 
 2. Query scheduling and lookup data should be set to 5 minutes (minimal interval).  
 3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
