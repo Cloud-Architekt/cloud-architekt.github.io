@@ -46,8 +46,8 @@ Set “other mail address” to a non-privileged account mailbox:
 ```
 $BreakGlassAccountName	= “<YourHardToGuessBreakGlassName>”
 $DefaultDomainName		= (Get-AzureADDomain | Where-Object IsInitial -eq $true).Name
-$ForwardedMailbox			= “<YourOpsMailbox@YourCompany.com>”
-$Location					= “<YourCountryCode>”
+$ForwardedMailbox		= “<YourOpsMailbox@YourCompany.com>”
+$Location				= “<YourCountryCode>”
 ```
 
 3. Create a security groups with all emergency access accounts as members to exclude them from Conditional Access Policies and MFA Registration:
@@ -70,7 +70,7 @@ $BreakGlassAccount = New-AzureADUser `
 	-OtherMails $ForwardedMailbox
 ```
 
-4. Assign permanent Global Admin role assignment to account:
+5. Assign permanent Global Admin role assignment to account:
 ```
 $DirectoryRole = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
 Add-AzureADDirectoryRoleMember -ObjectId $DirectoryRole.ObjectId -RefObjectId $BreakGlassAccount.ObjectId
@@ -78,7 +78,7 @@ Add-AzureADDirectoryRoleMember -ObjectId $DirectoryRole.ObjectId -RefObjectId $B
 
 _Note: Directory role “Global Administrator” is named as “Company Administrator” in PowerShell and Microsoft Graph API_
 
-5. Exclude the emergency access security group ($BreakGlassAccountGroup) from the following policies manually (there is no API for automation/scripting):
+6. Exclude the emergency access security group ($BreakGlassAccountGroup) from the following policies manually (there is no API for automation/scripting):
 
 	* All Azure AD Conditional Access Policies
 	* Risk-based Conditional Access Policies in Azure AD Identity Protection
@@ -87,7 +87,7 @@ _Note: Directory role “Global Administrator” is named as “Company Administ
 _Note: Please be aware that Microsoft’s baseline policies (“Require MFA for all Admins”) does not allow to exclude users or groups._
 _I can strongly recommended to create your own conditional access policy to enforce MFA for all admins excluding the emergency accounts._
 
-6. Verify that all related accounts are not covered by your “Self Service Password Reset (SSPR)” assignment.
+7. Verify that all related accounts are not covered by your “Self Service Password Reset (SSPR)” assignment.
 
 _Note: Currently there is no option to exclude users by a group:_
 /[Disable SSPR by group (exclude group from SSPR) – Customer Feedback for Microsoft Azure](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/35797822-disable-sspr-by-group-exclude-group-from-sspr)/
@@ -102,6 +102,7 @@ First of all you should check if you have already connected “Azure AD logs” 
 Use the “Rule creation wizard” in Azure Sentinel to create a simple analytics:
 
 	1. Start with a simple KQL query to get all sign-in activities from your emergency access accounts (filtered by your naming convention) as you can see in this example:
+
 ```
 SigninLogs
 | where Identity startswith “<BreakGlassNamingConvention>”
