@@ -29,54 +29,54 @@ _Note: This is a very simple example that shows some aspects of implementing eme
 
 1. Generate a complex password and set option to disable the force of change password (at next logon). In my sample I have used the script function “New-RandomPassword” from the TechNet Script Center ([Script Function - New-RandomPassword](https://gallery.technet.microsoft.com/scriptcenter/Function-New-RandomPassword-3f3703ac)) to simplify the generation of a password In this sample. 
 
-```
-$PasswordLength = "<YourPasswordLength>"
-$PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-$PasswordProfile.Password = New-RandomPassword -PasswordLength $PasswordLength
-$PasswordProfile.ForceChangePasswordNextLogin = $False
-```
+	```
+	$PasswordLength = "<YourPasswordLength>"
+	$PasswordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
+	$PasswordProfile.Password = New-RandomPassword -PasswordLength $PasswordLength
+	$PasswordProfile.ForceChangePasswordNextLogin = $False
+	```
 
-_Note: Microsoft supports passwords with a length up to 256 characters in Azure AD (since May 2019)._
-/Source: [Removal of the 16-character limit for passwords in Azure AD - Microsoft Tech Community - 565275](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Removal-of-the-16-character-limit-for-passwords-in-Azure-AD/ba-p/565275)/
+	_Note: Microsoft supports passwords with a length up to 256 characters in Azure AD (since May 2019)._
+	/Source: [Removal of the 16-character limit for passwords in Azure AD - Microsoft Tech Community - 565275](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Removal-of-the-16-character-limit-for-passwords-in-Azure-AD/ba-p/565275)/
 
-_Advice: Generated password in this script will be stored in the variable ($PasswordProfile.Password). Make sure you are using a securely transfer to your target system (password safe, PAM solution or export function to create the “offline copy” in a sealed envelope).  Secured Azure KeyVault (limited to Global Admins) can be used to temporary store created or updated passwords._
+	_Advice: Generated password in this script will be stored in the variable ($PasswordProfile.Password). Make sure you are using a securely transfer to your target system (password safe, PAM solution or export function to create the “offline copy” in a sealed envelope).  Secured Azure KeyVault (limited to Global Admins) can be used to temporary store created or updated passwords._
 
 2. Define the required parameters to create an account including default tenant domain name and a username (recommend to use ones that is not easy to guess).
 Set “other mail address” to a non-privileged account mailbox:
-```
-$BreakGlassAccountName	= “<YourHardToGuessBreakGlassName>”
-$DefaultDomainName		= (Get-AzureADDomain | Where-Object IsInitial -eq $true).Name
-$ForwardedMailbox		= “<YourOpsMailbox@YourCompany.com>”
-$Location				= “<YourCountryCode>”
-```
+	```
+	$BreakGlassAccountName	= “<YourHardToGuessBreakGlassName>”
+	$DefaultDomainName		= (Get-AzureADDomain | Where-Object IsInitial -eq $true).Name
+	$ForwardedMailbox		= “<YourOpsMailbox@YourCompany.com>”
+	$Location				= “<YourCountryCode>”
+	```
 
 3. Create a security groups with all emergency access accounts as members to exclude them from Conditional Access Policies and MFA Registration:
-```
-$BreakGlassAccountGroup = “<Your Naming convention>”
-New-AzureADGroup -DisplayName $BreakGlassAccountGroup -MailEnabled $false -Description “All accounts for emergency access which are configured on internal policies” -SecurityEnabled $true -MailNickName “NotSet”
-```
+	```
+	$BreakGlassAccountGroup = “<Your Naming convention>”
+	New-AzureADGroup -DisplayName $BreakGlassAccountGroup -MailEnabled $false -Description “All accounts for emergency access which are configured on internal policies” -SecurityEnabled $true -MailNickName “NotSet”
+	```
 
-_Advice: Use Azure AD Access Review to set-up a regular review in addition to auditing. Only the related accounts should be member of this security group._
+	_Advice: Use Azure AD Access Review to set-up a regular review in addition to auditing. Only the related accounts should be member of this security group._
 
 4. Create break glass account with pre-populated variables:
-```
-$BreakGlassAccount = New-AzureADUser `
-	-UserPrincipalName ($BreakGlassAccountName + "@" + $DefaultDomainName) `
-	-DisplayName $BreakGlassAccountName `
-	-MailNickName $BreakGlassAccountName `
-	-AccountEnabled $true  -UsageLocation $Location `
-	—PasswordPolicies “DisablePasswordExpiration” `
-	-PasswordProfile $PasswordProfile `
-	-OtherMails $ForwardedMailbox
-```
+	```
+	$BreakGlassAccount = New-AzureADUser `
+		-UserPrincipalName ($BreakGlassAccountName + "@" + $DefaultDomainName) `
+		-DisplayName $BreakGlassAccountName `
+		-MailNickName $BreakGlassAccountName `
+		-AccountEnabled $true  -UsageLocation $Location `
+		—PasswordPolicies “DisablePasswordExpiration” `
+		-PasswordProfile $PasswordProfile `
+		-OtherMails $ForwardedMailbox
+	```
 
 5. Assign permanent Global Admin role assignment to account:
-```
-$DirectoryRole = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
-Add-AzureADDirectoryRoleMember -ObjectId $DirectoryRole.ObjectId -RefObjectId $BreakGlassAccount.ObjectId
-```
+	```
+	$DirectoryRole = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
+	Add-AzureADDirectoryRoleMember -ObjectId $DirectoryRole.ObjectId -RefObjectId $BreakGlassAccount.ObjectId
+	```
 
-_Note: Directory role “Global Administrator” is named as “Company Administrator” in PowerShell and Microsoft Graph API_
+	_Note: Directory role “Global Administrator” is named as “Company Administrator” in PowerShell and Microsoft Graph API_
 
 6. Exclude the emergency access security group ($BreakGlassAccountGroup) from the following policies manually (there is no API for automation/scripting):
 
@@ -84,13 +84,13 @@ _Note: Directory role “Global Administrator” is named as “Company Administ
 	* Risk-based Conditional Access Policies in Azure AD Identity Protection
 	* MFA Registration in Azure AD Identity Protection
 
-_Note: Please be aware that Microsoft’s baseline policies (“Require MFA for all Admins”) does not allow to exclude users or groups._
-_I can strongly recommended to create your own conditional access policy to enforce MFA for all admins excluding the emergency accounts._
+	_Note: Please be aware that Microsoft’s baseline policies (“Require MFA for all Admins”) does not allow to exclude users or groups._
+	_I can strongly recommended to create your own conditional access policy to enforce MFA for all admins excluding the emergency accounts._
 
 7. Verify that all related accounts are not covered by your “Self Service Password Reset (SSPR)” assignment.
 
-_Note: Currently there is no option to exclude users by a group:_
-/[Disable SSPR by group (exclude group from SSPR) – Customer Feedback for Microsoft Azure](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/35797822-disable-sspr-by-group-exclude-group-from-sspr)/
+	_Note: Currently there is no option to exclude users by a group:_
+	/[Disable SSPR by group (exclude group from SSPR) – Customer Feedback for Microsoft Azure](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/35797822-disable-sspr-by-group-exclude-group-from-sspr)/
 
 
 # Sign-in Alerting und Auditing
