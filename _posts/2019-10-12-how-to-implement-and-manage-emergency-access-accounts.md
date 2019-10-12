@@ -183,5 +183,3 @@ AuditLogs
 
 Filtered out activities by security-critical operations as you can see in this example:
 ![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
-
- 
