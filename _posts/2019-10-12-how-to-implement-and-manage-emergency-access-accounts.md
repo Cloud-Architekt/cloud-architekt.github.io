@@ -2,7 +2,7 @@
 layout: post
 title:  "How to implement and manage "emergency access accounts" / "break glass""
 author: thomas
-categories: [ Azure, Security, Azure AD ]
+categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/break-glass-accounts.jpg
 description: "icrosoft strongly recommends to implement emergency access accounts. This article gives an overview and step-by-step guide to configure and monitor this type of accounts!"
