@@ -133,7 +133,7 @@ Run the query in your “Logs” blade to validate the results and click on “N
 
 Configure your existing or a new action group to trigger Logic apps or other notify the Operations Team. 
 
-	![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitorActionGroup.png)
+![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitorActionGroup.png)
 
 ## Alerting “Add Global Admin outside of PIM” with Azure Sentinel
 You should also trigger an alert in case that someone is creating an emergency account or permanent “Global Admin”. For this reason, we create another custom rule to alert in case of adding members to “Global Admin” role outside of “Azure AD Privileged Identity Management (PIM)”. 
