@@ -17,8 +17,8 @@ Emergency access accounts, also known as “break glass accounts”, should be i
 
 Microsoft strongly recommends to implement two or more emergency access accounts in your Azure tenant environment. This non-personal and high-privileged accounts should be only used in emergency cases and strictly monitored. This applies also to self-inflicted problem such as “lock yourself out from tenant” (e.g. misconfigured Conditional Access policy) or downtime of hybrid identity components (e.g. ADFS or PTA). Regular use to bypass limited (RBAC) permissions or security baselines must be prevented. 
 
-A well-documented guide of emergency access accounts is also available from Microsoft:
-[Manage emergency access administrator accounts - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-emergency-access)
+A well-documented guide of emergency access accounts is also available from Microsoft Docs:
+[Manage emergency access administrator accounts](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-emergency-access)
 
 _Note: Spend some time to design practical process chains for access, audit, validation and maintenance of the credentials (such as password rollover after number of days or IT personnel change) . This part of the implementation and management is often underestimated and must always proceed smoothly (particular in case of emergency)._
 
@@ -37,7 +37,7 @@ _Note: This is a very simple example that shows some aspects of implementing eme
 	```
 
 	_Note: Microsoft supports passwords with a length up to 256 characters in Azure AD (since May 2019)._
-	/Source: [Removal of the 16-character limit for passwords in Azure AD - Microsoft Tech Community - 565275](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Removal-of-the-16-character-limit-for-passwords-in-Azure-AD/ba-p/565275)/
+	_[Removal of the 16-character limit for passwords in Azure AD](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Removal-of-the-16-character-limit-for-passwords-in-Azure-AD/ba-p/565275)_
 
 	_Advice: Generated password in this script will be stored in the variable ($PasswordProfile.Password). Make sure you are using a securely transfer to your target system (password safe, PAM solution or export function to create the “offline copy” in a sealed envelope).  Secured Azure KeyVault (limited to Global Admins) can be used to temporary store created or updated passwords._
 
@@ -99,7 +99,7 @@ Set “other mail address” to a non-privileged account mailbox:
 # Sign-in Alerting und Auditing
 
 ## Alerting “Sign-in attempt” with Azure Sentinel
-First of all you should check if you have already connected “Azure AD logs” as data source in Azure Sentinel: [Connect Azure AD data to Azure Sentinel | Microsoft Docs](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-active-directory)
+First of all you should check if you have already connected “Azure AD logs” as data source in Azure Sentinel: [Connect Azure AD data to Azure Sentinel](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-active-directory)
 
 ### Create custom rule to detect sign-in attempts 
 Use the “Rule creation wizard” in Azure Sentinel to create a simple analytics:
@@ -127,7 +127,8 @@ You will see an incident in Azure Sentinel in case of any sign-in attempt (succe
 ![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
 
 ### Alerting by Log Analytics / Azure Monitor Alerts
-You are able use the same KQL query in Log Analytics even if you aren’t using Azure Sentinel. More details on how to implement Azure AD logs to Logs Analytics are available in Microsoft Docs:  [Stream Azure AD logs to Azure Monitor](http://aka.ms/AzureADLogAnalytics)
+You are able use the same KQL query in Log Analytics even if you aren’t using Azure Sentinel. More details on how to implement Azure AD logs to Logs Analytics are available here: 
+[Stream Azure AD logs to Azure Monitor](http://aka.ms/AzureADLogAnalytics)
 
 Run the query in your “Logs” blade to validate the results and click on “New alert rule”.
 
