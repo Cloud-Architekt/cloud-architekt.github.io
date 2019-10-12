@@ -45,9 +45,9 @@ _Note: This is a very simple example that shows some aspects of implementing eme
 Set “other mail address” to a non-privileged account mailbox:
 	```
 	$BreakGlassAccountName	= “<YourHardToGuessBreakGlassName>”
-	$DefaultDomainName		= (Get-AzureADDomain | Where-Object IsInitial -eq $true).Name
-	$ForwardedMailbox		= “<YourOpsMailbox@YourCompany.com>”
-	$Location				= “<YourCountryCode>”
+	$DefaultDomainName	= (Get-AzureADDomain | Where-Object IsInitial -eq $true).Name
+	$ForwardedMailbox	= “<YourOpsMailbox@YourCompany.com>”
+	$Location	= “<YourCountryCode>”
 	```
 
 3. Create a security groups with all emergency access accounts as members to exclude them from Conditional Access Policies and MFA Registration:
