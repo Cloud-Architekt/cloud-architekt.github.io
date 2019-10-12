@@ -114,14 +114,14 @@ SigninLogs
 3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
 4. The following analytic rule will be generated finally:
 
-![](./2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
 
 
 
 ### Incident case based on created custom rule
 You will see the incident case in Azure Sentinel in case of any sign-in attempt (successful or unsuccessful):
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
 
 ### Alerting by Log Analytics / Azure Monitor Alerts
 You are able use the same KQL query in Log Analytics if you aren’t using Azure Sentinel. More details on how to implement Azure AD logs to Logs Analytics are available here:  [Stream Azure Active Directory logs to Azure Monitor logs | Microsoft Docs](http://aka.ms/AzureADLogAnalytics)
@@ -133,7 +133,7 @@ Run the query in your “Logs” blade to validate the results and click on “N
 
 Configure your existing or a new action group to trigger Logic apps or other notify the Operations Team. 
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitorActionGroup.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitorActionGroup.png)
 
 ## Alerting “Add Global Admin outside of PIM” with Azure Sentinel
 You should also trigger an alert in case that someone is creating an emergency account or permanent “Global Admin”. For this reason, we create another custom rule to alert in case of adding members to “Global Admin” role outside of “Azure AD Privileged Identity Management (PIM)”. 
@@ -150,7 +150,7 @@ _Note: OperationName must be set to “Add member to role” if you are not usin
 
 By the end of the configuration you will get the following custom analytic rule:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AddMemberOutsideOfPIM.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AddMemberOutsideOfPIM.png)
 
 
 ## Investigation of account activity with Azure Sentinel
@@ -158,16 +158,16 @@ Identity Protection is essential for your emergency access accounts even if you 
 
 Get an overview of all incidents which may be linked to an emergency access account by implementing default or custom rule templates in Azure Sentinel:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
 
-/Note: Learn more about the out-of-box threat detections in Azure Sentinel on Microsoft Docs/
-/[Investigate alerts with Azure Sentinel | Microsoft Docs](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)/
+_Note: Learn more about the out-of-box threat detections in Azure Sentinel on Microsoft Docs:_
+/[Investigate alerts with Azure Sentinel](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)/
 
 Microsoft Cloud App Security (MCAS) can also be used to monitor activities of break glass accounts and trigger specific (policy-based) alerts.
 
 At the end you are able to investigate incidents as in the following example:
 
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
 
 
 Internal brute-force attack of emergency access account and successful sign-in (after several attempts) with administrative activity from a non-compliant device. Suspicious granting of permissions to an account was detected. 
@@ -182,4 +182,4 @@ AuditLogs
 ```
 
 Filtered out activities by security-critical operations as you can see in this example:
-![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
+![](assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
