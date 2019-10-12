@@ -101,7 +101,7 @@ First of all you should check if you have already connected “Azure AD logs” 
 ### Create custom rule to detect sign-in attempts 
 Use the “Rule creation wizard” in Azure Sentinel to create a simple analytics:
 
-	1. Start with a simple KQL query to get all sign-in activities from your emergency access accounts (filtered by your naming convention) as you can see in this example:
+1. Start with a simple KQL query to get all sign-in activities from your emergency access accounts (filtered by your naming convention) as you can see in this example:
 
 ```
 SigninLogs
@@ -110,9 +110,9 @@ SigninLogs
 | extend AccountCustomEntity = UserPrincipalName
 ```
 
-	2. Query scheduling and lookup data should be set to 5 minutes (minimal interval).  
-	3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
-	4. The following analytic rule will be generated finally:
+2. Query scheduling and lookup data should be set to 5 minutes (minimal interval).  
+3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
+4. The following analytic rule will be generated finally:
 
 ![](./2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
 
@@ -160,7 +160,8 @@ Get an overview of all incidents which may be linked to an emergency access acco
 
 ![](2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
 
-/Note: Learn more about the out-of-box threat detections in Azure Sentinel on Microsoft Docs: [Investigate alerts with Azure Sentinel | Microsoft Docs](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)./
+/Note: Learn more about the out-of-box threat detections in Azure Sentinel on Microsoft Docs/
+/[Investigate alerts with Azure Sentinel | Microsoft Docs](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)/
 
 Microsoft Cloud App Security (MCAS) can also be used to monitor activities of break glass accounts and trigger specific (policy-based) alerts.
 
@@ -178,7 +179,6 @@ This query shows all audit-related logs of break-glass accounts (based on define
 ```
 AuditLogs
 | where (TargetResources has “YourBreakGlassAccount1” or TargetResources has “YourBreakGlassAccount2”)
-
 ```
 
 Filtered out activities by security-critical operations as you can see in this example:
