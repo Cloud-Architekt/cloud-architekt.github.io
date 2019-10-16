@@ -4,7 +4,7 @@ title: "Cloud-Architekt.net"
 description: "Blogging  "
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/favlogo.png'
-baseurl: ''
+baseurl: 'https://www.cloud-architekt.net'
 include: ["_pages"]
 permalink: /:title/
 
