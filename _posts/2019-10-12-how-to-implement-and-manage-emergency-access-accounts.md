@@ -67,7 +67,8 @@ Set "other mail address" to a non-privileged account mailbox:
 		-UserPrincipalName ($BreakGlassAccountName + "@" + $DefaultDomainName) `
 		-DisplayName $BreakGlassAccountName `
 		-MailNickName $BreakGlassAccountName `
-		-AccountEnabled $true  -UsageLocation $Location `
+		-AccountEnabled $true `
+		-UsageLocation $Location `
 		—PasswordPolicies "DisablePasswordExpiration" `
 		-PasswordProfile $PasswordProfile `
 		-OtherMails $ForwardedMailbox
@@ -78,7 +79,6 @@ Set "other mail address" to a non-privileged account mailbox:
 	$DirectoryRole = Get-AzureADDirectoryRole | Where-Object {$_.displayName -eq 'Company Administrator'}
 	Add-AzureADDirectoryRoleMember -ObjectId $DirectoryRole.ObjectId -RefObjectId $BreakGlassAccount.ObjectId
 	```
-
 	_Note: Directory role "Global Administrator" is named as "Company Administrator" in PowerShell and Microsoft Graph API_
 
 6. Exclude the emergency access security group ($BreakGlassAccountGroup) from the following policies manually (there is no API for automation/scripting):
