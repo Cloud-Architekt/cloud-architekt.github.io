@@ -88,6 +88,3 @@ BeyondCorp is Google’s implementation of the zero trust security model which w
 
 [BeyondCorp Beyond Google (Cloud Next ’18)](https://www.youtube.com/watch?v=ei1CxF1BHh4)  
 Recorded session from Google’s cloud conference (Cloud Next) about the transformation project of Veolia (french company with over 169,000 employees) in 2018.
-
-
-<span style="color:silver;font-style:italic;font-size:small">Cover image by [bsdrouin from pixabay.com](https://pixabay.com/photos/network-server-system-2402637/)</span>
