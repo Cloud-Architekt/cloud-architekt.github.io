@@ -4,7 +4,7 @@ title:  "Implementing Zero Trust with Microsoft 365 (Study collection)"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
-image: assets/images/zero-trust-network.jpg
+image: https://www.cloud-architekt.net/assets/images/zero-trust-network.jpg
 description: "Do you want to know how to implement a ZeroTrust security model with Microsoft 365? Take a look on my link collection to learn more about the modern approach to cybersecurity."
 featured: true
 hidden: false
