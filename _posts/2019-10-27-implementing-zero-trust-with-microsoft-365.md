@@ -15,6 +15,10 @@ _Building and implementing “Zero Trust networks” (ZTN) is essential to archi
 It’s a mind shift from a model of implicit trust to one of explicit verification.
 In a brief summary this means: **“Always Verify. Never Trusts”**.
 
+![](../2019-10-27-implementing-zero-trust-with-microsoft-365/zero-trust-major-components.jpg)
+_The major components of work performed in each phase of Zero Trust.  
+Source: [Microsoft IT Showcase: Implementing a Zero Trust security model at Microsoft](https://www.microsoft.com/en-us/itshowcase/implementing-a-zero-trust-security-model-at-microsoft)_
+
 Microsoft 365 includes features and services to support this approach to validate every objective in your environment such as the following one:
 
 * Users (Azure Active Directory)
