@@ -49,7 +49,7 @@ This white paper is written to to discuss how to translate the principles of “
 [“Zero Trust - Identity approach” by Brjann Brekkan](https://www.linkedin.com/posts/brjann-brekkan-0a24a72_identity-and-zero-trust-strategy-techdays-ugcPost-6593043152322605056-elDz)  
 Slides from Brjann Brekaan’s session about the Identity approaches in “Zero Trust” scenarios at the TechDays Sweden 2019. Overview of mindset, methods and Microsoft’s related identity security solutions.
 
-[Zero Trust part 1: Identity and access management - Microsoft Security](https://www.microsoft.com/security/blog/2018/12/17/zero-trust-part-1-identity-and-access-management/)  
+[Zero Trust part 1: Identity and access management](https://www.microsoft.com/security/blog/2018/12/17/zero-trust-part-1-identity-and-access-management/)  
 Blog series about the implementation in Microsoft 365 solutions. This part of the series describes in general the approach of Zero Trust approach in Microsoft’s Azure AD.
 
 [“Zer0ing Trust - Do Zero Trust Approaches Deliver Real Security” by David Weston](https://github.com/dwizzzle/Presentations/blob/master/David%20Weston%20-%20Zer0ing%20Trust%20-%20Do%20Zero%20Trust%20Approaches%20Deliver%20Real%20Security.pdf)  
