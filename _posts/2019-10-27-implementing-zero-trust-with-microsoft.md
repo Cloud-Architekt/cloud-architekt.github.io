@@ -30,13 +30,13 @@ There are already many excellent study resources that I like to share with you.
 In this blog post you’ll find few links to white papers, documentations and session recordings to learn more about “Zero Trust”.
 
 # Overview of Zero Trust approach
-[“A new era of security”](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE3YnRL) 
+[“A new era of security”](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE3YnRL)  
 High-level overview of Microsoft's view on “Zero Trust” security model, dual perimeter strategy and the three pillars to achieve the goal: Signal, Decision and Enforcement.
 
-[Traditional perimeter-based network defense is obsolete—transform to a Zero Trust model](https://www.microsoft.com/security/blog/2019/10/23/perimeter-based-network-defense-transform-zero-trust-model/) 
+[Traditional perimeter-based network defense is obsolete—transform to a Zero Trust model](https://www.microsoft.com/security/blog/2019/10/23/perimeter-based-network-defense-transform-zero-trust-model/)  
 Comparison of the various stages of transformation from traditional to “optimal” (fully) implemented model.
 
-[Zero Trust Maturity Model](https://aka.ms/Zero-Trust-Vision) 
+[Zero Trust Maturity Model](https://aka.ms/Zero-Trust-Vision)  
 Guiding principles and the maturity model are in focus of this white paper.
 
 # Building “Zero Trust” with Microsoft 365
