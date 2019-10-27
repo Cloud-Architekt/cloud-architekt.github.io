@@ -10,33 +10,36 @@ featured: true
 hidden: false
 ---
 
-Building and implementing “Zero Trust networks” (ZTN) is essential to archive a new cyber security model in a world of modern IT and cloud transformation. Previous (traditional) perimeter-based network security based on the paradigm that data is secure as long as it is located on-premises and within local (corporate) networks. This doesn’t fit in today’s business environment of cross-business collaboration, usage of (personal) mobile devices, specific protection of data security and cloud apps. 
+Building and implementing “Zero Trust networks” (ZTN) is essential to archive a new cyber security model in a world of modern IT and cloud transformation. Previous (traditional) perimeter-based network security depend on the paradigm that data is secure as long as it is located on-premises and within local (corporate) networks. This doesn’t fit in today’s business environment of cross-business collaboration, usage of (personal) mobile devices, specific protection of data security and cloud apps. 
 
 It’s a mind shift from a model of implicit trust to one of explicit verification.
 In a brief summary this means: **“Always Verify. Never Trusts”**.
 
 Microsoft 365 includes features and services to support this approach to validate every objective in your environment such as the following one:
 
-	* Users (Azure Active Directory)
-	* Applications (Microsoft Cloud App Security)
-	* Devices and Endpoints (Microsoft Intune and Microsoft Defender ATP)
-	* Data (Microsoft Information Protection)
+* Users (Azure Active Directory)
+* Applications (Microsoft Cloud App Security)
+* Devices and Endpoints (Microsoft Intune and Microsoft Defender ATP)
+* Data (Microsoft Information Protection)
 
-Microsoft partner are also providing extended solutions that could be an essential part of your “Zero Trust” implementation (for example to replace network segmentation with app segmentation or securely publish legacy apps).
+Various Microsoft partner are also providing extended solutions that could be an essential part of your “Zero Trust” implementation (for example to replace network segmentation with app segmentation or securely publish legacy apps).
 
 It is advisable, however, to take a closer look on (conceptual) approaches of other cloud provider (such as Google) to see differences or common position and standards (for your multi-cloud or exit strategies).
 
-There are already many excellent study resources that I like to share to you.
-In this blog post you’ll find few links to white papers, blog posts or session recordings to learn more about “Zero Trust”.
+There are already many excellent study resources that I like to share with you.
+In this blog post you’ll find few links to white papers, documentations and session recordings to learn more about “Zero Trust”.
 
 # Overview of Zero Trust approach
 [“A new era of security”](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE3YnRL)
+
 High-level overview of the “Zero Trust” security model, dual perimeter strategy and three pillars to achieve the goal: Signal, Decision and Enforcement.
 
 [Traditional perimeter-based network defense is obsolete—transform to a Zero Trust model](https://www.microsoft.com/security/blog/2019/10/23/perimeter-based-network-defense-transform-zero-trust-model/)
+
 Comparison of the various stages of transformation from traditional to “optimal” (fully) implemented model.
 
 [Zero Trust Maturity Model](https://aka.ms/Zero-Trust-Vision)
+
 Guiding principles and the maturity model are in focus of this white paper.
 
 # Building “Zero Trust” with Microsoft 365
