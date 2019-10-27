@@ -30,6 +30,12 @@ There are already many excellent study resources that I like to share with you.
 In this blog post you’ll find few links to white papers, documentations and session recordings to learn more about “Zero Trust”.
 
 # Overview of "Zero Trust" approach
+
+You’ll find the white papers and resources of CAT here:  
+[http://aka.ms/CAT](http://aka.ms/CAT)  
+Test
+
+
 [“A new era of security”](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE3YnRL)  
 High-level overview of Microsoft's view on “Zero Trust” security model, dual perimeter strategy and the three pillars to achieve the goal: Signal, Decision and Enforcement.
 
