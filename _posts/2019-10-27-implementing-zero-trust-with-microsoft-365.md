@@ -16,6 +16,7 @@ It’s a mind shift from a model of implicit trust to one of explicit verificati
 In a brief summary this means: **“Always Verify. Never Trusts”**.
 
 ![](../2019-10-27-implementing-zero-trust-with-microsoft-365/zero-trust-major-components.jpg)  
+
 _Figure 1: The major components of work performed in each phase of Zero Trust.  
 Source: [Microsoft IT Showcase: Implementing a Zero Trust security model at Microsoft](https://www.microsoft.com/en-us/itshowcase/implementing-a-zero-trust-security-model-at-microsoft)_
 
