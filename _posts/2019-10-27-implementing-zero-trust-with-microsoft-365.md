@@ -4,13 +4,13 @@ title:  "Implementing Zero Trust with Microsoft 365 (Study collection)"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
-image: https://www.cloud-architekt.net/assets/images/zero-trust-network.jpg
+image: assets/images/zero-trust-network.jpg
 description: "Do you want to know how to implement a ZeroTrust security model with Microsoft 365? Take a look on my link collection to learn more about the modern approach to cybersecurity."
 featured: true
 hidden: false
 ---
 
-Building and implementing “Zero Trust networks” (ZTN) is essential to archive a new cyber security model in a world of modern IT and cloud transformation. Previous (traditional) perimeter-based network security depend on the paradigm that data is secure as long as it is located on-premises and within local (corporate) networks. This doesn’t fit in today’s business environment of cross-business collaboration, usage of (personal) mobile devices, specific protection of data security and cloud apps. 
+_Building and implementing “Zero Trust networks” (ZTN) is essential to archive a new cyber security model in a world of modern IT and cloud transformation. Previous (traditional) perimeter-based network security depend on the paradigm that data is secure as long as it is located on-premises and within local (corporate) networks. This doesn’t fit in today’s business environment of cross-business collaboration, usage of (personal) mobile devices, specific protection of data security and cloud apps._ 
 
 It’s a mind shift from a model of implicit trust to one of explicit verification.
 In a brief summary this means: **“Always Verify. Never Trusts”**.
