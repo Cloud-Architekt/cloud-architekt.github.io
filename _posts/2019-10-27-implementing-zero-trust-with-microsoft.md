@@ -29,7 +29,7 @@ It is advisable, however, to take a closer look on (conceptual) approaches of ot
 There are already many excellent study resources that I like to share with you.
 In this blog post you’ll find few links to white papers, documentations and session recordings to learn more about “Zero Trust”.
 
-# Overview of Zero Trust approach
+# Overview of "Zero Trust" approach
 [“A new era of security”](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE3YnRL)  
 High-level overview of Microsoft's view on “Zero Trust” security model, dual perimeter strategy and the three pillars to achieve the goal: Signal, Decision and Enforcement.
 
@@ -78,7 +78,7 @@ High level overview of the advantages in adopting a modern security approach for
 [ZScaler and MAN](https://www.youtube.com/watch?v=P0XnqGDdXaA&feature=youtu.be)
 MAN energy solutions has implemented Zscaler services as alternative to “traditional” VPN solutions to publish internal applications (to over 5.000 employees).
 
-## Google’s zero trust approach with BeyondCorp
+## Google’s "zero trust" approach with "BeyondCorp"
 [Google Online Security Blog: How Google adopted BeyondCorp](https://security.googleblog.com/2019/06/how-google-adopted-beyondcorp.html)
 BeyondCorp is Google’s implementation of the zero trust security model which was also implemented within the company. Learn more about this approach in the following white papers and research papers:
 
