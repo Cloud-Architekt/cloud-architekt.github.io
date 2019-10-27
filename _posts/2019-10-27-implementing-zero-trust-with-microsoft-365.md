@@ -47,6 +47,9 @@ Guiding principles and the maturity model are in focus of this white paper.
 [Achieve Zero Trust with Azure AD conditional access](https://aka.ms/ZeroTrust)  
 Microsoft’s resource page of all ZTN resources related to Azure AD and conditional access.
 
+[Overview of Zero Trust solutions by Microsoft](https://www.microsoft.com/en-us/security/zero-trust)  
+Overview of all components and Microsoft solutions that support the "Zero Trust" approach.
+
 [Implementing a Zero Trust approach with Azure Active Directory](https://www.microsoftpartnercommunity.com/atvwr79957/attachments/atvwr79957/Australia_Security_Compliance_Practice/10/1/Implementing-a-Zero-Trust-approach-with-Azure-Active-Directory.pdf)  
 This white paper is written to to discuss how to translate the principles of “Zero Trust” concretely with Azure AD and other Microsoft security products for your organization.
 
