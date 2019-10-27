@@ -6,7 +6,7 @@ categories: [ Azure, Architecture, DevOps ]
 tags: [azure, architecture]
 image: assets/images/overview-of-azure-architecture.png
 description: "Collection of various resources and study guides of Azure Architecture & Design Patterns."
-featured: true
+featured: false
 hidden: false
 ---
 
