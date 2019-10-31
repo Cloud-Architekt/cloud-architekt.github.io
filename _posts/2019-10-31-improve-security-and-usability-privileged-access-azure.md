@@ -37,7 +37,7 @@ _Source: Microsoft Docs: [Common identity and device access policies - Microsoft
 Every identity which can be used to manage Azure resources, Microsoft 365 services or your subscriptions (Enterprise Agreement Portal) should be (always) forced to use multi-factor authentication.
 
 Microsoft has well documented how to create a Conditional Access policy to **require MFA for administrators**:
-[Conditional Access - Require MFA for administrators - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-admin-mfa)
+[Conditional Access - Require MFA for administrators | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-admin-mfa)
 
 Microsoft’s documentation described to use a list of “directory roles” as user assignment but other critical roles are not covered (e.g. Intune service Administrator is missing) in this introduction. 
 
@@ -58,10 +58,10 @@ Another baseline policy to require compliant devices is also documented in Micro
 
 Define your security baseline for device configuration as “device compliance policy”.
 This policy really depends on your needs of OS and security configuration (e.g. BitLocker encryption, OS version):  
-[Create device compliance policies in Microsoft Intune - Azure | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/create-compliance-policy)
+[Create device compliance policies in Microsoft Intune | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/create-compliance-policy)
 
 Take a look on the MDM Security Baseline if you are planning to review or to rebuild your policies:  
-[Intune security baselines settings for Windows 10 MDM - Microsoft Intune | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/security-baseline-settings-mdm-all?pivots=mdm-may-2019)
+[Intune security baselines settings for Windows 10 MDM | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/security-baseline-settings-mdm-all?pivots=mdm-may-2019)
 
 Please keep in mind to exclude emergency or break glass accounts from these policies as I described in [my previous blog post](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/).
 
