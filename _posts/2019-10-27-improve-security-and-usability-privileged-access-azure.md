@@ -27,9 +27,9 @@ Now, at that point, when I’m writing this post, some of the features are in �
  Identity and device access policies
 The following diagram shows recommended set of policies from Microsoft Docs. Some settings of the protection level “highly-regulated” environment can be adopted to protect your privileged accounts and devices:
 
-[../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png]
+![](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
-/Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)/
+Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)
 
 
 ## Always require MFA
@@ -42,25 +42,27 @@ Microsoft’s documentation described to use a list of “directory roles” as 
 
 Consider to create (dynamic) security groups that includes all your admin accounts. This group can be used as user assignment for the “Conditional Access policies” of all privileged accounts.  Further more I personally prefer to force these CA policies before a user account is eligible to request or assign the privileged role.
 
-In addition to this you can also configure **require MFA for Azure Management** services for all users. This common policy is also documented by Microsoft: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management). This ensure that everyone is prompted for MFA if users attempt to access Azure Service Management apps such as Azure Portal.
+In addition to this you can also configure **require MFA for Azure Management** services for all users. This common policy is also documented by Microsoft: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management).
+This ensure that everyone is prompted for MFA if users attempt to access Azure Service Management apps such as Azure Portal.
 
 Make sure that your admins are able to use passwordless methods as strong authentication for MFA to avoid daily use of annoying verification options such das text messages or phone calls.
 
 ## Require compliant devices
 Microsoft Intune can be used to identify if devices meet compliance requirements. Various Device Compliance policy settings such as requiring a PIN or operating system version can be configured in Intune. 
-Device-compliance policies defines the requirements that devices must passed **to be marked as compliant.** Another baseline policy to require compliant devices is also documented in Microsoft Docs: [Conditional Access - Require compliant devices - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
+Device-compliance policies defines the requirements that devices must passed **to be marked as compliant.**
+Another baseline policy to require compliant devices is also documented in Microsoft Docs: [Conditional Access - Require compliant devices - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
 
 Define your security baseline configuration as “device compliance policy”.
-This policy really depends on your needs of OS and security configuration (e.g. BitLocker encryption, OS version):
+This policy really depends on your needs of OS and security configuration (e.g. BitLocker encryption, OS version):  
 [Create device compliance policies in Microsoft Intune - Azure | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/create-compliance-policy)
 
-Take a look on the MDM Security Baseline if you are planning to review or to rebuild your policies:
+Take a look on the MDM Security Baseline if you are planning to review or to rebuild your policies:  
 [Intune security baselines settings for Windows 10 MDM - Microsoft Intune | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/security-baseline-settings-mdm-all?pivots=mdm-may-2019)
 
 Please keep in mind to exclude emergency or break glass accounts from these policies as I described in [my previous blog post](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/).
 
 ## Identity protection risk policies
-Identity protection should be applied to privileged accounts for detection of risky users. Verify that the user risk policy also includes your privileged accounts: [How to configure and enable risk policies in Azure Active Directory Identity Protection | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-configure-risk-policies)
+Identity protection should be applied to privileged accounts for detection of risky users. Verify that the user risk policy also includes your privileged accounts:  [How to configure and enable risk policies in Azure Active Directory Identity Protection | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-configure-risk-policies)
 
 # Separated browser profiles
 Every privileged identity should have at minimum a separated browser profile. Increase security by level of separation: Dedicated hardware or single device with separation by virtualization or sandboxing.
@@ -72,7 +74,7 @@ Google’s Chrome and Edge Insider (Chromium-based) are able to manage multiple 
 [Windows 10 Accounts - Chrome Web Store](https://chrome.google.com/webstore/detail/windows-10-accounts/ppnbnpeolgkicgegkbkbjmhlideopiji)
 
 _Advice: Do you like to know more about Azure AD tokens and browser cookies in Chrome and Edge (Classic)? Technical details on Azure AD WAM plug-in and how it also enables SSO on browser (by injecting the PRT) are described in this excellent PRT documentation by Microsoft:_
-/[Primary Refresh Token (PRT) and Azure AD - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token)/
+[Primary Refresh Token (PRT) and Azure AD - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token)
 
 ## Hardening of browser settings
 Review your browser settings and validate some options such as:
@@ -93,7 +95,9 @@ Synchronization of user settings increase the usability but can be risky. Theref
 ## Limit risk time with Azure AD PIM
 Azure AD Privileged Identity Management (PIM) supports you to manage just-in-time elevated access for users. Request/approval process, access reviews, alerts or auditing are just few of the features. In my opinion PIM is not replacing the need of separated privileged accounts for users. Therefore I can not recommended to assign privileged access to your standard users even with time-bounded access only.
 
-There are lots of good documentations and videos about the implementation of Azure AD PIM such as [Privileged Identity Management documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/) and [Protect the keys to your kingdom with Privileged Identity Management](https://www.youtube.com/watch?v=w7wTpZYJJeQ).
+There are lots of good documentations and videos about the implementation of Azure AD PIM such as the following ones:
+
+* [Privileged Identity Management documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/)* [Protect the keys to your kingdom with Privileged Identity Management](https://www.youtube.com/watch?v=w7wTpZYJJeQ).
 
 Therefore I will not describe this part in more detail.
 I would like to share a tip to handle activation of an Azure AD or Azure Resource PIM role. I myself daily use this process to activate a role without sign out and log back:
@@ -103,10 +107,10 @@ I would like to share a tip to handle activation of an Azure AD or Azure Resourc
 * [Azure AD Portal - PIM - Directory Roles - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/aadroles)
 * [Azure AD Portal - PIM - Azure Resources - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/azurerbac)
 
-2. Navigate to portal.azure.com (bookmarked in browser) and activated role can be used.
+2. Navigate to [Azure Portal](https://portal.azure.com) (bookmarked in browser) and activated role can be used.
 
-/Tip: If you like to integrate Azure AD PIM to an existing self-service portal or create a own app (front-end):
-Jan Vidar Elven has written a great blog post about building an [Azure AD PIM App with PowerApps and Flow using Microsoft Graph](https://gotoguy.blog/2018/09/15/create-your-own-azure-ad-pim-app-with-powerapps-and-flow-using-microsoft-graph/)./
+_Tip: If you like to integrate Azure AD PIM to an existing self-service portal or create a own app (front-end):
+Jan Vidar Elven has written a great blog post about building an [Azure AD PIM App with PowerApps and Flow using Microsoft Graph](https://gotoguy.blog/2018/09/15/create-your-own-azure-ad-pim-app-with-powerapps-and-flow-using-microsoft-graph/)._
 
 ## Sign me out when inactive (Azure Portal)
 Azure Portal settings allows you to enable a "sign out" of users after specific time of inactivity. Idle timeout can be individually configured by the user.
@@ -139,12 +143,12 @@ You are able to reduce the rolling windows of 90 days (by default) and asking us
 
 Control of **persistent browser sessions** allows to prevent users to choose “stay signed-in” at the Azure AD sign-in page. So the user will not remain signed in of the cloud app after closing and reopening their browser window.
 
-The configuration of both policies are described in Microsoft Docs:
+The configuration of both policies are described in Microsoft Docs:  
 [Configure authentication session management with Azure Active Directory Conditional Access | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-session-lifetime#persistence-of-browsing-sessions)
 
 Choose the token lifetime wisely with regard of idle timeout and activation duration of Azure AD PIM eligible roles.
 
-/Advice: I can strongly recommended to read [Peter van der Woude](https://www.petervanderwoude.nl/)’s detailed blog post about [Sign-in frequency](https://www.petervanderwoude.nl/post/conditional-access-and-sign-in-frequency/) and [persistent browser session](https://www.petervanderwoude.nl/post/conditional-access-and-persistent-browser-sessions/) controls./
+_Advice: I can strongly recommended to read [Peter van der Woude](https://www.petervanderwoude.nl/)’s detailed blog post about [Sign-in frequency](https://www.petervanderwoude.nl/post/conditional-access-and-sign-in-frequency/) and [persistent browser session](https://www.petervanderwoude.nl/post/conditional-access-and-persistent-browser-sessions/) controls._
 
 ## Passwordless authentication
 There is no doubt that passwordless authentication methods increase security and usability for administrators. This method also avoids to use (unsecure) MFA verification options such as phone call or text messages everyday. Microsoft has invested strongly to support passwordless options in Azure Active Directory in the recent months.
@@ -161,20 +165,20 @@ Microsoft documented a deployment guide including comparison of the various pass
 In general you have the following three options to implement passwordless for your privileged accounts. 
 
 * **FIDO2-compatible security key:**
-Following the introduction in this Microsoft Docs article if you like to evaluate security keys on a Windows 10 device:
+Following the introduction in this Microsoft Docs article if you like to evaluate security keys on a Windows 10 device:  
 [Enable passwordless security key sign in for Azure AD (preview) - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-security-key)
 
 _Advice: Security keys works also on macOS. In my tests Google Chrome and Edge Insider works very well._
 
-/Note: FIDO2-support is not supported on iOS and iPadOS platform (yet). So it would be great to enable the passwordless option for this scenarios as well. For example: Using Microsoft's Azure app or portal and FIDO2 key would be very helpful in case of on-call service. Therefore I’ve posted a user voice: [Adding YubiKey Support to Azure AD and Edge on iOS/iPadOS](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878600-adding-yubikey-support-to-azure-ad-and-edge-on-ios)/
+_Note: FIDO2-support is not supported on iOS and iPadOS platform (yet). So it would be great to enable the passwordless option for this scenarios as well. For example: Using Microsoft's Azure app or portal and FIDO2 key would be very helpful in case of on-call service. Therefore I’ve posted a user voice: [Adding YubiKey Support to Azure AD and Edge on iOS/iPadOS](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878600-adding-yubikey-support-to-azure-ad-and-edge-on-ios)_
 
 * **Microsoft Authenticator app (“phone sign-in”)**
-If you prefer to use your (full managed) mobile device with Microsoft’s authenticator app to sign-in: [Enable passwordless sign-in with the Microsoft Authenticator app (preview) - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-phone) 
+If you prefer to use your (full managed) mobile device with Microsoft’s authenticator app to sign-in:  [Enable passwordless sign-in with the Microsoft Authenticator app (preview) - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-phone) 
 
 * **Windows Hello for Business (WHfB)**
-Some organizations already adopted “Windows Hello for Business” and therefore it could be an easy option to use this method for your privileged accounts as well:
+Some organizations already adopted “Windows Hello for Business” and therefore it could be an easy option to use this method for your privileged accounts as well:  
 [Windows Hello for Business (Windows 10) | Microsoft Docs](https://docs.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/hello-identity-verification)
 
 _Advice: This is also a passwordless option if you like to use virtual machines  (Hyper-V with vTPM-enabled) for remote management._
 
-/Note: Microsoft only supports biometric methods on Windows platform. Google already started to support Apple’s Touch ID sensor on macOS-Devices for authentication. I’ve posted a user voice to request for Azure AD support as well: [Adding Touch ID Support for MFA/password-less on Chromium (macOS)](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878789-adding-touch-id-support-for-mfa-password-less-on-c)/
+_Note: Microsoft only supports biometric methods on Windows platform. Google already started to support Apple’s Touch ID sensor on macOS-Devices for authentication. I’ve posted a user voice to request for Azure AD support as well: [Adding Touch ID Support for MFA/password-less on Chromium (macOS)](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878789-adding-touch-id-support-for-mfa-password-less-on-c)_
