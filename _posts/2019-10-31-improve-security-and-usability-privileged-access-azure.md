@@ -12,25 +12,29 @@ hidden: false
 
 It is recognized that privileged access and management of IT services needs particularly protection and high security policies. There are already some concepts for securing privileged access that has been proven very useful in management of an on-premises infrastructure. Some of them can be adopted to hybrid or cloud-native environments as well.
 
-However, it seems quite common to use a browser on a productivity workstation to manage Azure or Microsoft 365 workloads. Few years ago Microsoft has designed a concept of [Privileged Access Workstations (PAW)](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/privileged-access-workstations) to use dedicated high-secured devices for privileged tasks only. 
-This approach seems not be generally applied in management of Azure resources as expected.
+However, it seems quite common to use a browser on a productivity (standard) workstation to manage Azure or Microsoft 365 workloads. Few years ago Microsoft has designed a concept of [Privileged Access Workstations (PAW)](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/privileged-access-workstations) to use dedicated high-secured devices for privileged tasks only. 
+This security approach generally seems not be applied in many cases to manage Azure resources as expected.
 
-Scenarios and concepts for PAW or SAW (Secure Admin Workstations) in (hybrid) cloud environments are also part of my community talks about [“Securing and monitoring Azure AD accounts”](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) 
-**I still strongly recommended to use a PAW** to separate your privileged workloads and apply a sufficient security baseline on Device-/OS-level (pattern such as source-principal approach, secure keyboard, etc. can be applied). 
+Scenarios and concepts for PAW or SAW (Secure Admin Workstations) in (hybrid) cloud environments are also part of my community talks about [“Securing and monitoring Azure AD accounts”](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf).   
+**I can only strongly recommended to use a PAW** to separate privileged and productivity workloads. This allows you to apply a sufficient security baseline for privileged tasks on Device-/OS-level and adopt security pattern such as "clean source"-principal approach and "secure keyboard".
+But there are various deployment options from physical to shielded VM-based PAWs. The choiche also depends on your rating of convenients, security and costs.
+More details on design approaches and implementation of SAW devices will be followed in one of my next blog posts.
 
-The need of a fundamental concept for privileged identity management will not covered and therefore not replaced by the following recommendation in this article. You should **ensure that all admins have a privileged account for Azure Management** which is separated from “productivity” accounts (e.g. internet and mail access) or (high-privileged) on-premises admin accounts.
+The need of a fundamental concept for privileged identity management will not covered in this article and therefore it will not replaced by the following recommendation. You should **ensure that all admins have a privileged account for Azure Management** which is separated from “productivity” accounts (e.g. internet and mail access) or (high-privileged) on-premises admin accounts.
 
 In this blog post I like to give you some recommendations and advices to increase your security and usability on level of browser- and identity-configuration. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client.
 
-Now, at that point, when I’m writing this post, some of the features are in “public preview”. Please take also in consideration that these features are not recommended to use in production (yet). This article has no claim for completeness.
+Now, at that point, when I’m writing this post, some of the features are in “public preview”. Please take also in consideration that these features are not recommended to use in production (yet).
+This article has no claim for completeness.
 
- Identity and device access policies
+# Identity and device access policies
 The following diagram shows recommended set of policies from Microsoft Docs. Some settings of the protection level “highly-regulated” environment can be adopted to protect your privileged accounts and devices:
 
 ![](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
-Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)
+[![image-text](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
+_Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)_
 
 ## Always require MFA
 Every identity which can be used to manage Azure resources, Microsoft 365 services or your subscriptions (Enterprise Agreement Portal) should be (always) forced to use multi-factor authentication.
@@ -42,17 +46,18 @@ Microsoft’s documentation described to use a list of “directory roles” as 
 
 Consider to create (dynamic) security groups that includes all your admin accounts. This group can be used as user assignment for the “Conditional Access policies” of all privileged accounts.  Further more I personally prefer to force these CA policies before a user account is eligible to request or assign the privileged role.
 
-In addition to this you can also configure **require MFA for Azure Management** services for all users. This common policy is also documented by Microsoft: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management).
-This ensure that everyone is prompted for MFA if users attempt to access Azure Service Management apps such as Azure Portal.
+In addition to this you can also configure **require MFA for Azure Management** services for all users. Every user will be prompted for MFA if they attempt to access Azure Service Management apps such as Azure Portal.
 
-Make sure that your admins are able to use passwordless methods as strong authentication for MFA to avoid daily use of annoying verification options such das text messages or phone calls.
+A common policy is also documented by Microsoft to achieve this goal: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management).
+
+_Advice: Make sure that your admins are able to use passwordless methods as strong authentication for MFA to avoid daily use of annoying verification options such das text messages or phone calls._
 
 ## Require compliant devices
 Microsoft Intune can be used to identify if devices meet compliance requirements. Various Device Compliance policy settings such as requiring a PIN or operating system version can be configured in Intune. 
 Device-compliance policies defines the requirements that devices must passed **to be marked as compliant.**
 Another baseline policy to require compliant devices is also documented in Microsoft Docs: [Conditional Access - Require compliant devices - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
 
-Define your security baseline configuration as “device compliance policy”.
+Define your security baseline for device configuration as “device compliance policy”.
 This policy really depends on your needs of OS and security configuration (e.g. BitLocker encryption, OS version):  
 [Create device compliance policies in Microsoft Intune - Azure | Microsoft Docs](https://docs.microsoft.com/en-us/intune/protect/create-compliance-policy)
 
@@ -66,11 +71,12 @@ Identity protection should be applied to privileged accounts for detection of ri
 
 # Separated browser (user) profiles
 Every privileged identity should have at minimum a separated browser profile.
-Create seperated profiles for each account based on (staging/customer) environement or split critical role. Increase your security by level of separation: Dedicated hardware or single device with browser on virtualization or sandboxing platform.
+Create seperated profiles for each account, for example based on (staging/customer) environement or split critical role. Increase your security by level of separation: Dedicated hardware or single device with browser on virtualization or sandboxing platform.
 
-Google’s Chrome and Edge Insider (Chromium-based) are able to manage multiple user profiles and allow support of Azure AD work accounts:
+Google’s Chrome and Edge Insider (Chromium-based) are able to manage multiple user profiles and allow sign-in option of Azure AD work accounts:
 * Microsoft Edge (Chromium) has native support to sign-in with your Azure AD account on profile level and manage the refresh token for single-sign on:
 [Sign-in and sync with work or school accounts in Microsoft Edge Insider builds - Microsoft Edge Blog](https://blogs.windows.com/msedgedev/2019/08/21/sign-in-sync-work-school-accounts-aad-websso/)
+
 * Google Chrome requires “Windows 10 Accounts” extension to support device compliance and sign-in + SSO of your Azure AD account on profile level.
 [Windows 10 Accounts - Chrome Web Store](https://chrome.google.com/webstore/detail/windows-10-accounts/ppnbnpeolgkicgegkbkbjmhlideopiji)
 
@@ -87,23 +93,26 @@ Review your browser settings and validate some options such as:
 (required extension on Google Chrome)
 * Set page layout and content to Focus (Edge Insider only) 
 
-Do not use the browser (profile) for non-privileged activities and (if possible technically disable the operability).
+Do not use the browser (profile) for non-privileged activities and (if possible) technically disable for preventation.
 
 ## Sync browser settings (Edge Insider only)
 Synchronization of user settings increase the usability but can be risky. Therefore you should limit the synchronization of browser settings to “Favorites” or “Settings” only. If you are able to manage the browser settings you should also exclude the sync of settings.
 
 
-## Limit risk time with Azure AD PIM
-Azure AD Privileged Identity Management (PIM) supports you to manage just-in-time elevated access for users. Request/approval process, access reviews, alerts or auditing are just few of the features. In my opinion PIM is not replacing the need of separated privileged accounts for users. Therefore I can not recommended to assign privileged access to your standard users even with time-bounded access only.
+## Limit risk time with Azure AD Privileged Identity Management
+Azure AD Privileged Identity Management (PIM) supports you to manage just-in-time elevated access for users. Request/approval process, access reviews, alerts or auditing are just few of the features.
 
-There are lots of good documentations and videos about the implementation of Azure AD PIM such as the following ones:
+In my opinion PIM is not replacing the need of separated privileged accounts for users and isolation of critical roles. Therefore I can not recommended to assign privileged access to your standard users even with time-bounded access only.
 
-* [Privileged Identity Management documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/)* [Protect the keys to your kingdom with Privileged Identity Management](https://www.youtube.com/watch?v=w7wTpZYJJeQ).
+There are lot of good documentations and videos about the implementation of Azure AD PIM such as the following ones:
+
+* [Privileged Identity Management documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/)
+* [Protect the keys to your kingdom with Privileged Identity Management](https://www.youtube.com/watch?v=w7wTpZYJJeQ).
 
 Therefore I will not describe this part in more detail.
-I would like to share a tip to handle activation of an Azure AD or Azure Resource PIM role. I myself daily use this process to activate a role without sign out and log back:
+But I would like to share a tip to handle activation of an Azure AD or Azure Resource PIM role. I myself daily use this process to activate a role without sign out and log back:
 
-1. Open Azure AD Portal with direct link to “Identity Governance” for request/activate role (bookmarked in browser):
+1. Open Azure AD Portal with deep link to blade “Identity Governance” for request/activate role (bookmarked in browser):
 
 * [Azure AD Portal - PIM - Directory Roles - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/aadroles)
 * [Azure AD Portal - PIM - Azure Resources - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/azurerbac)
@@ -119,7 +128,7 @@ Click in the Azure Portal on the portal settings to choose the level timeout:
 
 ![](../2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out1.png)
 
-It is also possible to configure the inactivity timeout on tenant-level (for every user). Click in the portal settings on “Configure directory level timeout” to move to the following config blade:
+It is also possible to configure the inactivity timeout on tenant-level (applied to every user). Click in the portal settings on “Configure directory level timeout” to move to to this config blade:
 
 ![](../2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out2.png)
 
@@ -156,7 +165,7 @@ There is no doubt that passwordless authentication methods increase security and
 
 ![](../2019-10-27-improve-security-and-usability-privileged-access-azure/passwordless-convenience-security.png)
 
-/Source: *Microsoft Docs: [Passwordless authentication options](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)*/
+_Source: *Microsoft Docs: [Passwordless authentication options](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)*_
 
 With a Windows device, you have the freedom to choose between built-in Windows Hello or FIDO2 security keys (such as YubiKeys) to achieve a passwordless sign-in. Security keys can be preferred if you like to separate Windows device and authentication key or using non-Windows devices.
 
@@ -166,8 +175,7 @@ Microsoft documented a deployment guide including comparison of the various pass
 In general you have the following three options to implement passwordless for your privileged accounts. 
 
 * **FIDO2-compatible security key:**
-Following the introduction in this Microsoft Docs article if you like to evaluate security keys on a Windows 10 device:  
-[Enable passwordless security key sign in for Azure AD (preview) - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-security-key)
+Following the introduction in this Microsoft Docs article if you like to evaluate security keys on a Windows 10 device: [Enable passwordless security key sign in for Azure AD (preview) - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-security-key)
 
 _Advice: Security keys works also on macOS. In my tests Google Chrome and Edge Insider works very well._
 
@@ -180,9 +188,9 @@ If you prefer to use your (full managed) mobile device with Microsoft’s authen
 Some organizations already adopted “Windows Hello for Business” and therefore it could be an easy option to use this method for your privileged accounts as well:  
 [Windows Hello for Business (Windows 10) | Microsoft Docs](https://docs.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/hello-identity-verification)
 
-_Advice: This is also a passwordless option if you like to use virtual machines  (Hyper-V with vTPM-enabled) for remote management._
+_Advice: This is also a passwordless option if you like to use virtual machines  (Hyper-V with vTPM-enabled) for remote management or as "virtualized" PAW/SAW devices._
 
-_Note: Microsoft only supports biometric methods on Windows platform. Google already started to support Apple’s Touch ID sensor on macOS-Devices for authentication. I’ve posted a user voice to request for Azure AD support as well: [Adding Touch ID Support for MFA/password-less on Chromium (macOS)](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878789-adding-touch-id-support-for-mfa-password-less-on-c)_
+_Note: Microsoft only supports biometric methods on Windows platform. Google already started to support Apple’s Touch ID sensor on macOS-Devices for authentication. I’ve posted a user voice to request for Azure AD support: [Adding Touch ID Support for MFA/password-less on Chromium (macOS)](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878789-adding-touch-id-support-for-mfa-password-less-on-c)_
 
 <br>
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [Geralt / Pixabay](https://pixabay.com/illustrations/productivity-work-businessman-1995786/)</span>
