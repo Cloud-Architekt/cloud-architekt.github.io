@@ -183,3 +183,6 @@ Some organizations already adopted “Windows Hello for Business” and therefor
 _Advice: This is also a passwordless option if you like to use virtual machines  (Hyper-V with vTPM-enabled) for remote management._
 
 _Note: Microsoft only supports biometric methods on Windows platform. Google already started to support Apple’s Touch ID sensor on macOS-Devices for authentication. I’ve posted a user voice to request for Azure AD support as well: [Adding Touch ID Support for MFA/password-less on Chromium (macOS)](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/38878789-adding-touch-id-support-for-mfa-password-less-on-c)_
+
+<br>
+<span style="color:silver;font-style:italic;font-size:small">Original cover image by [Geralt / Pixabay](https://pixabay.com/illustrations/productivity-work-businessman-1995786/)</span>
