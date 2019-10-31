@@ -4,10 +4,10 @@ title:  "Improve security and usability of privileged access in Microsoft Azure"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
-image: assets/images/azure-admin.jpg
-description: "In this blog post I like to give you some recommendations and advices to increase your security and usability on level of browser- and identity-configuration. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client."
-featured: false
-hidden: true
+image: assets/images/just-in-time-admin.jpg
+description: "Improve security and usability of privileged access in Azure even if you don't use (as recommended) a dedicated devices. This blog post give you some recommendations and advices to protect privileged identity, session and browser. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client."
+featured: true
+hidden: false
 ---
 
 It is recognized that privileged access and management of IT services needs particularly protection and high security policies. There are already some concepts for securing privileged access that has been proven very useful in management of an on-premises infrastructure. Some of them can be adopted to hybrid or cloud-native environments as well.
@@ -64,13 +64,14 @@ Please keep in mind to exclude emergency or break glass accounts from these poli
 ## Identity protection risk policies
 Identity protection should be applied to privileged accounts for detection of risky users. Verify that the user risk policy also includes your privileged accounts:  [How to configure and enable risk policies in Azure Active Directory Identity Protection | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-configure-risk-policies)
 
-# Separated browser profiles
-Every privileged identity should have at minimum a separated browser profile. Increase security by level of separation: Dedicated hardware or single device with separation by virtualization or sandboxing.
+# Separated browser (user) profiles
+Every privileged identity should have at minimum a separated browser profile.
+Create seperated profiles for each account based on (staging/customer) environement or split critical role. Increase your security by level of separation: Dedicated hardware or single device with browser on virtualization or sandboxing platform.
 
 Google’s Chrome and Edge Insider (Chromium-based) are able to manage multiple user profiles and allow support of Azure AD work accounts:
-* Edge has native support to sign-in with your Azure AD account on profile level and manage the refresh token for single-sign on:
+* Microsoft Edge (Chromium) has native support to sign-in with your Azure AD account on profile level and manage the refresh token for single-sign on:
 [Sign-in and sync with work or school accounts in Microsoft Edge Insider builds - Microsoft Edge Blog](https://blogs.windows.com/msedgedev/2019/08/21/sign-in-sync-work-school-accounts-aad-websso/)
-* Chrome requires “Windows 10 Accounts” extension to support device compliance and sign-in + SSO of your Azure AD account on profile level.
+* Google Chrome requires “Windows 10 Accounts” extension to support device compliance and sign-in + SSO of your Azure AD account on profile level.
 [Windows 10 Accounts - Chrome Web Store](https://chrome.google.com/webstore/detail/windows-10-accounts/ppnbnpeolgkicgegkbkbjmhlideopiji)
 
 _Advice: Do you like to know more about Azure AD tokens and browser cookies in Chrome and Edge (Classic)? Technical details on Azure AD WAM plug-in and how it also enables SSO on browser (by injecting the PRT) are described in this excellent PRT documentation by Microsoft:_
