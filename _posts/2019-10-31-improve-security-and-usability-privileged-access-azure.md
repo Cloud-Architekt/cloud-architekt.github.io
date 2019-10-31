@@ -45,14 +45,15 @@ Consider to create (dynamic) security groups that includes all your admin accoun
 
 In addition to this you can also configure **require MFA for Azure Management** services for all users. Every user will be prompted for MFA if they attempt to access Azure Service Management apps such as Azure Portal.
 
-A common policy is also documented by Microsoft to achieve this goal: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management)
+A common policy is also documented by Microsoft to achieve this goal:
+[Conditional Access - Require MFA for Azure management](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management)
 
 _Advice: Make sure that your admins are able to use passwordless methods as strong authentication for MFA to avoid daily use of annoying verification options such das text messages or phone calls._
 
 ## Require compliant devices
 Microsoft Intune can be used to identify if devices meet compliance requirements. Various Device Compliance policy settings such as requiring a PIN or operating system version can be configured in Intune. 
 Device-compliance policies defines the requirements that devices must passed **to be marked as compliant.**
-Another baseline policy to require compliant devices is also documented in Microsoft Docs: [Conditional Access - Require compliant devices - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
+Another baseline policy to require compliant devices is also documented in Microsoft Docs: [Conditional Access - Require compliant devices](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
 
 Define your security baseline for device configuration as “device compliance policy”.
 This policy really depends on your needs of OS and security configuration (e.g. BitLocker encryption, OS version):  
