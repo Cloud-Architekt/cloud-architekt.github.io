@@ -6,7 +6,7 @@ categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/azure-admin.jpg
 description: "In this blog post I like to give you some recommendations and advices to increase your security and usability on level of browser- and identity-configuration. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client."
-featured: true
+featured: false
 hidden: true
 ---
 
