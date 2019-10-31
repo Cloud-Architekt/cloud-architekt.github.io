@@ -53,7 +53,8 @@ _Advice: Make sure that your admins are able to use passwordless methods as stro
 ## Require compliant devices
 Microsoft Intune can be used to identify if devices meet compliance requirements. Various Device Compliance policy settings such as requiring a PIN or operating system version can be configured in Intune. 
 Device-compliance policies defines the requirements that devices must passed **to be marked as compliant.**
-Another baseline policy to require compliant devices is also documented in Microsoft Docs: [Conditional Access - Require compliant devices](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
+Another baseline policy to require compliant devices is also documented in Microsoft Docs:
+[Conditional Access - Require compliant devices](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-compliant-device).
 
 Define your security baseline for device configuration as “device compliance policy”.
 This policy really depends on your needs of OS and security configuration (e.g. BitLocker encryption, OS version):  
