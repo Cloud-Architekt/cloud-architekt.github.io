@@ -15,8 +15,7 @@ It is recognized that privileged access and management of IT services needs part
 However, it seems quite common to use a browser on a productivity (standard) workstation to manage Azure or Microsoft 365 workloads. Few years ago Microsoft has designed a concept of [Privileged Access Workstations (PAW)](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/privileged-access-workstations) to use dedicated high-secured devices for privileged tasks only. 
 This security approach generally seems not be applied in many cases to manage Azure resources as expected.
 
-Scenarios and concepts for PAW or SAW (Secure Admin Workstations) in (hybrid) cloud environments are also part of my community talks about [“Securing and monitoring Azure AD accounts”](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf).   
-**I can only strongly recommended to use a PAW** to separate privileged and productivity workloads. This allows you to apply a sufficient security baseline for privileged tasks on Device-/OS-level and adopt security pattern such as "clean source"-principal approach and "secure keyboard".
+Scenarios and concepts for PAW or SAW (Secure Admin Workstations) in (hybrid) cloud environments are also part of my community talks about [“Securing and monitoring Azure AD accounts”](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf). **I can only strongly recommended to use a PAW** to separate privileged and productivity workloads. This allows you to apply a sufficient security baseline for privileged tasks on Device-/OS-level and adopt security pattern such as "clean source"-principal approach and "secure keyboard".
 But there are various deployment options from physical to shielded VM-based PAWs. The choiche also depends on your rating of convenients, security and costs.
 More details on design approaches and implementation of SAW devices will be followed in one of my next blog posts.
 
@@ -30,11 +29,9 @@ This article has no claim for completeness.
 # Identity and device access policies
 The following diagram shows recommended set of policies from Microsoft Docs. Some settings of the protection level “highly-regulated” environment can be adopted to protect your privileged accounts and devices:
 
-![](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
-
 [![image-text](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
-_Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)_
+Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)
 
 ## Always require MFA
 Every identity which can be used to manage Azure resources, Microsoft 365 services or your subscriptions (Enterprise Agreement Portal) should be (always) forced to use multi-factor authentication.
@@ -48,7 +45,7 @@ Consider to create (dynamic) security groups that includes all your admin accoun
 
 In addition to this you can also configure **require MFA for Azure Management** services for all users. Every user will be prompted for MFA if they attempt to access Azure Service Management apps such as Azure Portal.
 
-A common policy is also documented by Microsoft to achieve this goal: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management).
+A common policy is also documented by Microsoft to achieve this goal: [Conditional Access - Require MFA for Azure management - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-azure-management)
 
 _Advice: Make sure that your admins are able to use passwordless methods as strong authentication for MFA to avoid daily use of annoying verification options such das text messages or phone calls._
 
