@@ -104,7 +104,7 @@ In my opinion PIM is not replacing the need of separated privileged accounts for
 
 There are lot of good documentations and videos about the implementation of Azure AD PIM such as the following ones:
 
-* [Privileged Identity Management documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/)
+* [Privileged Identity Management documentation](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/)
 
 * [Protect the keys to your kingdom with Privileged Identity Management](https://www.youtube.com/watch?v=w7wTpZYJJeQ).
 
