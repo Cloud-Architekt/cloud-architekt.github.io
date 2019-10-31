@@ -31,7 +31,7 @@ The following diagram shows recommended set of policies from Microsoft Docs. Som
 
 [![image-text](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
-_Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)_
+_Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)_
 
 ## Always require MFA
 Every identity which can be used to manage Azure resources, Microsoft 365 services or your subscriptions (Enterprise Agreement Portal) should be (always) forced to use multi-factor authentication.
@@ -113,8 +113,8 @@ But I would like to share a tip to handle activation of an Azure AD or Azure Res
 
 1. Open Azure AD Portal with deep link to blade “Identity Governance” for request/activate role (bookmarked in browser):
 
-* [Azure AD Portal - PIM - Directory Roles - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/aadroles)
-* [Azure AD Portal - PIM - Azure Resources - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/azurerbac)
+- [Azure AD Portal - PIM - Directory Roles - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/aadroles)
+- [Azure AD Portal - PIM - Azure Resources - My Roles](https://aad.portal.azure.com/#blade/Microsoft_Azure_PIMCommon/ActivationMenuBlade/azurerbac)
 
 2. Navigate to [Azure Portal](https://portal.azure.com) (bookmarked in browser) and activated role can be used.
 
