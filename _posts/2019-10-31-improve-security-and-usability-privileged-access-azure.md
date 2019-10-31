@@ -31,7 +31,7 @@ The following diagram shows recommended set of policies from Microsoft Docs. Som
 
 [![image-text](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
-Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies)
+_Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)_
 
 ## Always require MFA
 Every identity which can be used to manage Azure resources, Microsoft 365 services or your subscriptions (Enterprise Agreement Portal) should be (always) forced to use multi-factor authentication.
@@ -104,6 +104,7 @@ In my opinion PIM is not replacing the need of separated privileged accounts for
 There are lot of good documentations and videos about the implementation of Azure AD PIM such as the following ones:
 
 * [Privileged Identity Management documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/)
+
 * [Protect the keys to your kingdom with Privileged Identity Management](https://www.youtube.com/watch?v=w7wTpZYJJeQ).
 
 Therefore I will not describe this part in more detail.
@@ -162,7 +163,7 @@ There is no doubt that passwordless authentication methods increase security and
 
 ![](../2019-10-27-improve-security-and-usability-privileged-access-azure/passwordless-convenience-security.png)
 
-_Source: *Microsoft Docs: [Passwordless authentication options](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)*_
+_Source: Microsoft Docs: [Passwordless authentication options](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)_
 
 With a Windows device, you have the freedom to choose between built-in Windows Hello or FIDO2 security keys (such as YubiKeys) to achieve a passwordless sign-in. Security keys can be preferred if you like to separate Windows device and authentication key or using non-Windows devices.
 
