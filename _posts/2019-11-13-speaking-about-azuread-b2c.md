@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Speaking about Azure Active Directory B2C"
+title:  "Speaking about Azure Active Directory B2C at .NET User Group Koblenz"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
-image: assets/images/aadb2c-session.png
+image: assets/images/aadb2c-session.jpg
 description: "I have speaking about Azure AD B2C at the local .NET user group. You can find my slides here."
 featured: false
 hidden: false
