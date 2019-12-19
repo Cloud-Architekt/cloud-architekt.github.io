@@ -9,8 +9,8 @@ description: "The year is nearly over… now is a great time to look back and se
 featured: false
 hidden: false
 ---
-# 
-_The year is nearly over… now is a great time to look back and see what’s next in the upcoming year.
+
+_The year is nearly over… now is a great time to look back and see what’s next in the upcoming year._
 
 ## Review 2019
 I had the pleasure to talk at various meetups and conferences this year.
