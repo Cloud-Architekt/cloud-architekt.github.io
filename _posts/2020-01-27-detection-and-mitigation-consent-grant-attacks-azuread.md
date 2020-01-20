@@ -10,13 +10,15 @@ Microsoft has already documented this in details:
 By default, all users in Azure AD can register applications and set consent permission on their behalf. This represent a risk and and you need to ensure that your organization wants to allow end-users to acquire application as self-service without any compliance or risk check.
 So regardless of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
 
-The user settings are splitted in **”User can register applications”** and **”Users can consent to apps accessing company data on their behalf”**:
+The user settings are splitted in **”User can register applications”** and
+**”Users can consent to apps accessing company data on their behalf”**:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/6021243C-D741-4680-9C02-EC86FA024949.png)
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/192E3C51-33A8-4012-9BD1-7CE2E3259F7F.png)
 
-Follow Microsoft’s step-by-step guide to find out which setting is configured in your tenant: [Configure how end-users consent to applications using Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent)
+Follow Microsoft’s step-by-step guide to find out which setting is configured in your tenant:
+[Configure how end-users consent to applications using Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent)
 
 _Tip: Use the PowerShell cmdlet for monitoring your desired state of the “UsersPermissionToUserConsentToAppEnabled” setting in your tenant._
 
@@ -35,12 +37,12 @@ Attackers sending mails to supply “storage upgrade” or “shared OneDrive fi
 In my opinion it’s unrealistic to prevent this attacks or minimize the risk trough end-user education caused by the app consent experience:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/CC56C7A6-2B83-4199-AF5A-B54AC93382EF.png)
-/Source: [Azure AD app consent experiences - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))/
+Source: [Azure AD app consent experiences - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
 
 Once the user has been granted the consent, the attacker has account-level access without stealing credentials or infecting user’s device.
 Enforcement of MFA and Conditional Access is also not effective because of the interaction model of the application.
 
-It is impressive to see how simple and efficient this attacks can be executed. ([Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/)) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video:
+It is impressive to see how simple and efficient this attacks can be executed. [Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/)) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCF1jdajaIg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -48,13 +50,13 @@ Details on this illicit consent grant attack is described in his [blog post](htt
 
 There are also other real world examples and toolkits for attack scenarios like this:
 
-	* Ransomware of Office 365 user data:
+* Ransomware of Office 365 user data:
 	[https://blog.knowbe4.com/heads-up-new-ransomware-strain-encrypts-cloud-email-real-time-video](https://blog.knowbe4.com/heads-up-new-ransomware-strain-encrypts-cloud-email-real-time-video)
-	* Pawn Storm OAuth attacks:
+* Pawn Storm OAuth attacks:
 	https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks/
-	* Office 365 Attack Toolkit:
+* Office 365 Attack Toolkit:
 	[https://www.mdsec.co.uk/2019/07/introducing-the-office-365-attack-toolkit/](https://www.mdsec.co.uk/2019/07/introducing-the-office-365-attack-toolkit/)
-	* FireEye PwnAuth:
+* FireEye PwnAuth:
 	https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html
 
 Microsoft takes care on this attack patterns and tries to detect and remediated the users on the Office 365 platform. In the past phishing campaigns were able to bypass the ATP protection as you can see on several tweets ([December 2019](https://twitter.com/itguysocal/status/1209778676587323392?s=12), [January 2020](https://mobile.twitter.com/itguysocal/status/1212251786129498112?s=12)) from [Joe Stocker](https://mobile.twitter.com/ITguySoCal).
@@ -74,7 +76,7 @@ The following information should support your investigation:
 
 If you decided to use MCAS you need to [create a OAuth app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#create-a-new-oauth-app-policy) to be notified in case of risky app consent or registration. Filters for the alert can be set on the above described values. In addition you should create an [anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#oauth-app-anomaly-detection-policies) to identify misleading app or publisher names. Follow [Microsoft’s tutorial](https://docs.microsoft.com/en-us/cloud-app-security/investigate-risky-oauth) for guided steps to investigate risky OAuth Apps.
 
-/Tip: Consider to [report suspected apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#send-feedback) to Microsoft’s Cloud App Security team as feedback to enhance OAuth App risk score and analysis./
+/Tip: Consider to [report suspected apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#send-feedback) to Microsoft’s Cloud App Security team as feedback to enhance OAuth App risk score and analysis. /
 
 More details on [working with the OAuth apps page](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#ban-or-approve-an-app) are described on Microsoft Docs and further information on managing risky 3rd party app permission with MCAS are [available here](https://techcommunity.microsoft.com/t5/enterprise-mobility-security/managing-risky-3rd-party-app-permissions-with-microsoft-s-casb/ba-p/276401).
 
