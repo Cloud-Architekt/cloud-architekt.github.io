@@ -65,11 +65,11 @@ There are also other real world examples and toolkits for attack scenarios like 
 	[https://blog.knowbe4.com/heads-up-new-ransomware-strain-encrypts-cloud-email-real-time-video](https://blog.knowbe4.com/heads-up-new-ransomware-strain-encrypts-cloud-email-real-time-video)
 * Pawn Storm OAuth attacks:
 	[https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks/]
-	https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks/
+	(https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks/)
 * Office 365 Attack Toolkit:
 	[https://www.mdsec.co.uk/2019/07/introducing-the-office-365-attack-toolkit/](https://www.mdsec.co.uk/2019/07/introducing-the-office-365-attack-toolkit/)
 * FireEye PwnAuth:
-	[https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html]https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html
+	[https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html](https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html)
 
 Microsoft takes care on this attack patterns and tries to detect and remediated the users on the Office 365 platform. In the past phishing campaigns were able to bypass the ATP protection as you can see on several tweets ([December 2019](https://twitter.com/itguysocal/status/1209778676587323392?s=12), [January 2020](https://mobile.twitter.com/itguysocal/status/1212251786129498112?s=12)) from [Joe Stocker](https://mobile.twitter.com/ITguySoCal).
 
