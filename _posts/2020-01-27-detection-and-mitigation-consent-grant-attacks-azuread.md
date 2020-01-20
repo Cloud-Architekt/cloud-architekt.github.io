@@ -52,15 +52,7 @@ Source: [Azure AD app consent experiences - Microsoft identity platform | Micros
 Once the user has been granted the consent, the attacker has account-level access without stealing credentials or infecting user’s device.
 Enforcement of MFA and Conditional Access is also not effective because of the interaction model of the application.
 
-It is impressive to see how simple and efficient this attacks can be executed. [Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video: [Azure AD app consent experiences - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
-
-
-
-
-
-
-
-
+It is impressive to see how simple and efficient this attacks can be executed. [Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video:
 
 <div>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCF1jdajaIg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
