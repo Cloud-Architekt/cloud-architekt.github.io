@@ -54,8 +54,9 @@ Enforcement of MFA and Conditional Access is also not effective because of the i
 
 It is impressive to see how simple and efficient this attacks can be executed. [Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video: [Azure AD app consent experiences - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
 
+<div>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCF1jdajaIg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+</div>
 Details on this illicit consent grant attack is described in his [blog post](https://securecloud.blog/2018/10/02/demonstration-illicit-consent-grant-attack-in-azure-ad-office-365/).
 
 There are also other real world examples and toolkits for attack scenarios like this:
@@ -63,11 +64,12 @@ There are also other real world examples and toolkits for attack scenarios like 
 * Ransomware of Office 365 user data:
 	[https://blog.knowbe4.com/heads-up-new-ransomware-strain-encrypts-cloud-email-real-time-video](https://blog.knowbe4.com/heads-up-new-ransomware-strain-encrypts-cloud-email-real-time-video)
 * Pawn Storm OAuth attacks:
+	[https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks/]
 	https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks/
 * Office 365 Attack Toolkit:
 	[https://www.mdsec.co.uk/2019/07/introducing-the-office-365-attack-toolkit/](https://www.mdsec.co.uk/2019/07/introducing-the-office-365-attack-toolkit/)
 * FireEye PwnAuth:
-	https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html
+	[https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html]https://www.fireeye.com/blog/threat-research/2018/05/shining-a-light-on-oauth-abuse-with-pwnauth.html
 
 Microsoft takes care on this attack patterns and tries to detect and remediated the users on the Office 365 platform. In the past phishing campaigns were able to bypass the ATP protection as you can see on several tweets ([December 2019](https://twitter.com/itguysocal/status/1209778676587323392?s=12), [January 2020](https://mobile.twitter.com/itguysocal/status/1212251786129498112?s=12)) from [Joe Stocker](https://mobile.twitter.com/ITguySoCal).
 
@@ -78,15 +80,19 @@ Microsoft offering several solutions to detect or create alerts in case of conse
 Microsoft Cloud App Security (MCAS) is detecting risky OAuth Apps and allows to get insights of app permissions in the portal.
 
 The following information should support your investigation:
-	* “Community use” rating to understand how common is the use of this app in other organization (such as default Office 365 apps)
-	* Authorized by single/multiple users or admin consented
-	* Permission level from Low (Sign-in and read user profile) to High (Access your data anytime)
+* “Community use” rating to understand how common is the use of this app in other organization (such as default Office 365 apps)
+* Authorized by single/multiple users or admin consented
+* Permission level from Low (Sign-in and read user profile) to High (Access your data anytime)
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/20A777EF-E0B0-4BEB-BFE5-AAEEF3BB327F.png)
 
-If you decided to use MCAS you need to [create a OAuth app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#create-a-new-oauth-app-policy) to be notified in case of risky app consent or registration. Filters for the alert can be set on the above described values. In addition you should create an [anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#oauth-app-anomaly-detection-policies) to identify misleading app or publisher names. Follow [Microsoft’s tutorial](https://docs.microsoft.com/en-us/cloud-app-security/investigate-risky-oauth) for guided steps to investigate risky OAuth Apps.
+If you decided to use MCAS you need to [create a OAuth app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#create-a-new-oauth-app-policy) to be notified in case of risky app consent or registration. Filters for the alert can be set on the above described values.
 
-/Tip: Consider to [report suspected apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#send-feedback) to Microsoft’s Cloud App Security team as feedback to enhance OAuth App risk score and analysis./
+In addition you should create an [anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#oauth-app-anomaly-detection-policies) to identify misleading app or publisher names.
+
+Follow [Microsoft’s tutorial](https://docs.microsoft.com/en-us/cloud-app-security/investigate-risky-oauth) for guided steps to investigate risky OAuth Apps.
+
+Tip: Consider to [report suspected apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#send-feedback) to Microsoft’s Cloud App Security team as feedback to enhance OAuth App risk score and analysis.
 
 More details on [working with the OAuth apps page](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#ban-or-approve-an-app) are described on Microsoft Docs and further information on managing risky 3rd party app permission with MCAS are [available here](https://techcommunity.microsoft.com/t5/enterprise-mobility-security/managing-risky-3rd-party-app-permissions-with-microsoft-s-casb/ba-p/276401).
 
@@ -208,7 +214,9 @@ You can find the required settings in the blade of the disabled user consent:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/73C21FEB-D39D-4860-BD17-C21A5260B31B.png)
 
-A Microsoft docs article describes in detail how to enable this preview feature: [Configure the admin consent workflow - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
+A Microsoft docs article describes in detail how to enable this preview featur
+
+[Configure the admin consent workflow - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
 
 #### Limitations
 Currently there are two limitations in the (public preview) implementation:
