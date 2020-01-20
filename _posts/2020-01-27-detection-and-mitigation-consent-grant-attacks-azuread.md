@@ -7,7 +7,7 @@ tags: [azure, azuread, security]
 image: assets/images/community-events-2019.jpg
 description: "Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks."
 featured: false
-hidden: true
+hidden: false
 ---
 
 _Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
@@ -20,8 +20,8 @@ Microsoft has already documented this in details:
 By default, all users in Azure AD can register applications and set consent permission on their behalf. This represent a risk and and you need to ensure that your organization wants to allow end-users to acquire application as self-service without any compliance or risk check.
 So regardless of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
 
-The user settings are splitted in **”User can register applications”** and
-**”Users can consent to apps accessing company data on their behalf”**:
+The user settings are splitted in **”User can register applications”**
+and **”Users can consent to apps accessing company data on their behalf”**:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/6021243C-D741-4680-9C02-EC86FA024949.png)
 
@@ -30,7 +30,7 @@ The user settings are splitted in **”User can register applications”** and
 Follow Microsoft’s step-by-step guide to find out which setting is configured in your tenant:
 [Configure how end-users consent to applications using Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent)
 
-_Tip: Use the PowerShell cmdlet for monitoring your desired state of the “UsersPermissionToUserConsentToAppEnabled” setting in your tenant._
+_Tip: Use the PowerShell cmdlet for monitoring your desired state of the UsersPermissionToUserConsentToAppEnabled” setting in your tenant._
 
 This default settings makes it easily for users to enable access or on-board to every new SaaS applications.
 Nevertheless it is [recommended by Microsoft to disable user consent operations](https://docs.microsoft.com/en-us/azure/security/fundamentals/steps-secure-identity#restrict-user-consent-operations) . This is also part of the identity secure score:
@@ -52,7 +52,7 @@ Source: [Azure AD app consent experiences - Microsoft identity platform | Micros
 Once the user has been granted the consent, the attacker has account-level access without stealing credentials or infecting user’s device.
 Enforcement of MFA and Conditional Access is also not effective because of the interaction model of the application.
 
-It is impressive to see how simple and efficient this attacks can be executed. [Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/)) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video:
+It is impressive to see how simple and efficient this attacks can be executed. [Joosua Santasalo](https://securecloud.blog/2019/12/17/helsec-azure-ad-write-up-phishing-on-steroids-with-azure-ad-consent-extractor/) demonstrates an attack from user and attacker perspective with “Azure AD Consent Extractor” in the following video: [Azure AD app consent experiences - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCF1jdajaIg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -86,7 +86,7 @@ The following information should support your investigation:
 
 If you decided to use MCAS you need to [create a OAuth app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#create-a-new-oauth-app-policy) to be notified in case of risky app consent or registration. Filters for the alert can be set on the above described values. In addition you should create an [anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#oauth-app-anomaly-detection-policies) to identify misleading app or publisher names. Follow [Microsoft’s tutorial](https://docs.microsoft.com/en-us/cloud-app-security/investigate-risky-oauth) for guided steps to investigate risky OAuth Apps.
 
-/Tip: Consider to [report suspected apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#send-feedback) to Microsoft’s Cloud App Security team as feedback to enhance OAuth App risk score and analysis. /
+/Tip: Consider to [report suspected apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#send-feedback) to Microsoft’s Cloud App Security team as feedback to enhance OAuth App risk score and analysis./
 
 More details on [working with the OAuth apps page](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#ban-or-approve-an-app) are described on Microsoft Docs and further information on managing risky 3rd party app permission with MCAS are [available here](https://techcommunity.microsoft.com/t5/enterprise-mobility-security/managing-risky-3rd-party-app-permissions-with-microsoft-s-casb/ba-p/276401).
 
@@ -197,12 +197,12 @@ Microsoft implemented a new feature to request user consent as part of a workflo
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/E9AA1162-2275-48B1-AD5A-3590BDE00B0B.png)
 
-**Benefit**
+#### Benefit
 Admin consent workflow gives end-users an option to request a consent permission which can be reviewed by an admin.
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/ADC7C61B-2C3B-49C5-A04F-AD810697E6BD.png)
 
-**Configuration**
+#### Configuration
 The configuration of admin consent request and workflow is very easy.
 You can find the required settings in the blade of the disabled user consent:
 
@@ -210,7 +210,7 @@ You can find the required settings in the blade of the disabled user consent:
 
 A Microsoft docs article describes in detail how to enable this preview feature: [Configure the admin consent workflow - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
 
-**Limitations:**
+#### Limitations
 Currently there are two limitations in the (public preview) implementation:
 	1. Only permanent privileged user accounts can be assigned to review consent permissions. You can’t choose an eligible user from Azure AD PIM.
 	2. Notification are limited to e-mail, no support of Microsoft Graph API to automate the process.
