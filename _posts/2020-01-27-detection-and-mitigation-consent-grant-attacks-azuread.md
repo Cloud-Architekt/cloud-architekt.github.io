@@ -47,7 +47,7 @@ Attackers sending mails to supply “storage upgrade” or “shared OneDrive fi
 In my opinion it’s unrealistic to prevent this attacks or minimize the risk trough end-user education caused by the app consent experience:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/CC56C7A6-2B83-4199-AF5A-B54AC93382EF.png)
-Source: [Azure AD app consent experiences - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
+Source: [Azure AD app consent experiences | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
 
 Once the user has been granted the consent, the attacker has account-level access without stealing credentials or infecting user’s device.
 Enforcement of MFA and Conditional Access is also not effective because of the interaction model of the application.
@@ -213,9 +213,10 @@ You can find the required settings in the blade of the disabled user consent:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/73C21FEB-D39D-4860-BD17-C21A5260B31B.png)
 
-A Microsoft docs article describes in detail how to enable this preview featur
+A Microsoft docs article describes in detail how to enable this preview feature:
 
 [Configure the admin consent workflow - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
+
 
 #### Limitations
 Currently there are two limitations in the (public preview) implementation:
