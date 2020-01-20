@@ -169,7 +169,8 @@ All the steps should be executed to verify that an illicit consent grant attack 
 ### Option 2: Revoke OAuth consent grant and Service App Role via Azure Sentinel Playbook
 Automation of threat response can be configured by an Playbook (Logic App) which is triggered by an incident in Azure Sentinel.
 
-You can revoke the OAuth consent grant and Service App Role Assigment with the PowerShell cmdlets (Remove-AzureADOAuth2PermissionGrant and Remove-AzureADServiceAppRoleAssignment) which are already described in Option 1. Revocation of user’s refresh token is already available as Playbook sample from the Azure Sentinel GitHub repo:
+You can revoke the OAuth consent grant and Service App Role Assigment with the PowerShell cmdlets (Remove-AzureADOAuth2PermissionGrant and Remove-AzureADServiceAppRoleAssignment) which are already described in Option 1.
+Revocation of user’s refresh token is already available as Playbook sample from the Azure Sentinel GitHub repo:
 [Azure-Sentinel/Playbooks/Revoke-AADSignInSessions at master · Azure/Azure-Sentinel · GitHub](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Revoke-AADSignInSessions)
 
 ### Option 3: Ban app from OAuth investigation in MCAS 
@@ -221,14 +222,15 @@ You can find the required settings in the blade of the disabled user consent:
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/73C21FEB-D39D-4860-BD17-C21A5260B31B.png)
 
 A Microsoft docs article describes in detail how to enable this preview feature:
-
-[Configure the admin consent workflow - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
+[Configure the admin consent workflow - Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
 
 
 #### Limitations
 Currently there are two limitations in the (public preview) implementation:
-	1. Only permanent privileged user accounts can be assigned to review consent permissions. You can’t choose an eligible user from Azure AD PIM.
-	2. Notification are limited to e-mail, no support of Microsoft Graph API to automate the process.
+
+1. Only permanent privileged user accounts can be assigned to review consent permissions. You can’t choose an eligible user from Azure AD PIM.
+
+2. Notification are limited to e-mail, no support of Microsoft Graph API to automate the process.
 
 ### Step 3: Monitoring approved user consents and OAuth apps
 Consider to implement an inventory and monitoring of OAuth apps and permissions even if you configure the consent approval flow in your organization. In my opinion MCAS for risk detection and inventory management is required and a perfect solution for this kind of requirements. 
