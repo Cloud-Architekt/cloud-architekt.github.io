@@ -4,7 +4,7 @@ title:  "Detection and Mitigation of Consent Grant Attacks in Azure AD"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
-image: assets/images/community-events-2019.jpg
+image: assets/images/consent-grant-attack.jpg
 description: "Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks."
 featured: false
 hidden: false
@@ -229,4 +229,4 @@ Consider to implement an inventory and monitoring of OAuth apps and permissions 
 
 
 
-<span style="color:silver;font-style:italic;font-size:small">Original cover image by [iAmMrRob / Pixabay](https://pixabay.com/photos/hacking-cyber-blackandwhite-crime-2903156/)</span>
+<span style="color:silver;font-style:italic;font-size:small">Original cover image by [Tumisu / Pixabay](https://pixabay.com/illustrations/phishing-fraud-cyber-security-3390518/)</span>
