@@ -12,7 +12,7 @@ hidden: true
 
 _Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
 
-{:toc}
+{% include toc.html html=content %}
 
 ## Consent Framework in Default (Tenant) Settings
 In the first step it’s very useful to know the permission and consent framework in the Microsoft Identity platform works. You need to understand the delegation process and potential attack surface.
