@@ -223,6 +223,8 @@ Admin consent workflow gives end-users an option to request a consent permission
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/ADC7C61B-2C3B-49C5-A04F-AD810697E6BD.png)
 
+_Advice: Consider to use least privilege access to approve admin consent requests (prevent usage of Global admin). To approve requests, a reviewer needs cloud application administrator or application administrator only._
+
 #### Configuration
 The configuration of admin consent request and workflow is very easy.
 You can find the required settings in the blade of the disabled user consent:
