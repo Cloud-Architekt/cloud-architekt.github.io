@@ -140,8 +140,8 @@ Required information of granted permissions are available from Microsoft Graph A
 
 #### Get-AzureADPSPermissionGrants.ps1
 [Philippe Signoret](https://gist.github.com/psignoret) has written a PowerShell script to lists all delegated permission grants. 
-
 Example:
+
 `Get-AzureADServicePrincipal -All $true | .\Get-AzureADPSPermissionGrants.ps1 -Preload `
 
 This script is regular updated and available from his GitHub page:
@@ -149,8 +149,8 @@ This script is regular updated and available from his GitHub page:
 
 #### AzureADAssessment Module (MSCloudIdAssessment)
 Microsoft published a PowerShell module to gather configuration information across the Azure AD tenant. It includes a cmdlet (“Get-MSCloudIdConsentGrantList”) to get a list of all consent grants in the directory.
-
 Example:
+
 `Get-MSCloudIdConsentGrantList | Export-Csv -Path “.\ConsentGrantList.csv” `
 
 This module is available from the AzureAD GitHub repo:
