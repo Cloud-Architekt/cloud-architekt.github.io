@@ -15,7 +15,7 @@ _Popular phishing attacks are using consent requests to gain access to company o
 ## Consent Framework and Default (Tenant) Settings
 In the first step it’s very helpful to know the permission and consent framework in the Microsoft Identity platform. You need to understand the delegation process and potential attack surface.
 Microsoft has already documented this in details:
-[Microsoft identity platform scopes, permissions, and consent | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent)
+[Microsoft identity platform scopes, permissions, and consent | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent){:target="_blank"}
 
 By default, all users in Azure AD can register applications and set consent permission on their behalf. This represent a risk and and you need to ensure that your organization wants to allow end-users to acquire application as self-service without any compliance or risk check.
 So regardless of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
