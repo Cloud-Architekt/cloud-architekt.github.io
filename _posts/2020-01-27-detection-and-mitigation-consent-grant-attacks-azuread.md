@@ -1,26 +1,25 @@
 ---
 layout: post
-title:  "Detection and Mitigation of Consent Grant Attacks in Azure AD"
+title:  "Detection and Mitigation of Illicit Consent Grant Attacks in Azure AD"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/consent-grant-attack.jpg
-description: "Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks."
+description: "Popular phishing attacks are using illicit cosent grant  to gain company or user data. In this article we will cover the detection (with Microsoft Cloud App Security and Azure Sentinel) and mitigation with the latest feature of Azure AD."
 featured: false
 hidden: true
 ---
 
 _Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
 
-{% include toc.html html=content %}
-
 ## Consent Framework in Default (Tenant) Settings
-In the first step it’s very useful to know the permission and consent framework in the Microsoft Identity platform works. You need to understand the delegation process and potential attack surface.
+In the first step it’s very required to know the permission and consent framework in the Microsoft Identity platform. You need to understand the delegation process and potential attack surface.
 Microsoft has already documented this in details:
 [Microsoft identity platform scopes, permissions, and consent | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent)
 
 By default, all users in Azure AD can register applications and set consent permission on their behalf. This represent a risk and and you need to ensure that your organization wants to allow end-users to acquire application as self-service without any compliance or risk check.
-So regardless of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
+So regardle
+ss of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
 
 The user settings are splitted in **”User can register applications”**...
 
@@ -35,8 +34,9 @@ Follow Microsoft’s step-by-step guide to find out which setting is configured 
 
 _Tip: Use the PowerShell cmdlet for monitoring your desired state of the UsersPermissionToUserConsentToAppEnabled” setting in your tenant._
 
-This default settings makes it easily for users to enable access or on-board to every new SaaS applications.
-Nevertheless it is [recommended by Microsoft to disable user consent operations](https://docs.microsoft.com/en-us/azure/security/fundamentals/steps-secure-identity#restrict-user-consent-operations) . This is also part of the identity secure score:
+This default settings makes it easily for users to enable access or onboard any SaaS applications.
+Nevertheless it is [recommended by Microsoft to disable user consent operations](https://docs.microsoft.com/en-us/azure/security/fundamentals/steps-secure-identity#restrict-user-consent-operations).
+This is also part of the identity secure score:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/218DC82C-6F6A-40F9-B795-3090FC93E17A.png)
 
@@ -45,13 +45,13 @@ By now every organization should review their settings and methods to detect, re
 
 ## Attack methods and scenarios
 Many popular phishing attacks and campaigns tries to take over accounts by user consent requests from apps that looks like Office 365 services.
-Attackers sending mails to supply “storage upgrade” or “shared OneDrive files” to fools the victims that permission to Office 365 is required.
+Attackers sending mails with subjects like “storage upgrade” or “shared OneDrive files” to fools the victims that permission to Office 365 is required.
 
-In my opinion it’s unrealistic to prevent this attacks or minimize the risk trough end-user education caused by the app consent experience:
+In my opinion it’s unrealistic to prevent this attacks or minimize the risk trough end-user education even by a clear statement during the app consent process:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/CC56C7A6-2B83-4199-AF5A-B54AC93382EF.png)
 
-Source: [Azure AD app consent experiences | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
+Source:[Azure AD app consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
 
 Once the user has been granted the consent, the attacker has account-level access without stealing credentials or infecting user’s device.
 Enforcement of MFA and Conditional Access is also not effective because of the interaction model of the application.
@@ -86,7 +86,7 @@ Microsoft offering several solutions to detect or create alerts in case of conse
 ### Investigation and Alerting of OAuth apps with MCAS
 Microsoft Cloud App Security (MCAS) is detecting risky OAuth Apps and allows to get insights of app permissions in the portal.
 
-The following information should support your investigation:
+The following information should support your investigation and decision if a consent to a risky app was granted:
 * “Community use” rating to understand how common is the use of this app in other organization (such as default Office 365 apps)
 * Authorized by single/multiple users or admin consented
 * Permission level from Low (Sign-in and read user profile) to High (Access your data anytime)
@@ -106,7 +106,7 @@ More details on [working with the OAuth apps page](https://docs.microsoft.com/en
 MCAS is the most powerful tool for review of risky OAuth apps and in combination with alerting and global investigation by Azure Sentinel a recommended option.
 
 ### Azure AD Workbook “App Consent Audit”
-Azure Monitor Workbooks visualizing log data which is stored in a Log Analytics workspace. Several workbooks related to Azure AD analysis are part of the Azure AD Portal (built-in).
+Azure Monitor Workbooks is visualizing log data from a Log Analytics workspace. Several workbooks related to Azure AD analysis are part of the Azure AD Portal (built-in).
 
 You’ll find an “App Consent Audit” workbook to get more insights on consent permissions and a visual overview of your configuration:
 
@@ -114,7 +114,7 @@ You’ll find an “App Consent Audit” workbook to get more insights on consen
 
 ###  Hunting and Analytics (Alerting) with Azure Sentinel
 #### Azure Sentinel Hunting of “Consent to application” operations
-Threat hunting is one of the essential features of Azure Sentinel and supports proactively search for attackers.
+Threat hunting is one of the essential features of Azure Sentinel and supports search for attackers.
 The following (built-in) hunting query looks at a period of time for any “Consent to application” operation occurs by a user or app:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/F0A62247-22CA-47E2-9E31-55CF2476C1FD.png)
@@ -123,13 +123,13 @@ The KQL query behind this hunting is also usable for any Log Analytics Workspace
 You’ll find the hunting query in the GitHub repo of Azure Sentinel:
 [Azure-Sentinel/ConsentToApplicationDiscovery.yaml at Azure/Azure-Sentinel · GitHub](https://github.com/Azure/Azure-Sentinel/blob/a3d9984d88377a02a2f94caaf67e3d5828d972de/Hunting%20Queries/AuditLogs/ConsentToApplicationDiscovery.yaml)
 
-#### Azure Sentinel Analytics (Alert) of Rare application consent
+#### Azure Sentinel Analytics (Alert) of "Rare application consent"
 You should configure Azure Sentinel or Azure Monitor Alerts (via Azure AD Audit Logs in Log Analytics) if you want to received an alert when a “consent to application“ is triggered.
 
-Microsoft released a detection rule for rare application consent on the Sentinel GitHub page:
+Microsoft released a detection rule for this activity on the Sentinel GitHub page:
 [Azure-Sentinel/RareApplicationConsent.yaml at master · Azure/Azure-Sentinel · GitHub](https://github.com/Azure/Azure-Sentinel/blob/master/Detections/AuditLogs/RareApplicationConsent.yaml)
 
-This analytic is a built-in rule template in Sentinel:
+It is available as built-in rule template in Azure Sentinel:
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/AEC07221-5AF7-4B51-9CBF-8B9F424B69F7.png)
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/7BD2EAD8-87E4-40FA-8342-2A9051CFDB0C.png)
@@ -137,14 +137,20 @@ This analytic is a built-in rule template in Sentinel:
 The KQL-based query can be also used in [Azure Monitor as Alert rule (Analytics query using Custom Log search)](https://devblogs.microsoft.com/premier-developer/alerts-based-on-analytics-query-using-custom-log-search/) in case you are not using Azure Sentinel. This implies that Azure AD Audit Logs are forwarded to a Log Analytics Workspace.
 
 ### List grant permissions with PowerShell
-Required information of granted permissions are available from Microsoft Graph API or audit logs.  So you are able to build a custom integration with your analytics/alert tool or any other programmatically query. Existing PowerShell scripts are also available and easy to use.
+Required information of granted permissions are available from Microsoft Graph API.  So you are able to build a custom integration with your existing analytics/alert tool or any other programmatically query. Some great PowerShell scripts are already available and "ready to use".
 
 #### Get-AzureADPSPermissionGrants.ps1
-[Philippe Signoret](https://gist.github.com/psignoret) has written a PowerShell script to lists all delegated permission grants. This script is regular updated and available from his GitHub page: [Get all permissions granted to an app in Azure AD · GitHub](https://gist.github.com/psignoret/9d73b00b377002456b24fcb808265c23)
+[Philippe Signoret](https://gist.github.com/psignoret) has written a PowerShell script to lists all delegated permission grants. 
+
+Example:
+`Get-AzureADServicePrincipal -All $true | .\Get-AzureADPSPermissionGrants.ps1 -Preload
+
+This script is regular updated and available from his GitHub page: [Get all permissions granted to an app in Azure AD · GitHub](https://gist.github.com/psignoret/9d73b00b377002456b24fcb808265c23)
 
 #### AzureADAssessment Module (MSCloudIdAssessment)
 Microsoft published a PowerShell module to gather configuration information across the Azure AD tenant. It includes a cmdlet (“Get-MSCloudIdConsentGrantList”) to get a list of all consent grants in the directory.
 
+Example:
 `Get-MSCloudIdConsentGrantList | Export-Csv -Path “.\ConsentGrantList.csv” `
 
 This module is available from the AzureAD GitHub repo: [AzureADAssessment/MSCloudIdAssesment.psm1 at master · AzureAD/AzureADAssessment · GitHub](https://github.com/AzureAD/AzureADAssessment/blob/master/MSCloudIdAssesment.psm1)
@@ -175,7 +181,7 @@ Revocation of user’s refresh token is already available as Playbook sample fro
 [Azure-Sentinel/Playbooks/Revoke-AADSignInSessions at master · Azure/Azure-Sentinel · GitHub](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Revoke-AADSignInSessions)
 
 ### Option 3: Ban app from OAuth investigation in MCAS 
-Suspicioned apps can be marked as banned and will force to disable permission. Future access of user consent will be automatically revoked by MCAS. Consider in this scenario the delay until the policy effects.
+Suspicioned apps can be marked as banned and will forced to disable permission. Future access of user consent will be automatically revoked by MCAS. Consider in this scenario the delay until the policy effects.
 
 Follow [these steps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#ban-or-approve-an-app) to ban the app and notify users who granted access. During my tests I was not able to verify that MCAS will revoke the refresh token automatically. So keep that in mind if you like to include this step in your remediation process.
 
@@ -234,9 +240,7 @@ Currently there are two limitations in the (public preview) implementation:
 2. Notification are limited to e-mail, no support of Microsoft Graph API to automate the process.
 
 ### Step 3: Monitoring approved user consents and OAuth apps
-Consider to implement an inventory and monitoring of OAuth apps and permissions even if you configure the consent approval flow in your organization. In my opinion MCAS for risk detection and inventory management is required and a perfect solution for this kind of requirements. 
-
-
+Consider to implement an inventory and monitoring of OAuth apps and permissions even if you configure the consent approval flow in your organization. In my opinion MCAS for risk detection and inventory management is required and a perfect solution for this kind of requirements. Make sure that every alert should be forwarded to a SIEM solution (Azure Sentinel) to enable global investigation (from phishing mail to consent grant request) and incident management.
 
 
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [Tumisu / Pixabay](https://pixabay.com/illustrations/phishing-fraud-cyber-security-3390518/)</span>
