@@ -10,7 +10,7 @@ featured: false
 hidden: true
 ---
 
-_Popular phishing attacks are using consent (requests) to gain company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
+_Popular phishing attacks are using consent requests to gain access to company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
 
 ## Consent Framework and Default (Tenant) Settings
 In the first step it’s very helpful to know the permission and consent framework in the Microsoft Identity platform. You need to understand the delegation process and potential attack surface.
@@ -22,11 +22,11 @@ So regardless of phishing attacks this default setting should be reviewed by IT 
 
 The user settings are splitted in **”User can register applications”**...
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/6021243C-D741-4680-9C02-EC86FA024949.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/6021243C-D741-4680-9C02-EC86FA024949.png)
 
 ...and **”Users can consent to apps accessing company data on their behalf”**:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/192E3C51-33A8-4012-9BD1-7CE2E3259F7F.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/192E3C51-33A8-4012-9BD1-7CE2E3259F7F.png)
 
 Follow Microsoft’s step-by-step guide to find out which setting is configured in your tenant:
 [Configure how end-users consent to applications using Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-user-consent)
@@ -37,7 +37,7 @@ This default settings makes it easy for users to enable access or onboard any Sa
 Nevertheless it is [recommended by Microsoft to disable user consent operations](https://docs.microsoft.com/en-us/azure/security/fundamentals/steps-secure-identity#restrict-user-consent-operations).
 This is also part of the identity secure score:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/218DC82C-6F6A-40F9-B795-3090FC93E17A.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/218DC82C-6F6A-40F9-B795-3090FC93E17A.png)
 
 In the last month we are seeing increased numbers of consent grant attacks by phishing mails but also Microsoft introduced new (public preview) features to detect/manage consent request.
 By now every organization should review their settings and methods to detect, remediate and mitigate these attacks.
@@ -48,7 +48,7 @@ Attackers sending mails with subjects like “storage upgrade” or “shared On
 
 In my opinion it’s unrealistic to prevent this attacks or minimize the risk trough end-user education even by a clear statement during the app consent process:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/CC56C7A6-2B83-4199-AF5A-B54AC93382EF.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/CC56C7A6-2B83-4199-AF5A-B54AC93382EF.png)
 
 Source: [Azure AD app consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience)
 
@@ -90,7 +90,7 @@ The following information should support your investigation and decision if a co
 * Authorized by single/multiple users or admin consented
 * Permission level from Low (Sign-in and read user profile) to High (Access your data anytime)
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/20A777EF-E0B0-4BEB-BFE5-AAEEF3BB327F.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/20A777EF-E0B0-4BEB-BFE5-AAEEF3BB327F.png)
 
 If you decided to use MCAS you should [create a OAuth app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#create-a-new-oauth-app-policy) to be notified in case of risky app consent or registration. Filters for the alert can be set on the above described values.
 
@@ -109,14 +109,14 @@ Azure Monitor Workbooks is visualizing log data from a Log Analytics workspace. 
 
 You’ll find an “App Consent Audit” workbook to get more insights on consent permissions and a visual overview of your configuration:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/91F8A31E-C68D-4E0D-8791-80279F81A1C2.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/91F8A31E-C68D-4E0D-8791-80279F81A1C2.png)
 
 ###  Hunting and Analytics (Alerting) with Azure Sentinel
 #### Azure Sentinel Hunting of “Consent to application” operations
 Threat hunting is one of the essential features of Azure Sentinel and supports search for attackers.
 The following (built-in) hunting query looks at a period of time for any “Consent to application” operation occurs by a user or app:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/F0A62247-22CA-47E2-9E31-55CF2476C1FD.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/F0A62247-22CA-47E2-9E31-55CF2476C1FD.png)
 
 The KQL query behind this hunting is also usable for any Log Analytics Workspace Query that contains the latest Azure AD Audit Logs. 
 You’ll find the hunting query in the GitHub repo of Azure Sentinel:
@@ -129,9 +129,9 @@ Microsoft has released a detection rule for this activity on the Azure Sentinel 
 [Azure-Sentinel/RareApplicationConsent.yaml at master · Azure/Azure-Sentinel · GitHub](https://github.com/Azure/Azure-Sentinel/blob/master/Detections/AuditLogs/RareApplicationConsent.yaml)
 
 It is available as built-in rule template in Azure Sentinel:
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/AEC07221-5AF7-4B51-9CBF-8B9F424B69F7.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/AEC07221-5AF7-4B51-9CBF-8B9F424B69F7.png)
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/7BD2EAD8-87E4-40FA-8342-2A9051CFDB0C.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/7BD2EAD8-87E4-40FA-8342-2A9051CFDB0C.png)
 
 The KQL-based query can be also used in [Azure Monitor as Alert rule (Analytics query using Custom Log search)](https://devblogs.microsoft.com/premier-developer/alerts-based-on-analytics-query-using-custom-log-search/) in case you have not already implemented Azure Sentinel. This implies that Azure AD Audit Logs are forwarded to a Log Analytics Workspace.
 
@@ -163,11 +163,11 @@ This module is available from the AzureAD GitHub repo:
 Azure AD portal supports you to review the granted permission of an app.
 Click on the “Review permissions” button on the “Permissions” blade of the app:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/17DC4115-32C8-40B1-A11C-AF63EF9C6EEB.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/17DC4115-32C8-40B1-A11C-AF63EF9C6EEB.png)
 
 Afterwards you have several options to proceed the review:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/B7C04890-1F1C-4466-9F01-A2A5665978D1.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/B7C04890-1F1C-4466-9F01-A2A5665978D1.png)
 
 Choose “This application is malicious and I’m compromised” to get a preview of the required PowerShell scripts to remediate the issue.
 
@@ -187,14 +187,14 @@ Revocation of user’s refresh token is already available as Playbook sample fro
 ### Option 3: Ban app from OAuth investigation in MCAS 
 Suspicioned apps can be marked as banned and will forced to disable permission. Future access of user consent will be automatically revoked by MCAS. Consider in this scenario the delay until the policy effects.
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/mcas_ban.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/mcas_ban.png)
 
 Follow [these steps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions#ban-or-approve-an-app) to ban the affected app and notify users who granted access. During my tests I was not able to verify that MCAS will revoke the user's refresh token automatically. So keep that in mind if you like to include this step in your remediation process.
 
 ### Not recommended: Revoke individual user consent as user
 Users are also able to manage their app (user) consent in MyApps portal including revocation by click on "Remove":
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/myapps_remove.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/myapps_remove.png)
 
 Not all required steps (that I have already described above) will be executed in this case. So I can’t recommend this option to remediate the issue.
  
@@ -204,11 +204,11 @@ Disable the permission for a user to set consent permission on their behalf is t
 
 Open the “[User settings](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/UserSettings)” blade in the Azure (AD) Portal to disable “User can register applications”:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/5CD64953-744B-423A-A05F-3790BEA73E53.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/5CD64953-744B-423A-A05F-3790BEA73E53.png)
 
 Finally go to the “[Enterprise applications](https://portal.azure.com/#blade/Microsoft_AAD_IAM/StartboardApplicationsMenuBlade/UserSettings/menuId/UserSettings)” blade (“Manage how end users launch and view their applications”) on the same page to disable consent permissions:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/EF201C98-A620-4B33-B675-C3222038003F.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/EF201C98-A620-4B33-B675-C3222038003F.png)
 
 
 _Advice: The only alternative would be to keep the default setting AND using MCAS for reactive measures (including OAuth policies, monitoring and auto-revoke). But this will not mitigate the issue proactively in my opinion. So I’ve decided to exclude this scenario as option for mitigation._   
@@ -219,15 +219,15 @@ _Advice: The only alternative would be to keep the default setting AND using MCA
 Initially it is a pain if you are disabling the user consent without any alternate (user friendly) option or process to request consent permission by non-admins. End-users are facing generic error message and increased helpdesk calls will be one of the consequences.
 Microsoft implemented a new feature to request user consent as part of a workflow:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/F99EAC85-4A59-4D99-8E74-FE17FC22439A.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/F99EAC85-4A59-4D99-8E74-FE17FC22439A.png)
 
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/E9AA1162-2275-48B1-AD5A-3590BDE00B0B.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/E9AA1162-2275-48B1-AD5A-3590BDE00B0B.png)
 
 #### Benefit
 Admin consent workflow gives end-users an option to request a consent permission which can be reviewed by an admin.
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/ADC7C61B-2C3B-49C5-A04F-AD810697E6BD.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/ADC7C61B-2C3B-49C5-A04F-AD810697E6BD.png)
 
 _Advice: Consider to use least privilege access to approve admin consent requests (prevent usage of Global admin). To approve requests, a reviewer needs cloud application administrator or application administrator only._
 
@@ -235,7 +235,7 @@ _Advice: Consider to use least privilege access to approve admin consent request
 The configuration of admin consent request and workflow is very easy.
 You can find the required settings in the blade of the disabled user consent:
 
-![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/73C21FEB-D39D-4860-BD17-C21A5260B31B.png)
+![](../2020-01-21-detection-and-mitigation-consent-grant-attacks/73C21FEB-D39D-4860-BD17-C21A5260B31B.png)
 
 The following Microsoft docs article describes how to enable this preview feature in details:
 [Configure the admin consent workflow - Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
