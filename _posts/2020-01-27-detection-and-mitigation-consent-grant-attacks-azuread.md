@@ -18,8 +18,7 @@ Microsoft has already documented this in details:
 [Microsoft identity platform scopes, permissions, and consent | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent)
 
 By default, all users in Azure AD can register applications and set consent permission on their behalf. This represent a risk and and you need to ensure that your organization wants to allow end-users to acquire application as self-service without any compliance or risk check.
-So regardle
-ss of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
+So regardless of phishing attacks this default setting should be reviewed by IT compliance, risk and governance management of your company.
 
 The user settings are splitted in **”User can register applications”**...
 
@@ -51,7 +50,7 @@ In my opinion it’s unrealistic to prevent this attacks or minimize the risk tr
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/CC56C7A6-2B83-4199-AF5A-B54AC93382EF.png)
 
-Source:[Azure AD app consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience))
+Source: [Azure AD app consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience)
 
 Once the user has been granted the consent, the attacker has account-level access without stealing credentials or infecting user’s device.
 Enforcement of MFA and Conditional Access is also not effective because of the interaction model of the application.
@@ -137,15 +136,16 @@ It is available as built-in rule template in Azure Sentinel:
 The KQL-based query can be also used in [Azure Monitor as Alert rule (Analytics query using Custom Log search)](https://devblogs.microsoft.com/premier-developer/alerts-based-on-analytics-query-using-custom-log-search/) in case you are not using Azure Sentinel. This implies that Azure AD Audit Logs are forwarded to a Log Analytics Workspace.
 
 ### List grant permissions with PowerShell
-Required information of granted permissions are available from Microsoft Graph API.  So you are able to build a custom integration with your existing analytics/alert tool or any other programmatically query. Some great PowerShell scripts are already available and "ready to use".
+Required information of granted permissions are available from Microsoft Graph API.  So you are able to build a custom integration with your existing analytics/alert tool or any other programmatically access. Some great PowerShell scripts are already available and "ready to use".
 
 #### Get-AzureADPSPermissionGrants.ps1
 [Philippe Signoret](https://gist.github.com/psignoret) has written a PowerShell script to lists all delegated permission grants. 
 
 Example:
-`Get-AzureADServicePrincipal -All $true | .\Get-AzureADPSPermissionGrants.ps1 -Preload
+`Get-AzureADServicePrincipal -All $true | .\Get-AzureADPSPermissionGrants.ps1 -Preload `
 
-This script is regular updated and available from his GitHub page: [Get all permissions granted to an app in Azure AD · GitHub](https://gist.github.com/psignoret/9d73b00b377002456b24fcb808265c23)
+This script is regular updated and available from his GitHub page:
+[Get all permissions granted to an app in Azure AD · GitHub](https://gist.github.com/psignoret/9d73b00b377002456b24fcb808265c23)
 
 #### AzureADAssessment Module (MSCloudIdAssessment)
 Microsoft published a PowerShell module to gather configuration information across the Azure AD tenant. It includes a cmdlet (“Get-MSCloudIdConsentGrantList”) to get a list of all consent grants in the directory.
@@ -153,7 +153,8 @@ Microsoft published a PowerShell module to gather configuration information acro
 Example:
 `Get-MSCloudIdConsentGrantList | Export-Csv -Path “.\ConsentGrantList.csv” `
 
-This module is available from the AzureAD GitHub repo: [AzureADAssessment/MSCloudIdAssesment.psm1 at master · AzureAD/AzureADAssessment · GitHub](https://github.com/AzureAD/AzureADAssessment/blob/master/MSCloudIdAssesment.psm1)
+This module is available from the AzureAD GitHub repo:
+[AzureADAssessment/MSCloudIdAssesment.psm1 at master · AzureAD/AzureADAssessment · GitHub](https://github.com/AzureAD/AzureADAssessment/blob/master/MSCloudIdAssesment.psm1)
 
 ## Remediate: Process to remove consent permission
 ### Option 1: Guided review in Azure AD Portal (required)
@@ -228,7 +229,7 @@ You can find the required settings in the blade of the disabled user consent:
 
 ![](../2020-01-27-detection-and-mitigation-consent-grant-attacks/73C21FEB-D39D-4860-BD17-C21A5260B31B.png)
 
-A Microsoft docs article describes in detail how to enable this preview feature:
+This Microsoft docs article describes in detail how to enable this preview feature:
 [Configure the admin consent workflow - Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/configure-admin-consent-workflow) 
 
 
