@@ -5,12 +5,12 @@ author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/consent-grant-attack.jpg
-description: "Popular phishing attacks are using illicit cosent grant  to gain company or user data. In this article we will cover the detection (with Microsoft Cloud App Security and Azure Sentinel) and mitigation with the latest feature of Azure AD."
-featured: false
+description: "Popular phishing attacks are using illicit consent grant to gain company or user data. In this article we will cover the detection (with Microsoft Cloud App Security and Azure Sentinel) and mitigation with the latest feature of Azure AD."
+featured: true
 hidden: false
 ---
 
-_Popular phishing attacks are using consent requests to gain access to company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
+_Popular phishing attacks are using illicit consent grant to gain access to company or user data. In this article we will cover the detection (with Azure Sentinel, Microsoft Cloud App Security or Azure AD portal) and mitigation of illicit consent grant attacks._
 
 ## Consent Framework and Default (Tenant) Settings
 In the first step it’s very helpful to know the permission and consent framework in the Microsoft Identity platform. You need to understand the delegation process and potential attack surface.
