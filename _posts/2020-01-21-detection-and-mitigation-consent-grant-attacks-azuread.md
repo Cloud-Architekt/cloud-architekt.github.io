@@ -244,6 +244,8 @@ Currently there are two limitations in the (public preview) implementation:
 
 1. Only permanent privileged user accounts can be assigned to review consent permissions. You can’t choose an admin with (Azure AD PIM) eligible roles.
 
+_UPDATE 01/25/20: You should be able to choose a consent reviewer with an eligible role if the user has activated the role during the time of configuration. Admins with eligible roles will received notifications even if the role isn't activated. To approval the admin consent as reviewer it is needed to activate the role. Thanks to [Stephan Waelde](https://stephanwaelde.com/) for pointing that out._
+
 2. Notification are limited to e-mail, no support of Microsoft Graph API to automate the process.
 
 ### Step 3: Monitoring approved user consents and OAuth apps
