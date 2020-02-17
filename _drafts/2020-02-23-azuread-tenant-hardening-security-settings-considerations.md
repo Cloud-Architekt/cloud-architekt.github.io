@@ -11,13 +11,13 @@ hidden: true
 ---
 
 _Every created Azure AD tenant has default configurations by Microsoft.
-These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. In these blog post I like to give you a summary on using “Identity Secure Score” for hardening your tenant-level settings and in addition some settings that needs special attention (including recommendations)!_
+These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance policies. In these blog post I like to give you an overview of using “Identity Secure Score” and few hardening settings that needs particular attention._
 
 **Microsoft’s default settings**
 
-Default tenant settings seems to be chosen by Microsoft to fits for most (small or mid-sized) organizations. Nevertheless the customer is still responsible to verify that these settings cover their needs and requirements.
+Default tenant settings seems to be chosen by Microsoft to fits for most (small or mid-sized) organizations. Nevertheless the customer is still responsible to review these settings and comparing it with business and organizational requirements.
 
-Azure AD, as every cloud service, is not a shipped product and so you should regularly assess previous and new settings. Best practices may have changed or new features have been implemented with default settings in your tenant.
+Azure AD, as every cloud service, is not a shipped product and so you should regularly assess previous and new settings. Best practices may have been changed or new features enabled in your tenant.
 
 Follow the [release notes of Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/whats-new) to be aware of new features and setting options.
 
@@ -25,26 +25,27 @@ Follow the [release notes of Azure AD](https://docs.microsoft.com/en-us/azure/ac
 
 Microsoft did a good job to implement “Security Score” for Azure AD (similar to the other security scores in Office 365, Azure Security Center,…) and provides every customer a built-in measurement of their “identity security configuration".
 
-It is an easy way to follow Microsoft’s security recommendations and guidance to improve your identity security posture.
+It is very easy to follow Microsoft’s security recommendations and guidance to improve your identity security posture.
 You’ll find the “[Identity secure score](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/identity-secure-score#how-do-i-get-my-secure-score)” in the “Azure AD Security” blade of the Azure Portal:
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score.png)
 
-On the one hand many findings are very clear (such as require MFA for privileged roles), but on the other hand some action description and guidance should be well thought out and not followed blindly.
+On the one hand many findings are very clear and obviously (such as require MFA for privileged roles). But on the other hand some action description and guidance should be well thought out and not followed blindly.
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score-action.png)
 
-In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned  in case of MFA service outage). You’ll find more details in my blog post [about managing accounts for "break glass" or "emergency" scenarios.](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/)
+In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned in case of MFA service outage). You’ll find more details in my blog post [about managing accounts for "break glass" or "emergency access" scenarios.](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/)
 
 Configuration of [Azure AD Identity Protection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/overview-identity-protection), [Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) or (Global) [Password Protection](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-password-ban-bad) and other latest security features are also part of the recommended actions if you have not already enabled it.
 
 Score impact of improvement actions, overall score of your tenant and relevant benchmarks (industry average and company size) are also available from this blade and can help you to improve estimation and awareness of configuration (risk).
 
-I can strongly recommended to review the score and improvement actions on a regular basis. These information are also available from the [Microsoft Graph Security API](https://docs.microsoft.com/en-us/graph/api/resources/security-api-overview?view=graph-rest-1.0#common-use-cases) and can be integrated to your dashboard, PKI or monitoring solution.
+I can strongly recommended to review the score and improvement actions on a regular basis.
+These information are also available from the [Microsoft Graph Security API](https://docs.microsoft.com/en-us/graph/api/resources/security-api-overview?view=graph-rest-1.0#common-use-cases) and can be integrated to your existing dashboard (KPI/ITSM or monitoring) solution.
 
 **Further consideration and aspects**
 
-In the following sections I like to give an overview of some settings that are not part or specific covered by the “Identity Secure Score” (yet).
+In the following sections I like to give an overview of some settings that are not part or fully covered by the “Identity Secure Score” (yet).
 
 _The recommendations that I will referred below are based on my personal view and assessment. You should cross review these with your environment and requirements (as always). In addition my statements could be also out-dated after certain time after publishing these article._
 
@@ -93,10 +94,11 @@ _Azure AD Portal > User settings > Manage external collaboration settings_
 Every user is able to invite “Guest users“ and even invited Guests are able to invite other Guests. By default Guest users has limited permission in your tenant. Check the Microsoft documentation to [compare member and guest default permissions](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/users-default-permissions#compare-member-and-guest-default-permissions).
 
 ### My recommendation:
-* Disable invitation of guests by your (member) user and/or restrict invitation from specified domains only
+* Disable invitation of guests by your (member and guest) user 
+* Optional: Restrict invitation from specified domains only
 * Implement a workflow and governance for invitation of B2B users via [connected organization in Azure AD entitlement management](https://docs.microsoft.com/en-us/azure/active-directory/governance/entitlement-management-organization)
 * Configure  [a secure guest sharing environment](https://docs.microsoft.com/en-us/office365/enterprise/create-a-secure-guest-sharing-environment%E2%80%AC) and consider [Microsoft’s best practices for B2B scenarios](https://docs.microsoft.com/en-us/azure/active-directory/b2b/b2b-fundamentals)
-* Be aware of [Conditional Access and MFA behavior of B2B users](https://docs.microsoft.com/en-us/azure/active-directory/b2b/conditional-access) as documented by Microsoft
+* Be aware of [Conditional Access and MFA behavior of B2B users](https://docs.microsoft.com/en-us/azure/active-directory/b2b/conditional-access) as documented by Microsoft. Restriced invitation of external users may have impact to Office 365 services.
 
 ## Access to Azure Portal
 _Azure AD Portal > User settings_
