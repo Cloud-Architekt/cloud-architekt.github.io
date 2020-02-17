@@ -13,6 +13,7 @@ hidden: true
 _Every created Azure AD tenant has default configurations by Microsoft. These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. In these blog post I like to give you a summary on using “Identity Secure Score” for hardening your tenant-level settings and in addition some settings that needs special attention (including recommendations)!_
 
 **Microsoft’s default settings**
+
 Default tenant settings seems to be chosen by Microsoft to fits for most (small or mid-sized) organizations. Nevertheless the customer is still responsible to verify that these settings cover their needs and requirements.
 
 Azure AD, as every cloud service, is not a shipped product and so you should regularly assess previous and new settings. Best practices may have changed or new features have been implemented with default settings in your tenant.
@@ -21,7 +22,9 @@ Follow the announcements of new features in the Azure AD release notes to raise 
 
 [What’s new? Release notes - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/whats-new)
 
+
 **Identity Secure Score**
+
 Microsoft did a good job to implement “Security Score” for Azure AD (similar to the other security scores in Office 365, Azure Security Center,…) and provides every customer a built-in measurement of “identity security posture”.
 
 It is an easy way to follow Microsoft’s security recommendations and guidance to improve your identity security posture.
@@ -42,6 +45,7 @@ Score impact of improvement actions, overall score of your tenant and relevant b
 I can strongly recommended to review the score and improvement actions on a regular basis. These information are also available from the [Microsoft Graph Security API](https://docs.microsoft.com/en-us/graph/api/resources/security-api-overview?view=graph-rest-1.0#common-use-cases) and can be integrated to your dashboard, PKI or monitoring solution.
 
 **Further consideration and aspects**
+
 In the following sections I like to give an overview of some settings that are not part or specific covered by the “Identity Secure Score” (yet).
 
 _The recommendations that I will referred below are based on my personal view and assessment. You should cross review these with your environment and requirements (as always). In addition my statements could be also out-dated after certain time after publishing these article._
