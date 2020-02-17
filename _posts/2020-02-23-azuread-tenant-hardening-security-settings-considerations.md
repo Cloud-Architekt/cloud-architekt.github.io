@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD Tenant Hardening - Security settings that should be consider"
+title:  "Azure AD Tenant Hardening - Security settings consideration and recommendations"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
