@@ -10,7 +10,8 @@ featured: false
 hidden: true
 ---
 
-_Every created Azure AD tenant has default configurations by Microsoft. These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. In these blog post I like to give you a summary on using “Identity Secure Score” for hardening your tenant-level settings and in addition some settings that needs special attention (including recommendations)!_
+_Every created Azure AD tenant has default configurations by Microsoft.
+These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. In these blog post I like to give you a summary on using “Identity Secure Score” for hardening your tenant-level settings and in addition some settings that needs special attention (including recommendations)!_
 
 **Microsoft’s default settings**
 
@@ -18,14 +19,11 @@ Default tenant settings seems to be chosen by Microsoft to fits for most (small 
 
 Azure AD, as every cloud service, is not a shipped product and so you should regularly assess previous and new settings. Best practices may have changed or new features have been implemented with default settings in your tenant.
 
-Follow the announcements of new features in the Azure AD release notes to raise awareness for new settings:
-
-[What’s new? Release notes - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/whats-new)
-
+Follow the [release notes of Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/whats-new) to be aware of new features and setting options.
 
 **Identity Secure Score**
 
-Microsoft did a good job to implement “Security Score” for Azure AD (similar to the other security scores in Office 365, Azure Security Center,…) and provides every customer a built-in measurement of “identity security posture”.
+Microsoft did a good job to implement “Security Score” for Azure AD (similar to the other security scores in Office 365, Azure Security Center,…) and provides every customer a built-in measurement of their “identity security configuration".
 
 It is an easy way to follow Microsoft’s security recommendations and guidance to improve your identity security posture.
 You’ll find the “[Identity secure score](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/identity-secure-score#how-do-i-get-my-secure-score)” in the “Azure AD Security” blade of the Azure Portal:
@@ -36,7 +34,7 @@ On the one hand many findings are very clear (such as require MFA for privileged
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score-action.png)
 
-In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned  in case of MFA service outage). You’ll find more information about these accounts for “break glass” scenarios in one of my recent blog posts: [Cloud-Architekt.net | How to implement and manage Emergency Access Accounts / Break Glass](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/)
+In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned  in case of MFA service outage). You’ll find more details about it in my blog post [about managing accounts for "break glass" or "emergency" scenarios.](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/)
 
 Configuration of [Azure AD Identity Protection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/overview-identity-protection), [Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) or (Global) [Password Protection](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-password-ban-bad) and other latest security features are also part of the recommended actions if you have not already enabled it.
 
@@ -53,7 +51,7 @@ _The recommendations that I will referred below are based on my personal view an
 ## Security Defaults (Baseline policies / Conditional Access)
 _Azure AD Portal > Properties > Manage Security Defaults_
 
-Security default was introduced in November 2019 to replace the “Baseline policies” in Azure AD Conditional Access. It’s an easy way to implement the most **basically** recommendations by Microsoft for your new Azure AD tenant. It’s available for every organization to achieve a basic level of security without no extra costs. Every organization should consider to create custom “Conditional Access Policies” to implement their security, identity and access strategy.  Configuring exclusions (such as emergency access or temporary exclusions of users) are also possible with custom policies only.
+Security default was introduced in November 2019 to replace the “Baseline policies” in Azure AD Conditional Access. It’s an "one-click" solution to implement the most **basically** recommendations by Microsoft for your new Azure AD tenant. It’s available for every organization to achieve a basic level of security without no extra costs. Every organization should consider to create custom “Conditional Access Policies” to implement their security, identity and access strategy.  Configuring exclusions (such as emergency access or temporary exclusions of users) are also possible with custom policies only.
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/enable-security-defaults.png)
 
@@ -63,7 +61,7 @@ Every Tenant has enabled “security defaults” that was created after October 
 ### My recommendation:
 * Turn it on if you have no Conditional Access Strategy designed or resources for configuration (yet):
 	* Consider that you have no option to exclude “[Emergency Access Accounts](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/))” from the security policies. 
-	* Replace “security defaults” by configuring [equivalent policies](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/concept-fundamentals-security-defaults#conditional-access) in Azure AD Conditional Access as soon as possible, There are no excuses to postpone these steps after creation of the tenant.
+	* Replace “security defaults” by configuring [equivalent policies](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/concept-fundamentals-security-defaults#conditional-access) in Azure AD Conditional Access as soon as possible. There are no excuses to postpone these steps after creation of the tenant.
 	* Afterwards start working on a strategy for “Conditional Access” design for your organization: Microsoft released some good documentation about [common identity and device access policies](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies). This could be an example and start to draft your own (custom) policies.
 * As soon you are using “Conditional Access Policies” this setting should be not relevant for you anymore.
 
@@ -76,9 +74,9 @@ _Azure AD Portal > User settings (> Enterprise applications)_
 
 
 ### Default value:
-All users are able to proceed app registration and consent user permission. This was already a topic of my recent blog post: [Detection and Mitigation of Illicit Consent Grant Attacks in Azure AD](https://www.cloud-architekt.net/detection-and-mitigation-consent-grant-attacks-azuread/)
+All users are able to proceed app registration and consent user permission. This was already [a topic of my recent blog post](https://www.cloud-architekt.net/detection-and-mitigation-consent-grant-attacks-azuread/) and you should take care of the security risk. 
 
-Be aware of the security risk of keeping these default options enabled.
+Be aware of security impact if you keeping these default options enabled.
 
 ### My recommendation:
 * Turn off app registration and user consent
@@ -92,7 +90,7 @@ _Azure AD Portal > User settings > Manage external collaboration settings_
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/b2b-invitation.png)
 
 ### Default value:
-Every user is able to invite “Guest users“ and even invited Guests are able to invite other Guests. By default Guest users has limited permission in your tenant. Check the following documentation to compare member and guest default permissions: [Default user permissions - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/users-default-permissions#compare-member-and-guest-default-permissions)
+Every user is able to invite “Guest users“ and even invited Guests are able to invite other Guests. By default Guest users has limited permission in your tenant. Check the Microsoft documentation to [compare member and guest default permissions](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/users-default-permissions#compare-member-and-guest-default-permissions).
 
 ### My recommendation:
 * Disable invitation of guests by your (member) user and/or restrict invitation from specified domains only
@@ -111,7 +109,7 @@ Every user is able to access Azure AD administration portal and use default perm
 ### My recommendation:
 * This really depends on your desired objective. Enabling the access restriction of Azure AD admin portal for non-admins is not covered by other access paths (PowerShell and other REST-Clients are still able to browse). You should first think about the benefit,  scope and need/use case of this type of restriction.
 * Default permissions for your member users still exists even if you prevent access to the portals. There are a few [default permissions that can be restricted](https://docs.microsoft.com/bs-cyrl-ba/azure/active-directory/fundamentals/users-default-permissions#to-restrict-the-default-permissions-for-member-users) (such as ability to read other users) but you should really consider disadvantages and need for modify the defaults.
-* Conditional Access can be used to restrict access to several Azure management endpoint (Azure portal, ARM provider, Az PowerShell) as documented in the following article: [Manage access to Azure management with Conditional Access in Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/conditional-access-azure-management). 
+* Conditional Access can be used to restrict access to several Azure management endpoint (Azure portal, ARM provider, Az PowerShell) as documented in Microsoft docs to [manage access to Azure management](https://docs.microsoft.com/en-us/azure/role-based-access-control/conditional-access-azure-management).
 
 ## Access management for Azure resources
 _Azure AD Portal > Properties_
