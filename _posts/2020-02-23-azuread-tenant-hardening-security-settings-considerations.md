@@ -18,6 +18,7 @@ Default tenant settings seems to be chosen by Microsoft to fits for most (small 
 Azure AD, as every cloud service, is not a shipped product and so you should regularly assess previous and new settings. Best practices may have changed or new features have been implemented with default settings in your tenant.
 
 Follow the announcements of new features in the Azure AD release notes to raise awareness for new settings:
+
 [What’s new? Release notes - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/whats-new)
 
 **Identity Secure Score**
@@ -56,11 +57,11 @@ Security default was introduced in November 2019 to replace the “Baseline poli
 Every Tenant has enabled “security defaults” that was created after October 2019. Existing or older tenants are configured without these option by default.
 
 ### My recommendation:
-	* Turn it on if you have no Conditional Access Strategy designed or resources for configuration (yet):
-		* Consider that you have no option to exclude “[Emergency Access Accounts](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/))” from the security policies. 
-		* Replace “security defaults” by configuring [equivalent policies](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/concept-fundamentals-security-defaults#conditional-access) in Azure AD Conditional Access as soon as possible, There are no excuses to postpone these steps after creation of the tenant.
-		* Afterwards start working on a strategy for “Conditional Access” design for your organization: Microsoft released some good documentation about [common identity and device access policies](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies). This could be an example and start to draft your own (custom) policies.
-	* As soon you are using “Conditional Access Policies” this setting should be not relevant for you anymore.
+* Turn it on if you have no Conditional Access Strategy designed or resources for configuration (yet):
+	* Consider that you have no option to exclude “[Emergency Access Accounts](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/))” from the security policies. 
+	* Replace “security defaults” by configuring [equivalent policies](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/concept-fundamentals-security-defaults#conditional-access) in Azure AD Conditional Access as soon as possible, There are no excuses to postpone these steps after creation of the tenant.
+	* Afterwards start working on a strategy for “Conditional Access” design for your organization: Microsoft released some good documentation about [common identity and device access policies](https://docs.microsoft.com/en-us/microsoft-365/enterprise/identity-access-policies). This could be an example and start to draft your own (custom) policies.
+* As soon you are using “Conditional Access Policies” this setting should be not relevant for you anymore.
 
 ## Application registrations and user consent
 _Azure AD Portal > User settings (> Enterprise applications)_
@@ -76,10 +77,10 @@ All users are able to proceed app registration and consent user permission. This
 Be aware of the security risk of keeping these default options enabled.
 
 ### My recommendation:
-	* Turn off app registration and user consent
-	* Automation and process to register and onboard new Azure AD-integrated apps (3rd party and internal apps)
-		* Delegate permissions with least privileges (“Application Administrator”)
-	* Implementing admin consent requests to manage user’s requests
+* Turn off app registration and user consent
+* Automation and process to register and onboard new Azure AD-integrated apps (3rd party and internal apps)
+	* Delegate permissions with least privileges (“Application Administrator”)
+* Implementing admin consent requests to manage user’s requests
 
 ## Invitation of external users (B2B)
 _Azure AD Portal > User settings > Manage external collaboration settings_
@@ -90,10 +91,10 @@ _Azure AD Portal > User settings > Manage external collaboration settings_
 Every user is able to invite “Guest users“ and even invited Guests are able to invite other Guests. By default Guest users has limited permission in your tenant. Check the following documentation to compare member and guest default permissions: [Default user permissions - Azure Active Directory | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/users-default-permissions#compare-member-and-guest-default-permissions)
 
 ### My recommendation:
-	* Disable invitation of guests by your (member) user and/or restrict invitation from specified domains only
-	* Implement a workflow and governance for invitation of B2B users via [connected organization in Azure AD entitlement management](https://docs.microsoft.com/en-us/azure/active-directory/governance/entitlement-management-organization)
-	* Configure  [a secure guest sharing environment](https://docs.microsoft.com/en-us/office365/enterprise/create-a-secure-guest-sharing-environment%E2%80%AC) and consider [Microsoft’s best practices for B2B scenarios](https://docs.microsoft.com/en-us/azure/active-directory/b2b/b2b-fundamentals)
-		* Be aware of [Conditional Access and MFA behavior of B2B users](https://docs.microsoft.com/en-us/azure/active-directory/b2b/conditional-access) as documented by Microsoft
+* Disable invitation of guests by your (member) user and/or restrict invitation from specified domains only
+* Implement a workflow and governance for invitation of B2B users via [connected organization in Azure AD entitlement management](https://docs.microsoft.com/en-us/azure/active-directory/governance/entitlement-management-organization)
+* Configure  [a secure guest sharing environment](https://docs.microsoft.com/en-us/office365/enterprise/create-a-secure-guest-sharing-environment%E2%80%AC) and consider [Microsoft’s best practices for B2B scenarios](https://docs.microsoft.com/en-us/azure/active-directory/b2b/b2b-fundamentals)
+* Be aware of [Conditional Access and MFA behavior of B2B users](https://docs.microsoft.com/en-us/azure/active-directory/b2b/conditional-access) as documented by Microsoft
 
 ## Access to Azure Portal
 _Azure AD Portal > User settings_
@@ -104,48 +105,46 @@ _Azure AD Portal > User settings_
 Every user is able to access Azure AD administration portal and use default permissions such as read users or groups. This behavior is roughly comparable to Active Directory (on-premises) and authenticated user that are able to browse the directory objects. 
 
 ### My recommendation:
-	* This really depends on your desired objective. Enabling the access restriction of Azure AD admin portal for non-admins is not covered by other access paths (PowerShell and other REST-Clients are still able to browse). You should first think about the benefit,  scope and need/use case of this type of restriction.
-	* Default permissions for your member users still exists even if you prevent access to the portals. There are a few [default permissions that can be restricted](https://docs.microsoft.com/bs-cyrl-ba/azure/active-directory/fundamentals/users-default-permissions#to-restrict-the-default-permissions-for-member-users) (such as ability to read other users) but you should really consider disadvantages and need for modify the defaults.
-	* Conditional Access can be used to restrict access to several Azure management endpoint (Azure portal, ARM provider, Az PowerShell) as documented in the following article: [Manage access to Azure management with Conditional Access in Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/conditional-access-azure-management). 
+* This really depends on your desired objective. Enabling the access restriction of Azure AD admin portal for non-admins is not covered by other access paths (PowerShell and other REST-Clients are still able to browse). You should first think about the benefit,  scope and need/use case of this type of restriction.
+* Default permissions for your member users still exists even if you prevent access to the portals. There are a few [default permissions that can be restricted](https://docs.microsoft.com/bs-cyrl-ba/azure/active-directory/fundamentals/users-default-permissions#to-restrict-the-default-permissions-for-member-users) (such as ability to read other users) but you should really consider disadvantages and need for modify the defaults.
+* Conditional Access can be used to restrict access to several Azure management endpoint (Azure portal, ARM provider, Az PowerShell) as documented in the following article: [Manage access to Azure management with Conditional Access in Azure AD | Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/conditional-access-azure-management). 
 
 ## Access management for Azure resources
 _Azure AD Portal > Properties_
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/elevated-azure-permission.png)
 
-
 ### Default value:
 Global Admins are not allowed to manage access to all Azure resources as “User Access Administrators”.
 
 ### My recommendation:
-	* Prevent (regular or permanent) elevate access of Global Admins:
-		* Design a process to regain access to a specific subscription or management group in case of lost access
-		* Delegate read-only permission to browse and review permissions of Azure resources to Global Admins (if needed)
-	* Implement [Azure Privileged Identity Management (PIM)](https://docs.microsoft.com/en-us/azure/role-based-access-control/pim-azure-resource) to manage permissions to your Azure Resources
-	* Monitor [all assignments at root scope](https://docs.microsoft.com/en-us/azure/role-based-access-control/elevate-access-global-admin) to detect elevated access by Global Admins
+* Prevent (regular or permanent) elevate access of Global Admins:
+	* Design a process to regain access to a specific subscription or management group in case of lost access
+	* Delegate read-only permission to browse and review permissions of Azure resources to Global Admins (if needed)
+* Implement [Azure Privileged Identity Management (PIM)](https://docs.microsoft.com/en-us/azure/role-based-access-control/pim-azure-resource) to manage permissions to your Azure Resources
+* Monitor [all assignments at root scope](https://docs.microsoft.com/en-us/azure/role-based-access-control/elevate-access-global-admin) to detect elevated access by Global Admins
 
-	
+
 ## Local administrators on Azure AD joined devices
 _Azure AD Portal > Devices > Device settings_
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/devices-local-admin.png)
 
-
 ### Default value:
 No specific user is configured and shown in the portal as local administrator but the following 3 types of users are granted by default:
 
-	* Users with “Global Administrator” role
-	* Users with “Device Administrator” role
-	* User which has performed the Azure AD join
+* Users with “Global Administrator” role
+* Users with “Device Administrator” role
+* User which has performed the Azure AD join
 
 ### My recommendation:
-	* Prevent usage of accounts with local admin permissions on all devices
-		* Using Privileged Account Management (PAM) or alternate LAPS (e.g. “[Serverless LAPS](https://github.com/jseerden/SLAPS)”) solution to manage and rotate passwords for local admin accounts of all Windows devices in your Azure AD.
-	* Remove default permission for GA as local admin
-		* No local admin tasks by Tier0 account
-	* Avoid usage of Device Administrator
-		* Consideration: Removed role assignments can be locally granted with local admin permissions as you might expected. Check the following blog post about these kind of [challenges by Kenneth van Surksum](https://www.vansurksum.com/2020/02/11/challenges-while-managing-administrative-privileges-on-your-azure-ad-joined-windows-10-devices/).
-	* Configure AutoPilot profile to prevent initial user granted as local admin.
+* Prevent usage of accounts with local admin permissions on all devices
+	* Using Privileged Account Management (PAM) or alternate LAPS (e.g. “[Serverless LAPS](https://github.com/jseerden/SLAPS)”) solution to manage and rotate passwords for local admin accounts of all Windows devices in your Azure AD.
+* Remove default permission for GA as local admin
+	* No local admin tasks by Tier0 account
+* Avoid usage of Device Administrator
+	* Consideration: Removed role assignments can be locally granted with local admin permissions as you might expected. Check the following blog post about these kind of [challenges by Kenneth van Surksum](https://www.vansurksum.com/2020/02/11/challenges-while-managing-administrative-privileges-on-your-azure-ad-joined-windows-10-devices/).
+* Configure AutoPilot profile to prevent initial user granted as local admin.
 
 ## Smart lockout thresholds and duration
 _Azure AD Security > Authentication Methods > Password protection_
@@ -157,11 +156,15 @@ _Azure AD Security > Authentication Methods > Password protection_
 By default locks accounts from sign-in attempts for one minute after 10 failed accounts.
 
 ### My recommendation:
-	* Consider the following facts:
-		* Each Azure AD data center tracks lockout independently
-		* Familiar and unfamiliar locations will be used to differentiate between bad actor and genuine user. Therefore separate lockout counters will be used.
-	* In case you are using PTA: Lockout threshold in Azure AD must be less than the Active Directory account lockout threshold. Azure AD lockout duration must be set longer than AD reset account lockout. Verify your [on-premises account lockout policy](https://docs.microsoft.com/en-us/Azure/active-directory/authentication/howto-password-smart-lockout#verify-on-premises-account-lockout-policy) to set suitable values.
-		* Recommendation: Reconsider your existing AD lockout policy and check alternative approaches to prevent attackers from (on-premises) brute-force attempts. Azure ATP and automated response process (as part of Azure Sentinel) can be used to detect attacks and explicit lock out attackers without negative impact for genuine user. Otherwise attackers are also aided by your local account lockout policy to use denial-of-service attack for locking out accounts in your on-premises environment.
+* Consider the following facts:
+	* Each Azure AD data center tracks lockout independently
+	* Familiar and unfamiliar locations will be used to differentiate between bad actor and genuine user. Therefore separate lockout counters will be used.
+* In case you are using PTA: Lockout threshold in Azure AD must be less than the Active Directory account lockout threshold. Azure AD lockout duration must be set longer than AD reset account lockout. Verify your [on-premises account lockout policy](https://docs.microsoft.com/en-us/Azure/active-directory/authentication/howto-password-smart-lockout#verify-on-premises-account-lockout-policy) to set suitable values.
+	* Recommendation: Reconsider your existing AD lockout policy and check alternative approaches to prevent attackers from (on-premises) brute-force attempts. Azure ATP and automated response process (as part of Azure Sentinel) can be used to detect attacks and explicit lock out attackers without negative impact for genuine user. Otherwise attackers are also aided by your local account lockout policy to use denial-of-service attack for locking out accounts in your on-premises environment.
+
+
+
+
 
 
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [Pettycon / Pixabay](https://pixabay.com/de/users/Pettycon-3307648/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1674891)</span>
