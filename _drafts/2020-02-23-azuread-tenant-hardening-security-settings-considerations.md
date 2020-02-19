@@ -37,7 +37,7 @@ But on the other hand some action descriptions and guidance should be well thoug
 
 ![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score-action.png)
 
-In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned in case of MFA service outage). You’ll find more details in my blog post [about managing these special kind of accounts for emergency scenarios](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/).
+In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned in case of MFA service outage). You’ll find more details [about managing these special kind of accounts for emergency scenarios on my blog](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/).
 
 Configuration of [Azure AD Identity Protection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/overview-identity-protection), [Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) or (Global) [Password Protection](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-password-ban-bad) and other latest security features are also part of the recommended actions if you have not already enabled it.
 
