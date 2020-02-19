@@ -67,7 +67,7 @@ Existing or older tenants are configured without these option by default.
 
 ### My recommendation:
 * Turn it on if you have no Conditional Access Strategy designed or resources for configuration (yet):
-	* Consider that you have no option to exclude “[Emergency Access Accounts](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/))” from the security policies. 
+	* Consider that you have no option to exclude “[Emergency Access Accounts](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/)” from the security policies and just a very basic protection. 
 * Replace “security defaults” by configuring [equivalent policies](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/concept-fundamentals-security-defaults#conditional-access) in Azure AD Conditional Access as soon as possible.
 There are no excuses to postpone these steps after creation of the tenant.
 	* Afterwards start working on a strategy for “Conditional Access” design for your organization. 
