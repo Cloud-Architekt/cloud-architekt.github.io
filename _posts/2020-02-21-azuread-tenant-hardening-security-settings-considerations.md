@@ -7,7 +7,7 @@ tags: [azure, azuread, security]
 image: assets/images/tenant-settings.png
 description: "Every created Azure AD tenant has default configurations by Microsoft. These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. Using Secure Score and few settings needs particular attention."
 featured: false
-hidden: true
+hidden: false
 ---
 
 _Every created Azure AD tenant has default configurations by Microsoft.
