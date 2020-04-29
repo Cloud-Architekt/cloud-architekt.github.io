@@ -7,7 +7,7 @@ tags: [azure, azuread, security]
 image: assets/images/adminunits.png
 description: "Administrative Units (AUs) allow organizations to delegate admin permission to a custom scope and segment (such as region, department, business units) within a single Azure AD tenant. In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature"
 featured: false
-hidden: true
+hidden: false
 ---
 
 /Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature./
@@ -71,19 +71,19 @@ Therefore, it could be also interesting for on-call service or mobile admins.
 
 Access to the “MyStaff” portal can be restricted by the user feature preview settings in the Azure portal:
 
-![](../2020-04-30-azuread-administrative-units/mystaff-settings.png)
+![](../2020-04-29-azuread-administrative-units/mystaff-settings.png)
 
 Delegated admins are able to see the assigned AU only:
 
-![](../2020-04-30-azuread-administrative-units/mystaff-au.png)
+![](../2020-04-29-azuread-administrative-units/mystaff-au.png)
 
 List of all users in the AU will be displayed:
 
-![](../2020-04-30-azuread-administrative-units/mystaff-allusers.png)
+![](../2020-04-29-azuread-administrative-units/mystaff-allusers.png)
 
 Password Admins are able to reset the password in the reduced UI. Option to “Add phone number” is grayed-out because of the missing directory role assignment of “Authenticator Admin”:
 
-![](../2020-04-30-azuread-administrative-units/mystaff-user.png)
+![](../2020-04-29-azuread-administrative-units/mystaff-user.png)
 
 
 ### Microsoft 365 Admin Portal
@@ -91,12 +91,12 @@ Users with assigned directory roles of an AU-level are also able to use the Micr
 They will find a drop down in the left corner for showing them the current and assigned AU scope.
 Resources from this AU will be displayed in the portal only:
 
-![](../2020-04-30-azuread-administrative-units/m365portal.png)
+![](../2020-04-29-azuread-administrative-units/m365portal.png)
 
 ### Azure Audit and sign-in logs
 Currently the Azure AD Audit Log schema contains already an “administrativeUnits” column of the TargetRessources entry. But has not been filled or used until now. So it seems that Microsoft is planning to include the information of AU assignment(s):
 
-![](../2020-04-30-azuread-administrative-units/azureadauditlogs.png)
+![](../2020-04-29-azuread-administrative-units/azureadauditlogs.png)
 
 ### Role Assignments in the Azure Portal
 Assigned directory roles on level of AUs are not visible in (tenant-level) Azure Portal overview
@@ -104,17 +104,17 @@ Assigned directory roles on level of AUs are not visible in (tenant-level) Azure
 
 
 Directory Role Assignment in **Azure AD Roles and Administrators**:
-![](../2020-04-30-azuread-administrative-units/roles-tenant-overview.png)
+![](../2020-04-29-azuread-administrative-units/roles-tenant-overview.png)
 
 
 
 Display of "Your Role" also not showing AU-assigned permissions:
-![](../2020-04-30-azuread-administrative-units/roles-myassign.png)
+![](../2020-04-29-azuread-administrative-units/roles-myassign.png)
 
 
 
 Directory Role Assignment in **Administrative Unit Management**:
-![](../2020-04-30-azuread-administrative-units/roles-tenat-auview.png)
+![](../2020-04-29-azuread-administrative-units/roles-tenat-auview.png)
 
 All of this can be confusing because of a missing overall view of directory role assignments in the portal. 
 
@@ -127,10 +127,11 @@ Even if it seems that you have the option to convert an AU-scoped role assignmen
 In contrast of the Azure AD blade, PIM shows the assignment of “Password Administrator”.
 But unfortunately PIM displayed the scope as “Directory” (Tenant-wide) and not in scope of AU "Hybrid Identities":
 
-![](../2020-04-30-azuread-administrative-units/pim-overview.png)
+![](../2020-04-29-azuread-administrative-units/pim-overview.png)
 
 This scope is shown incorrect because of the missing support of AUs as a configurable scope in Azure AD PIM.
-Please be aware that converting this permanent to eligible assignment will also set the role assignment on a Directory-level scope. Your previous AU-scoped assignment will be overwritten.
+Please be aware that converting this permanent to eligible assignment will also set the role assignment on a Directory-level scope.
+Your previous AU-scoped assignment will be overwritten.
 
 ## Conclusion: *Current* limitations and considerations of AUs
 Administrative Units is a great way to build a flexible structure for delegation and management.
