@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Azure AD Administrative Units: Use cases, considerations and limitations"
+title:  "Azure AD Administrative Units: Deep Dive"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
-image: assets/images/adminunits.png
+image: assets/images/adminunits.jpg
 description: "Administrative Units (AUs) allow organizations to delegate admin permission to a custom scope and segment (such as region, department, business units) within a single Azure AD tenant. In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature"
 featured: false
 hidden: false
@@ -147,3 +147,15 @@ But keep in mind and consider the following limitations (at the time of writing 
 * Azure AD PIM is currently not supported, Permanent assignment can be used only
 * This feature needs Azure AD P1 (or higher) for admins that are using AUs
 	* Therefore it seems not supported in B2C tenants
+
+
+
+
+
+
+
+
+
+
+
+<span style="color:silver;font-style:italic;font-size:small">Original cover image by [geralt / Pixabay](https://pixabay.com/illustrations/social-media-personal-909708/)</span>
