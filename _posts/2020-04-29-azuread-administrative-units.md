@@ -13,7 +13,7 @@ hidden: false
 _Administrative Units (AUs) allow organizations to delegate admin permission to a custom segment of a tenant (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature._
  
 ## What are “Administrative Units” (AUs)?
-In general, Azure AD has a flat structure where objects are located on the same “level”. In the (old) days of Active Directory the management “Organizational Units” (OUs) helps to delegate administration and apply policies (GPO) based on a designed structured. This is why customers has mostly the initial thought that AUs are an 1:1 adoption of the traditional OUs concept in Azure AD. On second place it will be clear that this concepts has some major differences (as described in this blog post).
+In general, Azure AD has a flat structure where objects are located on the same “level”. In the (old) days of Active Directory the management “Organizational Units” (OUs) helps to delegate administration and apply policies (GPO) based on a designed structured. This is why some initial thought is that AUs are an 1:1 adoption of the traditional OUs concept in Azure AD. On second glace it will be clear that this concepts has some major differences (as described in this blog post).
 
 However, you may looking for a solution to segment users or groups for delegation of permissions on a self-named structure (based on container) now or at any future time.
 
@@ -29,7 +29,7 @@ It is obvious that Microsoft has decided to separate the authorization model
 (such as using Security Groups) from a “resource grouping” approach (in this case with AUs).
 
 This model should assists organizations to assign least-privileges on a minimum scope and provide an option to build a (logical) management structure for resources within a single tenant.
-It supports also large or multi-site organizations to bring structure to your tenant. 😉
+It supports also large or multi-site organizations to bring structure to the tenant. 😉
 
 ## Characteristics of AUs
 * Only certain types of resources can be assigned
@@ -65,7 +65,7 @@ In my opinion these are good examples where AUs can supports to limit the scope.
 
 ## Visibility and usage of AUs in Portals
 ### My Staff portal
-This portal (mystaff.microsoft.com) seems to be a great way for administrators and helpdesk employees to manage users on a certain (AU) scope.
+This portal (mystaff.microsoft.com) seems to be a great option for administrators and helpdesk employees to manage users on a certain (AU) scope.
 It is also optimized for touch based input and the UI is sharply reduced (compared to Azure AD portal). 
 Therefore, it could be also interesting for 1st-level helpdesk, on-call service or mobile admins.
 
