@@ -10,7 +10,7 @@ featured: false
 hidden: true
 ---
 
-_Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature./
+/Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature./
  
 ## What are “Administrative Units” (AUs)?
 In general, Azure AD has a flat structure where objects are located on the same “level”. In the (old) days of Active Directory the management “Organizational Units” (OUs) helps to delegate administration and apply  policies (GPO) based on a designed structured. That is why customers has mostly the initial thought that AUs are an 1:1 adoption of the traditional OUs concept in Azure AD. On second place it will be clear that this concepts has some major differences (as described in this blog post).
@@ -22,29 +22,34 @@ Administrative Units are available as public preview since [December 2014](https
 This is a good time to check how this feature can support you and what are the considerations or limitations.
 
 ## General purposed use of AUs
-Global and Privileged Role Admins are able to manage AUs in an Azure AD tenant. This container are purposed for management and delegation tasks only. It is obvious that Microsoft has decided to separate the authorization model (such as using Security Groups) from a “resource grouping” approach (in this case with AUs). This model should assists to assign least-privileges on a minimum scope and provide an option to build a management structure for resources within a single tenant. This helps also large or multi-side organizations to bring structure to your tenant. 😉
+Global and Privileged Role Admins are able to manage AUs in an Azure AD tenant.
+This container are purposed for management and delegation tasks only.
+It is obvious that Microsoft has decided to separate the authorization model
+(such as using Security Groups) from a “resource grouping” approach (in this case with AUs).
 
-## Characteristics of AUs and user/groups
-	* Only certain types of resources can be assigned
-	(so far restricted to users and groups)
-	* Relationship can be established in one-to-many (resource to AU)
-		* No necessary one-to-one relation or unique allocation
-		(strong difference to Organizational Units in AD)
-	* No hierarchical structure and inheritance
-	(in the style of “Sub-AUs” 😀) 
-	* Membership to AU with single assignment of built import
-	(no dynamic assignment support yet)
-	* Directory Roles can be assigned on scope of AUs
-	(has to support this as well, currently very limited)
-	* Management via PowerShell, Graph API and Portal UI
+This model should assists to assign least-privileges on a minimum scope and provide an option to build a management structure for resources within a single tenant. It supports also large or multi-side organizations to bring structure to your tenant. 😉
+
+## Characteristics of AUs
+* Only certain types of resources can be assigned
+(so far restricted to users and groups)
+* Relationship can be established in one-to-many (resource to AU)
+* No necessary one-to-one relation or unique allocation
+(strong difference to Organizational Units in AD)
+* No hierarchical structure and inheritance
+(in the style of “Sub-AUs” 😀) 
+* Membership to AU with single assignment of built import
+(no dynamic assignment support yet)
+* Directory Roles can be assigned on scope of AUs
+(has to support this as well, currently very limited)
+* Management via PowerShell, Graph API and Portal UI
 
 ## Management of AUs
 Microsoft has written a very good documentation on how to manage and assign resources and delegate permissions to a directory role.
 Saying this, I like to reference on the related official Microsoft Docs:
 
-	* [Manage administrative units](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-manage) with Azure Portal and PowerShell
-	* Add and manage [users](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-users) and [groups](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-groups) in an AU
-	* [Assign scoped roles](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-assign-roles) to an AU
+* [Manage administrative units](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-manage) with Azure Portal and PowerShell
+* Add and manage [users](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-users) and [groups](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-groups) in an AU
+* [Assign scoped roles](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-assign-roles) to an AU
 
 ## Real-world use cases and scenarios of AUs
 In the past I’ve faced the following limitations or questions around the existing flat structure of Azure AD:
@@ -92,11 +97,14 @@ Currently the Azure AD Audit Log schema contains already an “administrativeUni
 ### Role Assignments in the Azure Portal
 Assigned directory roles on level of AUs are not visible in (tenant-level) Azure Portal overview (outside of the AU management):
 
+
 Directory Role Assignment in **Azure AD Roles and Administrators**:
 ![](../2020-04-30-azuread-administrative-units/roles-tenant-overview.png)
 
+
 Directory Role Assignment in the certain **Administrative Unit Management**:
 ![](../2020-04-30-azuread-administrative-units/roles-tenat-auview.png)
+
 
 This also covers when the current role will be displayed in the overview of “Roles and administrators” in the Azure AD portal:
 ![](../2020-04-30-azuread-administrative-units/roles-myassign.png)
