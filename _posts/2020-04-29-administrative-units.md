@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD Administrative Units: Use cases, considerations and limitations"
+title:  "Azure AD Administrative Units - Use cases, considerations and limitations"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
@@ -10,7 +10,7 @@ featured: false
 hidden: false
 ---
 
-/Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature./
+_Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature._
  
 ## What are “Administrative Units” (AUs)?
 In general, Azure AD has a flat structure where objects are located on the same “level”. In the (old) days of Active Directory the management “Organizational Units” (OUs) helps to delegate administration and apply policies (GPO) based on a designed structured. That is why customers has mostly the initial thought that AUs are an 1:1 adoption of the traditional OUs concept in Azure AD. On second place it will be clear that this concepts has some major differences (as described in this blog post).
