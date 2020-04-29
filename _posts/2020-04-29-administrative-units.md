@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD Administrative Units: Deep Dive"
+title:  "Azure AD Administrative Units: Use cases, considerations and limitations"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
