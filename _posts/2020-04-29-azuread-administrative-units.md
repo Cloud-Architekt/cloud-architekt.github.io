@@ -85,6 +85,7 @@ Password Admins are able to reset user's password in the reduced UI. Option to â
 
 ![](../2020-04-29-azuread-administrative-units/mystaff-user.png)
 
+More details on the MyStaff portal and how to apply Conditional Access are described in [Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/my-staff-configure#apply-a-----conditional-access-policy-to-my-staff).  
 
 ### Microsoft 365 Admin Portal
 Users with assigned directory roles of an AU-level are also able to use the Microsoft 365 Portal.
