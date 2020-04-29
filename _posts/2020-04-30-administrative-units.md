@@ -5,7 +5,7 @@ author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/adminunits.png
-description: "Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature"
+description: "Administrative Units (AUs) allow organizations to delegate admin permission to a custom scope and segment (such as region, department, business units) within a single Azure AD tenant. In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature"
 featured: false
 hidden: true
 ---
@@ -13,38 +13,40 @@ hidden: true
 /Administrative Units (AUs) allow Azure AD admins to delegate admin permission to a custom segment of a tenant_organization (such as region, department, business units). In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature./
  
 ## What are “Administrative Units” (AUs)?
-In general, Azure AD has a flat structure where objects are located on the same “level”. In the (old) days of Active Directory the management “Organizational Units” (OUs) helps to delegate administration and apply  policies (GPO) based on a designed structured. That is why customers has mostly the initial thought that AUs are an 1:1 adoption of the traditional OUs concept in Azure AD. On second place it will be clear that this concepts has some major differences (as described in this blog post).
+In general, Azure AD has a flat structure where objects are located on the same “level”. In the (old) days of Active Directory the management “Organizational Units” (OUs) helps to delegate administration and apply policies (GPO) based on a designed structured. That is why customers has mostly the initial thought that AUs are an 1:1 adoption of the traditional OUs concept in Azure AD. On second place it will be clear that this concepts has some major differences (as described in this blog post).
 
-However, you may looking for a solution to segment users or groups for delegation of permissions on a self-named structure (container) now or at any future time.
+However, you may looking for a solution to segment users or groups for delegation of permissions on a self-named structure (based on container) now or at any future time.
 
-Administrative Units are available as public preview since [December 2014](https://azure.microsoft.com/en-us/updates/public-preview-administrative-units/) (!).  But the management of AUs was limited to Graph API and [PowerShell](https://docs.microsoft.com/en-us/powershell/azure/active-directory/working-with-administrative-units?view=azureadps-2.0).  In the latest preview release (April 2020), Microsoft introduce the option to using the Azure Portal. 
+Administrative Units are available as public preview since [December 2014](https://azure.microsoft.com/en-us/updates/public-preview-administrative-units/) (!).
+But the management of AUs was limited to Graph API and [PowerShell](https://docs.microsoft.com/en-us/powershell/azure/active-directory/working-with-administrative-units?view=azureadps-2.0).  In the latest preview release (April 2020), Microsoft introduce the option to using the Azure Portal. 
 
 This is a good time to check how this feature can support you and what are the considerations or limitations.
 
 ## General purposed use of AUs
 Global and Privileged Role Admins are able to manage AUs in an Azure AD tenant.
-This container are purposed for management and delegation tasks only.
+These containers are purposed for management and delegation tasks only.
 It is obvious that Microsoft has decided to separate the authorization model
 (such as using Security Groups) from a “resource grouping” approach (in this case with AUs).
 
-This model should assists to assign least-privileges on a minimum scope and provide an option to build a management structure for resources within a single tenant. It supports also large or multi-side organizations to bring structure to your tenant. 😉
+This model should assists organizations to assign least-privileges on a minimum scope and provide an option to build a (logical) management structure for resources within a single tenant.
+It supports also large or multi-side organizations to bring structure to your tenant. 😉
 
 ## Characteristics of AUs
 * Only certain types of resources can be assigned
 (so far restricted to users and groups)
-* Relationship can be established in one-to-many (resource to AU)
-* No necessary one-to-one relation or unique allocation
+* Relationship can be established in one-to-many (one resource assigned to multiple AUs)
+	* No one-to-one relation or unique allocation neccessary
 (strong difference to Organizational Units in AD)
-* No hierarchical structure and inheritance
+* No hierarchical structure, nesting and inheritance
 (in the style of “Sub-AUs” 😀) 
-* Membership to AU with single assignment of built import
-(no dynamic assignment support yet)
-* Directory Roles can be assigned on scope of AUs
-(has to support this as well, currently very limited)
+* Membership to AU with single assignment or bulk import
+(no dynamic assignment support)
+* Azure AD (RBAC) Directory Roles can be assigned on scope of AUs
+(roles has to support this as well, currently very limited)
 * Management via PowerShell, Graph API and Portal UI
 
 ## Management of AUs
-Microsoft has written a very good documentation on how to manage and assign resources and delegate permissions to a directory role.
+Microsoft has written a very good documentation on how to manage AUs and assignment of directory roles.
 Saying this, I like to reference on the related official Microsoft Docs:
 
 * [Manage administrative units](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-manage) with Azure Portal and PowerShell
@@ -54,10 +56,10 @@ Saying this, I like to reference on the related official Microsoft Docs:
 ## Real-world use cases and scenarios of AUs
 In the past I’ve faced the following limitations or questions around the existing flat structure of Azure AD:
 
-	* Scoped or delegated permission on geographical, organizational or intra-company units
-		* Example: Local helpdesk should be able to manage groups or user limited to the local office only
-	* Privileged (sensitive) accounts and work (hybrid) accounts
-		* Example: User or Password Administrator are able to reset passwords for “non-administrator” only. Microsoft already [mentioned in the documentation](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles#user-administrator) that accounts with owner-permissions of subscription (Azure resources) or delegation outside of Azure AD RBAC/Directory Roles (such as Intune- or MDATP-RBAC) also involved as “non-administrators”. 
+* Scoped or delegated permission on geographical, organizational or intra-company units
+	* Example: Local helpdesk should be able to manage groups or user limited to the local office only
+* Privileged (sensitive) accounts and work (hybrid) accounts
+	* Example: User or Password Administrator are able to reset passwords for “non-administrator” only. Microsoft already [mentioned in the documentation](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles#user-administrator) that accounts with owner-permissions of subscription (Azure resources) or delegation outside of Azure AD RBAC/Directory Roles (such as Intune- or MDATP-RBAC) also involved as “non-administrators”. 
 
 Both scenarios seems to be a perfect scenario to prevent privileged escalation by delegate Directory Roles on a limited scope with AUs.
 
