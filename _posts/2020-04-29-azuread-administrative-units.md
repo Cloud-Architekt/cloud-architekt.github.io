@@ -35,7 +35,7 @@ It supports also large or multi-site organizations to bring structure to the ten
 * Only certain types of resources can be assigned
 (so far restricted to users and groups)
 * Relationship can be established in one-to-many (one resource assigned to multiple AUs)
-	* No one-to-one relation or unique allocation neccessary
+	* No one-to-one relation or unique assignment necessary
 (strong difference to Organizational Units in AD)
 * No hierarchical structure, nesting and inheritance
 (in the style of “Sub-AUs” 😀) 
