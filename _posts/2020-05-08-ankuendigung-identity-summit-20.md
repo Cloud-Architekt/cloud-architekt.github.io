@@ -28,7 +28,7 @@ Hinweis: **Alle Teilnehmer der Umfrage werden vorab informiert, sobald die Regis
 
 ![](../2020-05-08-ankuendigung-identity-summit-20/identity-summit-20-cover.png)
 
-Weitere Informationen und die Umfrage findet Ihr auch auf der Event-Webseite: https://www.identitysummit.cloud.
+Weitere Informationen und die Umfrage findet Ihr auch auf der Event-Webseite "[identitysummit.cloud]"(https://www.identitysummit.cloud/)
 
 Oder *folgt uns auf Twitter [@identitysummit](https://twitter.com/identitysummit)* um aktuelle Neuigkeiten rund um das Summit zu erfahren.
 
