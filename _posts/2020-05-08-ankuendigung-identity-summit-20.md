@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Ankündigung: Cloud Identity Summit am 23.10.2020 in Koblenz"
+title:  "Community Event: Cloud Identity Summit am 23.10.2020 in Koblenz"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [community, azuread]
