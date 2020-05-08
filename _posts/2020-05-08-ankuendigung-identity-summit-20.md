@@ -10,11 +10,12 @@ featured: false
 hidden: true
 ---
 
-Ich freue mich sehr, ein besonderes Community-Event für den Herbst anzukündigen. Wir, das Orga-Team des “Azure Meetup Bonn”, planen für den **23. Oktober 2020** in meiner Heimatstadt Koblenz eine **ganztägige Veranstaltung rund um das Thema Azure Active Directory**.
+Ich freue mich sehr, ein besonderes Community-Event für den Herbst anzukündigen.
+Wir, das Orga-Team des “Azure Meetup Bonn”, planen für den **23. Oktober 2020** in meiner Heimatstadt Koblenz eine **ganztägige Veranstaltung rund um das Thema Azure Active Directory**.
 
-Der **“Cloud Identity Summit”** wird eine deutschsprachige und kostenfreie Veranstaltung sein, die dabei nicht nur Vorträge zum Identitätsmanagement in Azure bietet, sondern vor allem auch einen starken Fokus auf den Austausch zwischen den Teilnehmern setzen wird.
+Der **“Cloud Identity Summit”** wird eine deutschsprachige und kostenfreie Veranstaltung sein, die dabei nicht nur Vorträge zum Identitätsmanagement in Azure bietet, sondern vor allem einen starken Fokus auf den Austausch zwischen den Teilnehmern setzen wird.
 
-Dabei würden wir uns freuen **Identity-Experten aus verschiedenen Bereichen und Branchen** wie z.B. Microsoft Partnern bzw. Systemhäusern oder Unternehmen mit Interner IT begrüßen zu dürfen.
+Dabei würden wir uns freuen **Identity-Experten aus verschiedenen Bereichen und Branchen** wie z.B. Microsoft Partnern bzw. Systemhäusern oder Unternehmen (mit Internal IT) begrüßen zu dürfen.
 
 Wir freuen uns sehr, dass wir das **Debeka Innovation Center (DICE) als Sponsor und Location** für dieses besondere Community Format gewinnen konnten.
 
@@ -25,6 +26,7 @@ Daher bitten wir Euch, bei Interesse an der Veranstaltung, an der folgenden **Um
 
 ![](../2020-05-08-ankuendigung-identity-summit-20/identity-summit-20-cover.png)
 
-Weitere Informationen findet Ihr auch auf der **Event-Webseite “https://www.identitysummit.cloud”**. Oder *folgt uns auf Twitter [@identitysummit](https://twitter.com/identitysummit)* um aktuelle Neuigkeiten rund um das Summit zu erfahren.
+Weitere Informationen findet Ihr auch auf der **Event-Webseite “https://www.identitysummit.cloud”**.
+Oder *folgt uns auf Twitter [@identitysummit](https://twitter.com/identitysummit)* um aktuelle Neuigkeiten rund um das Summit zu erfahren.
 
 Bei weiteren Fragen oder Anmerkungen könnt Ihr mich gerne auch per E-Mail, Twitter oder LinkedIn kontaktieren.
