@@ -21,12 +21,15 @@ Wir freuen uns sehr, dass wir das **Debeka Innovation Center (DICE) als Sponsor 
 
 Wir möchten im Vorfeld die Community einbinden, um das **Event für Euch zu planen und auf Eure Wünsche eingehen** zu können.
 
-Daher bitten wir Euch, bei Interesse an der Veranstaltung, an der folgenden **Umfrage teilzunehmen um Themenschwerpunkte zu setzen und uns Feedback sowie Ideen mitzuteilen**. Wir haben bereits für Euch auch  Themenvorschläge vorbereitet, über die Ihr abstimmen oder eigene Ideen einbringen könnt.
+Daher bitten wir Euch, bei Interesse an der Veranstaltung, an der nachfolgenden **Umfrage teilzunehmen um Themenschwerpunkte zu setzen und uns Feedback sowie Ideen mitzuteilen**.
+Wir haben bereits für Euch auch  Themenvorschläge vorbereitet, über die Ihr abstimmen oder eigene Ideen einbringen könnt.
+
 /Hinweis: **Alle Teilnehmer der Umfrage werden vorab informiert, sobald die Registrierung möglich ist.** /
 
 ![](../2020-05-08-ankuendigung-identity-summit-20/identity-summit-20-cover.png)
 
 Weitere Informationen findet Ihr auch auf der **Event-Webseite “https://www.identitysummit.cloud”**.
+
 Oder *folgt uns auf Twitter [@identitysummit](https://twitter.com/identitysummit)* um aktuelle Neuigkeiten rund um das Summit zu erfahren.
 
 Bei weiteren Fragen oder Anmerkungen könnt Ihr mich gerne auch per E-Mail, Twitter oder LinkedIn kontaktieren.
