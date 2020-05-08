@@ -7,7 +7,7 @@ tags: [community, azuread]
 image: assets/images/identity-summit-20-logo.png
 description: "Am 23.10.2020 wird eine ganztägige Community-Veranstaltung zu Themen rund um Azure AD in Koblenz statt finden. Der Cloud Identity Summit setzt dabei besonders den Fokus auf den Austausch unter den Teilnehmern und Vorträge für Identity Experten."
 featured: false
-hidden: true
+hidden: false
 ---
 
 Ich freue mich sehr, ein besonderes Community-Event für den Herbst anzukündigen.
