@@ -24,7 +24,7 @@ Wir möchten im Vorfeld die Community einbinden, um das **Event für Euch zu pla
 Daher bitten wir Euch, bei Interesse an der Veranstaltung, an der nachfolgenden **Umfrage teilzunehmen um Themenschwerpunkte zu setzen und uns Feedback sowie Ideen mitzuteilen**.
 Wir haben bereits für Euch auch  Themenvorschläge vorbereitet, über die Ihr abstimmen oder eigene Ideen einbringen könnt.
 
-/ Hinweis: **Alle Teilnehmer der Umfrage werden vorab informiert, sobald die Registrierung möglich ist.** /
+Hinweis: **Alle Teilnehmer der Umfrage werden vorab informiert, sobald die Registrierung möglich ist.**
 
 ![](../2020-05-08-ankuendigung-identity-summit-20/identity-summit-20-cover.png)
 
