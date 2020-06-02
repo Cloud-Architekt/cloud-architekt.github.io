@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD SSPR: Deployment considerations and detection of suspicious password reset"
+title:  "Azure AD SSPR: Deployment considerations and detection of suspicious self-service password reset"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread]
@@ -10,13 +10,13 @@ featured: false
 hidden: false
 ---
 
-_End-users are able to reset their passwords as part of the Azure AD „self-service password reset“ (SSPR) service. Including an option to write back passwords resets from Azure AD to on-premises AD. Consideration of security aspects and detection of any suspicious activity in the password reset process should be included in your implementation._
+_End-users are able to reset their passwords as part of the Azure AD „self-service password reset“ (SSPR) service. Including an option of password writeback from Azure AD to on-premises AD. Consideration of security aspects and detection of any suspicious activity in the password reset process should be included in your deployment plan._
 
-## First off: Password resets in an era of “passwordless”
+## First off: Relevance of password. resets in an era of “passwordless”
 Most organizations are moving to passwordless options to “kill” passwords and all the weakness and (risk) management that comes with it.
 There is a wide range of options such as Windows Hello, Microsoft Authenticator and FIDO2.
 
-Nevertheless, there are currently use cases where initial user (self-service) enrollments based on password-based credentials or fallback options are required (e.g. to enable or recover passwordless authenticators).
+Nevertheless, currently there are use cases where initial user (self-service) enrollments depends on password-based credentials or fallback options are required (e.g. to enable or recover passwordless authenticators).
 In addition there’s no option to force “passwordless only” yet. 
 I guess many of those “challenges” will be resolved or fixed in the near feature.
 
@@ -25,7 +25,7 @@ If, however, passwords will be used in rare cases it’s more likely that users 
 ## Overview and Architecture
 At first, it is necessary to know the architecture and technical flow before we go into details about design considerations and options for securing and monitoring SSPR events in Azure AD.
 
-So check out Microsoft’s description of [Key benefits](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#key-benefits) and [User flow](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#solution-architecture) if you aren‘t already familiar with the fundamentals of Azure AD SSPR. This content is part of [planning guide of SSPR deployment](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#plan-configuration)which includes many guidance and best practices by Microsoft. In my opinion it’s a great start to get an good overview as you can see in this overview graphic of the user flow:
+So check out Microsoft’s description of [Key benefits](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#key-benefits) and [User flow](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#solution-architecture) if you aren‘t already familiar with the fundamentals of Azure AD SSPR. This content is part of [planning guide of SSPR deployment](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#plan-configuration) which includes many guidance and best practices by Microsoft. In my opinion it’s a great start to get an good overview as you can see in this overview graphic of the user flow:
  
 ![](../2020-07-02-azuread-sspr-deployment-detection/sspruserflow.png)
 
@@ -39,11 +39,11 @@ In the most scenarios the users will be forwarded to SSPR by using the link „C
 
 ![](../2020-07-02-azuread-sspr-deployment-detection/ssprgate.jpg)
 
-The option to start the SSPR process is public available for everyone who is able to enter the UserID and CAPTCHA. In this case the CAPTCHA is implemented by Microsoft to prevent bots from using the SSPR gate.
+The option to start the SSPR process is public available for everyone who is able to enter the UserID and CAPTCHA. This has been implemented by Microsoft to prevent bots from using the SSPR gate.
 
-Unfortunately the initial access to the use this portal can not be restricted or protected by any further advanced options. 
+Unfortunately the initial access to this portal can not be restricted or protected by any further advanced options. 
 
-_Note: In my opinion it would be a helpful to give admins the option to restrict access by conditions such as trusted location or registered devices. It seems there are no built-in security options which also prevents access from risky or anonymous IP address._
+_Note: In my opinion it would be helpful to give admins the option to restrict access by conditions such as trusted location or registered devices. It seems there are no built-in security options which also prevents access from risky or anonymous IP address._
 
 An overview of all authentication methods of the users is visible as part of the next step:
 
@@ -55,10 +55,10 @@ Failed attempts of the CAPTCHA input will not be audited but all other events ar
 
 ![](../2020-07-02-azuread-sspr-deployment-detection/ssprgatelogscaptcha.jpg)
 
-More details on auditing of SSPR will be included in the second part of this blog post.
+More details on auditing of SSPR will be explained later in this blog post.
 
 ### Throttling of multiple attempts to reset passwords
-Microsoft has implemented some limitations and locked out processes to reduce number of SSPR attempts.
+Microsoft has implemented some limitations and locked out processes to reduce number of SSPR attempts:
 
 * Users can try only five password reset attempts within a 24 hour period before they're locked out for 24 hours.
 	
@@ -71,7 +71,7 @@ Microsoft has implemented some limitations and locked out processes to reduce nu
 _Source: [Password management frequently asked questions](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq#password-reset)_
 
 ### Write-back to Active Directory (on-premises)
-SSPR gives you also the option to write-back the password to on-premises / Active Directory. An detailed tutorial to [configure and enable the write-back option](https://docs.microsoft.com/en-us/azure/active-directory/authentication/tutorial-enable-sspr-writeback) is available on Microsoft Docs.
+SSPR gives you also the option to enable password writeback to on-premises / Active Directory. An detailed tutorial to [configure and enable the write-back option](https://docs.microsoft.com/en-us/azure/active-directory/authentication/tutorial-enable-sspr-writeback) is available on Microsoft Docs.
 
 All events of the SSPR write-back will be audited in the Application Eventlog (Source „PasswordResetService“) on the Azure AD Connect Servers:
 
@@ -82,7 +82,7 @@ EventLog entries includes a „TrackingId“ which is identical with the „Corr
 ![](../2020-07-02-azuread-sspr-deployment-detection/sspraadauditlog.jpg)
 
 I can strongly recommended to delegate “write” permissions of passwords in AD to the certain scope of hybrid users which are planned to use SSPR.
-[Aaron Guilmette](https://www.undocumented-features.com/about/) has written a [PowerShell script to set this permissions](https://www.powershellgallery.com/packages/AADConnectPermissions/) on an organizational unit scope. 
+[Aaron Guilmette](https://www.undocumented-features.com/about/) has written a [PowerShell script to set this permissions](https://www.powershellgallery.com/packages/AADConnectPermissions/) on scope of an organizational unit. 
 
 _Note: There are reports in Microsoft (Support) forums where customers are running into issues in environments with implemented ATA and (domain-wide) configured SAM-R (for lateral movement). Check [this forum post](https://social.msdn.microsoft.com/Forums/SECURITY/en-US/6082daf5-2893-407b-b009-bc49464df984/aadsync-password-reset?forum=WindowsAzureAD) for further details._ 
 
@@ -90,22 +90,22 @@ _Note: There are reports in Microsoft (Support) forums where customers are runni
 Some other general considerations and implementation questions around SSPR are already written down by Microsoft:
 
 * SSPR requests of [B2B users (guests)](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-sspr-howitworks#password-reset-for-b2b-users)
-* Password write-back is a feature of Azure AD Connect, so keep the components up-to-date (no support for versions that were released more than 18 months).  Regular check of [version history](https://docs.microsoft.com/en-us/azure/active-directory/hybrid/reference-connect-health-version-history) is recommended to follow changes.
+* "Password writeback" is a feature of Azure AD Connect, so keep the components up-to-date (no support for versions that were released more than 18 months).  Regular check of [version history](https://docs.microsoft.com/en-us/azure/active-directory/hybrid/reference-connect-health-version-history) is recommended to follow changes.
 * [Frequently asked questions of SSPR management](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq)
 	(incl. password policy and cloud-only scenarios)
 
-I can strongly recommend to have in-place an actively monitor of your SSPR audit events and insights (as written in the next part of this blog post).
+I can strongly recommend to have in-place an actively monitor of your SSPR audit events and insights (as described in the last section of this article).
 
 ## Registration and options of authentication methods methods for SSPR
 Users must already have been registered for SSPR with authentication method(s) before they begin the reset process. It’s recommended to [enable combined registration for SSPR and MFA](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-registration-mfa-sspr-combined) for those users. This step should be part of the (Azure AD) user on-boarding process and configured right from the start.
 
-/Advice: It‘s important to restrict access of MFA and SSPR registration based on trusted location or device. Check out to [secure the registration process by Conditional Access](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-registration)./
+_Advice: It‘s important to restrict access of MFA and SSPR registration based on trusted location or device. Check out to [secure the registration process by Conditional Access](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-policy-registration)._
 
 But you should also verify the number of days where users will be prompted to re-confirm their authentication information:
 
 ![](../2020-07-02-azuread-sspr-deployment-detection/ssprregistration.png)
 
-In General you should also decide if you like to enable users to manage their authentication methods themselves or to manage them as part of IAM processes. I guess the most regulated or larger companies will facing some compliance and governance requirements around this decision.
+In General you should decide if you like to enable users to manage their authentication methods themselves or to manage them as part of IAM processes. I guess the most regulated or larger companies will facing some compliance and governance requirements around this decision.
 
 _Tip: Microsoft introduced recently a [new Microsoft Graph (beta) API to manage users‘ authentication methods (combined registration) programmatically.](https://techcommunity.microsoft.com/t5/azure-active-directory-identity/manage-your-authentication-phone-numbers-and-more-in-new/ba-p/1257359). A highly-requested feature to pre-register and manage all aspects of Authenticator that are used for MFA and SSPR._ 
 
@@ -139,7 +139,7 @@ _Note: Microsoft already [supports to sending security notifications](https://te
 
 
 ## Unlocking accounts by SSPR
-Active Directory accounts (on-premises) will also be „unlocked“ if user resets their password and write-back is enabled.
+Active Directory accounts (on-premises) will also be „unlocked“ if user resets their password and writeback is enabled.
 
 But you have also the option to separate both operations by enabling to „unlock accounts“ without resetting the password of the account:
 
@@ -155,7 +155,7 @@ By default the following Directory Roles in Azure AD are able to reset passwords
 	
 There’s no built-in option to notify users if admins are resetting their credentials. This activity is only covered by the Azure AD reports.
 
-_Advice: Be aware of the various directory roles and their permission to reset passwords and „non-password credentials“ (authentication methods such as MFA or passwordless). A very good example is the „Authentication Administrator“ role which can reset passwords and other authentication methods of non-admins. This means that admins assigned to the role are able to „take over“ any „non-admin account“. In this case „non-admin“ means also accounts with privileged permissions as subscription owner or outside of Azure AD RBAC (such as Intune or Exchange Online RBAC). In a case like this, it is always a good idea to check the detailed description and notes from Microsoft‘s documentation on „[Administrator role permissions](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles#authentication-administrator)“._
+_Advice: Be aware of the various directory roles and their permission to reset passwords and „non-password credentials“ (authentication methods such as MFA or passwordless). A very good example is the „Authentication Administrator“ role which can reset passwords and other authentication methods of non-admins. This means assigned role members are able to „take over“ any „non-admin account“. In this case „non-admin“ also affect accounts with privileged permissions as subscription owner or outside of Azure AD RBAC (such as Intune or Exchange Online RBAC). In a case like this, it is always a good idea to check the detailed description and notes from Microsoft‘s documentation on „[Administrator role permissions](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles#authentication-administrator)“._
 
 
 ## SSPR auditing and insights
@@ -201,7 +201,7 @@ SSPR attempts and detailed steps from the user flow in SSPR are not included in 
 
 
 ## Detect suspicious password reset by users and admins with Azure Sentinel
-At the moment there is no detection for suspicious activities of SSPR request available. Therefore I started to write some KQL queries that can be used as part of an Azure Sentinel Analytic rules to create incidents in such cases. You‘ll find the latest version of the queries on my GitHub repository. It’s free use but without given any guarantee or support: https://github.com/Cloud-Architekt/azuresentinel
+At the moment there is no detection for suspicious activities of SSPR request available (as far as I know). Therefore I started to write some KQL queries that can be used as part of an Azure Sentinel Analytic rules to create incidents in such cases. You‘ll find the latest version of the queries on my GitHub repository. It’s free use but without given any guarantee or support: [Cloud-Architekt/azuresentinel](https://github.com/Cloud-Architekt/azuresentinel)
 
 ### Blocked attempts of SSPR by user
 This simple query is checking the AuditLog for SSPR events of „blocked“ attempts after reaching the throttling limit (within a specific time range).
@@ -256,7 +256,7 @@ AuditLogs
 ```
 
 ### Reset of two-factor authentication credentials by admin
-The next query is very simple but effective. Alert will be triggered if an admin have reset the password and modification of StrongAuthenticationMethod was stated. Maximum time difference between both events can be adjusted. This could be an indication of account takeover as part of suspicious activity.
+The next query is very simple but effective. Alert will be triggered if an admin have reset the password and modification of StrongAuthenticationMethod was stated. Maximum time difference between both events can be adjusted. This could be an indication of account takeover by a compromissed account.
 
 ```
 let timeFrame = 1h;
@@ -265,7 +265,7 @@ let resetDiff = 10m;
   AuditLogs
  | where TimeGenerated >= ago(timeFrame) 
  | where OperationName == "Reset password (by admin)" 
-| extend PasswordResetTime = TimeGenerated, UserPrincipalName = tostring(TargetResources[0].userPrincipalName), PasswordResetIP = tostring(InitiatedBy.user.ipAddress)
+ | extend PasswordResetTime = TimeGenerated, UserPrincipalName = tostring(TargetResources[0].userPrincipalName), PasswordResetIP = tostring(InitiatedBy.user.ipAddress)
 
   | join kind= inner (
 
