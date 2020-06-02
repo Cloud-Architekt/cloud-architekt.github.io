@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD SSPR: Deployment considerations and detection of suspicious password resets"
+title:  "Azure AD SSPR: Deployment and security considerations"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread]
@@ -147,11 +147,11 @@ But you have also the option to separate both operations by enabling to „unloc
  
 ## Other options to reset password of users
 By default the following Directory Roles in Azure AD are able to reset passwords as "admin":
-	• Authenticator Administrator
-	• Helpdesk Administrator
-	• Password Administrator 
-	• Privileged Authentication Administrator
-	• User Administrator 
+* Authenticator Administrator
+* Helpdesk Administrator
+* Password Administrator 
+* Privileged Authentication Administrator
+* User Administrator 
 	
 There’s no built-in option to notify users if admins are resetting their credentials. This activity is only covered by the Azure AD reports.
 
