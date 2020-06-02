@@ -7,7 +7,7 @@ tags: [security, azuread]
 image: assets/images/sspr.png
 description: "End-users are able to reset their passwords as part of the Azure AD „self-service password reset“ (SSPR) service. Including an option to write back passwords resets from Azure AD to on-premises AD. Consideration of security aspects and detection of any suspicious activity in the password reset process should be included in your implementation."
 featured: false
-hidden: true
+hidden: false
 ---
 
 _End-users are able to reset their passwords as part of the Azure AD „self-service password reset“ (SSPR) service. Including an option to write back passwords resets from Azure AD to on-premises AD. Consideration of security aspects and detection of any suspicious activity in the password reset process should be included in your implementation._
@@ -29,10 +29,10 @@ So check out Microsoft’s description of [Key benefits](https://docs.microsoft.
  
 ![](../2020-07-02-azuread-sspr-deployment-considerations/sspruserflow.png)
 
-I can also strongly recommended to watch the [official learning videos about Azure AD SSPR on YouTube](https://www.youtube.com/watch?v=hc97Yx5PJiM&feature=youtu.be).
+I can also strongly recommended to watch the [official learning videos about "Azure AD SSPR" on YouTube](https://www.youtube.com/watch?v=hc97Yx5PJiM&feature=youtu.be).
 
 ## Considerations in Deployment and User Flow
-### Access to SSPR page
+### Access to password reset page
 User flow within the SSPR portal is very straight forward and [well documented by Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-sspr-howitworks#how-does-the-password-reset-portal-work) (including prerequisite checks to verify that users are able to reset their passwords).
 
 In the most scenarios the users will be forwarded to SSPR by using the link „Can‘t access your account?“ or “Forgot my password” at the organization‘s Azure AD sign-in page. But there is also an short URL link available (https://aka.ms/sspr).
@@ -43,7 +43,7 @@ The option to start the SSPR process is public available for everyone who is abl
 
 Unfortunately the initial access to the use this portal can not be restricted or protected by any further advanced options. 
 
-/Note: In my opinion it would be a helpful to give admins the option to restrict access by conditions such as trusted location or registered devices. It seems there are no built-in security options which also prevents access from risky or anonymous IP address./
+_Note: In my opinion it would be a helpful to give admins the option to restrict access by conditions such as trusted location or registered devices. It seems there are no built-in security options which also prevents access from risky or anonymous IP address._
 
 An overview of all authentication methods of the users is visible as part of the next step:
 
@@ -60,15 +60,15 @@ More details on auditing of SSPR will be included in a further section of this b
 ### Throttling of multiple attempts to reset passwords
 Microsoft has implemented some limitations and locked out processes to reduce number of SSPR attempts.
 
-	* Users can try only five password reset attempts within a 24 hour period before they're locked out for 24 hours.
+* Users can try only five password reset attempts within a 24 hour period before they're locked out for 24 hours.
 	
-	* Users can try to validate a phone number, send a SMS, or validate security questions and answers only five times within an hour before they're locked out for 24 hours.
+* Users can try to validate a phone number, send a SMS, or validate security questions and answers only five times within an hour before they're locked out for 24 hours.
 	
-	* Users can send an email a maximum of 10 times within a 10 minute period before they're locked out for 24 hours.
+* Users can send an email a maximum of 10 times within a 10 minute period before they're locked out for 24 hours.
 	
-	* The counters are reset once a user resets their password.
+* The counters are reset once a user resets their password.
 
-	_Source: [Password management frequently asked questions](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq#password-reset)_
+_Source: [Password management frequently asked questions](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq#password-reset)_
 
 ### Write-back to Active Directory (on-premises)
 SSPR gives you also the option to write-back the password to on-premises / Active Directory. An detailed tutorial to [configure and enable the write-back option](https://docs.microsoft.com/en-us/azure/active-directory/authentication/tutorial-enable-sspr-writeback) is available on Microsoft Docs.
@@ -89,9 +89,9 @@ _Note: There are reports in Microsoft (Support) forums where customers are runni
 ### Other considerations
 Some other general considerations and implementation questions around SSPR are already written down by Microsoft:
 
-	* SSPR requests of [B2B users (guests)](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-sspr-howitworks#password-reset-for-b2b-users)
-	* Password write-back is a feature of Azure AD Connect, so keep the components up-to-date (no support for versions that were released more than 18 months).  Regular check of [version history](https://docs.microsoft.com/en-us/azure/active-directory/hybrid/reference-connect-health-version-history) is recommended to follow changes.
-	* [Frequently asked questions of SSPR management](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq)
+* SSPR requests of [B2B users (guests)](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-sspr-howitworks#password-reset-for-b2b-users)
+* Password write-back is a feature of Azure AD Connect, so keep the components up-to-date (no support for versions that were released more than 18 months).  Regular check of [version history](https://docs.microsoft.com/en-us/azure/active-directory/hybrid/reference-connect-health-version-history) is recommended to follow changes.
+* [Frequently asked questions of SSPR management](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq)
 	(incl. password policy and cloud-only scenarios)
 
 I can strongly recommend to have in-place an actively monitor of your SSPR audit events and insights (as written in the latest section of this article).
@@ -120,9 +120,9 @@ I can only strongly recommend to require two different methods for a SSPR reques
 
 In my opinion it isn‘t easy to choose the right methods and you should try to find the right balance between security and dependency in case of the reset process:
 
-	* Authentication methods which can be configured by users to (personal) mobile device, phone number or mail address are possibly in access without PIN (stolen device scenario).
-	* Office phone could be a bad option if you are using softphones or Microsoft Teams only.
-	* Security questions have some disadvantages in usability (hard to remember the answers) or vulnerable for social engineering (if the questions and answers are too easy). 
+* Authentication methods which can be configured by users to (personal) mobile device, phone number or mail address are possibly in access without PIN (stolen device scenario).
+* Office phone could be a bad option if you are using softphones or Microsoft Teams only.
+* Security questions have some disadvantages in usability (hard to remember the answers) or vulnerable for social engineering (if the questions and answers are too easy). 
 
 Some of you will say... that‘s the reasons why two authentication methods are required. But it‘s even harder to find two good options.
 
@@ -164,7 +164,9 @@ _Advice: Be aware of the various directory roles and their permission to reset p
 
 
 
-
+<br>
+<br>
+<br>
 
 
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [mohamed Hassan / Pixabay](https://pixabay.com/illustrations/cyber-security-security-lock-3216076/)</span>
