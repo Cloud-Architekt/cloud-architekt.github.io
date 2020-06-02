@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD SSPR: Deployment and security considerations"
+title:  "Azure AD SSPR: Deployment considerations and detection of suspicious password resets"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread]
@@ -111,7 +111,7 @@ _Tip: Microsoft introduced recently a [new Microsoft Graph (beta) API to manage 
 
 Alongside to configure the registration of SSPR as part of Conditional Access Policies you need to enable this feature and set a scope in the SSPR settings.
 
-![](../2020-07-02-azuread-sspr-deployment-considerations/ssprproperties.png)
+![](../2020-07-02-azuread-sspr-deployment-considerations/ssprproperties.jpg)
 
 _Note: Unfortunately there‘s no option to create multiple groups or configurations for SSPR. But there‘s already an [Azure Feedback](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/31990900-allow-multiple-groups-for-sspr-rather-than-only-on) for requesting multiple group support and the product group „planned“ to add some solution of this missing function._
 
