@@ -12,7 +12,7 @@ hidden: false
 
 _End-users are able to reset their passwords as part of the Azure AD „self-service password reset“ (SSPR) service. Including an option of password writeback from Azure AD to on-premises AD. Consideration of security aspects and detection of any suspicious activity in the password reset process should be included in your deployment plan._
 
-## First off: Relevance of password resets in an era of “passwordless”
+## First off: Relevance of SSPR in an era of “passwordless”
 Most organizations are moving to passwordless options to “kill” passwords and all the weakness and (risk) management that comes with it.
 There is a wide range of options such as Windows Hello, Microsoft Authenticator and FIDO2.
 
