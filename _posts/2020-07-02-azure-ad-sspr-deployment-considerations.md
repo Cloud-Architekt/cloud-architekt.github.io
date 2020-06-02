@@ -55,7 +55,7 @@ Failed attempts of the CAPTCHA input will not be audited but all other events ar
 
 ![](../2020-07-02-azuread-sspr-deployment-considerations/ssprgatelogscaptcha.jpg)
 
-More details on auditing of SSPR will be included in a further section of this blog post.
+More details on auditing of SSPR will be included in the second part of this blog post.
 
 ### Throttling of multiple attempts to reset passwords
 Microsoft has implemented some limitations and locked out processes to reduce number of SSPR attempts.
@@ -94,7 +94,7 @@ Some other general considerations and implementation questions around SSPR are a
 * [Frequently asked questions of SSPR management](https://docs.microsoft.com/en-us/azure/active-directory/authentication/active-directory-passwords-faq)
 	(incl. password policy and cloud-only scenarios)
 
-I can strongly recommend to have in-place an actively monitor of your SSPR audit events and insights (as written in the latest section of this article).
+I can strongly recommend to have in-place an actively monitor of your SSPR audit events and insights (as written in the next part of this blog post).
 
 ## Registration and options of authentication methods methods for SSPR
 Users must already have been registered for SSPR with authentication method(s) before they begin the reset process. It’s recommended to [enable combined registration for SSPR and MFA](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-registration-mfa-sspr-combined) for those users. This step should be part of the (Azure AD) user on-boarding process and configured right from the start.
