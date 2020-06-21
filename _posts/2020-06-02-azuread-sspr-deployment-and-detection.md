@@ -27,7 +27,7 @@ At first, it is necessary to know the architecture and technical flow before we 
 
 So check out Microsoft’s description of [Key benefits](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#key-benefits) and [User flow](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#solution-architecture) if you aren‘t already familiar with the fundamentals of Azure AD SSPR. This content is part of [planning guide of SSPR deployment](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-sspr-deployment#plan-configuration) which includes many guidance and best practices by Microsoft. In my opinion it’s a great start to get an good overview as you can see in this overview graphic of the user flow:
  
-![](../2020-07-02-azuread-sspr-deployment-detection/sspruserflow.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/sspruserflow.png)
 
 I can also strongly recommended to watch the [official learning videos about "Azure AD SSPR" on YouTube](https://www.youtube.com/watch?v=hc97Yx5PJiM&feature=youtu.be).
 
@@ -37,7 +37,7 @@ User flow within the SSPR portal is very straight forward and [well documented b
 
 In the most scenarios the users will be forwarded to SSPR by using the link „Can‘t access your account?“ or “Forgot my password” at the organization‘s Azure AD sign-in page. But there is also an short URL link available (https://aka.ms/sspr).
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprgate.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprgate.jpg)
 
 The option to start the SSPR process is public available for everyone who is able to enter the UserID and CAPTCHA. This has been implemented by Microsoft to prevent bots from using the SSPR gate.
 
@@ -47,13 +47,13 @@ _Note: In my opinion it would be helpful to give admins the option to restrict a
 
 An overview of all authentication methods of the users is visible as part of the next step:
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprgateauthmethods.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprgateauthmethods.png)
 
 Details of the phone number or mail addresses will be hidden. It is, however, possible to see the domain name and first characters of the alternate mail addresses.
 
 Failed attempts of the CAPTCHA input will not be audited but all other events are part of the Azure AD Audit Log:
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprgatelogscaptcha.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprgatelogscaptcha.jpg)
 
 More details on auditing of SSPR will be explained later in this blog post.
 
@@ -75,11 +75,11 @@ SSPR gives you also the option to enable password writeback to on-premises / Act
 
 All events of the SSPR write-back will be audited in the Application Eventlog (Source „PasswordResetService“) on the Azure AD Connect Servers:
 
-![](../2020-07-02-azuread-sspr-deployment-detection/aadconnecteventvwr.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/aadconnecteventvwr.png)
 
 EventLog entries includes a „TrackingId“ which is identical with the „CorrelationID“ in the Azure AD Audit Log. This allows to build an correlation between SSPR events in Azure AD and Active Directory.
 
-![](../2020-07-02-azuread-sspr-deployment-detection/sspraadauditlog.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/sspraadauditlog.jpg)
 
 I can strongly recommended to delegate “write” permissions of passwords in AD to the certain scope of hybrid users which are planned to use SSPR.
 [Aaron Guilmette](https://www.undocumented-features.com/about/) has written a [PowerShell script to set this permissions](https://www.powershellgallery.com/packages/AADConnectPermissions/) on scope of an organizational unit. 
@@ -103,7 +103,7 @@ _Advice: It‘s important to restrict access of MFA and SSPR registration based 
 
 But you should also verify the number of days where users will be prompted to re-confirm their authentication information:
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprregistration.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprregistration.png)
 
 In General you should decide if you like to enable users to manage their authentication methods themselves or to manage them as part of IAM processes. I guess the most regulated or larger companies will facing some compliance and governance requirements around this decision.
 
@@ -111,7 +111,7 @@ _Tip: Microsoft introduced recently a [new Microsoft Graph (beta) API to manage 
 
 Alongside to configure the registration of SSPR as part of Conditional Access Policies you need to enable this feature and set a scope in the SSPR settings.
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprproperties.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprproperties.jpg)
 
 _Note: Unfortunately there‘s no option to create multiple groups or configurations for SSPR. But there‘s already an [Azure Feedback](https://feedback.azure.com/forums/169401-azure-active-directory/suggestions/31990900-allow-multiple-groups-for-sspr-rather-than-only-on) for requesting multiple group support and the product group „planned“ to add some solution of this missing function._
 
@@ -143,7 +143,7 @@ Active Directory accounts (on-premises) will also be „unlocked“ if user rese
 
 But you have also the option to separate both operations by enabling to „unlock accounts“ without resetting the password of the account:
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprwriteback.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprwriteback.jpg)
  
 ## Other options to reset password of users
 By default the following Directory Roles in Azure AD are able to reset passwords as "admin":
@@ -164,40 +164,40 @@ All steps of the SSPR user flow is audited by (service) source „Self-service p
 
 The following screenshots shows the record of a successfully reset by a cloud-only identity in Azure AD audit blade:
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprauditcloudonly.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprauditcloudonly.png)
 
 As you can see the reset was initiated by fim_password_service@support.onmicrosoft.com. This is an internal account that will be used for resetting the password in the Core Directory (as part of an authorized/valid SSPR request). All other events will be recorded as initiated by the username which was entered as part of the SSPR user flow.
 
 A detailed view on the logs (from Log Analytics) shows that all SSPR-related events shares the same Correlation Id.
-![](../2020-07-02-azuread-sspr-deployment-detection/sspraudituserflow.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/sspraudituserflow.png)
 
 #### Hybrid identity environments
 Users in a hybrid environment (and enabled password write-back) will be facing a very similar set of audit events. In addition you can see the activities by the “Sync_<AADConnectServerName>” account which initiate the password change from an Azure AD Connect Server to Active Directory.
 
-![](../2020-07-02-azuread-sspr-deployment-detection/sspraudithybrid.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/sspraudithybrid.png)
 
 CorrelationId of Azure AD SSPR events is also part of the local AAD Connect Eventlog even if the “fim_password_service” and “Sync_*” initiated events have different CorrelationIds.
 
 ### Azure Sentinel Workbook
 Visualized overview about numbers of operations (including SuccessRate) of password resets by admins or user (self-service) is available in Azure Sentinel. It’s part of the workbook “Azure AD Audit, Activity and Sign-in logs” and based on KQL queries of Azure AD audit logs by Sentinel’s data connector.
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprsentinel.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprsentinel.jpg)
 
 ### Azure AD Usage and insights
 An overview of registered authentication methods by users are available in the “[Usage & Insights](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-methods-usage-insights)” dashboard. 
 
-![](../2020-07-02-azuread-sspr-deployment-detection/sspraadinsights.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/sspraadinsights.jpg)
 
 ### Microsoft Cloud App Security (MCAS) Activity Log
 Activity log in MCAS gives you an overview about all password changes as part of Azure AD SSPR, change password in Azure AD and on-premises AD. You are able to get the list by filtering the Activity Query to"Password changes and reset requests":
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprmcasfilter.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprmcasfilter.jpg)
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprmcasoverview.jpg)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprmcasoverview.jpg)
 
 SSPR attempts and detailed steps from the user flow in SSPR are not included in this activity log. You get a general event entry in case of successful requests. 
 
-![](../2020-07-02-azuread-sspr-deployment-detection/ssprmcas.png)
+![](../2020-06-02-azuread-sspr-deployment-detection/ssprmcas.png)
 
 
 ## Detect suspicious password reset by users and admins with Azure Sentinel
