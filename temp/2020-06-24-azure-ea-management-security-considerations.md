@@ -3,8 +3,8 @@ layout: post
 title:  "Security considerations of Azure EA Management and potential privilege escalation"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
-tags: [security, azuread]
-image: assets/images/sspr.png
+tags: [security, azure, architecture]
+image: assets/images/subscriptionmgmt.png
 description: "In the recent years many organizations used the Microsoft Enterprise Agreement (EA) portal (or APIs) for creation and initial setup of their subscriptions. I like to give an overview about security considerations and preventation of (potential) privilege escalation to „takeover“ subscriptions from EA enterprise or account administrators in your organization. In addition you’ll find some side notes about changes and differences to the management of the new Microsoft Customer Agreement (MCA) enrollment."
 featured: false
 hidden: true
@@ -15,13 +15,13 @@ hidden: true
 ## Overview of Enterprise Agreement (EA) Portal
 It was for a long time a valid (and the only) option to structure and manage subscriptions by functional, business- or geographic units in the EA portal. Until a later time, Microsoft introduced „Management Groups“, „Tagging“ and the improved „Cost Management“ in the Azure portal.
 
-![](./EA_VariantsofHierachies.png)
+![](.../2020-06-24-azure-ea-management-security-considerations/2020-06-24-azure-ea-management-security-considerations/EA_VariantsofHierachies.png)
 
 _Samples of simple Azure EA hierarchies which was also part of Microsoft‘s Cloud onboarding guidelines. Image source: [Get started with the Azure Enterprise portal](https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/ea-portal-get-started)_\
 \
 Today this superordinate level and separated portal seems to be „outdated“. Microsoft has moved more and more features to the Azure Portal such as [creating enterprise subscriptions for EA customers](https://azure.microsoft.com/de-de/blog/create-enterprise-subscription-experience-in-azure-portal-public-preview/). And also most organizations using „Tags“ and „Management Groups“ instead of creating a custom hierarchy (incl. departments or accounts) in the EA portal.
 
-![](./EA_OverviewPortals.jpeg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_OverviewPortals.jpeg)
 _Azure Portal will be also used for cost management of enterprise subscriptions today. Original the EA portal was designed for most billing and financial aspects of the enterprise enrollment. Image source: [Microsoft Security Compass Workshop](https://github.com/MarkSimos/MicrosoftSecurity/tree/master/Azure%20Security%20Compass%201.1)_
 
 Today some enterprise organizations are still using the EA portal or delegated permissions by the enterprise enrollment admin.
@@ -39,7 +39,7 @@ Enrollment hierarchy of the EA portal can be confusing or complex. Basically the
 \
 [Ed Mondek](https://www.edmondek.com/about) has created a great diagram that helps to understand the relation, assignment between delegation level, roles and range of permissions.
 
-![](./EA_EnrollmentHierarchy.jpeg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_EnrollmentHierarchy.jpeg)
 
 _“Account Owner“ has assigned permissions to manage the subscription in the scope of an associated „Account“. Users with assigned "Enterprise Administrator" role has indirect permissions to the subscription as well by change the Account Owner role. Source: „Azure Enterprise Enrollment Hierarchy“ on [EdMondek.com](https://www.edmondek.com/Azure-Enterprise-Enrollment-Hierarchy/)_
 
@@ -50,7 +50,7 @@ Be aware who has assigned permission to this EA roles even if you haven‘t impl
 MCA has also a new enrollment and billing management for every customers that is moving to this contract model.
 Existing roles will be transitioned to the new hierarchy management as you see in this diagram from Microsoft:
 
-![](./EA_CATransitionRole.png)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_CATransitionRole.png)
 
 _Previous „Account Owner“ will named as „Azure Subscription Creator“ with similar set of permissions as before. Source: [„Set up your billing account for a Microsoft Customer Agreement“ 
 ](https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/mca-setup-account#changes-to-billing-administrator-access)_
@@ -65,7 +65,7 @@ This role has permission to „manage resources in Azure portal“ [(as well as 
 
 It‘s important to understand that permissions around the EA roles will be applied to the subscription as part of the „Azure Classic Subscription roles“. These are admin roles from the "Azure Service Management" (ASM) which is mostly replaced by "Azure Resource Manager" (ARM) and "Azure RBAC". But the "clasic administrator" permissions are still effective even if ASM was deprecated as part of the ARM introduction in 2018. 
 
-![](./EA_DirectoryARMClassicRoles.png)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_DirectoryARMClassicRoles.png)
 
 _Three different admin role models could have impact or assigned privileges to manage permissions of your Azure subscriptions:
 Elevated Global Admin (Azure AD Directory Roles), Azure RBAC (ARM) and Classsic Subscription Admin Roles (ASM)_
@@ -77,13 +77,13 @@ Nevertheless, every new subscription which was created by „Account Owner“ in
 *"The Service Administrator" has full access to the Azure portal.“*
 _Source: [Classic subscription administrator roles, Azure roles, and Azure AD roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles)_
 
-![](./EA_AzPortalProperties.jpg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_AzPortalProperties.jpg)
 _Properties of an Azure Subscription shows you the assigned Account and Service Admin_
 
-![](./EA_AzPortalServiceAdminClassicAdmin.jpg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_AzPortalServiceAdminClassicAdmin.jpg)
 _Access control (IAM) of subscription still allows you to manage "Classic administrators". In this sample my account "Thomas" has assigned "Service Administrator" permission by default as "Account Owner"._
 
-![](./EA_AzPortalServiceAdminClassicAdminCheckPermissions.jpg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_AzPortalServiceAdminClassicAdminCheckPermissions.jpg)
 _Level of access can be reviewed for classic administrators by using the "Check access" feature in the Access control (IAM) blade._
 
 
@@ -91,13 +91,13 @@ Users with assigned roles as „Account Owner/Service Admins" are able to delega
 Co-Admins have similar high-privilege permissions as the Service-Admins which means full management and access of all Azure resources within the subscriptions.
 Microsoft has been well documented the [different classic subscription admin roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
 
-![](./EA_AzPortalAddCoAdmin.jpg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_AzPortalAddCoAdmin.jpg)
 _In this sample I've just added another user account as "Co-Administrator" to the classic administrator roles._ 
 
-![](./EA_AzPortalCoAdminCheckPermissions.png)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_AzPortalCoAdminCheckPermissions.png)
 _Level of access for the added user will be also displayed as "full access to all resources"._
 
-![](./EA_AzPortalCoAdminMyRole.jpg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_AzPortalCoAdminMyRole.jpg)
 _User logged on with assigned "Co-Admin" role will be seen "Owner" in the display of "My Role"._
 
 Nowadays mostly all permissions will be managed by the (modern) "Azure RBAC" model via Portal or Resource Manager (ARM) APIs. It‘s also strongly recommended to use them because of the great options to manage fine-grained role-based access in Azure.
@@ -130,7 +130,7 @@ Access to the EA portal and assigned permissions can be critical as already disc
 
 Microsoft has mentioned in the „Azure Security Compass“ workshop materials to use "Service Admins" just for emergency access or for initial configuration of subscription:
 
-![](./EA_SubscriptionRoles.jpeg)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_SubscriptionRoles.jpeg)
 
  I think this is a good approach but you should consider to configure an account seperatly from your „Break Glass“ of Azure AD. Even if security considerations as „sign-in attempt alerts“ should be also applied to this kind of emergency accounts. By the way: Sign-ins to the „Azure EA Portal“ are logged by Azure AD Sign-in logs.
  
@@ -160,10 +160,10 @@ Microsoft replaced the existing EA APIs by modern APIs for MCA. This APIs are us
 ### Alerting on adding classic administrators
 „Classic Administrators“ roles are still valid and effective as already written. Azure AD PIM is not supporting the "classic administrator" roles and maybe your auditing queries are scoped for monitoring "Azure RBAC" permissions only. Therefore you should configure a detection on suspicious changes of classic administrators. Azure Sentinel and MCAS can be used to trigger alerts if someone is modify classic administrator roles:
 
-![](./EA_MonitoringMCAS.png)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_MonitoringMCAS.png)
 *Azure App connector of MCAS allows you to investigate activity logs which contains also „write“- and „delete“-operations of „classicadministrators“. Alerts of this suspicious activity can be created in MCAS.*
 
-![](./EA_MonitoringAzSentinel.png)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_MonitoringAzSentinel.png)
 *Alerting from Azure Sentinel is also an option if you are using it as your SIEM solution. The illustrated [query is available in my GitHub repository](https://github.com/Cloud-Architekt/azuresentinel/blob/master/WriteClassicAdministratorsOfAzSubscription.kusto) for free use as detection (without any warranty).*
 
 <br>
