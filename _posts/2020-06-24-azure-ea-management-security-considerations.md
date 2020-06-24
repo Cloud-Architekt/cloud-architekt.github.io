@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Security considerations of "Azure EA Management" and potential privilege escalation"
+title:  "Security considerations of Azure EA management and potential privilege escalation"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azure, architecture]
