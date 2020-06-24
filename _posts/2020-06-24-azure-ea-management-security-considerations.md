@@ -132,13 +132,13 @@ This behavior is by the design and you should be aware that this could bypass yo
 Enterprise or department administrators are able to change the "Account Owner" as already described in this article.
 It allows those EA roles to modify subscription-level access as well. There are two scenarios:
 
-	1. Transfer of subscription to other Azure AD tenant: Existing RBAC assignment will be removed [(as documented by Microsoft)](https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/billing-subscription-transfer) and the new assigned "Account Owner" will have access to manage permission and resources only.
+1. Transfer of subscription to other Azure AD tenant: Existing RBAC assignment will be removed [(as documented by Microsoft)](https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/billing-subscription-transfer) and the new assigned "Account Owner" will have access to manage permission and resources only.
 
-	2. Transfer the subscription to other account in the same Azure AD tenant: Current "Azure RBAC" entries and "Service Administrator" will be retained but new assigned "Account Owner" is able to change the "service administrator" from the Account Center (https://account.azure.com/subscriptions).
+2. Transfer the subscription to other account in the same Azure AD tenant: Current "Azure RBAC" entries and "Service Administrator" will be retained but new assigned "Account Owner" is able to change the "service administrator" from the Account Center (https://account.azure.com/subscriptions).
 
-	So in the end the "Enterprise" and "Department" admins are able (indirectly) to set "Service Administrator" by assign a new "Account Owner" and in this way also the option to modify permissions to certain subscriptions.
-	Therefore you should review and monitor all EA roles in your organization. Unfortunately there‘s no built-in auditing available in the EA portal.
-	This makes it even harder!
+So in the end the "Enterprise" and "Department" admins are able (indirectly) to set "Service Administrator" by assign a new "Account Owner" and in this way also the option to modify permissions to certain subscriptions.
+Therefore you should review and monitor all EA roles in your organization. Unfortunately there‘s no built-in auditing available in the EA portal.
+This makes it even harder!
 
 ### EA admin takeover by helpdesk/local admins
 Some organizations delegates Azure AD Directory Roles such as „Password Admins“ or „Authenticator Admins“ to their local helpdesk or 1st-level support team. At first glance this delegation seems not to be too risky or eligible for privilege escalation. The description of roles shows that only authentication methods and password resets of non-admin users can be managed. But as already mentioned in other blog posts this not exclude privilege roles like the „Azure Subscription Owner“ or in this case „EA Admins“. So keep that always in mind!
