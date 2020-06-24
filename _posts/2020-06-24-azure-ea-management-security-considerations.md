@@ -123,10 +123,10 @@ They are also able [to change the "Service Administrator"](https://docs.microsof
 
 ![](../2020-06-24-azure-ea-management-security-considerations/EA_AccountPortalChangeServiceAdmin.png)
 
-_Account Owner are able to change "Service Administrator" in the Azure Account portal. Image source: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/classic-administrators#change-the-service-administrator)_
+	_Account Owner are able to change "Service Administrator" in the Azure Account portal. Image source: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/classic-administrators#change-the-service-administrator)_
 
-This behavior is by the design and you should be aware that this could bypass your existing security approaches (Azure PIM eligible and/or security group-assigned roles). Take care and choose wisely all your assigned users which has direct permission to manage the IAM of your Azure workloads. I prefer to use in this cases the analogy to the [Active Directory administrative tier model](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/securing-privileged-access-reference-material):
-EA Account Owner will have access to all your assets in Tier1 (Azure resources). But perhaps also (in)direct escalation for high-privilege permissions (similar to Tier0), especially if you are running „AD DS domain controllers“ as virtual machines or any other IAM-related resources/workloads (e.g. KeyVault) in the affected subscriptions.
+	This behavior is by the design and you should be aware that this could bypass your existing security approaches (Azure PIM eligible and/or security group-assigned roles). Take care and choose wisely all your assigned users which has direct permission to manage the IAM of your Azure workloads. I prefer to use in this cases the analogy to the [Active Directory administrative tier model](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/securing-privileged-access-reference-material):
+	EA Account Owner will have access to all your assets in Tier1 (Azure resources). But perhaps also (in)direct escalation for high-privilege permissions (similar to Tier0), especially if you are running „AD DS domain controllers“ as virtual machines or any other IAM-related resources/workloads (e.g. KeyVault) in the affected subscriptions.
 
 - **Subscription takeover by changing "Account Owner" from an EA enterprise admin**: 
 Enterprise or department administrators are able to change the "Account Owner" as already described in this article.
@@ -176,10 +176,12 @@ Standarized RBAC model (designed by least privilege access approach) and managed
 It could be a great way to manage your RBAC definitions "as code" if you are already using Azure Blueprint or other centralized "Cloud Governance and Deployment" tools.
 
 
-### Using MCA APIs with Azure AD Authentication 
+### APIs with Azure AD Authentication 
 Microsoft replaced the existing EA APIs by modern APIs for MCA. This APIs are using Azure AD authentication and previous EA customers needs to update their existing configuration in case of migrating their enrollment contract.
 
 [Migration steps and details on updated APIs](https://docs.microsoft.com/en-us/azure/cost-management-billing/costs/migrate-cost-management-api#ea-apis-replaced-with-mca-apis) are documented. Integration to your internal cost management or ITSM tools can also reduce the need for portal access by non-privileged users.
+
+Regular review of created API account keys in the EA Portal are neccessary if you are using the legacy EA APIs.
 
 ### Alerting on adding classic administrators
 „Classic Administrators“ roles are still valid and effective as already written. Azure AD PIM is not supporting the "classic administrator" roles and maybe your auditing queries are scoped for monitoring "Azure RBAC" permissions only. Therefore you should configure a detection on suspicious changes of classic administrators. Azure Sentinel and MCAS can be used to trigger alerts if someone is modify classic administrator roles:
