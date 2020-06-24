@@ -117,18 +117,18 @@ So be aware of all „classic administrators“ entries in your Access Control (
 ## Privilege Escalation Paths
 As a result of this insights, the following escalation paths could be a potential scenario if organizations assigned the EA portal roles to lower privileged admin accounts (e.g. license or purchase department):
 
-- **Subscription takeover by EA account owner**: 
+### Subscription takeover by EA account owner
 Account Owner is able to modify "Azure RBAC" entries and "classic administrator roles" as default assigned "Service Administrator".
 They are also able [to change the "Service Administrator"](https://docs.microsoft.com/en-us/azure/role-based-access-control/classic-administrators#change-the-service-administrator) if they haven't assigned to the role yet.
 
 ![](../2020-06-24-azure-ea-management-security-considerations/EA_AccountPortalChangeServiceAdmin.png)
 
-	_Account Owner are able to change "Service Administrator" in the Azure Account portal. Image source: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/classic-administrators#change-the-service-administrator)_
+_Account Owner are able to change "Service Administrator" in the Azure Account portal. Image source: [Microsoft Docs](https://docs.microsoft.com/en-us/azure/role-based-access-control/classic-administrators#change-the-service-administrator)_
 
-	This behavior is by the design and you should be aware that this could bypass your existing security approaches (Azure PIM eligible and/or security group-assigned roles). Take care and choose wisely all your assigned users which has direct permission to manage the IAM of your Azure workloads. I prefer to use in this cases the analogy to the [Active Directory administrative tier model](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/securing-privileged-access-reference-material):
+This behavior is by the design and you should be aware that this could bypass your existing security approaches (Azure PIM eligible and/or security group-assigned roles). Take care and choose wisely all your assigned users which has direct permission to manage the IAM of your Azure workloads. I prefer to use in this cases the analogy to the [Active Directory administrative tier model](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/securing-privileged-access-reference-material):
 	EA Account Owner will have access to all your assets in Tier1 (Azure resources). But perhaps also (in)direct escalation for high-privilege permissions (similar to Tier0), especially if you are running „AD DS domain controllers“ as virtual machines or any other IAM-related resources/workloads (e.g. KeyVault) in the affected subscriptions.
 
-- **Subscription takeover by changing "Account Owner" from an EA enterprise admin**: 
+### Subscription takeover by changing "Account Owner" from an EA enterprise admin 
 Enterprise or department administrators are able to change the "Account Owner" as already described in this article.
 It allows those EA roles to modify subscription-level access as well. There are two scenarios:
 
@@ -140,7 +140,7 @@ It allows those EA roles to modify subscription-level access as well. There are 
 	Therefore you should review and monitor all EA roles in your organization. Unfortunately there‘s no built-in auditing available in the EA portal.
 	This makes it even harder!
 
-- **EA admin takeover by helpdesk/local admins**: 
+### EA admin takeover by helpdesk/local admins
 Some organizations delegates Azure AD Directory Roles such as „Password Admins“ or „Authenticator Admins“ to their local helpdesk or 1st-level support team. At first glance this delegation seems not to be too risky or eligible for privilege escalation. The description of roles shows that only authentication methods and password resets of non-admin users can be managed. But as already mentioned in other blog posts this not exclude privilege roles like the „Azure Subscription Owner“ or in this case „EA Admins“. So keep that always in mind!
 		
 ## Hardening and security options
