@@ -15,7 +15,7 @@ hidden: true
 ## Overview of Enterprise Agreement (EA) Portal
 It was for a long time a valid (and the only) option to structure and manage subscriptions by functional, business- or geographic units in the EA portal. Until a later time, Microsoft introduced „Management Groups“, „Tagging“ and the improved „Cost Management“ in the Azure portal.
 
-![](../2020-06-24-azure-ea-management-security-considerations/2020-06-24-azure-ea-management-security-considerations/EA_VariantsofHierachies.png)
+![](../2020-06-24-azure-ea-management-security-considerations/EA_VariantsofHierachies.png)
 
 _Samples of simple Azure EA hierarchies which was also part of Microsoft‘s Cloud onboarding guidelines. Image source: [Get started with the Azure Enterprise portal](https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/ea-portal-get-started)_\
 \
