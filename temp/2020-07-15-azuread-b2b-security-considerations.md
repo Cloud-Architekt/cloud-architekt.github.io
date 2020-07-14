@@ -57,10 +57,11 @@ Connect-AzureAD
 ### No sign-in failure events if sign-in attempts of invited users in inviting tenant has failed
 
 **Description:**
+
 Sign-in failures of invited users will not be audited (neither in invited nor inviting tenant). This only applies to authentication scenarios where Azure AD will be used for primary credential validation (Password Hash Sync). ADFS- or PTA-Authentication allows you to see the failed validation attempts to your Active Directory (On-Premises) infrastructure.
 As far as I know, this limitation is not documented by Microsoft. 
 
-**Potential risk or security concern**
+**Potential risk or security concern:**
 
 Any kind of sign-in failures (including "Password Spray" or "Brute force" attacks) from an inviting tenant are not visible for SecOps.
 
@@ -233,5 +234,3 @@ But keep in mind to monitor them explicit and build an automation to response th
 <br>
 <br>
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [mohamed Hassan / Pixabay](https://pixabay.com/illustrations/insurance-life-protect-help-secure-4004023/)</span>
-
-
