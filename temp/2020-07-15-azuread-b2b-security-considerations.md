@@ -222,11 +222,10 @@ Blocked sign-in (disabled user) of sensitive or privileged Azure AD accounts tha
 
 _Note: Consider the lifetime and behaviour of various type of tokens if you need to revoke access. Microsoft publish a new article to give details on [revocation of user access in Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/users-revoke-access)._
 
-Enabling sign-in and user risk policy in the inviting / resource tenant (if possible) should be the best mitigation. This will also enforce risk-based policies to your other company tenants. Consider that remediation of user risk must be performed in the home tenant and access could be blocked to resource tenant.
-
-**Detection of risky "non-applied policies" sign-ins to Azure Portal**
-
+Detection of risky and "non-applied policies" sign-ins to Azure Portal seems to be possible.
 I've used the following query to detect sign-ins with risk detection and non-applied "Conditional Access policies" from the home tenant during my tests. This query is simple but very experimental. Feel free to use it (without any warranty)! The latest version of this query is available from my GitHub repo: [azuresentinel/RiskySignInToAzurePortal.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/RiskySignInToAzurePortal.kusto)
+
+Enabling sign-in and user risk policy in the inviting / resource tenant (if possible) should be the best mitigation. This will also enforce risk-based policies to your other company tenants. Consider that remediation of user risk must be performed in the home tenant and access could be blocked to resource tenant.
 
 ### Side note: Offline detection and sign-in risks
 
