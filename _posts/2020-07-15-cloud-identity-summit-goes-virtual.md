@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Security considerations of Azure EA management and potential privilege escalation222"
+title:  "Cloud Identity Summit 2020 goes virtual...and global!"
 author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [security, azure, architecture]
-image: assets/images/subscriptionmgmt.png
-description: "In the recent years many organizations used the Microsoft Enterprise Agreement (EA) portal (or APIs) for creation and initial setup of their subscriptions. I like to give an overview about security considerations and preventation of (potential) privilege escalation to „takeover“ subscriptions from EA enterprise or account administrators in your organization. In addition you’ll find some side notes about changes and differences to the management of the new Microsoft Customer Agreement (MCA) enrollment."
+categories: [ Azure, Community, AzureAD ]
+tags: [azure, azuread]
+image: assets/images/cis2020announcement.jpg
+description: "Cloud Identity Summit will be take place on October 22th as global virtual event. Find out more about this free Azure community event in my latest announcement."
 featured: false
 hidden: false
 ---
