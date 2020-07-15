@@ -5,7 +5,7 @@ author: thomas
 categories: [ Azure, Community, AzureAD ]
 tags: [security, azure, architecture]
 image: assets/images/cis2020announcement.jpg
-description: "Cloud Identity Summit will be take place on October 22th as global virtual event. Find out more about this free Azure community event..."
+description: "Cloud Identity Summit will be take place on October 22th as global virtual event. Find out more about this free Azure community event in my latest announcement."
 featured: false
 hidden: false
 ---
