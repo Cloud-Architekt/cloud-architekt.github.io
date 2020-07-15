@@ -10,9 +10,9 @@ featured: false
 hidden: false
 ---
 
-*In the recent months I‘ve spent time on research of identity security in B2B scenarios (when users are invited to another Azure AD tenant). In this blog post I like to share a few insights about known but also undocumented limitations or concerns of identity protection in Azure AD B2B. All results of my research was double checked in my lab environments. But I would be very interested to hear feedback from others about their experiences or technical insights.* 
+*In the recent months I‘ve spent time on research of identity security in B2B scenarios (when users are invited to another Azure AD tenant). In this blog post I like to share a few insights about known but also undocumented limitations or concerns of identity protection in Azure AD B2B. All results of my research were double checked in my lab environments, but I would be very interested to hear feedback from others about their experiences or technical insights.* 
 
-*Note: The following security concerns was submitted to „Microsoft Security Response Center“ (MSRC) during a case in June and July 2020. I‘ve shared details of my research work and potential attack scenarios. In the end the MSRC give me the following feedback:*
+*Note: The following security concerns were submitted to „Microsoft Security Response Center“ (MSRC) during a case in June and July 2020. I‘ve shared details of my research work and potential attack scenarios. In the end the MSRC gave me the following feedback:*
 
 *„Upon investigation, we have determined that this submission does not meet the bar for security servicing. This report does not appear to identify a weakness in a Microsoft product or service that would enable an attacker to compromise the integrity, availability, or confidentiality of a Microsoft offering.“*
 
@@ -31,7 +31,7 @@ I‘ve heard a few times that some (large) organizations implemented an internal
 
 In this diagram you can see the environment and "wordings" that I will use for further explanation about the B2B scenarios and examples of my security considerations: 
 
-![../2020-07-15-azuread-b2b-security-considerations/AADB2B0.jpeg](../2020-07-15-azuread-b2b-security-considerations/AADB2B0.jpeg)
+![../2020-07-16-azuread-b2b-security-considerations/AADB2B0.jpeg](../2020-07-16-azuread-b2b-security-considerations/AADB2B0.jpeg)
 
 ## Limitations or considerations that could allow „bypassing“ of your identity protection mechanism in B2B scenarios
 
@@ -53,6 +53,9 @@ Connect-AzureAD
        -Credential $Credential
        -TenantId $TenantID
 ```
+
+_Note: All of the following research results and instructions was performed or tested in July 2020. Since then, Microsoft may have changed functionality or features around the described scenario._
+_
 
 ### No sign-in failure events if sign-in attempts of invited users in inviting tenant has failed
 
@@ -78,17 +81,17 @@ Anonymous (e.g. [](https://www.whatismytenantid.com)OpenID Discovery (wellknown)
 *Note: David Chronlund has written a great blog post with some insights on "[Automatic Azure AD User Account Enumeration with PowerShell](https://danielchronlund.com/2020/03/13/automatic-azure-ad-user-account-enumeration-with-powershell-scary-stuff/) "*
 4. Enter (various) wrong credentials to generate failed sign-in attempts until account is temporarily locked (by default a lockout threshold of 10 attempts is configured). You will see the following message, which shows that [Smart Lockout was triggered](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-password-smart-lockout#how-to-determine-if-the-smart-lockout-feature-is-working-or-not):
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B1.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B1.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B1.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B1.png)
 
     *Note: Smart Lockout of the home tenant will applied to invited users which can be verified by changing the lockout threshold to any non-default value.*
 
 5. Check if sign-in failures are visible in the Azure AD Sign-in logs and MCAS activity (Azure App Connector/Azure AD events). In my tests this was not the case:
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B2.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B2.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B2.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B2.png)
 
 6. Optional: Check the MCAS activity logs if you have connected your Azure ATP instance and using PTA or ADFS as primary authentication. You'll find a failed logon event as part of Azure AD authentication request. In my sample the „Authentication Agent“ of PTA is located on server "DS1". This is the internal credential validation between "PTA Agent" and domain controller but not the original request.
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B3.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B3.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B3.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B3.png)
 
 **Mitigation or workaround:**
 
@@ -127,17 +130,17 @@ Details on "bypassing" Conditional Access Policies from the home tenant as invit
 
 1. Create various "Conditional Access Policies" in the home tenant that will apply to the test user. Check sign-in activities from the user in the home tenant to get an overview of all policies that was applied:
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B4.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B4.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B4.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B4.png)
 
     Optional: Check "What if" to simulate conditions and control of enabled CA policies
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B5.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B5.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B5.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B5.png)
 
 2. Try to access resources of the inviting tenant from your invited user (and a non-compliant / unmanaged device like in this sample). Don't forget to use the TenantID parameter! Afterwards check the sign-in logs in home and resource tenant for applied policies:
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B6.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B6.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B6.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B6.png)
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B7.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B7.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B7.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B7.png)
 
     As you can see only Conditional Access policies from the inviting tenant was applied to the invited user. In this case the user has access to the resource tenant without any device- or MFA requirements (as defined in the home tenant).
 
@@ -149,7 +152,7 @@ Ensure that required "Conditional Access Policies" are also deployed and assigne
 
 **Delegated Privileged Access to Azure AD B2C or other Azure AD "Free" Tenants**
 
-All new created tenants (starting from October 2019) will be protected by a minimum set of policies ("Security Defaults"). This is not the case for B2C tenants because it is not supported for this kind of directories. New B2C tenants will be created  without security defaults. Previous ["Baseline policies"](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/concept-baseline-protection) are deprecated and can't be used anymore. The announced support of Conditional Access and Identity Protection for Azure AD B2C will resolve this security concern finally.
+All new created tenants (starting from October 2019) will be protected by a minimum set of policies ("Security Defaults"). This is not the case for B2C tenants because it seems not to be supported for this kind of directories. New created B2C tenants will be created  without security defaults. Previous ["Baseline policies"](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/concept-baseline-protection) are deprecated and can't be enabled anymore. The announced support of Conditional Access and Identity Protection for Azure AD B2C will resolve this security concern finally.
 
 Enabling of “Security defaults” for all other (free) Azure AD tenants is supported and will enforce MFA for administrators in the tenant which also covers invited privileged users. But you will have no option to exclude “emergency access accounts” (aka “break glass” accounts). This also prevents you to configure other condition/controls as part of Conditional Access Policies (registered device required for privileged access). And you will be losing the access to the tenant in MFA outage scenarios without break-glass. It's necessary to  use custom "Conditional Access" as far it's technically possible.
 
@@ -188,9 +191,9 @@ In addition Microsoft also consider the following limitation as part of the Iden
 2. Invite the user from Azure AD Tenant without configured (Identity Protection) risk-based policies.
 *Note: In one of my tests I've used an account which was already flagged as risky (in the home tenant) before invitation was redeemed and sign-in successfully:*
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B8.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B8.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B8.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B8.png)
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B9.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B9.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B9.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B9.png)
 
 3. Try to sign-in from an Tor browser by accessing the Azure Portal with TenantID parameter (https://portal.azure.com/<TenantID>) as already described. Access from an anonymous IP address is one of the real-time detections that could be used to trigger a sign-in risk policy. 
 
@@ -200,25 +203,25 @@ In addition Microsoft also consider the following limitation as part of the Iden
 
 4. Check the identity risk detection in the home/invited tenant after few minutes. Real-time risk (anonymous IP address) was detected by Identity Protection: 
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B11.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B11.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B11.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B11.png)
 
 
 5. The following screenshot shows the original sign-in event that is audited in the home and resource tenant:
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B12.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B12.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B12.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B12.png)
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B13.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B13.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B13.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B13.png)
 
 6. Navigate to a resource of the home tenant ([https://portal.azure.com/<TenantIDOfInvitedTenant>](https://portal.azure.com/<TenantIDOfInvitedTenant>))
 in the Tor Browser to verify that user risk detection will be triggered if risk-based policies are enabled:
 
-    ![../2020-07-15-azuread-b2b-security-considerations/AADB2B14.png](../2020-07-15-azuread-b2b-security-considerations/AADB2B14.png)
+    ![../2020-07-16-azuread-b2b-security-considerations/AADB2B14.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B14.png)
 
 7. Optional: Invite your test user to any other tenant with enabled Identity Protection and assigned user risk and sign-in risk policies to all users (including guest). The risk-based policies will be triggered in real-time and works as expected (e.g. access from risky users will be blocked).
 
 **Mitigation or workaround:**
 
-Blocked sign-in (disabled user) of sensitive or privileged Azure AD accounts that are flagged as risky, can be used as replacement for automated response. This will prevent further authentication to resources (located in tenant without Identity Protection). [Azure Sentinel playbooks](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks) can be used to run automation with additional security operations such as revoke user‘s refresh token or reset user password.
+Blocked sign-in (disabled user) or forced password change of sensitive or privileged Azure AD accounts that are flagged as risky, could be a replacement for automated response. This will prevent further authentication to resources (located in tenant without Identity Protection). [Azure Sentinel playbooks](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks) can be used to run automation with additional security operations such as revoke user‘s refresh token or reset user password.
 
 _Note: Consider the lifetime and behaviour of various type of tokens if you need to revoke access. Microsoft publish a new article to give details on [revocation of user access in Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/users-revoke-access)._
 
@@ -229,11 +232,11 @@ Enabling sign-in and user risk policy in the inviting / resource tenant (if poss
 
 ### Side note: Offline detection and sign-in risks
 
-I've tested during my research also various [offline detections](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks) such as „Atypical travel“ or "Malicious IP address". Therefore I created two accounts (GuestUser and GuestAdmin) and invite them to a Azure AD Premium and Azure AD B2C tenant. I’ve used various public proxy servers to simulate the sign-ins from geographically (far) distant locations . It's good to know that sign-ins with offline calculated risks will be also detected and reported in the home tenant.
+I've tested also various [offline detections](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks) such as „Atypical travel“ or "Malicious IP address" during my research. Therefore I created two accounts (GuestUser and GuestAdmin) and invite them to a Azure AD Premium and Azure AD B2C tenant. I’ve used various public proxy servers to simulate the sign-ins from geographically (far) distant locations . It's good to know that sign-ins with offline calculated risks will be also detected and reported in the home tenant.
 
-![../2020-07-15-azuread-b2b-security-considerations/3_HomeTenant_SignInRisk.png](../2020-07-15-azuread-b2b-security-considerations/AADB2BSignInRisk.png)
+![../2020-07-16-azuread-b2b-security-considerations/3_HomeTenant_SignInRisk.png](../2020-07-16-azuread-b2b-security-considerations/AADB2BSignInRisk.png)
 
-![../2020-07-15-azuread-b2b-security-considerations/4_HomeTenant_RiskyUser.png](../2020-07-15-azuread-b2b-security-considerations/AADB2BRiskyUser.png)
+![../2020-07-16-azuread-b2b-security-considerations/4_HomeTenant_RiskyUser.png](../2020-07-16-azuread-b2b-security-considerations/AADB2BRiskyUser.png)
 
 But keep in mind to monitor them explicit and build an automation to response this identity risk if the resource tenant hasn’t any risk-based policy for auto-response.
 
