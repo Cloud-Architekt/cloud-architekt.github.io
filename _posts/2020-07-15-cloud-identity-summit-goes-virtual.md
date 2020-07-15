@@ -10,7 +10,7 @@ featured: false
 hidden: false
 ---
 
-Originally we had planned to run the 1st edition of the „Cloud Identity Summit“ as local event.
+Originally we had planned to run the 1st edition of the „Cloud Identity Summit“ as local event (in Koblenz, Germany).
 But as many other community events, we are still facing an unstable situation and restrictions around COVID-19. This makes it unsuitable for attendees and the organization team for any fixed statements or reliable planning.
 
 Therefore we have decided to reschedule this free community event to consider the special situation and potential health risks or restrictions for our attendees. 
