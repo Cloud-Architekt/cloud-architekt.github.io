@@ -10,12 +10,12 @@ featured: false
 hidden: false
 ---
 
-![](../2020-07-15-cloud-identity-summit-goes-virtual/cis_2020_virtual_announcement.png)
-
 Originally we had planned to run the 1st edition of the „Cloud Identity Summit“ as local event.
 But as many other community events, we are still facing an unstable situation and restrictions around COVID-19. This makes it unsuitable for attendees and the organization team for any fixed statements or reliable planning.
 
 Therefore we have decided to reschedule this free community event to consider the special situation and potential health risks or restrictions for our attendees. 
+
+![](../2020-07-15-cloud-identity-summit-goes-virtual/cis_2020_virtual_announcement.png)
 
 I‘m very pleased to announce that this year's „Cloud Identity Summit“ will be take place on Thursday, **October 22th as global virtual event**. We are happy to give everyone the opportunity to be part of this special format with a unique combination of deep-dive session and discussions!
 
