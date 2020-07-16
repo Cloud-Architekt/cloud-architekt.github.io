@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Azure AD B2B: Security considerations to protect external (privileged) identities
+title:  "Azure AD B2B: Security considerations to protect external (privileged) identities"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
@@ -239,7 +239,4 @@ I've tested also various [offline detections](https://docs.microsoft.com/en-us/a
 
 But keep in mind to monitor them explicit and build an automation to response this identity risk if the resource tenant hasn’t any risk-based policy for auto-response.
 
-<br>
-<br>
-<br>
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [mohamed Hassan / Pixabay](https://pixabay.com/illustrations/insurance-life-protect-help-secure-4004023/)</span>
