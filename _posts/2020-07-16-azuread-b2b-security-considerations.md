@@ -7,7 +7,7 @@ tags: [security, azuread, azure]
 image: assets/images/aadb2b.png
 description: "In this blog post I will share my research results of identity security in Azure AD B2B scenarios. This includes some security considerations on missing sign-in (failure) events and enforcement of Conditional Access and risk-based policies for invited users."
 featured: false
-hidden: false
+hidden: true
 ---
 
 *In the recent months I‘ve spent time on research of identity security in B2B scenarios (when users are invited to another Azure AD tenant). In this blog post I like to share a few insights about known but also undocumented limitations or concerns of identity protection in Azure AD B2B. All results of my research were double checked in my lab environments, but I would be very interested to hear feedback from others about their experiences or technical insights.* 
@@ -69,7 +69,7 @@ Any kind of sign-in failures (including "Password Spray" or "Brute force" attack
 
 Currently there are no options to restrict "inbound" invitations (list of domains that are allowed to invite users of your tenant). Only inviting domains of "outbound" invitation can be limited. In combination with the missing sign-in failure events it may lead to the concern that you have limited control and visibility of invited users by external partners (B2B).
 
-*Note: Erlend Andreas Gjære (SecurePractice.co) describes a sample of attack scenarios where [Azure AD B2B invitations](https://securepractice.co/blog/phishing-with-azure-ad-b2b-collaboration) can be used for phishing attacks. The inviting user will be forwarded to "MyApps" portal which includes a published app with attacker's own login page to phishing credentials.*
+*Note: Erlend Andreas Gjære (SecurePractice.co) describes a sample of attack scenarios where [Azure AD B2B invitations](https://securepractice.co/blog/phishing-with-azure-ad-b2b-collaboration) can be used for phishing attacks. The inviting user will be forwarded to "MyApps" portal which includes a published app with attacker's own login page to phishing (entered) credentials.*
 
 **Technical Background and Reproducing:**
 
