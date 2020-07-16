@@ -7,7 +7,7 @@ tags: [security, azuread, azure]
 image: assets/images/aadb2b.png
 description: "In this blog post I will share my research results of identity security in Azure AD B2B scenarios. This includes some security considerations on missing sign-in (failure) events and enforcement of Conditional Access and risk-based policies for invited users."
 featured: false
-hidden: true
+hidden: false
 ---
 
 *In the recent months I‘ve spent time on research of identity security in B2B scenarios (when users are invited to another Azure AD tenant). In this blog post I like to share a few insights about known but also undocumented limitations or concerns of identity protection in Azure AD B2B. All results of my research were double checked in my lab environments, but I would be very interested to hear feedback from others about their experiences or technical insights.* 
