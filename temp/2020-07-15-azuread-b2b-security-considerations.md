@@ -169,7 +169,7 @@ Every inviting tenant without configured sign-in or user-risk policy will not re
 
 > The user risk for B2B collaboration users is evaluated at their home directory. The real-time sign-in risk for these users is evaluated at the resource directory when they try to access the resource.
 
-*Source: Microsoft Docs ("[Identity Protection and B2B users](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b)")* 
+*Source and detailed information: Microsoft Docs ("[Identity Protection and B2B users](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b)")* 
 
 In addition Microsoft also consider the following limitation as part of the Identity Protection documentation:
 
