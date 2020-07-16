@@ -27,7 +27,7 @@ External users will be invited to Azure AD tenant for delegation of administrati
 - **Administration of Azure AD B2C tenant from Azure AD Premium (B2E) tenant:**<br>
 As you may already know, Azure AD B2C tenants are not supporting premium protection features (licensed as "Azure AD for O365" tenant only) yet. Conditional Access and Identity Protection for B2C was already announced at Ignite 2019. Today it might be a good practice to use privileged identities from Azure AD (B2E) Premium tenant. The option to invite guest users to B2C tenant for administration is also [described by Microsoft](https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-overview#guest-user). Basically external users from a Azure AD Premium tenant can be assigned to Conditional Access and Identity Protection risk-based policies/reports in the home tenant.
 - **Centralized Azure AD „Management“ tenant to manage a multi-tenant (enterprise) environment:**<br>
-I‘ve heard a few times that some (large) organizations implemented an internal „management“ tenant in the past. All privileged identities and resources will be located in this directory to use „shared services“ across a multi-tenant environment. Azure AD introduced in the recent year(s) many enhancements to separate or isolate resources within one tenant (e.g. Administrative Units, Custom Roles, fine-grained policies etc.). In the past Microsoft already recommended to use one tenant per organization but from historical or technical reasons (company merge, geo-political, technical limitations) real-world practice shows some (valid) alternate approaches.
+I‘ve heard a few times that some (large) organizations implemented an internal „management“ tenant in the past. All privileged identities and resources will be located in this directory to use „shared services“ across a multi-tenant environment. In the recent year(s) many enhancements were introduced to separate or isolate resources within one tenant (e.g. Administrative Units, Custom Roles, fine-grained policies etc.). Using one tenant per organization was also strongly recommended by Microsoft but from historical or technical reasons (company merge, geo-political, technical limitations) real-world practice shows some (valid) alternate approaches.
 
 In this diagram you can see the environment and "wordings" that I will use for further explanation about the B2B scenarios and examples of my security considerations: 
 
@@ -55,7 +55,6 @@ Connect-AzureAD
 ```
 
 _Note: All of the following research results and instructions was performed or tested in July 2020. Since then, Microsoft may have changed functionality or features around the described scenario._
-_
 
 ### No sign-in failure events if sign-in attempts of invited users in inviting tenant has failed
 
@@ -70,12 +69,12 @@ Any kind of sign-in failures (including "Password Spray" or "Brute force" attack
 
 Currently there are no options to restrict "inbound" invitations (list of domains that are allowed to invite users of your tenant). Only inviting domains of "outbound" invitation can be limited. In combination with the missing sign-in failure events it may lead to the concern that you have limited control and visibility of invited users by external partners (B2B).
 
-*Note: Erlend Andreas Gjære (SecurePractice.co) describes a sample of attack scenarios where [Azure AD B2B invitations](https://securepractice.co/blog/phishing-with-azure-ad-b2b-collaboration) can be used for phishing attacks. The inviting user will be forwarded to "MyApps" portal which includes a published apps with attacker's own login page to phishing credentials.*
+*Note: Erlend Andreas Gjære (SecurePractice.co) describes a sample of attack scenarios where [Azure AD B2B invitations](https://securepractice.co/blog/phishing-with-azure-ad-b2b-collaboration) can be used for phishing attacks. The inviting user will be forwarded to "MyApps" portal which includes a published app with attacker's own login page to phishing credentials.*
 
 **Technical Background and Reproducing:**
 
 1. Search for the Tenant ID of the inviting tenant:
-Anonymous (e.g. [](https://www.whatismytenantid.com)OpenID Discovery (wellknown) or [online tool "WhatIsMyTenantID.com"](https://www.whatismytenantid.com)) or as [authenticated user via PowerShell](https://docs.microsoft.com/de-de/powershell/module/azuread/Get-AzureADTenantDetail?view=azureadps-2.0)
+Anonymous (e.g. [](https://www.whatismytenantid.com)OpenID Discovery (wellknown) or [online tools such as "WhatIsMyTenantID.com"](https://www.whatismytenantid.com)) or as [authenticated user via PowerShell](https://docs.microsoft.com/de-de/powershell/module/azuread/Get-AzureADTenantDetail?view=azureadps-2.0)
 2. Navigate to a resource of the inviting tenant: https://portal.azure.com/"TenantIDOfInvitingTenant"
 3. Enter the name of the invited user or try to enumerate a user name that could be invited.
 *Note: David Chronlund has written a great blog post with some insights on "[Automatic Azure AD User Account Enumeration with PowerShell](https://danielchronlund.com/2020/03/13/automatic-azure-ad-user-account-enumeration-with-powershell-scary-stuff/) "*
@@ -101,7 +100,7 @@ Azure AD Smart Lockout will throttle the attempts and risks of „Password Spray
 
 It should be recommend to implement a security process and monitoring for B2B invitation of your users to other tenants.
 Unfortunately the tenantID of the inviting tenant seems not be included in the sign-in logs to the "Microsoft Invitation Acceptance Portal".
-So it's hard to detect the tenantID of the inviting tenant on a early stage in the invited tenant. Invitation process (incl. who has invited the user) can be audited in the inviting tenant very easily (check the Audit and sign-in logs during your tests).
+So it's hard to detect the tenantID of the inviting tenant on a early stage in the invited tenant. Invitation process (incl. who has invited the user) can be audited in the inviting tenant very easily (included in "Audit" and "Sign-in"-logs).
 
 *Note: Have a look on the "[Tenant restrictions](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/tenant-restrictions)" feature if you want to define a list of tenants that are permitted to access (requires proxy HTTP header insertion and TLS interception).*
 
@@ -117,7 +116,7 @@ Microsoft has already acknowledged the fact that Conditional Access Policies fro
 
 Therefore it's important to know that policies from the home tenant will not be applied when a inviting user accessing resources of the inventing tenant directly (by using the TenantID parameter).
 
-Details on "bypassing" Conditional Access Policies from the home tenant as invited users was already described in a [great blog post by Stephan Waelde](https://stephanwaelde.com/2019/12/26/guest-sign-ins/). He has also figured out that invited users are able to read basic information of all applied and non-applied policies in the inviting tenant (MySignIn reports)
+Details on "bypassing" Conditional Access Policies from the home tenant as invited users was already described in a [great blog post by Stephan Waelde](https://stephanwaelde.com/2019/12/26/guest-sign-ins/). He has also figured out that invited users are able to read basic information of all applied and non-applied policies in the inviting tenant (MySignIn reports).
 
 **Potential risk or security concern**
 
@@ -128,7 +127,7 @@ Details on "bypassing" Conditional Access Policies from the home tenant as invit
 
 **Technical Background and reproducing:**
 
-1. Create various "Conditional Access Policies" in the home tenant that will apply to the test user. Check sign-in activities from the user in the home tenant to get an overview of all policies that was applied:
+1. Create various "Conditional Access Policies" in the home tenant that will apply to the test user. Check sign-in activities from the user in the home tenant to get an overview of all policies that were applied:
 
     ![../2020-07-16-azuread-b2b-security-considerations/AADB2B4.png](../2020-07-16-azuread-b2b-security-considerations/AADB2B4.png)
 
@@ -148,18 +147,18 @@ Details on "bypassing" Conditional Access Policies from the home tenant as invit
 
 **Multi-Tenant Environment**
 
-Ensure that required "Conditional Access Policies" are also deployed and assigned in resource tenants. Misconfiguration and administrative efforts/costs can be reduced by automated deployment (to your multi-tenant-environment). Alexander Filipin has started an awesome [GitHub project](https://github.com/AlexFilipin/ConditionalAccess) to provide a fully automated solution for achieving an "As Code" approach for Conditional Access.
+Ensure that required "Conditional Access Policies" are also deployed and assigned in resource tenants. Misconfiguration and administrative efforts/costs can be reduced by automated deployment (to your multi-tenant-environment). Alexander Filipin has started a [GitHub project](https://github.com/AlexFilipin/ConditionalAccess) to provide a fully automated solution for achieving an "As Code" approach for Conditional Access. Strongly recommended to have a look on his policy set and automation!
 
 **Delegated Privileged Access to Azure AD B2C or other Azure AD "Free" Tenants**
 
-All new created tenants (starting from October 2019) will be protected by a minimum set of policies ("Security Defaults"). This is not the case for B2C tenants because it seems not to be supported for this kind of directories. New created B2C tenants will be created  without security defaults. Previous ["Baseline policies"](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/concept-baseline-protection) are deprecated and can't be enabled anymore. The announced support of Conditional Access and Identity Protection for Azure AD B2C will resolve this security concern finally.
+All new created tenants (starting from October 2019) will be protected by a minimum set of policies ("Security Defaults"). This is not the case for B2C tenants because it seems not to be supported for this kind of directories. New B2C tenants will be created without security defaults. Previous ["Baseline policies"](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/concept-baseline-protection) are deprecated and can't be enabled anymore. The announced support of Conditional Access and Identity Protection for Azure AD B2C will resolve this security concern finally.
 
-Enabling of “Security defaults” for all other (free) Azure AD tenants is supported and will enforce MFA for administrators in the tenant which also covers invited privileged users. But you will have no option to exclude “emergency access accounts” (aka “break glass” accounts). This also prevents you to configure other condition/controls as part of Conditional Access Policies (registered device required for privileged access). And you will be losing the access to the tenant in MFA outage scenarios without break-glass. It's necessary to  use custom "Conditional Access" as far it's technically possible.
+Enabling of “Security defaults” for all other (free) Azure AD tenants is supported and will enforce MFA for administrators in the tenant which also covers invited privileged users. But you will have no option to exclude “emergency access accounts” (aka “break glass” accounts). This also prevents you to configure other condition/controls as part of Conditional Access Policies (registered device required for privileged access). It's necessary to use custom "Conditional Access" as far it's technically possible.
 
 **Monitoring access to inviting tenant from privileged users without MFA**
 
 I've tried to write a simple Azure Sentinel / KQL query to detect sign-ins without MFA from (invited) privileged users. In many cases the sign-in logs of the inviting tenant shows that MFA requirement was satisfied by a claim in the token even if it wasn't required.
-The query can be used in the inviting tenant and filtered users by the user name prefix of your privileged accounts. This is still an experimental query without any warranty. You'll find the latest version in my GitHub repository: [azuresentinel/SignInFromExternalPrivilegedUserWithoutMFAClaim.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/SignInFromExternalPrivilegedUserWithoutMFAClaim.kusto)
+The query can be used in the inviting tenant and filtered users by name prefix of your privileged accounts. This is still an experimental query without any warranty. You'll find the latest version in my GitHub repository: [azuresentinel/SignInFromExternalPrivilegedUserWithoutMFAClaim.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/SignInFromExternalPrivilegedUserWithoutMFAClaim.kusto)
 
 ### No enforcement of sign-in risk and user risk policy in inviting Azure AD tenants (without Identity Protection)
 
@@ -221,14 +220,14 @@ in the Tor Browser to verify that user risk detection will be triggered if risk-
 
 **Mitigation or workaround:**
 
-Blocked sign-in (disabled user) or forced password change of sensitive or privileged Azure AD accounts that are flagged as risky, could be a replacement for automated response. This will prevent further authentication to resources (located in tenant without Identity Protection). [Azure Sentinel playbooks](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks) can be used to run automation with additional security operations such as revoke user‘s refresh token or reset user password.
+Blocked sign-in (disabled user) or forced password change of sensitive or privileged Azure AD accounts that are flagged as risky, could be a replacement for automated response. [Azure Sentinel playbooks](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks) can be used to run automation with additional security operations such as revoke user‘s refresh token or reset user password.
 
-_Note: Consider the lifetime and behaviour of various type of tokens if you need to revoke access. Microsoft publish a new article to give details on [revocation of user access in Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/users-revoke-access)._
+_Note: Consider the lifetime and behaviour of various type of tokens if you need to revoke access. Microsoft publish a new article which includes a general overview on [revocation of user access in Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/users-revoke-access)._
 
 Detection of risky and "non-applied policies" sign-ins to Azure Portal seems to be possible.
-I've used the following query to detect sign-ins with risk detection and non-applied "Conditional Access policies" from the home tenant during my tests. This query is simple but very experimental. Feel free to use it (without any warranty)! The latest version of this query is available from my GitHub repo: [azuresentinel/RiskySignInToAzurePortal.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/RiskySignInToAzurePortal.kusto)
+I've used the following query to detect sign-ins with risk detection and non-applied "Conditional Access policies" from the home tenant during my tests. This query is simple but also very experimental. Feel free to use it (without any warranty)! The latest version of this query is available from my GitHub repo: [azuresentinel/RiskySignInToAzurePortal.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/RiskySignInToAzurePortal.kusto)
 
-Enabling sign-in and user risk policy in the inviting / resource tenant (if possible) should be the best mitigation. This will also enforce risk-based policies to your other company tenants. Consider that remediation of user risk must be performed in the home tenant and access could be blocked to resource tenant.
+Enabling sign-in and user risk policy in the inviting / resource tenant (if possible) should be the best mitigation. This will also enforce risk-based policies to your other company tenants. Consider that remediation of [user risk must be performed in the home tenant](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b#why-cant-i-remediate-risky-b2b-collaboration-users-in-my-directory) and [access could be blocked to resource tenant](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b#what-do-i-do-if-a-b2b-collaboration-user-was-blocked-due-to-a-risk-based-policy-in-my-organization).
 
 ### Side note: Offline detection and sign-in risks
 
