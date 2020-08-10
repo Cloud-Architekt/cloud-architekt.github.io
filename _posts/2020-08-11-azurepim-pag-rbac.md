@@ -14,9 +14,8 @@ hidden: true
 
 ### What are Privileged Access Groups (PAG)?
 
-Microsoft introduced the public preview of [role-assignable groups](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-groups-concept) and support of ["Privileged Access Groups"](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/groups-features) (PAG) in Azure AD recently. At first glance it seems that these features are primarily relevant to assign groups to built-in directory roles..
-This is also described in the target scenario in the documentation of the current preview.
-But the option to manage eligible assignment of membership as part of "Privileged Identity Management" (PIM) allows also new opportunity for "just-in-time" (JIT) and "zero standing" access outside of eligible assignments to Azure AD (RBAC) built-in directory roles.
+Microsoft introduced the public preview of [role-assignable groups](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-groups-concept) and support of ["Privileged Access Groups"](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/groups-features) (PAG) in Azure AD recently. At first glance it seems that these features are primarily relevant to assign groups to built-in directory roles.
+But the option to manage eligible assignment of membership as part of "Privileged Identity Management" (PIM) allows also new opportunity for "just-in-time" (JIT) and "zero standing" access outside of eligible assignments to Azure AD (built-in) directory roles.
 
 Microsoft describes this recent public preview feature as follows:
 
@@ -25,15 +24,15 @@ Microsoft describes this recent public preview feature as follows:
 >Enforce just-in-time access for owners and members of this group by requiring them to activate for a limited period of time. Create just-in-time access policies for these users like approval workflow, MFA challenge and much more.
 
 This brings me to the question where it is suitable to use PAGs for other administrative roles and therefore take advantage of PIM features (approval or activation requirements, auditing, etc.).
-It could be a potentially flexible and centralized solution to manage privilege role assignments by Azure PIM (alongside of Azure AD Directory Roles).
+It could be a potentially flexible and centralized solution to manage other privilege role assignments by Azure PIM (alongside of Azure AD Directory Roles).
 
 For example, using Azure PIM capabilities to manage eligible assignment to "3rd Party RBACs" (AWS, Salesforce,..) or other Microsoft RBAC models (presumed role assignment to security groups are supported).
 
 ## Overview of RBACs in Microsoft's Cloud services
 
-It‘s makes sense to get an overview of Microsoft's RBAC implementations before we go into details of advanced role-based assignment scenarios in Microsoft Cloud services. 
+Before we go into details of advanced role-based assignment scenarios, I like to give an overview of Microsoft's RBAC implementations.
 
-Microsoft has implemented different RBAC models across various Microsoft 365 (M365) services and portals in the recent years. Examples are:
+Different RBAC models has been implemented across various Microsoft cloud services and portals in the recent years. Examples are:
 
 - Azure Advanced Threat Protection (ATP)
 - Billing and Enterprise Agreement (Portal)
@@ -44,19 +43,19 @@ Microsoft has implemented different RBAC models across various Microsoft 365 (M3
 - Microsoft Intune
 - Microsoft Compliance Manager
 
-A full list of all [M365 related administrator roles and content](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-m365-workload-docs) is also documented.
-Most Microsoft cloud services were represented by a dedicated Azure AD admin role which covers permission to "manage all aspects of the product" (for example Azure DevOps-, Dynamics 365-, Intune-, Kaizala Administrator, etc.). Assigned users to those roles will have "full" permissions within the certain cloud service but some of them have delegated permission within Azure AD as well.
+A full list of all [Microsoft 365 related administrator roles and content](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-m365-workload-docs) is also documented.
+Most Microsoft cloud services were represented by a dedicated Azure AD admin role which covers permission to "manage all aspects of the product" (for example Azure DevOps-, Dynamics 365-, Intune-, Kaizala Administrator, etc.). Assigned users will have granted "full" permissions within the certain cloud service but some of the roles have delegated permission within Azure AD as well.
 
-All other general admin roles (e.g. Security- or Compliance-Administrator) are mostly inherited to the the various RBAC model for achieving an unified access. One good example are roles such as "Global Admin" and "Global Reader" which have the option for read/full-access across all Microsoft Cloud services.
+All other general admin roles (e.g. Security- or Compliance-Administrator) are mostly inherited to the various RBAC model for achieving an unified access. One good example are roles such as "Global Admin" or "Global Reader" which have the option for read/full-access across all Microsoft Cloud services.
 
-I‘ve extended the following RBAC diagram (diagram from the [Microsoft Security Compass](https://www.notion.so/Privileged-Access-Groups-Manage-JIT-access-outside-of-Azure-AD-RBACs-with-PIM-714d851b565042c2b3ca33ec534ed09e#adc66ed4201741c1b4ce147f973bed91)) to give a general overview (in parts it should shows the inherited permission from AAD roles to portal-/product-related RBACs):
+I‘ve extended the following RBAC diagram (from the [Microsoft Security Compass](https://github.com/MarkSimos/MicrosoftSecurity/tree/master/Azure%20Security%20Compass%201.1) to give a high-level overview:
 
 ![../2020-08-11-azurepim-pag-rbac/microsoftrbac.png](../2020-08-11-azurepim-pag-rbac/microsoftrbac.png)
 
-Apart of using Azure AD roles to gain (comprehensive) access to several Microsoft cloud services, the option to delegate administrative tasks within the individual portal- or product-specific RBACs is also available. Flexibility to create custom roles and scopes are one of the advantages of well-designed RBAC models, as you can find in Microsoft Defender ATP (MDATP) or Intune.
+Apart of using Azure AD admin roles to gain (comprehensive) access to several Microsoft cloud services, the option to delegate administrative tasks within the individual portal- or product-specific RBACs is also available. Flexibility to create custom roles and scopes are one of the advantages of well-designed RBAC models, as you can find in Microsoft Defender ATP (MDATP) or Intune.
 
-Different quality and feature sets of RBAC implementation across Microsoft's products does not permit to draw any general conclusion.
-For example, MCAS is not supporting assignment to security groups which makes it also unusable to delegate admin roles to PAGs or any other kind of security groups in Azure AD.
+Different quality and feature sets of RBAC implementations across Microsoft products does not permit to draw any general conclusion.
+For example, MCAS is not supporting assignment to security groups which makes it also unusable to delegate admin roles to PAGs or any other kind of security groups from Azure AD.
 So keep in mind that only RBACs which includes support of security group assignment are in scope of possible solution approach regarding PAGs. 
 
 In contrast, Azure DevOps allows to use security groups from Azure AD for [assignment to roles on the various levels (Project or Collection)](https://docs.microsoft.com/en-us/azure/devops/organizations/security/set-project-collection-level-permissions?view=azure-devops&tabs=preview-page#add-a-user-or-group-to-a-security-group).
@@ -72,9 +71,10 @@ This can also be a blocker for a potential scenario to use PAGs for eligible ass
 
 ### Problem: No PIM-managed role assignments in Azure DevOps
 
-Azure DevOps will be used mostly for automated deployment to Azure resources as part of Continuous Deployment (CD) pipelines. [Service Connections](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml) allows to use "Service Principals" or "Managed Identities" to execute the privileged tasks (ARM Provider, KeyVault access,...).
+Azure DevOps will be used mostly for automated deployment to Azure resources as part of "Continuous Deployment" (CD) pipelines. [Service Connections](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml) allows to use "Service Principals" or "Managed Identities" to execute the privileged tasks (ARM or Terraform Deployment, KeyVault access,...).
 
-Some organizations are securing their privileged admin accounts in Microsoft Azure but aren't aware of privileged service identities as part of Azure DevOps project. Developers or Project managers may also have (indirect) permission to use those service connection by other pipelines (as originally planned or delegated).
+Some organizations are securing their privileged admin accounts in Microsoft Azure but aren't aware of privileged service identities in Azure DevOps.
+Developers or Project managers may also have (indirect) permission to use those service connections by other pipelines (as originally planned or delegated).
 
 ![../2020-08-11-azurepim-pag-rbac/admindevopstier.png](../2020-08-11-azurepim-pag-rbac/admindevopstier.png)
 
@@ -84,7 +84,7 @@ _Note: Microsoft already documented some general recommendations on [securing a 
 
 ### Solution approach: Using PAGs to assign (PIM-managed) membership of Azure DevOps roles
 
-Check that your target user has currently no privileged access to Azure DevOps before we configure PAG and eligible assignment:
+Check that your DevOps admin user has currently no privileged access to Azure DevOps before we configure PAG for eligible assignment:
 
 ![../2020-08-11-azurepim-pag-rbac/azdevops-accessednied.png](../2020-08-11-azurepim-pag-rbac/azdevops-accessednied.png)
 
@@ -131,7 +131,7 @@ Check that your target user has currently no privileged access to Azure DevOps b
 
     ![../2020-08-11-azurepim-pag-rbac/azdevops-userinput.png](../2020-08-11-azurepim-pag-rbac/azdevops-userinput.png)
 
-2. After activating the eligible assignment, the user will be added to the PAG in Azure AD immediately.
+2. User will be added to the PAG in Azure AD immediately after successfull activation of the eligible assignment.
 Move to the Azure DevOps portal to validate if the requested DevOps role assignment is now effective.
 
     ![../2020-08-11-azurepim-pag-rbac/azdevops-stream.png](../2020-08-11-azurepim-pag-rbac/azdevops-stream.png)
@@ -151,18 +151,18 @@ As example, Intune (Service) Administrators are [able to modify membership of Az
 It's not possible to customize the existing permission set of the built-in directory role (in this case, exclude group management of Intune Administrators). Currently [custom admin roles](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-custom-overview) are limited to Application (registration) management only.
 
 Therefore using a custom role as part of Intune RBAC seems to be the only option.
-This allows to delegate full access to the Intune service without assigning any privileged access to Azure AD objects. But this means also to lose any advantages of PIM-managed directory role assignments as well.
+This allows to delegate full access to the Intune service without assigning any privileged access to Azure AD (group) objects. But this means also to lose any advantages of PIM-managed directory role assignments as well.
 
 **No option to delegate permission on custom scope of devices or users**
 
-[Administrative Units (AUs)](https://docs.microsoft.com/de-de/azure/active-directory/users-groups-roles/directory-administrative-units) enables admins to scope permissions of admin roles to a certain subset of objects. But this isn't supported for "Intune Admins" and doesn't walk along with the object hierarchy of Intune.
+[Administrative Units (AUs)](https://docs.microsoft.com/de-de/azure/active-directory/users-groups-roles/directory-administrative-units) enables admins to scope permissions of management roles to a certain subset of objects. But this isn't supported for "Intune Admins" and doesn't walk along with the object hierarchy of Intune.
 
 Microsoft's implementation of RBAC in Intune and MDATP allows to delegate (fine-grained) control and permission on scope of device tags or device groups. This give us the option to implement a "Tier-based" delegation model on geo-location or any other separation of device types/categories.
 
 Microsoft has documented the management of [portal access](https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/rbac), usage of [device groups](https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/machine-groups) and [tags](https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/machine-tags) in MDATP very well.
 Intune allows custom roles but also scoped permissions of existing Intune (built-in) roles. Check the Microsoft Docs article about [Intune RBAC](https://docs.microsoft.com/en-us/mem/intune/fundamentals/role-based-access-control) for further details on managing scope tags and custom roles. Peter Daalmans has also give a good summarized explanation of Intune RBAC aspects in his [blog post](https://configmgrblog.com/2018/10/03/rbac-in-azure-ad-intune-and-scope-tags-explained/).
 
-One of my recommendation: You should separate and isolate admin- and non-admin objects in Intune and MDATP environments. Similar to separate any admin- and non-admin (productivity) identity and access. 
+One of my recommendation: You should separate and isolate admin- and non-admin objects in Intune and MDATP environments. Similar to separate any productivity- and privileged identities. 
 
 ![../2020-08-11-azurepim-pag-rbac/microsoftrabcscopedelegate.png](../2020-08-11-azurepim-pag-rbac/microsoftrabcscopedelegate.png)
 
@@ -218,7 +218,7 @@ Follow the instructions to create a PAG as described in the first scenario. In t
 
 1. Currently this feature is in public preview and my described use cases and solution approaches are not included in the technical documentation (as valid or supported scenario of PAG).
 2. During my tests I have found some delays and latency until membership changes has been effected in Azure DevOps or Intune RBAC/portal. As always it's require to evaluate if this range of delay and result passed your security or compliance requirements.
-3. Consider to protect users with assigned privileges outside of Azure AD admin roles. Users with assigned roles "Authenticator or Password Administrator" are able to reset credentials of PAG-assigned permissions. As already described in many previous blog posts, only user assignment to Azure AD directory roles (permanent or eligible) will protect them and restrict credential management (by "Privileged Authenticator or Password Administrators"). 
+3. Consider to protect users with assigned privileges outside of Azure AD admin roles. Users with assigned roles "Authenticator or Password Administrator" are able to reset credentials of PAG-assigned permissions. As already described in many previous blog posts, only user assignment to Azure AD directory roles (permanent or eligible, direct or role-assignable groups) will protect them and restrict credential management (by "Privileged Authenticator or Password Administrators"). 
 
 
 <br>
