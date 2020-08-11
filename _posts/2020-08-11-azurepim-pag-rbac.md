@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Privileged Access Groups: Manage JIT access outside of Azure AD admin roles with Azure PIM?"
+title:  "Privileged Access Groups: Manage privileged access outside of Azure AD admin roles with Azure PIM"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
