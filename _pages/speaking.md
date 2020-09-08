@@ -7,6 +7,7 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+*  [2020-09-01 Azure Governance - Best Practices (@Azure Meetup Bonn)](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) 
 *  [2020-07-28 Securing your privileged identity and access in Azure / Azure AD
  (@TrustInTech Cologne)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-07-28-TrustInTech%20Securing-your-privileged-identity-and-access-Azure.pdf) 
 *  [2020-05-28 Securing and monitoring yourAzure AD identities (@Microsoft 365 Virtual Marathon)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-05-27%20M365VM%20-%20Securing-and-Monitoring-AzureAD-identities.pdf) 
