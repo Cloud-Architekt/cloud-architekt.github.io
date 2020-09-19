@@ -4,14 +4,14 @@ title:  "Auditing and sign-in logs of Managed Identities and Service Principals"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
-image: assets/images/aadaudit.jpg
-description: "Recently, Microsoft added new categories for sign-in logs which includes auditing of non-interactive, managed or service principals in Azure AD.
+image: assets/images/aadaudit.png
+description: "Recently, Microsoft added new categories for sign-in logs which finally included non-interactive, managed or service principals in Azure AD.
 In this blog post I will describe the configuration steps to forward the new collections to Azure Sentinel, some considerations from my first tests and a few examples of correlation to activity logs and potentially Azure Sentinel analytic rules."
 featured: false
 hidden: false
 ---
 
-Recently, Microsoft added new categories for sign-in logs which includes auditing of non-interactive, managed or service principals in Azure AD.
+Recently, Microsoft added new categories for sign-in logs which finally included non-interactive, managed or service principals in Azure AD.
 In this blog post I will describe the configuration steps to forward the new collections to Azure Sentinel, some considerations from my first tests and a few examples of correlation to activity logs and potentially Azure Sentinel analytic rules.
 
 *Note: Currently there's no official statement or documentation around this feature. Please wait for Microsoft's documentation and consider the log volume estimation before enabling the new collection in your production environment.*
@@ -231,11 +231,13 @@ Service principal sign-in logs gives us many opportunities to build simple but a
 
 ### Sign-in attempts from service principals with expired/wrong keys
 **Rule logic:**
+
 Sign-in logs of service principals includes ResultType which include if the sign-in was successfully. There could be many reasons for sign-in failure (ResultType is not equal "0") such as wrong client secrets or an expired certificate. The error codes are listed in a Microsoft Docs about "[Azure AD Authentication and authorization error codes](https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes)".
 
 The following query checks for failure sign-in events of service principals and summarize the events by service principal, resource (target), result type (error) and IP address.
 
 **Rule query:**
+
 ```jsx
 let timeframe = 1d;
 let threshold = 1;
@@ -251,6 +253,7 @@ applicationSet = makeset(ResourceDisplayName) by ServicePrincipalName, IPAddress
 ### Detection of generate new key even service principal sign-ins are successfully
 
 **Rule logic:**
+
 Looking for audit events of updating certificates or secrets on service principals in a specific time range. Alerting if service principal has successfully sign-in events within a period of time before changing credentials. This could be a suspicious event that someone generates credentials without any obvious reasons.
 
 [https://github.com/Cloud-Architekt/azuresentinel/blob/master/ResetMFAAuthCredByAdmin.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/ResetMFAAuthCredByAdmin.kusto)
