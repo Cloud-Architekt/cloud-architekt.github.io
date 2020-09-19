@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Auditing and sign-in logs of Managed Identities and Service Principals"
+title:  "Sign-in logs and auditing of Managed Identities and Service Principals"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
