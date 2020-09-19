@@ -8,7 +8,7 @@ image: assets/images/aadaudit.jpg
 description: "Recently, Microsoft added new categories for sign-in logs which includes auditing of non-interactive, managed or service principals in Azure AD.
 In this blog post I will describe the configuration steps to forward the new collections to Azure Sentinel, some considerations from my first tests and a few examples of correlation to activity logs and potentially Azure Sentinel analytic rules."
 featured: false
-hidden: true
+hidden: false
 ---
 
 Recently, Microsoft added new categories for sign-in logs which includes auditing of non-interactive, managed or service principals in Azure AD.
