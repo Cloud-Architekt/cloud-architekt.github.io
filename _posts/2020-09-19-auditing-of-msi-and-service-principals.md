@@ -69,7 +69,8 @@ was made by client secret or certificate
 - No direct correlation between sign-in and activity log entry (as in the most other cases in Azure logging)
 - Be aware of the differences between application, object and service principal ID
     - Application and ServicePrincipal ID are included in the AADServicePrincipalSignInLogs
-- Currently only user sign-in logs are visible in the Azure Portal
+- ~~Currently only user sign-in logs are visible in the Azure Portal~~
+  UPDATE (Sept. 22th): Categories are also visible in the "Sign-ins" overview of the Azure AD blade. 
 - Table entries, size and size per entry should be actively monitored and considered in your test environment before enabling the new categories in your production. This also helps to calculate the estimated log volume.
     - I'm confident that Microsoft will update the [existing documentation about cost considerations soon](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor#cost-considerations).
     - I've used the "[Workspace Usage report](https://techcommunity.microsoft.com/t5/azure-sentinel/usage-reporting-for-azure-sentinel/ba-p/1267383)" during my early tests in the Azure Sentinel playground environment. The latest version of the workbook is [available from GitHub](https://github.com/CliveW-MSFT/KQLpublic/blob/master/KQL/Workbooks/Workspace%20Usage%20report.workbook).
