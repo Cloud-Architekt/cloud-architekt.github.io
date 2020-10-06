@@ -7,6 +7,7 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+*  [2020-10-06 Ignite Recap - Azure AD (@Azure Meetup Bonn)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-10-06%20AzureBonn-Ignite-Recap-AzureAD.pdf) 
 *  [2020-09-01 Azure Governance - Best Practices (@Azure Meetup Bonn)](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) 
 *  [2020-07-28 Securing your privileged identity and access in Azure / Azure AD
  (@TrustInTech Cologne)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-07-28-TrustInTech%20Securing-your-privileged-identity-and-access-Azure.pdf) 
