@@ -19,4 +19,5 @@ You'll find also an overview about my sessions (including slides) and engagement
 
 In 2020 I was awarded as "Most Valuable Professional" (MVP) in the category "Azure" for my community contributions by Microsoft.<br>
 I was also recognized with the "Most Valuable Mentor" by Microsoft in October 2020.<br><br>
-
+This is my personal blog. Opinions are my own and possibly not the views of my employer.<br><br>	
+<span style="color:silver;font-style:italic;font-size:small">Photo by [Sebastian Tillenburg](https://twitter.com/d_eiti?lang=de)</span>
