@@ -17,5 +17,5 @@ My subject areas are cloud-native, identity and security solutions on Microsoft 
 I am pleased to be a active part of the Azure community and speak at meetups and conferences.<br>
 You'll find also an overview about my sessions (including slides) and engagements on this blog.<br><br>
 
-In 2020 I was awarded as "Most Valuable Professional" (MVP) in the category "Azure" for my community contributions by Microsoft.
+In 2020 I was awarded as "Most Valuable Professional" (MVP) in the category "Azure" for my community contributions by Microsoft.<br>
 I was also recognized with the "Most Valuable Mentor" by Microsoft in October 2020.
