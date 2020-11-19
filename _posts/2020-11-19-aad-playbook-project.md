@@ -60,6 +60,7 @@ We were a little surprised how many details or conditions needs to be considered
 Nevertheless, the jointly research work was really a lot of fun! Once again, it has been shown that exchange or discussion of opinions and results from the lab are extremely valuable.
 
 ![../2020-11-19-aad-playbook-project/teamscall.jpg](../2020-11-19-aad-playbook-project/teamscall.jpg)
+
 *Regular video calls and joint editing of documents in Microsoft Teams has enabled us to work on this project.*
 
 ## Community-driven project
