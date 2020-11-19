@@ -7,7 +7,7 @@ tags: [security, azuread, azure]
 image: assets/images/worldwidesecurity.jpg
 description: "In the recent weeks, I've worked together with Sami Lamppu on the first section of a playbook about common attack and defense scenarios in Azure AD. In this article I would like to talk about the motivation, objective of the document and invite everyone from the community to participate in this project."
 featured: false
-hidden: true
+hidden: false
 ---
 
 *In the recent weeks, I've worked together with Sami Lamppu on the first section of a playbook about common attack and defense scenarios in Azure AD.
