@@ -16,7 +16,7 @@ hidden: false
 
 In the recent year I‘ve talked about monitoring of Azure Active Directory at many community sessions. From my point of view a comprehensive monitoring of identity security events must be an essential part of deployment plans and daily operations. Even though it may seem obvious as „best practice“ („[Actively monitor for suspicious activities](https://docs.microsoft.com/en-us/azure/security/fundamentals/identity-management-best-practices#actively-monitor-for-suspicious-activities)“), it seems to be also (mostly) underrated.
 
-Monitoring across Azure AD and Active Directory (including spreading between workloads in Azure and on-premises environments) can be complex and sometimes challenging but more important then ever. Identity protection in a hybrid world means also to protect and monitor Active Directory environments with all existing risks and traditional attack methods (Pass-the-Hash). The weakest link and uncover attack surfaces in your on-premises environment can be used to laverage or extend attacks to (hybrid) cloud services.
+Monitoring across Azure AD and Active Directory (including spreading between workloads in Azure and on-premises environments) can be complex and sometimes challenging but more important then ever. Identity protection in a hybrid world means also to protect and monitor Active Directory environments with all existing risks and traditional attack methods (Pass-the-Hash). The weakest link and uncover attack surfaces in your on-premises environment can be used to leverage or extend attacks to (hybrid) cloud services.
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_Security.png](../2020-12-11-identity-security-monitoring/AzIdentity_Security.png)
 
@@ -35,7 +35,7 @@ I've tried to find some sample use cases to underline when this monitoring optio
 It was hard for me to find the right level of details or scope with regard to the wide-range of this topic.
 
 *The following objectives are excluded (of scope):
-Azure AD B2C and Azure AD Domain Services will not be described in this blog post.*
+Azure AD B2C, Azure AD Domain Services and Microsoft Information Protection (AIP/MIP) will not be described in this blog post.*
 
 *Note: Microsoft announced many product name changes at the Ignite 2020. I've used all new product names in this article and partly point out the previous product names. A good overview of all name changes are written [in this blog post by Microsoft](https://techcommunity.microsoft.com/t5/itops-talk-blog/microsoft-365-and-azure-security-product-name-changes/ba-p/1719167).*
 
@@ -147,12 +147,13 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 - Microsoft’s “[deployment guide of Azure AD Monitoring](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/plan-monitoring-and-reporting)” gives you an general overview of aspects and options to integrate or archive logs. The [latency of Azure AD logging and the risk detections](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) should be also considered (for your security response and processes).
 - [Retention of the reports](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) are depends on type of activity and your Azure AD license.
 - [Costs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor#azure-monitor-logs-cost-considerations) should be calculated based on the requirements for long-term Retention.
+- Pay attention to missing audit logs of privileged activities in Azure Monitor.
+    - Example: [Azure EA portal and changes of ownership will not be audited]((https://www.cloud-architekt.net/azure-ea-management-security-considerations/)) but has effect on Azure RBAC!
 - [Identity Protection provides new APIs](https://docs.microsoft.com/en-us/graph/api/resources/identityprotection-root?view=graph-rest-beta) to get events and risk status of your users.
-- Consider the limitations and behaviour of [Identity Protection and External Users (B2B Guests)](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b)
-- Hybrid identity environment: Collect and monitor [logs from Azure AD Connect servers](https://docs.microsoft.com/en-gb/troubleshoot/azure/active-directory/installation-configuration-wizard-errors#troubleshoot-additional-error-messages) and the ["Password Hash Sync" agent](https://docs.microsoft.com/en-gb/troubleshoot/azure/active-directory/troubleshoot-pwd-sync#event-id-messages-in-event-viewer).
-- Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
 - I can strongly recommended to test and validate the detection mechanism in Identity Protection (as described in the [blog post by Sami Lampuu](https://samilamppu.com/2020/10/09/azure-ad-identity-protection-deep-diver-part-2/)). Take care on the delay and latency between attack and detection of the various mechanism. Keep in mind, risk response (as part of the Risk Policies) must be in accord with your Azure AD implementation.
     - Example: Force password change by risky sign-in detection works only in hybrid environments if password write-back is allowed.
+- Consider the limitations and behavior of [Identity Protection and External Users (B2B Guests)](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b)
+- Hybrid identity environment: Collect and monitor [logs from Azure AD Connect servers](https://docs.microsoft.com/en-gb/troubleshoot/azure/active-directory/installation-configuration-wizard-errors#troubleshoot-additional-error-messages) and the ["Password Hash Sync" agent](https://docs.microsoft.com/en-gb/troubleshoot/azure/active-directory/troubleshoot-pwd-sync#event-id-messages-in-event-viewer).
 - You might be facing the follow considerations in your daily work experiences:
     - Name in reports are based on the object name at the time of the event/sign-in
     - B2B users are able to get “user insights” and therefore internal information
@@ -163,6 +164,8 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
         - Global Reader
 - Microsoft "Identity Secure Score" is recommended for regular check as part of your identity security posture management and can be integrated in your monitoring via [Security Graph API](https://docs.microsoft.com/en-us/graph/api/securescore-get?view=graph-rest-1.0&tabs=http).
 - [Customer-managed keys](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/customer-managed-keys) can be configured and are supported for encryption in Azure Monitor.
+- Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
+- Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post]((https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/))
 - [Rate limitation of „Azure Alerts“](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-rate-limiting) should be considered for your service emergency and operational notifications.
 
 ## Cloud App Security and "Defender for Identity": Unified Hybrid Identity und Cloud SecOps
@@ -284,7 +287,8 @@ Automation of (governance) actions can be realized by PowerAutomate. Microsoft h
 - Implement a process and simulate [investigation of anomaly detection alerts](https://docs.microsoft.com/en-us/cloud-app-security/investigate-anomaly-alerts?WT.mc_id=twitter)!
 - RBAC in MCAS doesn't allow assignment of roles to Azure AD groups (only users supported).
 - [Scoped deployment](https://docs.microsoft.com/en-us/cloud-app-security/activity-privacy) can be very useful in setting up [Proof-of-Concept environment](https://gallery.technet.microsoft.com/Cloud-App-Security-Proof-4a49049f) or staged rollouts in production
-- Governance Actions (by activity policies) must be in accord with your Azure AD environment. Example: Suspended user will be reactivated after next Azure AD Connect sync interval.
+- Governance Actions (by activity policies) must be in accord with your Azure AD environment.
+    - Example: Suspended user will be reactivated after next Azure AD Connect sync interval.
 - Currently, blocking access to Cloud apps by (custom) indicators in "Microsoft Defender for Endpoint" (MDE) has some limitations:
     - MDE allows 15.000 indicators per tenant
     - This feature is supported on Windows 10 only (no support for ATP on MacOS or Linux yet)
@@ -303,6 +307,133 @@ Automation of (governance) actions can be realized by PowerAutomate. Microsoft h
 - Subscribe the RSS feed of "[What's new](https://docs.microsoft.com/en-us/defender-for-identity/whats-new)" to be notified about product changes and new features
 - Service health can be monitored on the [MDI status page](https://health.atp.azure.com/) and integrated for notification of service issues or delays of detections. Consider to actively monitor the sensors in your infrastructure.
 - [Defender for Identity sizing tool](https://aka.ms/aatpsizingtool) and [capacity planing guidance](https://docs.microsoft.com/en-us/defender-for-identity/capacity-planning) should be use in the planning phase to calculate amount of traffic, supportability and resource recommendations for sensors.
+
+## Microsoft 365 Defender: Unified SecOps of M365 Services
+
+*Sample use case: SecOps Teams that needs a unified visibility of incidents and possibility of hunting across all "Microsoft 365" services and assets (data, identity, endpoints and cloud apps). Consolidated view on logs and summarized incidents from all M365 Defender services with enriched data. Enabling centralized investigation of recorded activities (telemetry) in Microsoft 365 services and empowering (auto)-remediation of incidents by "Automated Investigation and Response (AIR) System".* 
+
+![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor.png](../2020-12-11-identity-security-monitoring/AzIdentity_MTP.png)
+
+Microsoft 365 Defender (formerly Microsoft Threat Protection) supports various services from the Microsoft 365 platform. Check the "[supported services](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/deploy-supported-services?view=o365-worldwide)" list to understand which data sources can be integrated. Start using M365 Defender is very easy by "[turn on](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-enable?view=o365-worldwide)" the described setting in the "Microsoft 365 Security Center".
+
+### Data Sources
+
+#### IaaS/PaaS (Cloud and on-Premises)
+
+Azure resource-level or collected logs by Azure Monitor are NOT covered by M365 Defender.
+Example: Event logs of Azure/Hybrid Servers or alerts from Azure Defender are NOT visible for hunting in this portal. 
+
+#### Cloud Identity (Azure Active Directory)
+
+[Incidents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/investigate-incidents?view=o365-worldwide) / [AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Risk detections from "Azure AD Identity Protection" are NOT included in the "Incidents" and are NOT visible in the table "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)". MCAS feeds many alerts to M365 Defender and sign-in risk events (detected by MCAS) are covered. ServiceSource and DetectionSource will be named "MCAS" in the log entries. All "Risky sign-in" alerts from MCAS, which collects all "Identity Protection" risks (detected by Azure AD), can NOT be founded in M365 Defender.
+
+Examples:
+
+- "Password Spray" will be detected by "Identity Protection" and listed in MCAS as "Risky sign-in". But it is NOT visible in the table or as part of an Incident in M365 Defender.
+- "Impossible Travel" is sourced and one of the risk detections by MCAS. It will be shown in the "Identity Protection" blade of Azure AD but also as listed as MCAS alert ("Impossible travel activity"). This alert is collected as part of an "Incident" view in M365 Defender and exists in the "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)" table.
+
+[IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events captured by MCAS will be stored in this table. This covers only sign-in events to connected apps and are similar to the "Activity Logs" in the MCAS blade (filtered by Successful or failed login-ins). As already described, non-interactive logons or sign-ins by service principal/managed identity are NOT covered.
+
+[IdentityInfo:](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityinfo-table?view=o365-worldwide) Account information from various identity sources (including Active Directory and Azure AD) will be stored here, to enable build relation between user objects (e.g. ObjectID, On-Premises SID and Cloud SID). Other details such as DisplayName, ProxyAddress or Account Status are also included.
+
+#### On-Premises Identity (Active Directory)
+
+It's important to know that data of "Microsoft Defender for Identity" (MDI) will only be shown in the M365 Defender portal if the integration between MCAS and MDI is enabled. MCAS seems to be responsible to feeds the related MDI data to M365 Defender.
+
+Correlation of MDI alerts with other activities and alerts from M365 Defender services (such as M365 Defender for Endpoint) gives you [new capabilities](https://techcommunity.microsoft.com/t5/microsoft-security-and/microsoft-365-defender-enriches-the-microsoft-defender-for/ba-p/1808275) to understand the context of Active Directory attacks. This becomes obvious if you think about the limited visibility of endpoint (threats) in MCAS.
+
+Recently, Microsoft added the opportunity to use "Advanced Hunting" based on [events captured by MDI](https://techcommunity.microsoft.com/t5/microsoft-365-defender/hunt-for-threats-using-events-captured-by-azure-atp-on-your/ba-p/1598212). Another benefit (compared to MDI queries in the MCAS portal):
+You are able to use KQL for advanced hunting in M365 Security Portal and use the (raw) logs from the following tables:
+
+[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Alerts from MDI will be stored in this table. AlertId includes the prefix "aa" (stands for Azure ATP?) and the original AlertId from the MDI portal (not the MCAS AlertID!).
+
+[IdentityInfo:](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityinfo-table?view=o365-worldwide) As already described before, this table helps to correlate and build relation between various account objects. In this case, very helpful for advanced hunting and queries between Azure AD and AD user objects.
+
+[IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events of your Active Directory will be stored in this table. The logon events will be sourced from the connected MDI instance in MCAS and show similar results to a filtered "Activity Log" (by app "Active Directory" in the MCAS portal). Various types of logon events in Active Directory are covered (including Remote Desktop, Interactive and Credentials validation via NTLM/Kerberos). Failure reason of sign-in attempts are also included (e.g. OldPassword).
+
+[IdentityQueryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityqueryevents-table?view=o365-worldwide): Queries on Active Directory objects (such as LDAP, DNS and SAMR) are collected from MDI in this table.
+
+[IdentityDirectoryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitydirectoryevents-table?view=o365-worldwide): This table contains many identity-related (Active Directory) audit and system events on the domain controller. User-level auditing of password or group memberships are included but also domain controller events such as PowerShell execution, Task scheduling or potential lateral movement.
+
+#### Cloud Sessions (Microsoft Cloud App Security)
+
+Cloud Discovery and activity logs from connected apps are NOT available in M365 Defender for hunting.
+
+[DeviceNetworkEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-devicenetworkevents-table?view=o365-worldwide): As already described, "Microsoft Defender for Endpoints" (MDE) can be configured to forward signals to MCAS (for cloud discovery and visibility of (un)sanctioned cloud apps). This table helps to start queries on the raw logs from MDE.
+
+#### Collaboration Platforms (Office 365 Services)
+[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Threat protection signals and data will be correlated from Microsoft Defender for Office 365 (MDO) in M365 Defender. But it's limited to features and alerts around "Exchange Online" (such as Safe Links or Attachments).
+
+Other Exchange Online-related logs and events are stored in the following tables and could be relevant for hunting of [phishing mails](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/phishing):
+
+- [EmailEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailevents-table?view=o365-worldwide) (email delivery and blocking events)
+- [EmailAttachmentInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-schema-tables?view=o365-worldwide) (file attachment)
+- [EmailPostDeliveryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailpostdeliveryevents-table?view=o365-worldwide) (security event after e-mail delivery)
+- [EmailUrlInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailurlinfo-table?view=o365-worldwide) (URLs / Safe Attachment in E-Mails)
+
+[CloudAppEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-cloudappevents-table?view=o365-worldwide): Activities from "Exchange Online" and "Microsoft Teams" (monitored by MCAS) are available for hunting here. Other O365 services are not supported yet! OneDrive and SharePoint Online will be [introduced in early 2021](https://techcommunity.microsoft.com/t5/microsoft-365-defender/hunt-across-cloud-app-activities-with-microsoft-365-defender/ba-p/1893857) and the existing "AppFileEvents" will be replaced at this time.
+
+#### Device / Endpoint Security (Microsoft Defender for Endpoint)
+
+[Support of "Microsoft Defender for Endpoint"](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/deploy-supported-services?view=o365-worldwide#limited-deployment-scenarios) (MDE) enables visibility on endpoint states, raw events, detections and alerts (which includes EDR/AV/attack surface reduction) and entities related to devices in M365 Defender.
+
+[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Alerts from MDE will be shown in this table. Other events from this source will be stored in the following tables:
+
+- [DeviceEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-deviceevents-table?view=o365-worldwide) (security controls such as AV or Exploit protection)
+- [DeviceLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-devicelogonevents-table?view=o365-worldwide) (logon events on/to devices from local or (Azure) AD users)
+- DeviceInfo (similar to the approach of the table "IdentityInfo", helps to correlate or build relation based on meta information by devices)
+
+M365 Defender provides a "[Device profile page](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/device-profile?view=o365-worldwide)" which is accessible from "Incident" view. This  gives you a unified control on M365 Defender- and MDE-related actions.
+
+### Analyze and Visualize
+
+#### Monitoring and Reporting ("Cards" in M365 Security Home)
+
+Dashboard of "Microsoft 365 Security Center" allows to add "cards" for summarized reports of various sections of security areas in M365 Defender (including "[identity monitoring and reporting](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/monitor-and-report-identities?view=o365-worldwide)").
+
+#### Investigation of Incidents
+
+Incidents can be managed in the portal by [adding comments, adjusting priority](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/manage-incidents?view=o365-worldwide), [reporting false/positives](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-autoir-report-false-positives-negatives?view=o365-worldwide) or [checking related entities (devices/users) or alerts](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/investigate-incidents?view=o365-worldwide#incident-overview).
+
+[Suspicious entities](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/investigate-incidents?view=o365-worldwide#evidence) are also stored in the table "[AlertEvidence](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertevidence-table?view=o365-worldwide)" which can be used for custom queries or advanced hunting.
+
+#### Advanced Hunting
+
+As already described, M365 Defender supports hunting on query-based analytics (KQL) across the various tables from supported M365 services. This allows you easily to start [hunting between activities and alerts of devices, e-mails and identities](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-query-emails-devices?view=o365-worldwide).
+
+#### Custom Detections
+
+Advanced Hunting queries can be used to create a "[Detection Rule](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/custom-detection-rules?view=o365-worldwide)" for alerting.
+This gives you the ability to proactively monitor specific critical events or potential threats. Applicable actions can be triggered if an entity is founded in the query (for example: Isolate device in case of a "Brute Force" attack).
+
+### Integration and Response
+
+#### Auto-Investigation and Response (AIR)
+
+M365 Defender supports only [remediation actions](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-remediation-actions?view=o365-worldwide) on suspicious or malicious "Devices" or "Emails". Pending (if approval is needed/configured) or completed actions are visible and can be managed in the "[Action Center](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-action-center?view=o365-worldwide)". This incident response activities [follows after an automated investigation](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-remediation-actions?view=o365-worldwide) by M365 Defender.
+
+[Automation level and scope for Endpoints](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-configure-auto-investigation-response?view=o365-worldwide#review-or-change-the-automation-level-for-device-groups) can be configured in the "Microsoft Defender Security Center" (MDE Portal). [Policies for Office 365 can be configured from the M365 Security Center](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-configure-auto-investigation-response?view=o365-worldwide#review-your-security-and-alert-policies-in-office-365).
+
+#### Threat Experts
+
+Advice by Microsoft's Threat Experts can be requested directly from the "Incident" view.
+This is an additional service which can be [enrolled for a 90-day-trial or on-Demand subscription (by Microsoft)](https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/microsoft-threat-experts#before-you-begin). 
+
+### Considerations and References
+
+- [Microsoft 365 Defender Ninja Training](https://techcommunity.microsoft.com/t5/microsoft-365-defender/become-a-microsoft-365-defender-ninja/ba-p/1789376) is a great resource to learn more!
+- [Advanced Hunting Cheat Sheet](https://github.com/MiladMSFT/AdvHuntingCheatSheet/blob/master/MTPAHCheatSheetv01-light.pdf) gives some good samples and uses cases of queries across the supported services in M365 Defender
+- [Samples of Advanced Hunting Queries](https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries) are available on GitHub and ready to use!
+- Evaluate the "Attack Simulator" in the M365 Security Center to simulate attacks (such as phishing attacks) and start "security awareness" training for end-users
+- Regular check on updates and changes in "[What's new in M365 Defender](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/whats-new?view=o365-worldwide)" or the message center in Microsoft 365 admin center is strongly recommended!
+- Get an overview of the M365 Defender core features by [Microsoft's "educational training videos"](https://techcommunity.microsoft.com/t5/microsoft-365-defender/short-amp-sweet-educational-videos-on-microsoft-365-defender/ba-p/1525296)
+- Custom Detection Rules can be configured only with a frequency between 1-24 hours and  built-in action as auto-response
+- [Default permissions](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-permissions?view=o365-worldwide) in M365 Defender should be considered (to know who has access)
+- Take a look on the "[Interactive guide](https://mslearn.cloudguides.com/en-us/guides/Protect%20your%20organization%20with%20Microsoft%20Threat%20Protection)" to get an overview about the capabilities
+- [Microsoft 365 Defender trial lab](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/mtp-evaluation?view=o365-worldwide) can be helpful to simulate attacks and learn the ways to resolve incidents or start advanced hunting.
+- Public Preview of [M365 Defender APIs](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/api-overview?view=o365-worldwide) allows integration and advanced hunting/queries programmatically
+
+
 
 
 <br>
