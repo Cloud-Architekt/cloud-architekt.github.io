@@ -12,6 +12,12 @@ hidden: false
 
 *Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give an overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
 
+- <A href="#overview-of-hybrid-identity-security-monitoring">Overview of Hybrid Identity Security Monitoring</A><br>
+- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads</A><br>
+- <A href="#cloud-app-security-and-defender-for-identity-unified-hybrid-identity-und-cloud-secops">Cloud App Security and "Defender for Identity": Unified Hybrid Identity und Cloud SecOps</A><br>
+- <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
+- <A>Azure Sentinel: Single pane of glass / Unified SecOps of Azure and M365 Services</A>
+
 ## Overview of Hybrid Identity Security Monitoring
 
 In the recent year I‘ve talked about monitoring of Azure Active Directory in community sessions and talks. From my point of view a comprehensive monitoring of identity security events must be an essential part of deployment plans and daily operations. Even though it may seem obvious as „best practice“ („[Actively monitor for suspicious activities](https://docs.microsoft.com/en-us/azure/security/fundamentals/identity-management-best-practices#actively-monitor-for-suspicious-activities)“), it is sometimes (mostly) underrated.
