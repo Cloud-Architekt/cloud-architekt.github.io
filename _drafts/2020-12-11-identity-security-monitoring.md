@@ -86,7 +86,7 @@ Various types of IaaS and PaaS resources (VMs, App Service, Storage,…) will be
 
 ### Cloud Identity (Azure Active Directory)
 
-*[Routing of Azure AD activity logs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor) is natively supported to various targets such as Azure Event Hub, Blob Storage and Log Analytics. **Längere Beschreibung von Logs und IPC...***
+*[Routing of Azure AD activity logs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor) is natively supported to various targets such as Azure Event Hub, Blob Storage and Log Analytics.
 
 *Supported reports in Azure Monitor*
 
