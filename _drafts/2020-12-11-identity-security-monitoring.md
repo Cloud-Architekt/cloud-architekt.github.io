@@ -10,21 +10,22 @@ featured: false
 hidden: false
 ---
 
-*Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give an (high-level) overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
+*Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give an overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
 
 ## Overview of Hybrid Identity Security Monitoring
 
-In the recent year I‘ve talked about monitoring of Azure Active Directory at many community sessions. From my point of view a comprehensive monitoring of identity security events must be an essential part of deployment plans and daily operations. Even though it may seem obvious as „best practice“ („[Actively monitor for suspicious activities](https://docs.microsoft.com/en-us/azure/security/fundamentals/identity-management-best-practices#actively-monitor-for-suspicious-activities)“), it seems to be also (mostly) underrated.
+In the recent year I‘ve talked about monitoring of Azure Active Directory in community sessions and talks. From my point of view a comprehensive monitoring of identity security events must be an essential part of deployment plans and daily operations. Even though it may seem obvious as „best practice“ („[Actively monitor for suspicious activities](https://docs.microsoft.com/en-us/azure/security/fundamentals/identity-management-best-practices#actively-monitor-for-suspicious-activities)“), it is sometimes (mostly) underrated.
 
 Monitoring across Azure AD and Active Directory (including spreading between workloads in Azure and on-premises environments) can be complex and sometimes challenging but more important then ever. Identity protection in a hybrid world means also to protect and monitor Active Directory environments with all existing risks and traditional attack methods (Pass-the-Hash). The weakest link and uncover attack surfaces in your on-premises environment can be used to leverage or extend attacks to (hybrid) cloud services.
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_Security.png](../2020-12-11-identity-security-monitoring/AzIdentity_Security.png)
+_Microsoft Defender for Identity (MDI), Microsoft Cloud App Security (MCAS) and Azure AD Identity Protection protects identities on various levels and platforms (On-Premises, Session/Cloud Apps and Cloud Identity/Sign-ins)_ 
 
-Identity security does not end with „enabling“ features such as „Azure AD Identity Protection“ or follow the recommendations by „Identity Secure Score“...
+Implementing "identity security" does not end with „enabling“ those features or by following the recommendations by „Identity Secure Score“...
 
-It’s important to develop a continuous improvement strategy of detections and an operational guide to empower and monitor your signals of „guards“. This includes also to provide workflows for automated response, an unified views for SecOps for hunting, security processes and posture management.
+It’s important to develop a continuous improvement strategy of detections and an operational guide to empower and monitor your signals of „guards“. This includes also to provide workflows for automated response, an unified views for incident management/hunting, security processes and posture management.
 
-Extensive possibilities of "User and Entity Behavior Analytics" (UEBA) allows SecOps to find anomalous activities (calcuated by machine learning algorithms) across the various data sources or signals instead of building manual correlation.
+Extensive possibilities of "User and Entity Behavior Analytics" (UEBA) allows SecOps to find anomalous activities (calculated by machine learning algorithms) across the various data sources or signals instead of building a manual correlation.
 
 At always, keep up-to-date and notified about latest changes of security features, attack/defense scenarios or security recommendations. Verification of effectiveness by simulated attacks should be also part of your operational tasks.
 
@@ -37,7 +38,10 @@ It was hard for me to find the right level of details or scope with regard to th
 *The following objectives are excluded (of scope):
 Azure AD B2C, Azure AD Domain Services and Microsoft Information Protection (AIP/MIP) will not be described in this blog post.*
 
-*Note: Microsoft announced many product name changes at the Ignite 2020. I've used all new product names in this article and partly point out the previous product names. A good overview of all name changes are written [in this blog post by Microsoft](https://techcommunity.microsoft.com/t5/itops-talk-blog/microsoft-365-and-azure-security-product-name-changes/ba-p/1719167).*
+_Caution: All description of features, potential limitations and implementation considerations are based on personal experiences and research results at the time of publication this blog post. Therefore the content and statement can be outdated since writting this blog post in December 2020._
+
+*Note: Microsoft announced many product name changes at the Ignite 2020. I've used all new product names in this article.
+A good overview of all name changes are written [in this blog post by Microsoft](https://techcommunity.microsoft.com/t5/itops-talk-blog/microsoft-365-and-azure-security-product-name-changes/ba-p/1719167).*
 
 ## Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads
 
@@ -86,7 +90,7 @@ Various types of IaaS and PaaS resources (VMs, App Service, Storage,…) will be
 
 ### Cloud Identity (Azure Active Directory)
 
-*[Routing of Azure AD activity logs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor) is natively supported to various targets such as Azure Event Hub, Blob Storage and Log Analytics.
+[Routing of Azure AD activity logs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor) is natively supported to various targets such as Azure Event Hub, Blob Storage and Log Analytics.
 
 *Supported reports in Azure Monitor*
 
@@ -113,11 +117,11 @@ Identity Protection of Azure AD Premium [stores reports and events](https://docs
     - [Microsoft Graph APIs](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-graph-api) allows you to collect this data for export or automate response to risk detections.
     - [Every Azure AD Sign-in log](https://docs.microsoft.com/en-us/graph/api/signin-list?view=graph-rest-1.0&tabs=http) includes the following properties related to the Identity Protection risk detection: riskDetail, riskLevelAggregated, riskLevelDuringSignIn, riskState, riskEventTypes.
 
-    ![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCDetection.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCDetection.png)
-    _Risk detections from "Cloud App Security" (such as Impossible Travel) will be also displayed in the "Identity Protection" blade (Azure portal). Corrleation between sign-in event and offline detections by Identity Protection (in this sample "Password Spray, Malicious IP address and Atypical travel) can be established by Request or CorrelationID._
+        ![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCDetection.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCDetection.png)
+        _Risk detections from "Cloud App Security" (such as Impossible Travel) will be also displayed in the "Identity Protection" blade (Azure portal). Corrleation between sign-in event and offline detections by Identity Protection (in this sample "Password Spray, Malicious IP address and Atypical travel) can be established by Request or CorrelationID._
 
-    ![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCQuery.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCQuery.png)
-    _Collected "sign-in events" in Azure Monitor Logs will be enriched with "RiskState" and "RiskLevelDuringSign" if a risky sign-in was detected (in real-time or sign-in attempt was made after risk detection)._
+        ![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCQuery.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor_IPCQuery.png)
+        _Collected "sign-in events" in Azure Monitor Logs will be enriched with "RiskState" and "RiskLevelDuringSign" if a risky sign-in was detected (in real-time or sign-in attempt was made after risk detection)._
 
 ### Log Collection (via Azure Monitor)
 
@@ -151,10 +155,11 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 ### Considerations of Azure AD Logging by Azure Monitoring
 
 - Microsoft’s “[deployment guide of Azure AD Monitoring](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/plan-monitoring-and-reporting)” gives you an general overview of aspects and options to integrate or archive logs. The [latency of Azure AD logging and the risk detections](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) should be also considered (for your security response and processes).
-- [Retention of the reports](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) are depends on type of activity and your Azure AD license.
+- [Retention of the reports](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) depends on type of activity and your Azure AD license.
 - [Costs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor#azure-monitor-logs-cost-considerations) should be calculated based on the requirements for long-term Retention.
 - Pay attention to missing audit logs of privileged activities in Azure Monitor.
-    - Example: [Azure EA portal and changes of ownership will not be audited]((https://www.cloud-architekt.net/azure-ea-management-security-considerations/)) but has effect on Azure RBAC!
+    - Example: [Azure EA portal and changes of ownership will not be audited]((https://www.cloud-architekt.net/azure-ea-management-security-considerations/)) but has effects on Azure RBAC!
+- [Rate limitation of „Azure Alerts“](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-rate-limiting) should be considered for your service emergency and operational notifications.
 - [Identity Protection provides new APIs](https://docs.microsoft.com/en-us/graph/api/resources/identityprotection-root?view=graph-rest-beta) to get events and risk status of your users.
 - I can strongly recommended to test and validate the detection mechanism in Identity Protection (as described in the [blog post by Sami Lampuu](https://samilamppu.com/2020/10/09/azure-ad-identity-protection-deep-diver-part-2/)). Take care on the delay and latency between attack and detection of the various mechanism. Keep in mind, risk response (as part of the Risk Policies) must be in accord with your Azure AD implementation.
     - Example: Force password change by risky sign-in detection works only in hybrid environments if password write-back is allowed.
@@ -172,13 +177,12 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 - [Customer-managed keys](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/customer-managed-keys) can be configured and are supported for encryption in Azure Monitor.
 - Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
 - Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post]((https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/))
-- [Rate limitation of „Azure Alerts“](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-rate-limiting) should be considered for your service emergency and operational notifications.
 
 ## Cloud App Security and "Defender for Identity": Unified Hybrid Identity und Cloud SecOps
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS.png)
 
-*Sample use case: (Security) Operation Teams that manages cloud platforms/SaaS solutions and need an unified view for investigation or alerting on (hybrid) identities.*
+*Sample use case: SecOps that manages security of cloud platforms/SaaS solutions and need an unified view for investigation or alerting on (hybrid) identities.*
 
 ## Data Sources
 
@@ -209,17 +213,19 @@ _All "Identity Protection" risk detections will be listed in the MCAS alerts vie
 - [Security Alerts](https://docs.microsoft.com/en-us/azure-advanced-threat-protection/suspicious-activity-guide?tabs=cloud-app-security#security-alert-name-mapping-and-unique-external-ids) are categorized in phases of the cyberattack kill-chain and [well documented](https://docs.microsoft.com/en-us/defender-for-identity/suspicious-activity-guide?tabs=external).
 - [Integration of MDI with Defender for Endpoint](https://docs.microsoft.com/en-us/defender-for-identity/integrate-mde#:~:text=In%20the%20Defender%20for%20Identity,the%20integration%20toggle%20to%20On.&text=To%20check%20the%20status%20of,Microsoft%20Defender%20for%20Endpoint%20integration.) allows you to discover usage of SaaS apps (for Cloud Discovery) and blocking access to unsanctioned apps. Furthermore it allows you to see [open MDI alerts as badge in the MDE portal](https://docs.microsoft.com/de-de/defender-for-identity/investigate-entity#cross-check-with-windows-defender).
 - [Integration of MDI with MCAS](https://docs.microsoft.com/en-us/defender-for-identity/mcas-integration) is mandatory for environments where both solutions are in use. More and more features around MDI will be moved to the MCAS portal (such as the new hunting experiences). All activities and detections of MDI will be also included in the UEBA if integration is configured.
-    - MCAS is using MDI data as source to collecting activities from Active Directory as an „app“. This allows to get unified activity overview of an user in Azure AD and Active Directory.
-    - Example: Change of user's password in Active Directory, Azure AD (by admin) or as part of self-service password reset.
+    ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png)
+    _Attacks on Active Directory (On-Premises) will be detected by MDI and generates an alert in the MDI portal._
+
+    ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png)
+    _New "hunting experience" allows to use MCAS portal for unified incident management between AD and Azure AD alerts._ 
+
+    - MCAS is using MDI data as source to collecting activities from Active Directory as an „app“. This allows to get unified activity overview of an user in Azure AD, Active Directory and connected apps.
+    ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UnifiedFailedLogins.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UnifiedFailedLogins.png)
+    _Example: Failed sign-in attempts to Active Directory or connected apps (in this case, Azure Portal and Office 365)._
+
 - All alerts and events of MDI can be exported on a [data schema in the CEF format](https://docs.microsoft.com/en-us/defender-for-identity/cef-format-sa).
 - Regular updates in this service also added new detection methods that raised up. A good example is the [vulnerability detection of ZeroLogon](https://www.microsoft.com/security/blog/2020/11/30/zerologon-is-now-detected-by-microsoft-defender-for-identity/) which was introduced in November 2020.
 - Details on managing and investigation are very well documented in the following TechCommunity blog article about ["daily operation of MDI"](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-defender-for-identity-azure-atp-daily-operation/ba-p/1831024). Another blog post in this series describes details on ["Deployment and Troubleshooting"](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-defender-for-identity-azure-atp-deployment-and/ba-p/1676122).
-
-![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png)
-_Attacks on Active Directory (On-Premises) will be detected by MDI and generates an alert in the MDI portal._
-
-![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png)
-_New "hunting experience" allows to use MCAS portal for unified incident management between AD and Azure AD alerts._
 
 ### Cloud Sessions (Microsoft Cloud App Security)
 
@@ -265,12 +271,10 @@ Activities of the users can be filtered and will be enriched by MCAS (such as In
     - User page and "hunting experiences" in "Microsoft Defender for Identity" are moving to the MCAS portal.
     - Device page is also available for all MDI device objects and shows open alerts and summary of activities (logged on users, resource access, IPs)
 - [Investigation Priority Score](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs):
-This score helps to identify the riskiest users across all integrated threat protections and connected app including potential impact of an compromised account. Therefore, the "Investigation Priority" pulls signals from all identity protection solutions and app connectors to find abnormal behavior and aggregate this into a score value. This score will be displayed on the MCAS dashboard and user page for [further investigation](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-ueba) or in the MCAS Dashboard.
+This score helps to identify the riskiest users across all integrated threat protections and connected app including potential impact of an compromised account. Therefore, the "Investigation Priority" pulls signals from all identity protection solutions and app connectors to find abnormal behavior and aggregate this into a score value. This score will be displayed on the MCAS dashboard, user page for [further investigation](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-ueba) and in the MCAS Dashboard.
     - Matt Soseman has recorded a [YouTube video](https://mattsoseman.wordpress.com/2020/07/08/ueba-in-microsoft-cloud-app-security-user-entity-behavior-analytics/) about it which includes the calculation of the Score and some demo on investigation in the UEBA.
     - After enabling the data sources (threat protections, connected apps and discovery logs) you should [tune the policies for anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-suspicious-activity) and review the default governance actions.
 
-    ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UEBA.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UEBA.png)
-    _UEBA user page shows all alerts, detections and the score of the past 7 days. In this sample, the UEBA looks clear because the alerts are older. You have to take care on the "User threat" section which includes "open alerts". This allows you to navigate to the unified view of all alerts across the various data sources._
     
 ### Identity Security Posture and Apps Inventory
 
@@ -289,6 +293,10 @@ Control your identities from connected apps/resources, monitored activities and 
     - [Activity Policies](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs) enforces automated response on a specific or repeated activity to a connected app. As a response, governance actions can enforce security mechanism on app provider API level (e.g. require sign-in prompt in Office 365), user account state in Azure AD (e.g. disable user) or custom playbook (PowerAutomate). 
     Activities of tasks that is performed by a user or admin of your Azure AD tenant.
     - [Anomaly Detection Policies](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy) are enabled (or configurable) to find unusual activities and trigger an alert if unusual behavior was detected (different from user's regular activity). They are part of the UEBA and ML capabilities which are integrated in MCAS and displayed in the "User Page" / Investigation Priority Score. Built-in policies covers activities from specific activities in a connected app (Azure Instance and "Multiple delete VM activities") to anomalies of a single user session ("Unusual activities by user"). Some anomaly detection policies [can be tuned or scoped](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy#tune-anomaly-detection-policies) to adjust sensitivity or customize automated response.
+
+    ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_Governance.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_Governance.png)
+    _Governance log shows actions (initiated by policies) of automated response on alerts (such as require user to sign-in again if a risky sign-in was detected)._
+
 - [Policy Templates](https://docs.microsoft.com/en-us/cloud-app-security/policy-template-reference):
 Before creating your own policies, check the built-in templates in MCAS that are ready for use. Many of them are essential and are strongly recommended to be enabled and configured in your MCAS instance.
 - [PowerAutomate](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs):
@@ -316,7 +324,7 @@ Automation of (governance) actions can be realized by PowerAutomate. Microsoft h
 - Currently, blocking access to Cloud apps by (custom) indicators in "Microsoft Defender for Endpoint" (MDE) has some limitations:
     - MDE allows 15.000 indicators per tenant
     - This feature is supported on Windows 10 only (no support for ATP on MacOS or Linux yet)
-- Detailed training on MCAS features are available from Microsoft as part of “[Ninja Training](https://techcommunity.microsoft.com/t5/microsoft-security-and/the-microsoft-cloud-app-security-mcas-ninja-training-is-here/ba-p/1877343)”
+- Detailed training on MCAS features are available as “[Ninja Training](https://techcommunity.microsoft.com/t5/microsoft-security-and/the-microsoft-cloud-app-security-mcas-ninja-training-is-here/ba-p/1877343)”
 
 ### Considerations of Microsoft Defender for Identity (MDI)
 
