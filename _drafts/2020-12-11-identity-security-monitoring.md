@@ -14,7 +14,7 @@ hidden: false
 
 - <A href="#overview-of-hybrid-identity-security-monitoring">Overview of Hybrid Identity Security Monitoring</A><br>
 - <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads</A><br>
-- <A href="#cloud-app-security-and-defender-for-identity-unified-hybrid-identity-und-cloud-secops">Cloud App Security and "Defender for Identity": Unified Hybrid Identity und Cloud SecOps</A><br>
+- <A href="#cloud-app-security-and-defender-for-identity-unified-secops-of-cloud-platform-and-hybrid-identity">Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity</A><br>
 - <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
 - <A>Azure Sentinel: Single pane of glass / Unified SecOps of Azure and M365 Services</A>
 
@@ -184,7 +184,7 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 - Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
 - Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post]((https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/))
 
-## Cloud App Security and "Defender for Identity": Unified Hybrid Identity und Cloud SecOps
+## Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS.png)
 
