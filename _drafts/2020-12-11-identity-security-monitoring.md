@@ -125,7 +125,7 @@ Identity Protection of Azure AD Premium [stores reports and events](https://docs
 Azure's native Log Management Solution enables deep analytics or advanced queries in case of troubleshooting or technical investigation. [Kusto (KQL)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/) is the query language that you should use (and learn).
 This is the foundation of many other features that we cover in this blog post such as Azure Sentinel (built on top of Log Analytics) or Azure AD Workbooks (sourced log data from a workspace). All other monitoring solutions in the Azure platform are using a Log Analytics workspace to store data (e.g. App Insights).
 
-### Analyze and Visualize
+### Analyze and Visualize with Azure Monitor
 
 - [Azure AD Workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks):
 Microsoft provides built-in visualization which requires Log Analytics workspace. There are very helpful to analyze (and troubleshoot) activities around Authentication, Conditional Access and other identity-related operations.
@@ -218,7 +218,7 @@ _All "Identity Protection" risk detections will be listed in the MCAS alerts vie
 ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png)
 _Attacks on Active Directory (On-Premises) will be detected by MDI and generates an alert in the MDI portal._
 
-![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertinMCAS.png)
+![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIAlertInMCAS.png)
 _New "hunting experience" allows to use MCAS portal for unified incident management between AD and Azure AD alerts._
 
 ### Cloud Sessions (Microsoft Cloud App Security)
@@ -249,13 +249,13 @@ In general, the audit log from "Office 365 Security and Compliance Portal" shows
     - Detailed [properties of the Office 365 audit log](https://docs.microsoft.com/en-us/microsoft-365/compliance/detailed-properties-in-the-office-365-audit-log?view=o365-worldwide)
 - Alerts of "Microsoft Defender for Office 365" (MDO) are also visible in the MCAS Activity Log and allows you to create custom policies in MCAS. Sami Lamppu has also given some details about this [in one of his blog posts](https://www.notion.so/ttps-samilamppu-com-2020-05-19-detect-o365-atp-alerts-in-cloud-app-security-and-microsoft-threat-p-399da36e4bf745e5861ef420873b1ad2).
 
-### Device / Endpoint Security (Microsoft Defender ATP)
+### Device / Endpoint Security (Microsoft Defender for Endpoint)
 
 *"Microsoft Defender ATP" (MDATP) Portal was rebranded to "[Microsoft Defender Security Portal](https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/portal-overview)" in the fall of 2020. Microsoft's Endpoint and Detection and Response (EDR) solution allows [deep integration to MCAS](https://techcommunity.microsoft.com/t5/microsoft-security-and/microsoft-cloud-app-security-and-windows-defender-atp-better/ba-p/263265). But also insights from MCAS will be displayed in the (new) Endpoint Security Portal.*
 
 Signal forwarding from "Microsoft Defender for Endpoint" (MDE) to MCAS is an essential configuration to establish the cloud app usage visibility and control of unwanted apps (as described previously). But it's also extend the MCAS Discovery Dashboard with an additional "machine-centric" view. This allows you to start investigation based on a specific machine and correlate statistics of risky apps, transaction/traffic and device risk (from MDE) right from MCAS. A direct (deep) link to the machine object in MDE helps to continue the investigation in the Microsoft Defender Security Center.
 
-### Analyze and Visualize
+### Analyze and Visualize with MCAS
 
 ### User and Entity Behavior Analytics (UEBA)
 
@@ -269,9 +269,9 @@ This score helps to identify the riskiest users across all integrated threat pro
     - Matt Soseman has recorded a [YouTube video](https://mattsoseman.wordpress.com/2020/07/08/ueba-in-microsoft-cloud-app-security-user-entity-behavior-analytics/) about it which includes the calculation of the Score and some demo on investigation in the UEBA.
     - After enabling the data sources (threat protections, connected apps and discovery logs) you should [tune the policies for anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-suspicious-activity) and review the default governance actions.
 
-![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UEBA.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UEBA.png)
-_UEBA user page shows all alerts, detections and the score of the past 7 days. In this sample, the UEBA looks clear because the alerts are older. You have to take care on the "User threat" section which includes "open alerts". This allows you to navigate to the unified view of all alerts across the various data sources._
-
+    ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UEBA.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_UEBA.png)
+    _UEBA user page shows all alerts, detections and the score of the past 7 days. In this sample, the UEBA looks clear because the alerts are older. You have to take care on the "User threat" section which includes "open alerts". This allows you to navigate to the unified view of all alerts across the various data sources._
+    
 ### Identity Security Posture and Apps Inventory
 
 - [Identity Security Posture](https://docs.microsoft.com/en-us/defender-for-identity/isp-overview):
@@ -308,7 +308,7 @@ Automation of (governance) actions can be realized by PowerAutomate. Microsoft h
 - Office 365 App Connector needs at least one assigned even if you want to use it to collect all Azure AD events.
 - Implement a process and simulate [investigation of anomaly detection alerts](https://docs.microsoft.com/en-us/cloud-app-security/investigate-anomaly)!
 - MCAS is very useful and efficient to monitor suspicious privileged tasks in Azure.
-    - Elevated Global Admin permissions on Azure Management (as already mentoined in the sample) is one of the use cases which can be (as far as I know) only be monitored by MCAS. Sami Lampuu has written a [detailed blog post](https://samilamppu.com/2020/06/18/monitor-elevated-global-admin-account-usage/) about it!
+    - Elevated Global Admin permissions on Azure Management (as already mentioned in the sample) is one of the use cases which can be (as far as I know) only be monitored by MCAS. Sami Lampuu has written a [detailed blog post](https://samilamppu.com/2020/06/18/monitor-elevated-global-admin-account-usage/) about it!
 - RBAC in MCAS doesn't allow assignment of roles to Azure AD groups (only users supported).
 - [Scoped deployment](https://docs.microsoft.com/en-us/cloud-app-security/activity-privacy) can be very useful in setting up [Proof-of-Concept environment](https://gallery.technet.microsoft.com/Cloud-App-Security-Proof-4a49049f) or staged rollouts in production
 - Governance Actions (by activity policies) must be in accord with your Azure AD environment.
@@ -412,7 +412,7 @@ Other Exchange Online-related logs and events are stored in the following tables
 
 M365 Defender provides a "[Device profile page](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/device-profile?view=o365-worldwide)" which is accessible from "Incident" view. This  gives you a unified control on M365 Defender- and MDE-related actions.
 
-### Analyze and Visualize
+### Analyze and Visualize with M365 Defender
 
 #### Monitoring and Reporting ("Cards" in M365 Security Home)
 
