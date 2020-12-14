@@ -182,19 +182,19 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 - Microsoft "Identity Secure Score" is recommended for regular check as part of your (cloud) "identity security posture management" and can be integrated in your monitoring via [Security Graph API](https://docs.microsoft.com/en-us/graph/api/securescore-get?view=graph-rest-1.0&tabs=http).
 - [Customer-managed keys](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/customer-managed-keys) can be configured and are supported for encryption in "Azure Monitor".
 - Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
-- Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post](https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/)
+- Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post](https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/)!
 
 ## Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS.png)
 
-*Sample use case: SecOps that manages security of cloud platforms/SaaS solutions and need an unified view for investigation or alerting on (hybrid) identities.*
+*Sample use case: SecOps that manages security of cloud platforms or SaaS solutions and need an unified view for investigation or alerting on (hybrid) identities.*
 
 ### Data Sources in MCAS
 
 #### IaaS/PaaS (Cloud and on-Premises) in MCAS
 
-*MCAS allows you to [connect Microsoft‘s Azure platform](https://docs.microsoft.com/en-us/cloud-app-security/connect-azure-to-microsoft-cloud-app-security) and other cloud platform provider ([AWS](https://docs.microsoft.com/en-us/cloud-app-security/connect-aws-to-microsoft-cloud-app-security) and [Google Cloud Platform](https://docs.microsoft.com/en-us/cloud-app-security/connect-google-gcp-to-microsoft-cloud-app-security)) via App Connector. This makes the „Activity logs“ available in MCAS for investigation and trigger alerts. The security configuration of the Google Cloud and AWS platform can be integrated to provide fundamental security recommendations based on the CIS benchmark.* 
+*MCAS allows you to [connect Microsoft‘s Azure platform](https://docs.microsoft.com/en-us/cloud-app-security/connect-azure-to-microsoft-cloud-app-security) and other cloud platform provider ([AWS](https://docs.microsoft.com/en-us/cloud-app-security/connect-aws-to-microsoft-cloud-app-security) and [Google Cloud Platform](https://docs.microsoft.com/en-us/cloud-app-security/connect-google-gcp-to-microsoft-cloud-app-security)) via App Connector. This makes the „Activity logs“ available in MCAS for investigation and trigger alerts. The security configuration of "Google Cloud" and "Amazon Web Services" (AWS) can be integrated to provide fundamental security recommendations based on the CIS benchmark.* 
 
 #### Azure Security Center (ASC) and MCAS-Integration
 
@@ -207,17 +207,18 @@ Advanced categories such as Service Principals aren't covered by the connector (
 
 - Severity of (cloud) identity risk alerts can be managed by [MCAS integration of AAD Identity Protection](https://docs.microsoft.com/en-us/cloud-app-security/aadip-integration).
 - Detections of identity protection are part of the UEBA/investigation priority score and will be also displayed on the user page.
-    - Some identity protection [risk detections will be detected by MCAS](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks#sign-in-risk) (such as impossible travel or inbox manipulation rule) and results will be forwarded to Azure AD Identity Protection (and displayed in the portal blade as well). Follow the [Identity protection playbook](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk) to simulate the attack scenarios and trigger the detection/response.
+    - Some identity [risk detections will be detected by MCAS](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks#sign-in-risk) (such as "impossible travel" or "inbox manipulation rule") and results will be forwarded to Azure AD Identity Protection (and displayed in the portal blade as well).
+    Follow the [Identity protection playbook](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk) to simulate the attack scenarios and trigger the detection/response.
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_IPCAlerts.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_IPCAlerts.png)
 _All "Identity Protection" risk detections will be listed in the MCAS alerts view._
 
 #### On-Premises Identity (Active Directory) in MCAS
 
-[Microsoft Defender for Identity](https://docs.microsoft.com/en-us/azure-advanced-threat-protection/what-is-atp) (MDI) allows you to detect and identify attacks in your on-premises environment. It‘s based on monitoring and profiling of user behaviour and activities. Therefore it can be identify suspicious activities and reduce your potential attack surface. MDI includes features such as [detection of Lateral Movement Paths (LMP)](https://techcommunity.microsoft.com/t5/microsoft-security-and/reduce-your-potential-attack-surface-using-azure-atp-lateral/ba-p/291787). The machine-learning on user/entity-related behavioural needs a learning period. 
+[Microsoft Defender for Identity](https://docs.microsoft.com/en-us/azure-advanced-threat-protection/what-is-atp) (MDI) allows you to detect and identify attacks in your on-premises environment. It‘s based on monitoring and profiling of user behaviour and activities. MDI includes the [detection of Lateral Movement Paths (LMP)](https://techcommunity.microsoft.com/t5/microsoft-security-and/reduce-your-potential-attack-surface-using-azure-atp-lateral/ba-p/291787) which is strongly recommended to consider. Keep in mind, machine-learning on user/entity-related behavioural needs a learning period. 
 
-- [Security Alerts](https://docs.microsoft.com/en-us/azure-advanced-threat-protection/suspicious-activity-guide?tabs=cloud-app-security#security-alert-name-mapping-and-unique-external-ids) are categorized in phases of the cyberattack kill-chain and [well documented](https://docs.microsoft.com/en-us/defender-for-identity/suspicious-activity-guide?tabs=external).
-- [Integration of MDI with Defender for Endpoint](https://docs.microsoft.com/en-us/defender-for-identity/integrate-mde#:~:text=In%20the%20Defender%20for%20Identity,the%20integration%20toggle%20to%20On.&text=To%20check%20the%20status%20of,Microsoft%20Defender%20for%20Endpoint%20integration.) allows you to discover usage of SaaS apps (for Cloud Discovery) and blocking access to unsanctioned apps. Furthermore it allows you to see [open MDI alerts as badge in the MDE portal](https://docs.microsoft.com/de-de/defender-for-identity/investigate-entity#cross-check-with-windows-defender).
+- [Security Alerts](https://docs.microsoft.com/en-us/azure-advanced-threat-protection/suspicious-activity-guide?tabs=cloud-app-security#security-alert-name-mapping-and-unique-external-ids) are categorized in phases of the cyberattack kill-chain and are [well documented](https://docs.microsoft.com/en-us/defender-for-identity/suspicious-activity-guide?tabs=external) by Microsoft.
+- [Integration of MDI with Defender for Endpoint](https://docs.microsoft.com/en-us/defender-for-identity/integrate-mde#:~:text=In%20the%20Defender%20for%20Identity,the%20integration%20toggle%20to%20On.&text=To%20check%20the%20status%20of,Microsoft%20Defender%20for%20Endpoint%20integration.) allows you to laverage the detection from events of the domain controller to all endpoints. Furthermore it allows you to see [open MDI alerts as badge in the MDE portal](https://docs.microsoft.com/de-de/defender-for-identity/investigate-entity#cross-check-with-windows-defender).
 - [Integration of MDI with MCAS](https://docs.microsoft.com/en-us/defender-for-identity/mcas-integration) is mandatory for environments where both solutions are in use. More and more features around MDI will be moved to the MCAS portal (such as the new hunting experiences). All activities and detections of MDI will be also included in the UEBA if integration is configured.
     ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png)
     _Attacks on Active Directory (On-Premises) will be detected by MDI and generates an alert in the MDI portal._
