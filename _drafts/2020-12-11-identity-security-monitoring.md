@@ -12,24 +12,24 @@ hidden: false
 
 *Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give an overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
 
-- <A href="#overview-of-hybrid-identity-security-monitoring">Overview of Hybrid Identity Security Monitoring</A><br>
+- <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a Hybrid Environment</A><br>
 - <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads</A><br>
 - <A href="#cloud-app-security-and-defender-for-identity-unified-secops-of-cloud-platform-and-hybrid-identity">Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity</A><br>
 - <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
 - <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel: “Single pane of glass” across Azure, Microsoft 365 and 3rd party (cloud) platforms</A>
 
-## Overview of Hybrid Identity Security Monitoring
+## Identity Security Monitoring in a Hybrid Environment
 
-In the recent year, I‘ve talked about monitoring of Azure Active Directory in community sessions and talks. From my point of view a comprehensive monitoring of identity security events must be an essential part of deployment plans and daily operations. Even though it may seem obvious as „best practice“ („[Actively monitor for suspicious activities](https://docs.microsoft.com/en-us/azure/security/fundamentals/identity-management-best-practices#actively-monitor-for-suspicious-activities)“), it is sometimes (mostly) underrated.
+In the recent year, I‘ve talked about monitoring of Azure Active Directory in community sessions and talks. From my point of view a comprehensive monitoring of identity security events must be an essential part of deployment plans and daily operations. Even though it may seem obvious as „best practice“ („[Actively monitor for suspicious activities](https://docs.microsoft.com/en-us/azure/security/fundamentals/identity-management-best-practices#actively-monitor-for-suspicious-activities)“), it is sometimes underrated.
 
-Monitoring across Azure AD and Active Directory (including spreading between workloads in Azure and on-premises environments) can be complex and sometimes challenging but more important then ever. Identity protection in a hybrid world means also to protect and monitor Active Directory environments with all existing risks and traditional attack methods (Pass-the-Hash). The weakest link and uncover attack surfaces in your on-premises environment can be used to leverage or extend attacks to (hybrid) cloud services.
+Monitoring across "Azure AD" and "Active Directory" (including spreading between workloads in Azure and on-premises environments) can be complex and sometimes challenging but more important then ever. Identity protection in a hybrid world means also to protect and monitor Active Directory environments with all existing risks and traditional attack methods (Pass-the-Hash). The weakest link and uncover attack surfaces in your on-premises environment can be used to leverage or extend attacks to (hybrid) cloud services.
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_Security.png](../2020-12-11-identity-security-monitoring/AzIdentity_Security.png)
 _Microsoft Defender for Identity (MDI), Microsoft Cloud App Security (MCAS) and Azure AD Identity Protection protects identities on various levels and platforms (On-Premises, Session/Cloud Apps and Cloud Identity/Sign-ins)_ 
 
 Implementing "identity security" does not end with „enabling“ those features or by following the recommendations by „Identity Secure Score“...
 
-It’s important to develop a continuous improvement strategy of detections and an operational guide to empower and monitor your signals of „guards“. This includes also to provide workflows for automated response, an unified views for incident management/hunting, security processes and posture management.
+It’s important to develop a continuous improvement strategy of detections and operational guide to empower and monitor your signals of „guards“. This includes also to provide workflows for automated response, an unified views for incident management/hunting, security processes and posture management.
 
 Extensive possibilities of "User and Entity Behavior Analytics" (UEBA) allows SecOps to find anomalous activities (calculated by machine learning algorithms) across the various data sources or signals instead of building a manual correlation.
 
@@ -38,20 +38,20 @@ At always, keep up-to-date and notified about latest changes of security feature
 This blog post is an attempt to give a common overview on solutions to collect and respond identity and access events.
 Many links to detailed documentation by Microsoft and members of the community are included.
 There is no claim for completeness and comprehensive view of all options.
-I've tried to find some sample use cases to underline when this monitoring option will be in particularly relevance (in my opinion).
+I've tried to find some sample use cases to underline when this monitoring option will be in particularly relevance..
 It was hard for me to find the right level of details or scope with regard to the wide-range of this topic.
 
-*The following objectives are excluded (of scope):
+*The following objectives are excluded and out of scope:
 Azure AD B2C, Azure AD Domain Services and Microsoft Information Protection (AIP/MIP) will not be described in this blog post.*
 
-_Caution: All description of features, potential limitations and implementation considerations are based on personal experiences and research results at the time of publication this blog post. Therefore the content and statement can be outdated since publishing this blog post in December 2020._
+_Caution: All description of features, potential limitations and implementation considerations are based on personal experiences and research results at the time of writting this blog post. Therefore the content and statement can be outdated since the article was published in December 2020._
 
 *Note: Microsoft announced many product name changes at the Ignite 2020. I've used all new product names in this article.
-A good overview of all name changes are written [in this blog post by Microsoft](https://techcommunity.microsoft.com/t5/itops-talk-blog/microsoft-365-and-azure-security-product-name-changes/ba-p/1719167).*
+A good overview of all name changes are included [in this blog post by Microsoft](https://techcommunity.microsoft.com/t5/itops-talk-blog/microsoft-365-and-azure-security-product-name-changes/ba-p/1719167).*
 
 ## Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads
 
-*Sample use case: Operation Teams that manages Microsoft Azure workloads only (no M365 services) and need a unified view of Azure Services and Azure AD security events. No hybrid identity (Windows Server Active Directory) or hybrid cloud (Google Cloud, AWS) scenarios.*
+*Sample use case: Security Operation Teams (SecOps) manages Microsoft Azure workloads only (no M365 services) and needs a unified view of Azure Services and Azure AD security events. No hybrid identity (Windows Server Active Directory) or hybrid cloud (Google Cloud, AWS) scenarios.*
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor.png)
 
@@ -67,8 +67,8 @@ Changes of Azure RBAC are also part of this activity logs.
     - [Collect and analyze Azure Activity Logs in Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/activity-log-collect)
     - [Data schema of Azure Audit Logs](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/activity-log-schema)
 - [Azure Resource Logs (Diagnostic Logs)](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/resource-logs):
-Insights and Audit Logs of operations that were performed within an Azure resource are stored here. This includes the logging of identity and access (IAM)-related services such as Azure KeyVault. You need to configure the [diagnostic settings to monitor access](https://docs.microsoft.com/en-us/azure/key-vault/general/howto-logging) of secrets and certificates which are stored in the Vault.
-- [Storage of Security Events in Log Analytics](https://docs.microsoft.com/en-us/azure/security-center/security-center-enable-data-collection#data-collection-tier) (via Azure Security Center data collection):
+Insights and "Audit Logs" of operations that were performed within an "Azure resource" are stored here. This includes the logging of identity and access (IAM)-related services such as Azure KeyVault. You need to configure the [diagnostic settings to monitor access](https://docs.microsoft.com/en-us/azure/key-vault/general/howto-logging) of secrets and certificates which are stored in the Vault.
+- [Storage of Security Events in Log Analytics](https://docs.microsoft.com/en-us/azure/security-center/security-center-enable-data-collection#data-collection-tier):
 Collect all (security) events from servers in Azure and non-Azure/On-Premises infrastructure as part of the Azure Security Center and Data Collection.
     - [Collect data from physical/virtual server (hybrid environments) with Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/learn/quick-collect-windows-computer) / Log Analytics Agent (Event Logs and Performance Counter)
     - Data Collection of "security logs" to Log Analytics can be [configured in "Azure Security Center"](https://docs.microsoft.com/en-us/azure/security-center/security-center-enable-data-collection#what-event-types-are-stored-for-common-and-minimal) by choosing "All Events", "Minimal" or "Common" options. Therefore it's strongly recommended to use the same workspace for "Azure Security Center" and "Azure Monitor" logs.
@@ -78,19 +78,19 @@ Collect all (security) events from servers in Azure and non-Azure/On-Premises in
 
 #### Azure Security Center (ASC) and "Azure Monitor"
 
-*[Continous Export](https://docs.microsoft.com/en-us/azure/security-center/continuous-export) allows to forward alerts and recommendations to Azure Event Hub or Log Analytics. This solution is divided in two different scopes: Free service "Security Center" as Cloud security posture management (CSPM) solution. Azure Defender as Cloud workload protection (CWP) add-on with licensing option to pay only for what you use.*
+*[Continous Export](https://docs.microsoft.com/en-us/azure/security-center/continuous-export) allows to forward alerts and recommendations to Azure Event Hub or Log Analytics. This solution is divided in two different scopes: Free service "Security Center" as "Cloud security posture management (CSPM)" solution. Azure Defender as "Cloud workload protection (CWP)" add-on with licensing option to pay only for what you use.*
 
 - [Recommendations](https://docs.microsoft.com/en-us/azure/security-center/recommendations-reference#recs-identity):
 Checks on-boarded subscriptions and their resources of recommendations around [Identity and access „resource security“](https://docs.microsoft.com/en-us/azure/security-center/security-center-identity-access).
     - [Reference Guide on Identity & Access Recommendations](https://docs.microsoft.com/en-us/azure/security-center/recommendations-reference#recs-identity)
 - [Alerts](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference):
-Various types of IaaS and PaaS resources (VMs, App Service, Storage,…) will be protected against threats including identity-related attacks (e.g. „A logon from a malicious IP has been detected“) or malware (e.g. Mimikatz activities). Triggering of alerts can be tested as described in the „[Alert validation](https://docs.microsoft.com/en-us/azure/security-center/security-center-alert-validation#validate-alerts-on-windows-vms-)“ guide of Microsoft.
+Various types of IaaS and PaaS resources (VMs, App Service, Storage,…) will be protected against threats including identity-related attacks (e.g. „A logon from a malicious IP has been detected“) or malware (e.g. Mimikatz or any "attack tools"). Triggering of alerts can be tested as described in the „[Alert validation](https://docs.microsoft.com/en-us/azure/security-center/security-center-alert-validation#validate-alerts-on-windows-vms-)“ guide of Microsoft.
     - [Azure Defender for Servers](https://docs.microsoft.com/en-us/azure/security-center/defender-for-servers-introduction) and [Integration of Microsoft Defender for Endpoint](https://docs.microsoft.com/en-us/azure/security-center/security-center-wdatp):
-    Alerts for [Windows](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-windows) and [Linux](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-linux) covers attack sources such as "Logon from a malicious IP" and integrates "Microsoft Defender for Endpoint" for extended scenarios.
-    You‘ll get advanced post-breach detections and alerts from Endpoint Protection, alongside of automation of onboarding sensors.
+    Alerts for [Windows](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-windows) and [Linux](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-linux) covers attack sources such as "anonymous or malicious IP addresses" and integrates "Microsoft Defender for Endpoint" for extended scenarios.
+    You‘ll get advanced post-breach detections and alerts from "Endpoint Protection", alongside of automation of onboarding sensors.
         - [Playbook for Windows Servers](https://github.com/Azure/Azure-Security-Center/blob/master/Simulations/Azure%20Security%20Center%20Security%20Alerts%20Playbook_v2.pdf) includes step-by-step instruction to simulate attacks (such as lateral movement).
         - [Audit logs of requests to "Just-in-Time Access"](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference) are available in the Activity Logs.
-    - Azure Defender for PaaS and "additional" threat protection capabilities
+    - Azure Defender for PaaS and threat protection capabilities:
     Various Azure PaaS services such as [Azure App Service](https://docs.microsoft.com/en-us/azure/security-center/defender-for-app-service-introduction), [containers](https://docs.microsoft.com/en-us/azure/security-center/container-security), [SQL](https://docs.microsoft.com/en-us/azure/security-center/defender-for-sql-introduction) or [KeyVault](https://docs.microsoft.com/en-us/azure/security-center/defender-for-key-vault-introduction) can be also protected by Azure Defender. Other platform services as the [management layer of Azure (Resource Manager)](https://docs.microsoft.com/en-us/azure/security-center/other-threat-protections) or [network layer](https://docs.microsoft.com/en-us/azure/security-center/other-threat-protections#threat-protection-for-azure-network-layer-) are also included. Detection of unusual or risky operations in the Azure subscription [are powered by MCAS](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-azureresourceman).
     - [Data schema](https://docs.microsoft.com/en-us/azure/security-center/alerts-schemas?tabs=schema-continuousexport) describes fields and data types of the ASC security alerts.
 
@@ -112,7 +112,7 @@ Microsoft updated the logging in Azure AD as addition to the above mentioned cla
     - [Non-interactive user sign-ins](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadnoninteractiveusersigninlogs)
     - [Managed identities for Azure resource sign-ins](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadmanagedidentitysigninlogs)
 - [Azure AD Provisioning Logs:](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-provisioning-logs)
-This log gives you [detailed insights of provisioning](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-provisioning-logs) users, roles and groups from or to Azure AD. [Log schema for Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadprovisioninglogs) is also documented.
+This log gives you [detailed insights of provisioning](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-provisioning-logs) users, roles and groups from or to Azure AD. [Log schema for Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadprovisioninglogs) is also documented in MSDocs.
 
 *Non-supported reports in Azure Monitor*
 
@@ -132,27 +132,27 @@ Identity Protection of Azure AD Premium [stores reports and events](https://docs
 ### Log Collection (via "Azure Monitor")
 
 - [Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/log-query-overview):
-Azure's native Log Management Solution enables deep analytics or advanced queries in case of troubleshooting or technical investigation. [Kusto (KQL)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/) is the query language that you should use (and learn).
-This is the foundation of many other features that we cover in this blog post such as Azure Sentinel (built on top of Log Analytics) or Azure AD Workbooks (sourced log data from a workspace). All other monitoring solutions in the Azure platform are using a Log Analytics workspace to store data (e.g. App Insights).
+Azure's native "Log Management Solution" enables deep analytics or advanced queries in case of troubleshooting or technical investigation. [Kusto (KQL)](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/) is the query language that you should use (and learn).
+This is the foundation of many other features that will be described in this blog post. This includes solutions such as as Azure Sentinel (built on top of Log Analytics) or Azure AD Workbooks (sourced log data from a workspace). All other monitoring solutions in the Azure platform are using a Log Analytics workspace to store data (e.g. App Insights).
 
 ### Analyze and Visualize with "Azure Monitor"
 
 - [Azure AD Workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks):
-Microsoft provides built-in visualization which requires Log Analytics workspace. There are very helpful to analyze (and troubleshoot) activities around Authentication, Conditional Access and other identity-related operations.
+Microsoft provides built-in visualization which requires Log Analytics workspace. They are very helpful to analyze (and troubleshoot) activities around Authentication, Conditional Access and other identity-related operations.
 - [Azure AD Dashboards](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-install-use-log-analytics-views):
 Azure AD Dashboard views are available for Account Provisioning and Sign-In Events but seems little bit outdated.
 - [Usage and Insights](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-methods-usage-insights):
 An overview about registered/usage of authentication methods and Azure AD-integrated apps activity are available in the Azure Portal. These usage statistics are also available via [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/api/resources/authenticationmethods-usage-insights-overview?view=graph-rest-beta). The following [sample script](https://docs.microsoft.com/en-us/samples/azure-samples/azure-mfa-authentication-method-analysis/azure-mfa-authentication-method-analysis/) analyse the statistics to make recommendations.
 - Log Analytics Solutions:
     - [AD Health Check](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/ad-assessment):
-    Optimize your Active Directory environment with the Active Directory Health Check solution in Azure Monitor
+    Optimize your Active Directory environment with the "Active Directory Health Check" solution in Azure Monitor
     - [AD Replication Status](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/ad-replication-status):
-    Monitor Active Directory replication status with Azure Monitor
+    Monitor your "Active Directory replication status" with Azure Monitor
 
 ### Integration and Response in "Azure Monitor"
 
-- [Alerts and Logic Apps](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-methods-usage-insights)
-Azure Monitor is able to trigger complex actions based on defined rules (such as [signal logic based on KQL custom log search](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-methods-usage-insights)). This gives you many options to integrate your workflows as part of Azure Logic Apps or any other 3rd Party systems.
+- [Alerts and Logic Apps](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-methods-usage-insights):
+Azure Monitor is able to trigger complex actions based on defined rules (such as [signal logic based on KQL custom log search](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-methods-usage-insights)). This gives you many options to integrate your workflows as part of "Azure Logic Apps" or any other 3rd Party systems.
     - Samples of Azure Monitor Alerts:
         - [Monitor your Azure AD Break Glass Accounts with Azure Monitor
         (Blog post by Daniel Chronlund](https://danielchronlund.com/2020/01/22/monitor-your-azure-ad-break-glass-accounts-with-azure-monitor/))
@@ -162,14 +162,14 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 
 - Microsoft’s “[deployment guide of Azure AD Monitoring](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/plan-monitoring-and-reporting)” gives you an general overview of aspects and options to integrate or archive logs. The [latency of Azure AD logging and the risk detections](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) should be also considered (for your security response and processes).
 - [Retention of the reports](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/reference-reports-data-retention) depends on type of activity and your Azure AD license.
-- [Costs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor#azure-monitor-logs-cost-considerations) should be calculated based on the requirements for long-term Retention.
+- [Costs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor#azure-monitor-logs-cost-considerations) should be calculated based on the requirements for long-term retention.
 - Pay attention to missing audit logs of privileged activities in Azure Monitor.
-    - Example: [Azure EA portal and changes of ownership will not be audited]((https://www.cloud-architekt.net/azure-ea-management-security-considerations/)) but has effects on Azure RBAC!
+    - Example: [Azure EA portal and changes of ownership will not be audited](https://www.cloud-architekt.net/azure-ea-management-security-considerations/) but has effects on Azure RBAC!
 - [Rate limitation of „Azure Alerts“](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-rate-limiting) should be considered for your service emergency and operational notifications.
 - [Identity Protection provides new APIs](https://docs.microsoft.com/en-us/graph/api/resources/identityprotection-root?view=graph-rest-beta) to get events and risk status of your users.
 - I can strongly recommended to test and validate the detection mechanism in Identity Protection (as described in the [blog post by Sami Lampuu](https://samilamppu.com/2020/10/09/azure-ad-identity-protection-deep-diver-part-2/)). Take care on the delay and latency between attack and detection of the various mechanism. Keep in mind, risk response (as part of the Risk Policies) must be in accord with your Azure AD implementation.
     - Example: Force password change by risky sign-in detection works only in hybrid environments if password write-back is allowed.
-- Consider the limitations and behavior of [Identity Protection and External Users (B2B Guests)](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b)
+- Consider the limitations and behavior of "[Identity Protection and External Users (B2B Guests)](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b)"
 - Hybrid identity environment: Collect and monitor [logs from Azure AD Connect servers](https://docs.microsoft.com/en-gb/troubleshoot/azure/active-directory/installation-configuration-wizard-errors#troubleshoot-additional-error-messages) and the ["Password Hash Sync" agent](https://docs.microsoft.com/en-gb/troubleshoot/azure/active-directory/troubleshoot-pwd-sync#event-id-messages-in-event-viewer).
 - You might be facing the follow considerations in your daily work experiences:
     - Name in reports are based on the object name at the time of the event/sign-in
@@ -179,10 +179,10 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
         - Security Administrator & Reader
         - Reports Reader and Application Administrator
         - Global Reader
-- Microsoft "Identity Secure Score" is recommended for regular check as part of your identity security posture management and can be integrated in your monitoring via [Security Graph API](https://docs.microsoft.com/en-us/graph/api/securescore-get?view=graph-rest-1.0&tabs=http).
-- [Customer-managed keys](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/customer-managed-keys) can be configured and are supported for encryption in Azure Monitor.
+- Microsoft "Identity Secure Score" is recommended for regular check as part of your (cloud) "identity security posture management" and can be integrated in your monitoring via [Security Graph API](https://docs.microsoft.com/en-us/graph/api/securescore-get?view=graph-rest-1.0&tabs=http).
+- [Customer-managed keys](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/customer-managed-keys) can be configured and are supported for encryption in "Azure Monitor".
 - Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
-- Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post]((https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/))
+- Consider service principal logs and the challenges to build relation to Azure Activity or DevOps CD logs, [as described in my previous blog post](https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/)
 
 ## Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity
 
