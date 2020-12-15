@@ -688,4 +688,4 @@ It's strongly recommended to use this integrated workbook to check the agent and
 
 
 <br>
-<span style="color:silver;font-style:italic;font-size:small">Original cover image by [Tumisu / Pixabay](https://pixabay.com/photos/safety-encryption-ssl-world-2890768/)</span>
+<span style="color:silver;font-style:italic;font-size:small">Original cover image by [200degrees / Pixabay](https://pixabay.com/vectors/dual-screen-programming-coding-1745705/)</span>
