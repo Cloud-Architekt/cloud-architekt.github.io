@@ -652,6 +652,7 @@ A logic app can be triggered to automate threat response when an "analytic rule"
 All logic apps that includes "Azure Sentinel alert trigger" can be used as "Playbook".
 Microsoft describes the configuration of this playbooks in one of the [Sentinel tutorials](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-respond-threats-playbook).
 As already mentioned, many logic app templates are available from [GitHub](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks).
+Monitoring of playbooks is an important part of daily operations if it's part of your automated response or incident management. [Workbook for "Playbook Health"](https://techcommunity.microsoft.com/t5/azure-sentinel/what-s-new-monitoring-your-logic-apps-playbooks-in-azure/ba-p/1873211) might be helpful to get an overview about failed runs and latency. 
 
 In addition, there is also a [Logic App connector for Azure Sentinel](https://docs.microsoft.com/en-us/connectors/azuresentinel/) which allows to update or use information from incidents.
 
