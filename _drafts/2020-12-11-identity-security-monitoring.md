@@ -10,7 +10,7 @@ featured: false
 hidden: false
 ---
 
-*Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give an overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
+*Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give a detailed overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
 
 - <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a Hybrid Environment</A><br>
 - <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads</A><br>
@@ -245,7 +245,7 @@ _All "Identity Protection" risk detections will be listed in the MCAS alerts vie
 - Sessions to Azure AD-integrated apps can be managed (for limited access) in MCAS with "Conditional Access App Control". MCAS acts as a [reverse proxy to control sessions](https://docs.microsoft.com/en-us/cloud-app-security/proxy-intro-aad#how-it-works) of the configured cloud app. This gives you [various compliance options](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-proxy) such as preventing data exfiltration or real-time monitoring of user activity (anomalies) in the session.
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_CloudSessionAlerts.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_CloudSessionAlerts.png)
-_MCAS allows to get insights of suspicious user behavior in the session to a connected cloud app (such as download/upload to OneDrive and SharePoint). Custom activity alerts are also possible (like in this example, activity by Global Admin Access in Azure portal to gain elevated access to Azure Management scope)._
+_MCAS allows to get insights of suspicious user behavior in the session to a connected cloud app (such as download/upload to OneDrive and SharePoint). Custom activity alerts are also possible (like in this example, activity by "Global Admin to gain elevated access to Azure Management scope")._
 
 #### Collaboration Platforms (Office 365 Services) in MCAS
 
@@ -260,74 +260,72 @@ _MCAS allows to get insights of suspicious user behavior in the session to a con
 In general, the audit log from "Office 365 Security and Compliance Portal" shows the same level of information as the activity log from the MCAS app connector.
     - Description of [audited activities in Office 365](https://docs.microsoft.com/en-us/microsoft-365/compliance/search-the-audit-log-in-security-and-compliance?view=o365-worldwide#audited-activities)
     - Detailed [properties of the Office 365 audit log](https://docs.microsoft.com/en-us/microsoft-365/compliance/detailed-properties-in-the-office-365-audit-log?view=o365-worldwide)
-- Alerts of "Microsoft Defender for Office 365" (MDO) are also visible in the MCAS Activity Log and allows you to create custom policies in MCAS. Sami Lamppu has also given some details about this [in one of his blog posts](https://www.notion.so/ttps-samilamppu-com-2020-05-19-detect-o365-atp-alerts-in-cloud-app-security-and-microsoft-threat-p-399da36e4bf745e5861ef420873b1ad2).
+- Alerts of "Microsoft Defender for Office 365" (MDO) are also visible in the "MCAS Activity Log" and allows you to create custom policies in MCAS. Sami Lamppu has also given some details about this [in one of his blog posts](https://www.notion.so/ttps-samilamppu-com-2020-05-19-detect-o365-atp-alerts-in-cloud-app-security-and-microsoft-threat-p-399da36e4bf745e5861ef420873b1ad2).
 
 #### Device / Endpoint Security (Microsoft Defender for Endpoint) Integration in MCAS
 
 *"Microsoft Defender ATP" (MDATP) Portal was rebranded to "[Microsoft Defender Security Portal](https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/portal-overview)" in the fall of 2020. Microsoft's Endpoint and Detection and Response (EDR) solution allows [deep integration to MCAS](https://techcommunity.microsoft.com/t5/microsoft-security-and/microsoft-cloud-app-security-and-windows-defender-atp-better/ba-p/263265). But also insights from MCAS will be displayed in the (new) Endpoint Security Portal.*
 
-Signal forwarding from "Microsoft Defender for Endpoint" (MDE) to MCAS is an essential configuration to establish the cloud app usage visibility and control of unwanted apps (as described previously). But it's also extend the MCAS Discovery Dashboard with an additional "machine-centric" view. This allows you to start investigation based on a specific machine and correlate statistics of risky apps, transaction/traffic and device risk (from MDE) right from MCAS. A direct (deep) link to the machine object in MDE helps to continue the investigation in the Microsoft Defender Security Center.
+Signal forwarding from "Microsoft Defender for Endpoint" (MDE) to MCAS is an essential configuration to establish the visibility of "cloud app usage" and control of unwanted apps (as described previously). But it's also extend the "MCAS Discovery Dashboard" with an additional "machine-centric" view. This allows you to start investigation based on a specific machine and correlate statistics of risky apps, transaction/traffic and device risk (calculated by MDE) right from MCAS. A direct (deep) link to the machine object helps to continue the investigation in the "Microsoft Defender Security Center" (MDE Portal).
 
 ### Analyze and Visualize with MCAS
 
 #### User and Entity Behavior Analytics (UEBA) in MCAS
 
-- [(Hybrid) Identity Threat Investigation](https://www.youtube.com/watch?v=znsX3ssctNM): The "user page" in MCAS gives you an overview and correlated information from all connected apps or integrated threat protection solutions in a single view. This is also a landing page to get all related and collected information about activities ("Activity Log"), alerts (filtered by selected user) or actions by policies ("Governance Log").
-User Exposure information shows summary from various sources (e.g. number of accounts are correlated by app connector).
+- [(Hybrid) Identity Threat Investigation](https://www.youtube.com/watch?v=znsX3ssctNM): The "user page" in MCAS gives you an overview and correlated information from all connected apps or integrated "threat protection solutions" in a single view. This is also a landing page to get all related and collected information about activities (from the "Activity Log"), alerts (filtered by selected user) or actions by policies ("Governance Log").
+User Exposure information shows summary from various sources (e.g. number of accounts that are correlated by app connector).
 Activities of the users can be filtered and will be enriched by MCAS (such as Internal/External users, Status as admin account or critical role/group assignment).
-    - User page and "hunting experiences" in "Microsoft Defender for Identity" are moving to the MCAS portal.
+    - User page and "hunting experiences" in "Microsoft Defender for Identity" will be probably moved to the MCAS portal.
     - Device page is also available for all MDI device objects and shows open alerts and summary of activities (logged on users, resource access, IPs)
 - [Investigation Priority Score](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs):
-This score helps to identify the riskiest users across all integrated threat protections and connected app including potential impact of an compromised account. Therefore, the "Investigation Priority" pulls signals from all identity protection solutions and app connectors to find abnormal behavior and aggregate this into a score value. This score will be displayed on the MCAS dashboard, user page for [further investigation](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-ueba) and in the MCAS Dashboard.
-    - Matt Soseman has recorded a [YouTube video](https://mattsoseman.wordpress.com/2020/07/08/ueba-in-microsoft-cloud-app-security-user-entity-behavior-analytics/) about it which includes the calculation of the Score and some demo on investigation in the UEBA.
-    - After enabling the data sources (threat protections, connected apps and discovery logs) you should [tune the policies for anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-suspicious-activity) and review the default governance actions.
+This score helps to identify the riskiest users across the various signals, alerts and integrations. Therefore, the "Investigation Priority" pulls together signals from connected apps and integrated threat protections (MDI and "Azure AD Identity Protection") to find abnormal behavior and aggregate this into a single score value. This score will be displayed on the MCAS dashboard, user page for [further investigation](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-ueba) and in the MCAS Dashboard.
+    - Matt Soseman has recorded a [YouTube video](https://mattsoseman.wordpress.com/2020/07/08/ueba-in-microsoft-cloud-app-security-user-entity-behavior-analytics/) about it which includes the calculation of the score and some demo on investigation in the UEBA.
+    - Consider to [tune the policies for anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-suspicious-activity) and review the default governance actions after enabling the data sources (threat protections, connected apps and discovery logs).
 
-    
 #### Identity Security Posture and Apps Inventory with MCAS
 
 - [Identity Security Posture](https://docs.microsoft.com/en-us/defender-for-identity/isp-overview):
-Assessment of various security critical Active Directory configurations that includes also instructions to remediate or resolve the findings.
+Assessment of various security critical "Active Directory" configurations that includes also instructions to remediate or resolve the findings.
 - [OAuth apps](https://docs.microsoft.com/en-us/cloud-app-security/manage-app-permissions):
-Risky apps can be [investigated by the discovered OAuth Apps in MCAS](https://docs.microsoft.com/en-us/cloud-app-security/investigate-risky-oauth). Furthermore, you are also be able to [configure an app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy) to monitor OAuth apps on various criterias (incl. permission level) and revoke the app (if needed).
+Risky apps can be [investigated by the discovered "OAuth Apps" in MCAS](https://docs.microsoft.com/en-us/cloud-app-security/investigate-risky-oauth). Furthermore, you should also be able to [configure an app policy](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy) to monitor "OAuth apps" on various criteria (incl. permission level) and revoke the app (if needed).
     - Built-in ["OAuth" app anomaly detection policies](https://docs.microsoft.com/en-us/cloud-app-security/app-permission-policy#oauth-app-anomaly-detection-policies) are already configured to detect malicious consent grants, misleading publisher/product names or activity to suspicious OAuth apps.
 
 #### Integration and Responds in MCAS
 
 - [Policies:](https://docs.microsoft.com/en-us/cloud-app-security/control-cloud-apps-with-policies)
-Control your identities from connected apps/resources, monitored activities and signals in MCAS by the following types of policies:
-    - [Access Policies](https://docs.microsoft.com/en-us/cloud-app-security/access-policy-aad) gives you the ability for real-time monitoring and control the access on your connected apps. The applied actions (Monitor or Block) can be filtered on advanced criterias such as device tags, source of access (IP address), client app or user/app scope.
+Control of your identities in connected apps/resources can be achieved by monitored activities and signals by MCAS. The following types of policies can be configured:
+    - [Access Policies](https://docs.microsoft.com/en-us/cloud-app-security/access-policy-aad) gives you the ability for real-time monitoring and control the access on your connected apps. The applied actions (Monitor or Block) can be filtered on advanced criteria such as device tags, source of access (IP address), client app or user/app scope.
     - [Session Policies](https://docs.microsoft.com/en-us/cloud-app-security/session-policy-aad) enables real-time action and monitoring within the session and allows to block or restrict on specific activities (such as sharing or file control).
-    - [Activity Policies](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs) enforces automated response on a specific or repeated activity to a connected app. As a response, governance actions can enforce security mechanism on app provider API level (e.g. require sign-in prompt in Office 365), user account state in Azure AD (e.g. disable user) or custom playbook (PowerAutomate). 
+    - [Activity Policies](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs) enforces automated response on a specific or repeated activity to a connected app. As a response, governance actions can enforce security mechanism on API level by connected app (e.g. require sign-in prompt in Office 365), user account state in Azure AD (e.g. disable user) or custom playbook (PowerAutomate).
     Activities of tasks that is performed by a user or admin of your Azure AD tenant.
-    - [Anomaly Detection Policies](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy) are enabled (or configurable) to find unusual activities and trigger an alert if unusual behavior was detected (different from user's regular activity). They are part of the UEBA and ML capabilities which are integrated in MCAS and displayed in the "User Page" / Investigation Priority Score. Built-in policies covers activities from specific activities in a connected app (Azure Instance and "Multiple delete VM activities") to anomalies of a single user session ("Unusual activities by user"). Some anomaly detection policies [can be tuned or scoped](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy#tune-anomaly-detection-policies) to adjust sensitivity or customize automated response.
+    - [Anomaly Detection Policies](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy) are enabled to find unusual activities and trigger an alert if unusual behavior was detected (different from user's regular activity). They are part of the UEBA and ML capabilities which are integrated in MCAS and displayed in the "User Page" / Investigation Priority Score. Built-in policies covers activities from specific activities in a connected app (e.g. connected "Azure Instance" and "Multiple delete VM activities") to find anomalies of a single user session ("Unusual activities by user"). Some anomaly detection policies [can be tuned or scoped](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy#tune-anomaly-detection-policies) to adjust sensitivity or customize automated response.
 
     ![../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_Governance.png](../2020-12-11-identity-security-monitoring/AzIdentity_MCAS_Governance.png)
     _Governance log shows actions (initiated by policies) of automated response on alerts (such as require user to sign-in again if a risky sign-in was detected)._
 
 - [Policy Templates](https://docs.microsoft.com/en-us/cloud-app-security/policy-template-reference):
-Before creating your own policies, check the built-in templates in MCAS that are ready for use. Many of them are essential and are strongly recommended to be enabled and configured in your MCAS instance.
+Before creating your own policies, check the built-in templates in MCAS that are ready for use. Many of them are essential and strongly recommended to be enabled and configured in your MCAS instance.
 - [PowerAutomate](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs):
-Automation of (governance) actions can be realized by PowerAutomate. Microsoft has released some sample playbooks for auto-remediation or -response scenarios on [GitHub](https://github.com/microsoft/Microsoft-Cloud-App-Security/tree/master/Playbooks).
-    - Other samples such as "[Request user validation](https://techcommunity.microsoft.com/t5/microsoft-security-and/alert-new-blog-series-automation-in-cloud-app-security/ba-p/1608357)" or "[auto-triage infrequent country alerts](https://techcommunity.microsoft.com/t5/microsoft-security-and/auto-triage-infrequent-country-alerts-using-mcas-amp-power/ba-p/1644980)" are documented as part of a TechCommunity Blog series.
+Automation of (governance) actions can be realized by "PowerAutomate". Microsoft has released some sample playbooks for auto-remediation or -response scenarios on [GitHub](https://github.com/microsoft/Microsoft-Cloud-App-Security/tree/master/Playbooks).
+    - Other samples such as "[Request user validation](https://techcommunity.microsoft.com/t5/microsoft-security-and/alert-new-blog-series-automation-in-cloud-app-security/ba-p/1608357)" or "[auto-triage infrequent country alerts](https://techcommunity.microsoft.com/t5/microsoft-security-and/auto-triage-infrequent-country-alerts-using-mcas-amp-power/ba-p/1644980)" are documented as part of this TechCommunity blog series.
 
 ### Considerations and References of MCAS
 
 - Interaction, integration and options of MCAS with other services in "Microsoft 365" are numerous and plays a significant role. Check out [Adrian Grigorof's diagram of MCAS](https://www.managedsentinel.com/2020/05/03/mcas-design/) to get a visibility of those possibilities.
-- Regular check of [MCAS Changelog](https://docs.microsoft.com/en-us/cloud-app-security/release-notes) should be made to be informed about changes in your tenant and introduced new features or signals.
-- MCAS allows to gain sensitive information about a user which includes files, used cloud apps and all activity logs from connected apps. Therefore you should verify with IT Compliance and Data Privacy Department if [anonymizing of user data](https://docs.microsoft.com/en-us/cloud-app-security/cloud-discovery-anonymizer) is required (to protect user privacy). Currently this feature is limited to user and machine names.
-- Service health can be monitored on the MCAS status page and integrated for notification of service issues or delays of detections
+- Regular check of "[MCAS Changelog](https://docs.microsoft.com/en-us/cloud-app-security/release-notes)" should be made to be informed about changes in your tenant and new features or risk detection.
+- MCAS allows to gain sensitive information about a user which includes files, used cloud apps and all activity logs from connected apps. Therefore you should verify with your "IT Compliance and Data Privacy Department" if [anonymizing of user data](https://docs.microsoft.com/en-us/cloud-app-security/cloud-discovery-anonymizer) is required (to protect user privacy). Currently this feature is limited to user and machine names.
+- Service health can be monitored on the "[MCAS status page](https://status.cloudappsecurity.com/)" and should be integrated for notification of service issues or delays of detections
 - [Daily operational tasks](https://docs.microsoft.com/en-us/cloud-app-security/daily-activities-to-protect-your-cloud-environment) for MCAS are documented by Microsoft.
 - Consider [Microsoft's best practices of implementing MCAS](https://docs.microsoft.com/en-us/cloud-app-security/best-practices) in your environment
-- Be aware of side effects from Azure AD connect sync processes such as „Suspend user governance action“ will be reverted
-- MCAS API can be easily discovered and tested by using the [postman collection](https://github.com/richlilly2004/CloudAppSecurity/blob/master/Postman/Microsoft%20Cloud%20App%20Security.postman_collection.json) by Rich Lilly.
-- Office 365 App Connector needs at least one assigned even if you want to use it to collect all Azure AD events.
+- Governance Actions (by activity policies) must be in accord with your Azure AD environment.
+    - Example: Suspended user will be reactivated after next Azure AD Connect sync interval.
+- MCAS API can be easily discovered and tested by using the [postman collection](https://github.com/richlilly2004/CloudAppSecurity/blob/master/Postman/Microsoft%20Cloud%20App%20Security.postman_collection.json) (from Rich Lilly).
+- Office 365 App Connector needs at least one assigned licensed user even if you want to use it to collect all Azure AD events only.
 - Implement a process and simulate [investigation of anomaly detection alerts](https://docs.microsoft.com/en-us/cloud-app-security/investigate-anomaly)!
 - MCAS is very useful and efficient to monitor suspicious privileged tasks in Azure.
     - Elevated Global Admin permissions on Azure Management (as already mentioned in the sample) is one of the use cases which can be (as far as I know) only be monitored by MCAS. Sami Lampuu has written a [detailed blog post](https://samilamppu.com/2020/06/18/monitor-elevated-global-admin-account-usage/) about it!
-- RBAC in MCAS doesn't allow assignment of roles to Azure AD groups (only users supported).
-- [Scoped deployment](https://docs.microsoft.com/en-us/cloud-app-security/activity-privacy) can be very useful in setting up [Proof-of-Concept environment](https://gallery.technet.microsoft.com/Cloud-App-Security-Proof-4a49049f) or staged rollouts in production
-- Governance Actions (by activity policies) must be in accord with your Azure AD environment.
-    - Example: Suspended user will be reactivated after next Azure AD Connect sync interval.
+- RBAC in MCAS doesn't allow assignment of roles to Azure AD groups (only users are supported).
+- [Scoped deployment](https://docs.microsoft.com/en-us/cloud-app-security/activity-privacy) can be very useful in setting up [Proof-of-Concept environment](https://gallery.technet.microsoft.com/Cloud-App-Security-Proof-4a49049f) or staged roll-outs in production
 - Currently, blocking access to Cloud apps by (custom) indicators in "Microsoft Defender for Endpoint" (MDE) has some limitations:
     - MDE allows 15.000 indicators per tenant
     - This feature is supported on Windows 10 only (no support for ATP on MacOS or Linux yet)
@@ -335,21 +333,21 @@ Automation of (governance) actions can be realized by PowerAutomate. Microsoft h
 
 ### Considerations and References of Microsoft Defender for Identity (MDI)
 
-- Check alerts for false-positive events ("DCSync Attack") of Azure AD Connect Servers (exclude them for this specific detection).
-- Signature-based capabilities can be evaluated as part of the "[Defender for Identity security alert lab](https://docs.microsoft.com/en-us/defender-for-identity/playbook-lab-overview)". Simulation of Lateral Movement Attacks is recommended and described in the [blog post (by Derk van der Woude)](https://medium.com/@derkvanderwoude/microsoft-defender-for-identity-lateral-movement-b55046c09870).
+- Check alerts for false-positive events ("DCSync Attack") of "Azure AD Connect" server (exclude them for this specific detection).
+- Signature-based capabilities can be evaluated as part of the "[Defender for Identity security alert lab](https://docs.microsoft.com/en-us/defender-for-identity/playbook-lab-overview)". Simulation of "Lateral Movement Attacks" is recommended and described in the [blog post (by Derk van der Woude)](https://medium.com/@derkvanderwoude/microsoft-defender-for-identity-lateral-movement-b55046c09870).
 - By default, some domains are excluded from detections (Example: spotify.com)!
 - Audit Policy of domain controllers must be configured to maximize detection capabilities. Using [this PowerShell script](https://github.com/microsoft/Azure-Advanced-Threat-Protection/tree/master/Auditing) should helps you to verify the configuration.
 - [Review the known issues and limitations](https://docs.microsoft.com/en-us/defender-for-identity/troubleshooting-known-issues) of MDI sensors and detections
 - Currently there's no option to collect Sensor health status!
-- Global and Security Administrator are assigned with MDI "Administrator" permission by design. Default Azure AD security groups ("Azure ATP <InstanceName> Administrator/Users/Viewers"> can be used to delegate permissions on the [MDI RBAC model.](https://docs.microsoft.com/en-us/defender-for-identity/role-groups#types-of-product-short-security-groups) Modification of those group membership should be monitored for prevention of access to security sensitive logs or disabling the sensor/detection.
-- Review list of [sensitive accounts and groups](https://docs.microsoft.com/en-us/defender-for-identity/sensitive-accounts) and add non-builtin privileged objects (incl. hybrid identity components such as Azure AD Connect and the service accounts).
+- Global and Security Administrator are assigned with MDI "Administrator" permission by design. Default "Azure AD security groups" ("Azure ATP <InstanceName> Administrator/Users/Viewers"> can be used to delegate permissions on the [MDI RBAC model.](https://docs.microsoft.com/en-us/defender-for-identity/role-groups#types-of-product-short-security-groups). Modification of those group membership should be monitored for prevention of access to security sensitive logs or disabling the sensor/detection.
+- I can only recommend to review the list of [sensitive accounts and groups](https://docs.microsoft.com/en-us/defender-for-identity/sensitive-accounts) and add non-builtin privileged objects (incl. hybrid identity components such as Azure AD Connect and the service accounts).
 - Subscribe the RSS feed of "[What's new](https://docs.microsoft.com/en-us/defender-for-identity/whats-new)" to be notified about product changes and new features
 - Service health can be monitored on the [MDI status page](https://health.atp.azure.com/) and integrated for notification of service issues or delays of detections. Consider to actively monitor the sensors in your infrastructure.
-- [Defender for Identity sizing tool](https://aka.ms/aatpsizingtool) and [capacity planing guidance](https://docs.microsoft.com/en-us/defender-for-identity/capacity-planning) should be use in the planning phase to calculate amount of traffic, supportability and resource recommendations for sensors.
+- [Defender for Identity sizing tool](https://aka.ms/aatpsizingtool) and [capacity planing guidance](https://docs.microsoft.com/en-us/defender-for-identity/capacity-planning) should be used in the planning phase to calculate amount of traffic, supportability and resource recommendations for sensors.
 
 ## Microsoft 365 Defender: Unified SecOps of M365 Services
 
-*Sample use case: SecOps needs a unified visibility of incidents and possibility of hunting across all "Microsoft 365" services and assets (data, identity, endpoints and cloud apps). Consolidated view on logs and summarized incidents from all "M365 Defender" services with enriched data. Enabling centralized investigation of recorded activities (telemetry) in M365 services and empowering (auto)-remediation of incidents by "Automated Investigation and Response (AIR) System".* 
+*Sample use case: SecOps needs a unified visibility of incidents and possibility of hunting across all "Microsoft 365" services and assets (data, identity, endpoints and cloud apps). Consolidated view on logs and summarized incidents from all "M365 Defender" services with enriched data is needed. Using centralized investigation of recorded activities (telemetry) in M365 services and empowering built-in (auto)-remediation of incidents by "Automated Investigation and Response (AIR) System".* 
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_AzMonitor.png](../2020-12-11-identity-security-monitoring/AzIdentity_MTP.png)
 
@@ -360,55 +358,55 @@ Microsoft 365 Defender (formerly Microsoft Threat Protection) supports various s
 #### IaaS/PaaS (Cloud and on-Premises) and "M365 Defender"
 
 Azure resource-level or collected logs by Azure Monitor are NOT covered by "M365 Defender".
-Example: Event logs of Azure/Hybrid Servers or alerts from Azure Defender are NOT visible for hunting in this portal. 
+    Example: Event logs of Azure/Hybrid Servers or alerts from Azure Defender are NOT visible for hunting in this portal. 
 
 #### Cloud Identity (Azure Active Directory) in "M365 Defender"
 
-[Incidents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/investigate-incidents?view=o365-worldwide) / [AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Risk detections from "Azure AD Identity Protection" are NOT included in the "Incidents" and are NOT visible in the table "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)". MCAS feeds many alerts to "M365 Defender" and sign-in risk events (detected by MCAS) are covered. MCAS will be named as ServiceSource and DetectionSource in the log entries. Nevertheless, all "Risky sign-in" alerts from MCAS, which collects all "Identity Protection" risks (detected by Azure AD), can NOT be founded in "M365 Defender".
+[Incidents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/investigate-incidents?view=o365-worldwide) / [AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Risk detections from "Azure AD Identity Protection" are NOT included in the "Incidents" and are NOT visible in the table "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)". MCAS feeds many alerts to "M365 Defender" and sign-in risk events (detected by MCAS) are covered. MCAS will be named as "ServiceSource" and "DetectionSource" in the log entries. Nevertheless, alerts from the "Risky sign-in" policy in MCAS, which collects all "Identity Protection" risks (detected by Azure AD), can NOT be founded in "M365 Defender".
 
 Examples:
 
-- "Password Spray" will be detected by "Identity Protection" and listed in MCAS as "Risky sign-in". But it is NOT visible in the "AlertInfo" table or as part of an Incident in "M365 Defender".
+- "Password Spray" will be detected by "Identity Protection" and listed in MCAS as "Risky sign-in" (as you have seen in the screenshots of previous article section). But it is NOT visible in the "AlertInfo" table or as part of an Incident in "M365 Defender".
 - "Impossible Travel" is detected by MCAS and will be shown in the "Identity Protection" blade of Azure AD. But this risk detection is also listed as MCAS alert ("Impossible travel activity") and collected as part of an "Incident" view in "M365 Defender" and exists in the "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)" table.
 
     ![../2020-12-11-identity-security-monitoring/AzIdentity_M365_Incidents.png](../2020-12-11-identity-security-monitoring/AzIdentity_M365_Incidents.png)
-    _Alerts from MCAS (and MDI) will be summarized as "Incidents" in the "M365 Security Portal". Detections by Identity Protection (e.g. Password Spray) is missing. Alerts from connected apps in MCAS are also not listed (e.g. Mass Download from OneDrive or SharePoint) or custom activity alerts (e.g. Elevated GA to Azure Management in Azure Portal)._
+    _Alerts from MCAS (and MDI) will be summarized as "Incidents" in the "M365 Security Portal". Detections by "Azure AD Identity Protection" (e.g. Password Spray) are missing. Alerts from connected apps in MCAS are also not listed in this case (e.g. Mass Download from OneDrive or SharePoint) or custom activity alerts (e.g. Elevated GA to Azure Management in Azure Portal)._
 
-[IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events captured by MCAS will be stored in this table. This covers only sign-in events to connected apps and are similar to the "Activity Logs" in the MCAS blade (filtered by Successful or failed login-ins). As already described, non-interactive logons or sign-ins by service principal/managed identity are NOT covered.
+[IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events captured by MCAS will be stored in this table. This covers only sign-in events to connected apps and are similar to the "Activity Logs" in the MCAS blade (filtered by "Successful or failed login-ins"). As already described, non-interactive logons or sign-ins by service principal/managed identity are NOT covered.
 
-[IdentityInfo:](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityinfo-table?view=o365-worldwide) Account information from various identity sources (including Active Directory and Azure AD) will be stored here, to enable build relation between user objects (e.g. ObjectID, On-Premises SID and Cloud SID). Other details such as DisplayName, ProxyAddress or Account Status are also included.
+[IdentityInfo:](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityinfo-table?view=o365-worldwide) Account information from various identity sources (including "Active Directory" and "Azure AD") will be stored here, to enable build relation between user objects (e.g. ObjectID, "On-Premises SID" and "Cloud SID"). Other details such as DisplayName, ProxyAddress or Account Status are also included.
 
 #### On-Premises Identity (Active Directory) in "M365 Defender"
 
 It's important to know that data of "Microsoft Defender for Identity" (MDI) will only be shown in the "M365 Defender" portal if the integration between MCAS and MDI is enabled. MCAS seems to be responsible to feeds the related MDI data to "M365 Defender".
 
-Correlation of MDI alerts with other activities and alerts from "M365 Defender" services (such as "M365 Defender" for Endpoint) gives you [new capabilities](https://techcommunity.microsoft.com/t5/microsoft-security-and/microsoft-365-defender-enriches-the-microsoft-defender-for/ba-p/1808275) to understand the context of Active Directory attacks. This becomes obvious if you think about the limited visibility of endpoint (threats) in MCAS.
+Correlation of MDI alerts with other activities and alerts from "M365 Defender" services (such as "Microsoft Defender for Endpoint") gives you [new capabilities](https://techcommunity.microsoft.com/t5/microsoft-security-and/microsoft-365-defender-enriches-the-microsoft-defender-for/ba-p/1808275) to understand the context of Active Directory attacks. This becomes obvious if you think about the limited visibility of endpoint (threats) in MCAS.
 
 Recently, Microsoft added the opportunity to use "Advanced Hunting" based on [events captured by MDI](https://techcommunity.microsoft.com/t5/microsoft-365-defender/hunt-for-threats-using-events-captured-by-azure-atp-on-your/ba-p/1598212). Another benefit (compared to MDI queries in the MCAS portal):
-You are able to use KQL for advanced hunting in "M365 Security Portal and use the (raw) logs from the following tables:
+You are able to write KQL queries for advanced hunting in "M365 Security Portal" by using the (raw) logs from the following tables:
 
 [AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Alerts from MDI will be stored in this table. AlertId includes the prefix "aa" (stands for Azure ATP?) and the original AlertId from the MDI portal (not the MCAS AlertID!).
 
 [IdentityInfo:](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityinfo-table?view=o365-worldwide) As already described before, this table helps to correlate and build relation between various account objects. In this case, very helpful for advanced hunting and queries between Azure AD and Active Directory user objects.
 
-[IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events to your Active Directory will be stored in this table. The logon events will be sourced from the connected MDI instance in MCAS and shows similar results to a filtered "Activity Log" (by app "Active Directory" in the MCAS portal). Various types of logon events in Active Directory are covered (including Remote Desktop, Interactive and Credentials validation via NTLM/Kerberos). Failure reason of sign-in attempts are also included (e.g. OldPassword).
+[IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events to your "Active Directory" will be stored in this table. The logon events will be sourced from the connected MDI instance in MCAS and shows similar results to a filtered "Activity Log" (by "Active Directory" app in the MCAS portal). Various types of logon events in "Active Directory" are covered (including Remote Desktop, Interactive and Credentials validation via NTLM/Kerberos). Failure reason of "sign-in attempts" are also included (e.g. OldPassword).
 
 [IdentityQueryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identityqueryevents-table?view=o365-worldwide): Queries on Active Directory objects (such as LDAP, DNS and SAMR) are collected from MDI in this table.
 
-[IdentityDirectoryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitydirectoryevents-table?view=o365-worldwide): This table contains many identity-related (on-premises) audit and system events on the domain controller. User-level auditing of password or group memberships are included but also domain controller events such as PowerShell execution, Task scheduling or potential lateral movement.
+[IdentityDirectoryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitydirectoryevents-table?view=o365-worldwide): This table contains many identity-related (on-premises) audit and system events on the domain controller. User-level auditing of password or group memberships are included but also "domain controller events" such as PowerShell execution, Task scheduling or potential lateral movement.
 
 #### Cloud Sessions (Microsoft Cloud App Security) in "M365 Security"
 
-Cloud Discovery and activity logs from connected apps are NOT available in "M365 Defender" for hunting.
+Cloud Discovery and activity logs from connected apps are NOT available for hunting in "M365 Defender".
 
 [DeviceNetworkEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-devicenetworkevents-table?view=o365-worldwide): As already described, "Microsoft Defender for Endpoints" (MDE) can be configured to forward signals to MCAS (for cloud discovery and visibility of (un)sanctioned cloud apps). This table helps to start queries on the raw logs from MDE.
 
 #### Collaboration Platforms (Office 365 Services)
-[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Threat protection signals and data will be correlated from Microsoft Defender for Office 365 (MDO) in M365 Defender. But it's limited to features and alerts around "Exchange Online" (such as Safe Links or Attachments).
+[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Threat protection signals and data will be correlated from Microsoft Defender for Office 365 (MDO) in M365 Defender. But it's limited to features and alerts around "Exchange Online" (such as "Safe Links" or Attachments).
 
 Other Exchange Online-related logs and events are stored in the following tables and could be relevant for hunting of [phishing mails](https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/phishing):
 
-- [EmailEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailevents-table?view=o365-worldwide) (email delivery and blocking events)
+- [EmailEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailevents-table?view=o365-worldwide) (e-mail delivery and blocking events)
 - [EmailAttachmentInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-schema-tables?view=o365-worldwide) (file attachment)
 - [EmailPostDeliveryEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailpostdeliveryevents-table?view=o365-worldwide) (security event after e-mail delivery)
 - [EmailUrlInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-emailurlinfo-table?view=o365-worldwide) (URLs / Safe Attachment in E-Mails)
@@ -417,7 +415,7 @@ Other Exchange Online-related logs and events are stored in the following tables
 
 #### Device / Endpoint Security (Microsoft Defender for Endpoint) and "M365 Defender"
 
-[Support of "Microsoft Defender for Endpoint"](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/deploy-supported-services?view=o365-worldwide#limited-deployment-scenarios) (MDE) enables visibility on endpoint states, raw events, detections and alerts (which includes EDR/AV/attack surface reduction) and entities related to devices in M365 Defender.
+[Integration of "Microsoft Defender for Endpoint"](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/deploy-supported-services?view=o365-worldwide#limited-deployment-scenarios) (MDE) enables visibility on endpoint states, raw events, detections and alerts (which includes EDR/AV/attack surface reduction) and entities related to devices in M365 Defender.
 
 [AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide): Alerts from MDE will be shown in this table. Other events from this source will be stored in the following tables:
 
@@ -425,7 +423,7 @@ Other Exchange Online-related logs and events are stored in the following tables
 - [DeviceLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-devicelogonevents-table?view=o365-worldwide) (logon events on/to devices from local or (Azure) AD users)
 - DeviceInfo (similar to the approach of the table "IdentityInfo", helps to correlate or build relation based on meta information by devices)
 
-M365 Defender provides a "[Device profile page](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/device-profile?view=o365-worldwide)" which is accessible from "Incident" view. This  gives you a unified control on M365 Defender- and MDE-related actions.
+M365 Defender provides a "[Device profile page](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/device-profile?view=o365-worldwide)" which is accessible from the "Incident" view. This gives you a unified control on M365 Defender- and MDE-related actions.
 
 ### Analyze and Visualize with "M365 Defender"
 
@@ -486,7 +484,7 @@ This is an additional service which can be [enrolled for a 90-day-trial or on-De
 All of the following data sources can be connected to Azure Sentinel by data connectors.
 Alerts from the [Microsoft Security products can be created as "Incident" automatically](https://docs.microsoft.com/en-us/azure/sentinel/create-incidents-from-alerts) which is strongly recommended to have been implemented (for unified incident view). Incidents generated by this products will be stored in the "[SecurityIncident](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityincident)" table of the workspace.
 
-Furthermore most of the following features can be used based on the various data sources:
+Most of the following features can be used to visualize or extend the logs and alerts from data sources:
 
 - KQL-based Dashboards ("[Workbooks](https://docs.microsoft.com/en-us/azure/sentinel/quickstart-get-visibility#use-built-in-workbooks)")
 - KQL-based Detections ("[Analytic Rules](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)") and [Hunting Queries](https://docs.microsoft.com/en-us/azure/sentinel/hunting#get-started-hunting)
@@ -498,15 +496,15 @@ Nevertheless, I have added the links to the GitHub repository where you can find
 ### IaaS/PaaS (Cloud and on-Premises) in "Azure Sentinel"
 
 Azure Sentinel is built and will be deployed on "top of" Log Analytics Workspaces.
-Collection of security and audit logs from Azure Resources or Servers (On-Premises or hosted by 3rd Party Cloud Providers) can be implemented, alongside of the previously described Azure Monitor (Logs) integration. Azure Sentinel offers some data connectors to easily integrate the following data sources:
+Collection of security and audit logs from "Azure Resources" or Servers (On-Premises or hosted by 3rd Party Cloud Providers) can be implemented, alongside of the previously described "Azure Monitor (Logs)" integration. Azure Sentinel offers some "data connectors" to easily integrate the following data sources:
 
-- [Data from Azure Activity Logs](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-activity): Selected subscriptions will stream their activity logs in the table "[AzureActivity](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/azureactivity)".
-    - Insights of all operations and events in the connected subscriptions will be visualized by the built-in "Azure Activity" workbook. This gives you an overview about detected failures, warnings and caller activities to the Azure Platform.
-    - Eight different analytic rules are available for this data source including detection of anomalous privileged access such as "[Suspicious Resource Deployment or granting of permission](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/AzureActivity)"
+- [Data from "Azure Activity Logs"](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-activity): Selected subscriptions will stream their activity logs in the table "[AzureActivity](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/azureactivity)".
+    - Insights of all operations and events in the connected subscriptions will be visualized by the built-in "Azure Activity" workbook. This gives you an overview about detected failures, warnings and caller activities to the "Azure Platform".
+    - Eight different analytic rules are available for this "data source" including detection of anomalous privileged access such as "[Suspicious Resource Deployment or granting of permission](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/AzureActivity)"
     - Security-related "diagnostic logs" should be also forwarded to the workspace of Azure Sentinel. It allows you to use "Analytic rules" for detecting unfamiliar access activities e.g. [in Azure Key Vault (mass secret retrieval or sensitive operations)](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/AzureDiagnostics).
     - Other Cloud Providers: [Amazon Web Services (AWS)](https://docs.microsoft.com/en-us/azure/sentinel/connect-aws) can be integrated to stream all "Management Events" to Azure Sentinel.
-- Data from [Syslog](https://docs.microsoft.com/en-us/azure/sentinel/connect-syslog) / [Security Event](https://docs.microsoft.com/en-us/azure/sentinel/connect-windows-security-events) Logs: This allows you to collect all security events from Windows and Linux machines by the Log Analytics Agent. Scope configuration of streamed events can be configured as previously described (All Events, Common and Minimal) in this blog post. This settings also defines the amount and scope of raw logs that will be stored in the tables "[SecurityEvent](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityevent)" and "[Syslog](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/syslog)".
-    - Azure Sentinel includes "analytic rules" to detect [failed logon attempts or "Brute Force" attacks](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/Syslog) to your Linux servers. But also many [detections for user management or (RDP) sign-in anomaly](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/SecurityEvent) on Windows Servers are available. In total over 31 detection templates based on "(Windows) Security Events" and over 11 rules for "Syslog" can be enabled to use this data source.
+- Data from [Syslog](https://docs.microsoft.com/en-us/azure/sentinel/connect-syslog) / [Security Event](https://docs.microsoft.com/en-us/azure/sentinel/connect-windows-security-events) Logs: This allows you to collect all security events from Windows and Linux machines by the Log Analytics Agent. Scope configuration of streamed events (All Events, Common and Minimal) can be configured as previously described in this blog post. This settings also defines the amount and scope of raw logs that will be stored in the tables "[SecurityEvent](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityevent)" and "[Syslog](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/syslog)".
+    - Azure Sentinel includes "analytic rules" to detect [failed logon attempts or "Brute Force" attacks](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/Syslog) to your Linux servers. But also many [detections for user management or (RDP) sign-in anomaly](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/SecurityEvent) on Windows Servers are available. In total over 31 detection templates based on "(Windows) Security Events" and over 11 rules for "Syslog" can be enabled to use this "data source".
     - Azure Sentinel provides two [ML-based behavior analytics to detect anomalous logins via SSH and RDP](https://techcommunity.microsoft.com/t5/azure-sentinel/what-s-new-azure-sentinel-machine-learning-behavior-analytics/ba-p/1521988).
     - Many workbooks are available to visualize the raw logs from servers in your environment including "[Event Analyzer](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/EventAnalyzer.json)"(for audit object, file system or registry of Windows) or "[Linux Machines](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/LinuxMachines.json)" (for insights of Linux events and errors).
 
@@ -515,21 +513,21 @@ Collection of security and audit logs from Azure Resources or Servers (On-Premis
 [Alert Data from Azure Security Center (detected by Azure Defender):](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-security-center) This connector allows to ingest alerts of detected threats by Azure Defender. The alerts will be found in the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table with ProviderName "Azure Security Center". 
 
 - Azure Sentinel includes a [unified workbook to get compliance, posture management and protection status](https://techcommunity.microsoft.com/t5/azure-sentinel/gain-compliance-posture-and-protection-insights-with-this-azure/ba-p/1290454) (including trends) on your Security Center data.
-- Playbooks allows you to [connect new Azure Subscription automatically](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/AutoConnect-ASCSubscriptions) on a scheduled basis or to automate the [incident notification (to RBAC assigned Owners)](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Notify-ASCAlertAzureResource) or [recommendation (incl. IAM configuration) of resources](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Get-ASCRecommendations).
+- Playbooks allows you to [connect new Azure Subscription automatically](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/AutoConnect-ASCSubscriptions) on a scheduled basis or to automate the notification of [incidents (to RBAC assigned Owners)](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Notify-ASCAlertAzureResource) or [recommendation (incl. IAM configuration) of resources](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Get-ASCRecommendations).
 
 ### Cloud Identity (Azure Active Directory) in "Azure Sentinel"
 
-[Data from Azure AD Logs](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-active-directory): Audit and Sign-ins will be collected but no sign-in logs of "Service Principals", "Non-Interactive", "Provisioning Logs" or "Managed Identities" are covered yet. Therefore you have to configure the "[diagnostic settings](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-integrate-activity-logs-with-log-analytics#send-logs-to-azure-monitor)" in the Azure AD blade manually to gather all insights of events to the workspace of Azure Sentinel.
+[Data from Azure AD Logs](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-active-directory): Audit and Sign-ins will be collected but no sign-in logs of "Service Principals", "Non-Interactive", "Provisioning Logs" or "Managed Identities" are covered yet. Therefore you have to configure the "[diagnostic settings](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-integrate-activity-logs-with-log-analytics#send-logs-to-azure-monitor)" in the "Azure AD blade" manually to gather all insights of events to the workspace of Azure Sentinel.
 
-- Many [KQL queries (analytic rules) are able to detect malicious activities such as OAuth app registrations](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/AuditLogs). Analyses of sign-in attempts supports you to find [initial access attacks such as brute force to Azure Portal or Azure AD PowerShell anomalies](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/Syslog).
-- Three different workbooks for Azure AD are included as "templates" in Azure Sentinel. Insights about Azure AD-related logs will be visualized and some are partially highly similar to the [Azure AD workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks).
+- Many [KQL queries (analytic rules) are able to detect malicious activities such as "OAuth app" registrations](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/AuditLogs). Analyses of sign-in attempts supports you to find [initial access attacks such as brute force to Azure Portal or Azure AD PowerShell anomalies](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/Syslog).
+- Three different workbooks for "Azure AD" are included as "templates" in Azure Sentinel. Insights about Azure AD-related logs will be visualized and some are partially similar to the [Azure AD workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks).
 
     ![../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelWorkbookAAD.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelWorkbookAAD.png)
     *This workbook shows unified events between activity logs from Azure but also audit and sign-ins logs from Azure AD.*
 
 - Auto-response on detected identity risks or threat detections can be extended by Playbooks. Microsoft offers samples for many actions such as [prompt user for investigation details](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Prompt-User), [isolate device of the user (by MDE)](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Isolate-MDATPMachine) or [revoke the sign-in session (token) by Microsoft Graph API](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Revoke-AADSignInSessions).
 
-[Security Alerts from Azure AD Identity Protection](https://docs.microsoft.com/en-us/azure/sentinel/connect-cloud-app-security): All risk detection will be stored in the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table under ProviderName "IPC" (= Identity Protection) by using this connector.
+[Security Alerts from "Azure AD Identity Protection"](https://docs.microsoft.com/en-us/azure/sentinel/connect-cloud-app-security): All risk detection will be stored in the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table under ProviderName "IPC" (= Identity Protection) by using this connector.
 
 - Advanced correlation between incidents of [unfamiliar and atypical detections](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/SecurityAlert) are possible with an analytic rule.
 - Status management of risky users ([confirm](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Confirm-AADRiskyUser) or [dismiss](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Dismiss-AADRiskyUser)) can be automated by Playbooks.
@@ -538,73 +536,73 @@ Collection of security and audit logs from Azure Resources or Servers (On-Premis
 
 [Alerts from Microsoft Defender for Identity (MDI)](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-atp): Connector is listed as "Azure Advanced Threat Protection (Preview)" and forward the alerts to the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table (also with the old Product name as ProviderName).
 
-- Raw or detailed logs from MDI aren't available in Azure Sentinel yet. Microsoft started to implement the ["Microsoft 365 Defender" connector](https://techcommunity.microsoft.com/t5/azure-sentinel/what-s-new-microsoft-365-defender-connector-now-in-public/ba-p/1865651) that allows streaming of advanced logs.
+- Raw or detailed logs from MDI aren't available in Azure Sentinel yet. Microsoft started to implement the ["Microsoft 365 Defender" connector](https://techcommunity.microsoft.com/t5/azure-sentinel/what-s-new-microsoft-365-defender-connector-now-in-public/ba-p/1865651) that seems to enable streaming of advanced logs in future.
 
     ![../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelM365Connector.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelM365Connector.png)
 
-    *"Microsoft 365 Defender" connector allows to stream the already known "Advanced hunting" tables (with raw event data) from the M365 Security Portal to Azure Sentinel. Currently this is limited to "Defender for Endpoint" but will be coming for other M365 Defender products soon!*
+    *"Microsoft 365 Defender" connector allows to stream the already known "Advanced hunting" tables (with raw event data) from the "M365 Security Portal" to Azure Sentinel. Currently this is limited to "Defender for Endpoint" but seems to be coming for other M365 Defender products as well!*
 
     But at this time, KQL-based queries and hunting (on detailed logs) from MDI is only possible in M365 Defender.
 
-- Collected (security) logs from domain controller (via Log Analytics Agent / Azure Security Center) can be used to gain insights of the on-premises environment. Workbooks to analyze security events to [detect usage of insecure protocols (NTLMv1, WDigest)](https://techcommunity.microsoft.com/t5/azure-sentinel/azure-sentinel-insecure-protocols-workbook-reimagined/ba-p/1558375) or anomalies and user activities across "Identity & Access" operations are available as Template.
+- Collected (security) logs from domain controller (via Log Analytics Agent / Azure Security Center) can be used to gain insights of the on-premises environment. Workbooks to analyze security events to [detect usage of insecure protocols (NTLMv1, WDigest)](https://techcommunity.microsoft.com/t5/azure-sentinel/azure-sentinel-insecure-protocols-workbook-reimagined/ba-p/1558375) or visualize anomalies and user activities across "Identity & Access" operations are available.
 
     ![../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelWorkbookIAM.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelWorkbookIAM.png)
-    *Workbook template "Identity & Access" uses logs from the "SecurityEvents" table to visualize authentication events and user activities in your Active Directory environment.*
+    *Workbook template "Identity & Access" uses logs from the "SecurityEvents" table to visualize authentication events and user activities in your "Active Directory" environment.*
 
 ### Cloud Sessions (Microsoft Cloud App Security) in "Azure Sentinel"
 
-[Data from Cloud App Security](https://docs.microsoft.com/en-us/azure/sentinel/connect-cloud-app-security): All alerts from MCAS will be stored in the table "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)". The second data type of the connector collects the MCAS "Discovery Log" ("Shadow IT" reports) to the "[McasShadowItReporting](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/mcasshadowitreporting)" table of the Sentinel workspace.
+[Data from Cloud App Security](https://docs.microsoft.com/en-us/azure/sentinel/connect-cloud-app-security): All alerts from MCAS will be stored in the table "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)". The second data type of the connector collects the "Discovery Log" ("Shadow IT" reports) from MCAS to the "[McasShadowItReporting](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/mcasshadowitreporting)" table in the Sentinel workspace.
 
-- Azure Sentinel integration will be also [configured in the MCAS portal](https://docs.microsoft.com/en-us/cloud-app-security/siem-sentinel) and allows to specify filters on the discovery logs.
-- [Data schema of the MCAS logs](https://docs.microsoft.com/en-us/cloud-app-security/siem-sentinel#alerts-and-discovery-logs-in-azure-sentinel) in Azure Sentinel are also documented in the MCAS docs.
+- Azure Sentinel integration will be also [configured in the "MCAS portal"](https://docs.microsoft.com/en-us/cloud-app-security/siem-sentinel) and allows to specify filters on the discovery logs.
+- [Data schema of the MCAS logs](https://docs.microsoft.com/en-us/cloud-app-security/siem-sentinel#alerts-and-discovery-logs-in-azure-sentinel) in Azure Sentinel are also documented by Microsoft.
 - Discovery Logs in Azure Sentinel can be visualized by using the [pre-configured Workbook](https://github.com/Azure/Azure-Sentinel/blob/45310fe6be3cb30cbd8f073443a0c2f9144115fa/Workbooks/MicrosoftCloudAppSecurity.json) template.
 - Resolving MCAS alerts can be automated as part of Playbook (instead of PowerAutomate).
-    - Example:  [Closing alert of "Infrequent Country"](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Resolve-McasInfrequentCountryAlerts) if affected users meet a criteria such as "out-of-office status" or "group membership" (high level of business travel). Details of this example are very well [explained by Sebastian Molendijk in his video](https://www.youtube.com/watch?v=ql8x4rC6m9A).
+    - Example:  [Closing alert of "Infrequent Country"](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks/Resolve-McasInfrequentCountryAlerts) if affected users meet a criteria such as "out-of-office status" or "group membership" (employees who travel internationally). Details of this example are very well [explained by Sebastian Molendijk in his video](https://www.youtube.com/watch?v=ql8x4rC6m9A).
 
 ### Collaboration Platforms (Office 365 Services) in "Azure Sentinel"
 
-[Data from Office 365 Logs](https://docs.microsoft.com/en-us/azure/sentinel/connect-office-365): Activity logs from SharePoint, Exchange and Teams will be stored in the "[OfficeActivity](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/officeactivity)" table.
+[Data from Office 365 Logs](https://docs.microsoft.com/en-us/azure/sentinel/connect-office-365): Activity logs from SharePoint, Exchange and Teams will be stored in the "[OfficeActivity](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/officeactivity)" table by this connector.
 
 - User activities by these three workloads can be visualized in the ["Office 365" workbook](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/Office365.json).
-- Many analytic rules are available [to detect suspicious "Office 365" activities](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/OfficeActivity) but also some hunting queries on [Exchange Online mailboxes, SharePoint downloads](https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/OfficeActivity) or [Teams activities](https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/TeamsLogs).
+- Many analytic rules are available [to detect suspicious "Office 365" activities](https://github.com/Azure/Azure-Sentinel/tree/master/Detections/OfficeActivity) but also some hunting queries on [Exchange Online mailboxes, SharePoint downloads](https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/OfficeActivity) or [Teams activities](https://github.com/Azure/Azure-Sentinel/tree/master/Hunting%20Queries/TeamsLogs) are available.
 - Other compliance, operational or security logs from Office 365 (such as Message Trace logs) are NOT included. Collecting the missing logs are described in a [TechCommunity blog post and will be achieved trough Azure Logic Apps](https://techcommunity.microsoft.com/t5/azure-sentinel/how-to-protect-office-365-with-azure-sentinel/ba-p/1656939).
 
 [Alerts from "Microsoft Defender for Office 365" (MDO)](https://docs.microsoft.com/en-us/azure/sentinel/connect-office-365-advanced-threat-protection): Data connector is named as "Office 365 Advanced Threat Protection" (OATP) and allows to store many types of alerts from the "Office Security and Compliance Center"  to the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table.
 
-Advanced logs (data) and all types of alerts from MDO aren't available yet. As already mentioned,  the "[M365 Connector](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender)" seems to improve the log integration between MDO and Sentinel in the future.
+Advanced logs (data) and all types of alerts from MDO aren't available yet. As already mentioned,  the "[M365 Defender Connector](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender)" seems to improve the log integration between MDO and Sentinel in the future.
 
 ### Device / Endpoint Security (Microsoft Defender for Endpoint) in "Azure Sentinel"
 
-[Alerts from "Microsoft Defender for Endpoint" (MDE)](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-defender-advanced-threat-protection): Data connector to fetch alerts generated by endpoint protection is also named unter the old brand "Microsoft Defender Advanced Threat Protection" (MDATP). Alerts will be also stored (similar to the other M365 Defender products) to the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table.
+[Alerts from "Microsoft Defender for Endpoint" (MDE)](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-defender-advanced-threat-protection): Data connector to fetch alerts generated by endpoint protection is also named unter the old brand "Microsoft Defender Advanced Threat Protection" (MDATP). Alerts will be also stored (similar to the other M365 Defender products) in the "[SecurityAlert](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/securityalert)" table.
 
-- Many [playbooks](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks) are available from Microsoft to use MDE to restrict entities (block IP address, URL, app execution,...) or further interaction (get investigation package or list of from the Threat & Vulnerability Management) as part of an automated response process.
+- Many [playbooks](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks) are available from Microsoft to use MDE to restrict entities (block IP address, URL, app execution,...) or further interaction (get investigation package or list of the Threat & Vulnerability Management) as part of an automated response process.
 
-[Data from M365 Defender (Device*)](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender): Advanced logs from the already known "advanced hunting" tables (DeviceInfo, DeviceLogonEvents,...) in M365 Defender will be streamed to Azure Sentinel by this new connector.
+[Data from M365 Defender (Device*)](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender): Advanced logs from the already known "advanced hunting" tables (DeviceInfo, DeviceLogonEvents,...) in M365 Defender will be streamed to "Azure Sentinel" by this new connector.
 
 - This allows new hunting and correlation options between logs that can be only collected from Azure Monitor/Azure Sentinel and M365 integrated logs.
-    - Example: Windows Sign In events (from Azure AD's SigninLogs) can be correlated natively with the DeviceLogonEvents (which covers local sign-in and authentication events from the endpoints).
+    - Example: Windows Sign In events (from Azure AD's "SigninLogs") can be correlated natively with the DeviceLogonEvents (which covers local sign-in and authentication events from the endpoints).
 - M365 Defender and Azure Sentinel using KQL as query language. Therefore all your existing hunting queries from MDE/M365 Defender should be easily used in Azure Sentinel as well.
 
 ## Investigation of Incidents in "Azure Sentinel"
 
 ### Incidents and Workbooks in "Azure Sentinel" blade
 
-Incidents blade of "Azure Sentinel" shows all alerts from the connected sources in Azure Sentinel. This includes MCAS custom alerts (such as "Elevated Global Admin to Azure Management") and all other built-in policies or detections (e.g. "Mass Download by a single user" in MCAS. But also alerts from "Azure Security Center" ("Access from a Tor exit") and "Analytic rules" (in Azure Sentinel) on Azure Activity Logs ("Rare subscription-level operations") will be listed.
+Incidents blade of "Azure Sentinel" shows all alerts from the connected sources in Azure Sentinel. This includes MCAS custom alerts (such as "Elevated Global Admin to Azure Management") and all other built-in policies or detections (e.g. "Mass Download by a single user" in MCAS. But also alerts from "Azure Security Center" ("Access from a Tor exit") and "Analytic rules" (from Azure Sentinel) on Azure Activity Logs ("Rare subscription-level operations") will be listed.
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelIncidents.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelIncidents.png)
 
 It's important to understand the difference between incident and alerts in Azure Sentinel:
-Incidents are group of related alerts and will be correlated by Azure Sentinel.
+Incidents are a group of related alerts and will be correlated by Azure Sentinel.
 
 - As already described, alerts from connected security products (MDE, MDI, Azure Defender, etc.) are only displayed as "Incident" if "[Microsoft Security Incident Creation Analytic Rules](https://docs.microsoft.com/en-us/azure/sentinel/create-incidents-from-alerts)" are configured in the "Analytics" blade.
 - Built-in (templates) or custom analytic rules can be grouped as "Incident" if an alert is triggered (enabled by default).
 
 It is also important to know the [three different types of analytic rules](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in#about-out-of-the-box-detections) and the logic behind them.
 
-Azure Sentinel includes various workbooks that supports a unified incident management:
+Azure Sentinel includes various workbooks that supports a unified and advanced view of incidents:
 
 - [Incident Overview](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/IncidentOverview.json) (In-depth information to a specific incident case)
-- [Investigation Insights](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/InvestigationInsights.json) (Incident Timeline and Trend combined with detailed information about entity and incidents)
+- [Investigation Insights](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/InvestigationInsights.json) (Incident timeline and trend combined with detailed information about entity and incidents)
 - [MITRE ATT&CK](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/MITREAttack.json) (Visualizing coverage of MITRE ATT&CK framework on Azure Sentinel)
 
 ## Investigation Graph
@@ -616,11 +614,11 @@ Recently, Microsoft introduced the "[Entity Insights](https://techcommunity.micr
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelInvestigationGraph.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelInvestigationGraph.png)
 
-*Investigation starts on "Mass Download" incident and exploring all other related alerts from the entities. At the end, a comprehensive attack time line and visualized progression of events will be shown. Detections of Brute-Force against Active Directory and the Azure Portal can be analysed.* 
+*Investigation starts on "Mass Download" incident and exploring all other related alerts from the entities. At the end, a comprehensive attack timeline and visualized progression of events will be shown. Detections of "Brute-Force" against Active Directory and the Azure Portal can be analyzed in the one investigation step.* 
 
 ### Advanced multistage attack detection
 
-[Advanced multistage attack detection](https://docs.microsoft.com/en-us/azure/sentinel/fusion) is based on machine learning (["Fusion" technology](https://www.microsoft.com/security/blog/2020/02/20/azure-sentinel-uncovers-real-threats-hidden-billions-low-fidelity-signals/)) and automate the correlation of various types of attack scenarios. This includes data exfiltration, lateral movement and malicious administrative activities. 
+[Advanced multistage attack detection](https://docs.microsoft.com/en-us/azure/sentinel/fusion) is based on machine learning (["Fusion" technology](https://www.microsoft.com/security/blog/2020/02/20/azure-sentinel-uncovers-real-threats-hidden-billions-low-fidelity-signals/)) and automates the correlation on various types of attack scenarios. This includes data exfiltration, lateral movement and malicious administrative activities. 
 
 ![../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelFusion.png](../2020-12-11-identity-security-monitoring/AzIdentity_AzSentinelFusion.png)
 *Fusion detects a multistage attack and build an incident with collections of related alerts.*
@@ -629,14 +627,14 @@ Recently, Microsoft introduced the "[Entity Insights](https://techcommunity.micr
 
 [User Entity Behavior Analytics (UEBA)](https://techcommunity.microsoft.com/t5/azure-sentinel/guided-ueba-investigation-scenarios-to-empower-your-soc/ba-p/1857100) allows investigation of entities (such as user or devices) and their behavior based on Azure Sentinel data.
 
-- Onboarded data sources and their raw data will be analyzed by the UEBA Engine in Azure Sentinel to find anomalies.
-- User information will be synchronized from Azure AD to enrich user profiles in the UEBA entity pages.
+- Onboarded data sources and their raw data will be analyzed by the "UEBA Engine" in Azure Sentinel to find anomalies.
+- User information will be synchronized from "Azure AD" to enrich user profiles in the UEBA entity pages.
 - Details on the architecture and engine to [identify advanced threats with this feature](https://docs.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics) are documented by Microsoft.
 
 UEBA can be [enabled](https://docs.microsoft.com/en-us/azure/sentinel/enable-entity-behavior-analytics) from the "Entity behavior" blade in Azure Sentinel.
-Selection of data sources that will be used by UEBA can be also configured there as well and includes Azure AD (Audit / Sign-in logs), Azure Activity and Security Events (Alerts from all connected Microsoft Security products).
+Selection of data sources (used by UEBA) can be also configured in this blade and includes "Azure AD" (Audit / Sign-in logs), "Azure Activity" and "Security Events" (from all connected Microsoft Security products).
 
-Enriched events from the UEBA engine will be stored in the "[BehaviorAnalytics](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/behavioranalytics)" table and you are able to read them as (raw) entries [by using KQL queries](https://docs.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics#querying-behavior-analytics-data). Microsoft is also using this table to visualize UEBA results in the workbook template "[User And Entity Behavior Analytics](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/UserEntityBehaviorAnalytics.json)". The founded anomalies will be scored with "Investigation Priority Score" and mapped to the MITRE ATT&CK framework.
+Enriched events from the "UEBA engine" will be stored in the "[BehaviorAnalytics](https://docs.microsoft.com/en-us/azure/azure-monitor/reference/tables/behavioranalytics)" table and readable as (raw) entries [by using KQL queries](https://docs.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics#querying-behavior-analytics-data). Microsoft is also using this table to visualize "UEBA results" in the workbook template "[User And Entity Behavior Analytics](https://github.com/Azure/Azure-Sentinel/blob/master/Workbooks/UserEntityBehaviorAnalytics.json)". The founded anomalies will be scored with "Investigation Priority Score" and mapped to the MITRE ATT&CK framework.
 
 Analytics from UEBA based on accounts, IP addresses and hosts entities can be displayed in the "Entity behavior" blade.
 
@@ -647,40 +645,41 @@ Analytics from UEBA based on accounts, IP addresses and hosts entities can be di
 
 ### Playbooks
 
-A logic app can be triggered when analytic rule generates the alert to automate threat response.
-Logic apps with an Azure Sentinel alert trigger can be used as "Playbook".
-Microsoft describes the configuration of playbooks in one of the [Sentinel tutorials](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-respond-threats-playbook).
+A logic app can be triggered to automate threat response when an "analytic rule" generates the alert.
+All logic apps that includes "Azure Sentinel alert trigger" can be used as "Playbook".
+Microsoft describes the configuration of this playbooks in one of the [Sentinel tutorials](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-respond-threats-playbook).
 As already mentioned, many logic app templates are available from [GitHub](https://github.com/Azure/Azure-Sentinel/tree/master/Playbooks).
 
-In addition, there is also a [Logic App connector for Azure Sentinel](https://docs.microsoft.com/en-us/connectors/azuresentinel/) which allows to update or use information information from incidents.
+In addition, there is also a [Logic App connector for Azure Sentinel](https://docs.microsoft.com/en-us/connectors/azuresentinel/) which allows to update or use information from incidents.
 
 ### WatchList
 
-Recently, Microsoft introduces [Watchlist](https://docs.microsoft.com/en-us/azure/sentinel/watchlists) as feature to collect data from external sources for correlation in the analytic rules or combined with events in Azure Sentinel. This enables also the possibilities of enrichment by external event or business data. One of Microsoft's playbook samples is using WatchList to close an [incident from known IP addresses](https://github.com/Azure/Azure-Sentinel/tree/ed03d35701b6a914c742bf0752f891b1c465c656/Playbooks/Watchlist-CloseIncidentKnownIPs). On this general approach, you can also used a playbook to ingest "Trusted IP addresses from Microsoft (backend)" to enrich false-positive events of unfamiliar locations.
+Recently, Microsoft introduces [Watchlist](https://docs.microsoft.com/en-us/azure/sentinel/watchlists) as feature to collect data from external sources for correlation in the analytic rules. This enables also the possibilities of enrichment by external event or business data. One of Microsoft's playbook samples is using WatchList to close an [incident from known IP addresses](https://github.com/Azure/Azure-Sentinel/tree/ed03d35701b6a914c742bf0752f891b1c465c656/Playbooks/Watchlist-CloseIncidentKnownIPs). On this general approach, you can also used a playbook to ingest "Trusted IP addresses from Microsoft (backend)" to enrich false-positive events of unfamiliar locations.
 
 ### Notebooks
 
-Azure Sentinel allows to use Jupyter notebooks running on Azure Machine Learning (AML) platform and using Azure Sentinel data. Notebook templates are already included such as an "[Entity Explorer for Account](https://github.com/Azure/Azure-Sentinel-Notebooks/blob/master/Entity%20Explorer%20-%20Account.ipynb)" or "[guided hunting on anomalous Exchange Online Sessions](https://github.com/Azure/Azure-Sentinel-Notebooks/blob/master/Guided%20Investigation%20-%20Anomaly%20Lookup.ipynb)".
+Azure Sentinel allows to use "Jupyter notebooks" running on "Azure Machine Learning" (AML) platform and using Azure Sentinel data. Notebook templates are already included such as an "[Entity Explorer for Account](https://github.com/Azure/Azure-Sentinel-Notebooks/blob/master/Entity%20Explorer%20-%20Account.ipynb)" or "[guided hunting on anomalous Exchange Online Sessions](https://github.com/Azure/Azure-Sentinel-Notebooks/blob/master/Guided%20Investigation%20-%20Anomaly%20Lookup.ipynb)".
 
-Notebook are very powerful to [hunt for security threats](https://docs.microsoft.com/en-us/azure/sentinel/notebooks) and allows [enhancement of existing Sentinel data by external threat intelligence](https://techcommunity.microsoft.com/t5/azure-sentinel/security-investigation-with-azure-sentinel-and-jupyter-notebooks/ba-p/432921).
+Notebook are very powerful for [hunting of security threats](https://docs.microsoft.com/en-us/azure/sentinel/notebooks) and allows [enhancement of existing "Azure Sentinel data" by external threat intelligence](https://techcommunity.microsoft.com/t5/azure-sentinel/security-investigation-with-azure-sentinel-and-jupyter-notebooks/ba-p/432921).
 
 ## Considerations and References of "Azure Sentinel"
 
-- [Azure Sentinel Ninja (Level 400)](https://techcommunity.microsoft.com/t5/azure-sentinel/become-an-azure-sentinel-ninja-the-complete-level-400-training/ba-p/1246310) Training includes a perfect list of resources to start your study on Microsoft's SIEM solution.
+- [Azure Sentinel Ninja (Level 400)](https://techcommunity.microsoft.com/t5/azure-sentinel/become-an-azure-sentinel-ninja-the-complete-level-400-training/ba-p/1246310) Training includes a a great list of resources to start your study on Microsoft's SIEM solution.
 - Consider [Microsoft's Best Practices for Azure Sentinel](https://www.microsoft.com/security/blog/wp-content/uploads/2020/07/Azure-Sentinel-whitepaper.pdf)
-    - Best Practices for [designing Azure Sentinel and Azure Security Center workspaces](https://techcommunity.microsoft.com/t5/azure-sentinel/best-practices-for-designing-an-azure-sentinel-or-azure-security/ba-p/832574) is very important! Consider to create as few workspaces as possible!
-- [Azure Sentinel To-Go](https://techcommunity.microsoft.com/t5/azure-sentinel/azure-sentinel-to-go-part1-a-lab-w-prerecorded-data-amp-a-custom/ba-p/1260191?WT.mc_id=twitter-social-thmaure) is a great way to build a lab environment with prerecorded data
+    - Best Practices for [designing Azure Sentinel and Azure Security Center workspaces](https://techcommunity.microsoft.com/t5/azure-sentinel/best-practices-for-designing-an-azure-sentinel-or-azure-security/ba-p/832574) is very important!
+    - Consider to create as few workspaces as possible!
+- [Azure Sentinel To-Go](https://techcommunity.microsoft.com/t5/azure-sentinel/azure-sentinel-to-go-part1-a-lab-w-prerecorded-data-amp-a-custom/ba-p/1260191?WT.mc_id=twitter-social-thmaure) is a great way to build a lab environment with prerecorded data.
 - Microsoft is offering many interesting webinars around Azure Sentinel! Check out the [upcoming events or the records of the past webinars](https://techcommunity.microsoft.com/t5/microsoft-security-and/security-community-webinars/ba-p/927888).
-    - One of my favourite session is "[Tackling Identity](https://www.youtube.com/watch?v=BcxiY32famg)" because of the high proportion of use cases and live-demos (KQL samples) that shows the advantages and power of Sentinel.
-- Maarten Goet has written a great blog post why [VSCode becomes essential for threat hunting with Azure Sentinel](https://medium.com/@maarten.goet/visual-studio-code-the-swiss-army-knife-for-threat-hunting-with-azure-sentinel-503e7ef38c96)
-- [Enrichment with Azure AD information](https://techcommunity.microsoft.com/t5/azure-sentinel/enriching-azure-sentinel-with-azure-ad-information/ba-p/1288805) can be important to associate detailed information to Azure Activity or Office 365 logs which is well described in this TechCommunity blog post.
-- Enrichment of alerts entities with other sources like MCAS or "Defender for Endpoint" is also possible. A [template](https://github.com/Sebmolendijk/ARMLogicApps/tree/master/EntitiesEnrichment) and [detailed video](https://www.youtube.com/watch?v=YZr-New3yCI&feature=youtu.be) is available to build entities enrichment by a  playbook.
-- Deployment of Azure Sentinel can be automated as part of a [centralized repository and CI/CD pipeline](https://techcommunity.microsoft.com/t5/azure-sentinel/deploying-and-managing-azure-sentinel-ninja-style/ba-p/1858073). This is a great approach if you like to have to manage staging or multi-tenant environments.
+    - One of my favourite session is "[Tackling Identity](https://www.youtube.com/watch?v=BcxiY32famg)" because of the high proportion of use cases and live-demos (KQL samples) that shows the advantages and technical possibilities of Azure Sentinel.
+- Maarten Goet has written a great blog post why ["VSCode" becomes essential for threat hunting with Azure Sentinel](https://medium.com/@maarten.goet/visual-studio-code-the-swiss-army-knife-for-threat-hunting-with-azure-sentinel-503e7ef38c96)
+- [Enrichment with Azure AD information](https://techcommunity.microsoft.com/t5/azure-sentinel/enriching-azure-sentinel-with-azure-ad-information/ba-p/1288805) can be important to associate detailed information to "Azure Activity" or "Office 365" logs which is well described in this TechCommunity blog post.
+- Enrichment of alerts entities with other sources like MCAS or "Defender for Endpoint" is also possible. A [template](https://github.com/Sebmolendijk/ARMLogicApps/tree/master/EntitiesEnrichment) and [detailed video](https://www.youtube.com/watch?v=YZr-New3yCI&feature=youtu.be) is available to build entity enrichment by a  playbook.
+- Deployment of Azure Sentinel can be automated as part of a [centralized repository and CI/CD pipeline](https://techcommunity.microsoft.com/t5/azure-sentinel/deploying-and-managing-azure-sentinel-ninja-style/ba-p/1858073). This is a great approach if you have the need to manage staging or multi-tenant environments.
+- Azure Lighthouse can be used for a multi-workspace view and therefore [tracking an attack multiple tenants](https://techcommunity.microsoft.com/t5/azure-sentinel/using-azure-lighthouse-and-azure-sentinel-to-investigate-attacks/ba-p/1043899). Collection of Azure AD or O365 logs from different tenants is also possible if you [configure a custom data connector](https://techcommunity.microsoft.com/t5/azure-sentinel/o365-amp-aad-multi-tenant-custom-connector-azure-sentinel/ba-p/1848968).
 - Monitoring of the Workspace Health is one the daily operational tasks in Azure Sentinel.
-The workbook for [usage reporting](https://techcommunity.microsoft.com/t5/azure-sentinel/usage-reporting-for-azure-sentinel/ba-p/1267383) is essential to check latency, cost and table analysis (past, current and estimated size of tables) of your Log Analytics / Sentinel instance.
+The workbook for [usage reporting](https://techcommunity.microsoft.com/t5/azure-sentinel/usage-reporting-for-azure-sentinel/ba-p/1267383) is essential to check latency, cost and table analysis (past, current and estimated size of tables) of your Log Analytics workspace / Sentinel instance.
 - Microsoft offers a [workbook to verify the monitoring health](https://docs.microsoft.com/en-us/azure/sentinel/monitor-data-connector-health) in Azure Sentinel.
 It's strongly recommended to use this integrated workbook to check the agent and data connector health but also connectivity and performance within Azure Sentinel.
-- Azure Lighthouse can be used for a multi-workspace view and therefore [tracking an attack multiple tenants](https://techcommunity.microsoft.com/t5/azure-sentinel/using-azure-lighthouse-and-azure-sentinel-to-investigate-attacks/ba-p/1043899). Collection of Azure AD or O365 logs from different tenants is also possible if you [configure a custom data connector](https://techcommunity.microsoft.com/t5/azure-sentinel/o365-amp-aad-multi-tenant-custom-connector-azure-sentinel/ba-p/1848968).
 - Comparison between "Azure Sentinel" and "M365 Defender" is one of the most common question. [Jan Geisbauer](https://www.linkedin.com/pulse/azure-sentinel-vs-microsoft-defender-jan-geisbauer/?trackingId=V%2B5QLIutQOOT7bHW7QUyVg%3D%3D) and [Sami Lamppu](https://samilamppu.com/2020/11/24/microsoft-365-defender-vs-azure-sentinel-which-one-to-use/) has written very good blog posts to give an general answer to this question.
 - You want to learn KQL? Check the [Basic KQL Course from Pluralsight](https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch) or "[Become a KQL Ninja" (KQL Internals Study Guide) by Huy](https://security-tzu.com/2020/08/07/become-a-kql-ninja/).
 
