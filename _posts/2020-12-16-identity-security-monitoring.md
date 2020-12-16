@@ -18,7 +18,7 @@ hidden: false
 Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
 - <A href="#mcas-and-defender-for-identity-unified-secops-of-connected-cloud-apps-and-hybrid-identity"><b>Microsoft Cloud App Security and Defender for Identity:</b>
 Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
-- <A href="#microsoft-365-defender-unified-secops-of-m365-services"><b>Microsoft 365 Defender:<b>
+- <A href="#microsoft-365-defender-unified-secops-of-m365-services"><b>Microsoft 365 Defender:</b>
 Unified SecOps of M365 Services</A><br>
 - <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms"><b>Azure Sentinel:</b>
 “Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
@@ -384,7 +384,7 @@ Examples:
 - "Password Spray" will be detected by "Identity Protection" and listed in MCAS as "Risky sign-in" (as you have seen in the screenshots of previous article section). But it is *not* visible in the "AlertInfo" table or as part of an Incident in "M365 Defender".
 - "Impossible Travel" is detected by MCAS and will be shown in the "Identity Protection" blade of Azure AD. But this risk detection is also listed as MCAS alert ("Impossible travel activity") and will be shown in the "Incident" view of "M365 Defender" and exists in the "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)" table.
 
-    ![../2020-12-16-identity-security-monitoring/AzIdentity_MTP_Incidents.png](../2020-12-16-identity-security-monitoring/AzIdentity_MTP_Incidents.png)
+    ![../2020-12-16-identity-security-monitoring/AzIdentity_M365_Incidents.png](../2020-12-16-identity-security-monitoring/AzIdentity_M365_Incidents.png)
     _Alerts from MCAS (and MDI) will be summarized as "Incidents" in the "M365 Security Portal". Detections by "Azure AD Identity Protection" (e.g. Password Spray) are missing. Alerts from connected apps in MCAS are also not listed in this case (e.g. "Mass Download" from OneDrive or SharePoint) or custom activity alerts (e.g. Elevated GA to Azure Management in Azure Portal)._
 
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MTP_MCASAlerts.png](../2020-12-16-identity-security-monitoring/AzIdentity_MTP_MCASAlerts.png)
