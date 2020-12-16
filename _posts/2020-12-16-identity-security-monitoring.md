@@ -14,10 +14,14 @@ hidden: false
 
 #### Table of Content:
 - <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a "Hybrid Environment"</A><br>
-- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
-- <A href="#mcas-and-defender-for-identity-unified-secops-of-connected-cloud-apps-and-hybrid-identity">MCAS and Defender for Identity: Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
-- <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
-- <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel: “Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
+- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor:
+Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
+- <A href="#mcas-and-defender-for-identity-unified-secops-of-connected-cloud-apps-and-hybrid-identity">Microsoft Cloud App Security and Defender for Identity:
+Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
+- <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender:
+Unified SecOps of M365 Services</A><br>
+- <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel:
+“Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
 
 ## Identity Security Monitoring in a Hybrid Environment
 
