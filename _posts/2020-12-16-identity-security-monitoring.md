@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Identity Security Monitoring in Microsoft Cloud"
+title:  "Identity Security Monitoring in Microsoft Cloud Services"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
@@ -14,13 +14,13 @@ hidden: false
 
 #### Table of Content:
 - <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a "Hybrid Environment"</A><br>
-- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor:
+- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor:<br>
 Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
-- <A href="#mcas-and-defender-for-identity-unified-secops-of-connected-cloud-apps-and-hybrid-identity">Microsoft Cloud App Security and Defender for Identity:
+- <A href="#mcas-and-defender-for-identity-unified-secops-of-connected-cloud-apps-and-hybrid-identity">Microsoft Cloud App Security and Defender for Identity:<br>
 Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
-- <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender:
+- <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender:<br>
 Unified SecOps of M365 Services</A><br>
-- <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel:
+- <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel:<br>
 “Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
 
 ## Identity Security Monitoring in a Hybrid Environment
