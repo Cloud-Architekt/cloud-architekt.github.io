@@ -12,27 +12,16 @@ hidden: true
 
 *Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give a detailed overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
 
+#### Table of Content:
 - <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a "Hybrid Environment"</A><br>
-- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of Azure AD and Azure Workloads</A><br>
-    - Data Sources of "Azure Monitor Logs"
-    - Log Collection (via "Azure Monitor")
-    - Analyze and Visualize with "Azure Monitor"
-    - Integration and ResponseConsiderations and References of Azure AD Logging by "Azure Monitor"
-- <A href="#cloud-app-security-and-defender-for-identity-unified-secops-of-cloud-platform-and-hybrid-identity">Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity</A><br>
-    - Data Sources in MCAS
-    - Analyze and Visualize with MCAS
-    - Considerations and References of "Cloud App Security"
-    - Considerations and References of "Microsoft Defender for Identity" (MDI)
+- <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
+- <A href="#microsoft-cloud-app-security-and-defender-for-identity-unified-secops-of-connected-cloud-aps-and-hybrid-identity">Microsoft Cloud App Security and Defender for Identity: Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
+- 
+- 
+- ## Microsoft Cloud App Security and "Defender for Identity": Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"
+- 
 - <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
-    - Data Sources in "M365 Defender"
-    - Analyze and Visualize with "M365 Defender"
-    - Integration and Response in "M365 Defender"
-    - Considerations and References of "M365 Defender"
-- <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel: “Single pane of glass” across Azure, Microsoft 365 and 3rd party (cloud) platforms</A>
-    - Data Sources of "Azure Sentinel"
-    - Investigation of Incidents in "Azure Sentinel"
-    - Integration and Response in "Azure Sentinel"
-    - Considerations and References of "Azure Sentinel"
+- <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel: “Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
 
 ## Identity Security Monitoring in a Hybrid Environment
 
@@ -200,7 +189,7 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 - Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
 - Consider service principal logs and the challenges to build relation to "Azure Activity" or "(Azure) DevOps Deployment pipeline" logs, [as described in my previous blog post](https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/)!
 
-## Cloud App Security and "Defender for Identity": Unified SecOps of Cloud Platform and Hybrid Identity
+## Microsoft Cloud App Security and "Defender for Identity": Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"
 
 ![../2020-12-16-identity-security-monitoring/AzIdentity_MCAS.png](../2020-12-16-identity-security-monitoring/AzIdentity_MCAS.png)
 
@@ -393,7 +382,7 @@ Examples:
     _Alerts from MCAS (and MDI) will be summarized as "Incidents" in the "M365 Security Portal". Detections by "Azure AD Identity Protection" (e.g. Password Spray) are missing. Alerts from connected apps in MCAS are also not listed in this case (e.g. "Mass Download" from OneDrive or SharePoint) or custom activity alerts (e.g. Elevated GA to Azure Management in Azure Portal)._
 
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MTP_MCASAlerts.png](../2020-12-16-identity-security-monitoring/AzIdentity_MTP_MCASAlerts.png)
-    _This can be compared with the list of alerts in MCAS, not existing alerts in "M365 Defender" are bordered in red._
+    _In comparison with the list of alerts in MCAS, not existing alerts in "M365 Defender" are bordered in red._
 
 
 [IdentityLogonEvents](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-identitylogonevents-table?view=o365-worldwide): Authentication events captured by MCAS will be stored in this table. This seems to covers only "sign-in events" to connected apps and are similar to the "Activity Logs" in the MCAS blade (filtered by "Successful or failed login-ins"). As already described, "non-interactive" logons or sign-ins by "service principal"/"managed identity" are *not* covered.
