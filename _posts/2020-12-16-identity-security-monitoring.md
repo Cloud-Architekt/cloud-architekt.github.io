@@ -15,7 +15,7 @@ hidden: false
 #### Table of Content:
 - <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a "Hybrid Environment"</A><br>
 - <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
-- <A href="#microsoft-cloud-app-security-and-defender-for-identity-unified-secops-of-connected-cloud-aps-and-hybrid-identity">Microsoft Cloud App Security and Defender for Identity: Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
+- <A href="#mcas-and-defender-for-identity-unified-secops-of-connected-cloud-apps-and-hybrid-identity">MCAS and Defender for Identity: Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
 - <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
 - <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel: “Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
 
@@ -185,7 +185,7 @@ Azure Monitor is able to trigger complex actions based on defined rules (such as
 - Self-Service Password Reset (SSPR): Monitor blocked attempts or suspicious activity via [Azure Monitor Alerts or Azure Sentinel](https://www.cloud-architekt.net/azuread-sspr-deployment-and-detection/)
 - Consider service principal logs and the challenges to build relation to "Azure Activity" or "(Azure) DevOps Deployment pipeline" logs, [as described in my previous blog post](https://www.cloud-architekt.net/auditing-of-msi-and-service-principals/)!
 
-## Microsoft Cloud App Security and "Defender for Identity": Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"
+## MCAS and "Defender for Identity": Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"
 
 ![../2020-12-16-identity-security-monitoring/AzIdentity_MCAS.png](../2020-12-16-identity-security-monitoring/AzIdentity_MCAS.png)
 
