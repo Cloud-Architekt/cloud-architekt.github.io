@@ -7,7 +7,7 @@ tags: [security, azuread, azure]
 image: assets/images/azsentinel.png
 description: "Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give an overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem"
 featured: false
-hidden: true
+hidden: false
 ---
 
 *Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory. I like to give a detailed overview about data sources or signals that should be considered for monitoring based on identity-related activities, risk detections, alerts and events across the Microsoft ecosystem.*
@@ -16,7 +16,6 @@ hidden: true
 - <A href="#identity-security-monitoring-in-a-hybrid-environment">Identity Security Monitoring in a "Hybrid Environment"</A><br>
 - <A href="#azure-monitor-operational-logs-and-alerts-of-azure-ad-and-azure-workloads">Azure Monitor: Operational Logs and Alerts of "Azure AD" and "Azure Workloads"</A><br>
 - <A href="#microsoft-cloud-app-security-and-defender-for-identity-unified-secops-of-connected-cloud-aps-and-hybrid-identity">Microsoft Cloud App Security and Defender for Identity: Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"</A><br>
-- ## Microsoft Cloud App Security and "Defender for Identity": Unified SecOps of connected "Cloud Apps" and "Hybrid Identity"
 - <A href="#microsoft-365-defender-unified-secops-of-m365-services">Microsoft 365 Defender: Unified SecOps of M365 Services</A><br>
 - <A href="#azure-sentinel-single-pane-of-glass-across-azure-microsoft-365-and-3rd-party-cloud-platforms">Azure Sentinel: “Single pane of glass” across Azure, Microsoft 365 and "3rd party solutions"</A>
 
@@ -222,6 +221,8 @@ _All "Identity Protection" risk detections will be listed in the MCAS alerts vie
 - [Security Alerts](https://docs.microsoft.com/en-us/azure-advanced-threat-protection/suspicious-activity-guide?tabs=cloud-app-security#security-alert-name-mapping-and-unique-external-ids) are categorized in phases of the "CyberAttack kill-chain" and are [well documented](https://docs.microsoft.com/en-us/defender-for-identity/suspicious-activity-guide?tabs=external) by Microsoft.
 - [Integration of MDI with Defender for Endpoint](https://docs.microsoft.com/en-us/defender-for-identity/integrate-mde#:~:text=In%20the%20Defender%20for%20Identity,the%20integration%20toggle%20to%20On.&text=To%20check%20the%20status%20of,Microsoft%20Defender%20for%20Endpoint%20integration.) allows you to laverage the detection from events of the domain controller to all endpoints. Furthermore it allows you to see [open MDI alerts as badge in the MDE portal](https://docs.microsoft.com/en-us/defender-for-identity/investigate-entity#cross-check-with-windows-defender).
 - [Integration of MDI with MCAS](https://docs.microsoft.com/en-us/defender-for-identity/mcas-integration) is mandatory for environments where both solutions are in use. More and more features around MDI seems to be moved to the MCAS portal (such as the new "hunting experiences"). All activities and detections of MDI will be also included in the UEBA if integration is configured.
+
+
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png](../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_MDIPortal.png)
     _Attacks on Active Directory (On-Premises) will be detected by MDI and generates an alert in the MDI portal._
 
@@ -229,6 +230,8 @@ _All "Identity Protection" risk detections will be listed in the MCAS alerts vie
     _New "hunting experience" allows to use MCAS portal for unified incident management between "Active Directory" and "Azure AD" alerts._ 
 
     - MCAS is using MDI data as source to collect activities from Active Directory as an „app“. This gives you an "unified activity" overview of an user in "Azure AD", "Active Directory" and "MCAS connected apps".
+
+
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_UnifiedFailedLogins.png](../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_UnifiedFailedLogins.png)
     _Example: Failed sign-in attempts to Active Directory or connected apps (in this case, "Azure Portal" and "Office 365")._
 
@@ -284,6 +287,7 @@ This score helps to identify the riskiest users across the various signals, aler
     - Matt Soseman has recorded a [YouTube video](https://mattsoseman.wordpress.com/2020/07/08/ueba-in-microsoft-cloud-app-security-user-entity-behavior-analytics/) about it which includes the calculation of the score and some demo on investigation in the "UEBA".
     - Consider to [tune the policies for anomaly detection](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-suspicious-activity) and review the default governance actions after enabling the data sources (threat protections, connected apps and discovery logs).
 
+
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_UEBA.png](../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_UEBA.png)
     _Alerts and activities of the last 7 days will be shown in the user page only. "Investigation priority" only considered the threats within this time range. So keep in mind, the total number of "open alerts" in the "user threat" panel._
 
@@ -304,6 +308,7 @@ Control of your identities in connected apps/resources can be achieved by monito
     - [Activity Policies](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-audit-logs) enforces automated response on a specific or repeated activity to a connected app. As a response, governance actions can enforce security mechanism on API level by "connected app" (e.g. require sign-in prompt in Office 365), user account state in Azure AD (e.g. disable user) or custom playbook (PowerAutomate).
     Activities of tasks that is performed by a user or admin of your Azure AD tenant.
     - [Anomaly Detection Policies](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy) are enabled to find unusual activities and trigger an alert if unusual behavior was detected (different from user's regular activity). They are part of the UEBA and ML capabilities which are integrated in MCAS and displayed in the "User Page" / "Investigation Priority Score". Built-in policies covers activities from specific activities in a connected app (e.g. connected "Azure Instance" and "Multiple delete VM activities") to find anomalies of a single user session ("Unusual activities by user"). Some anomaly detection policies [can be tuned or scoped](https://docs.microsoft.com/en-us/cloud-app-security/anomaly-detection-policy#tune-anomaly-detection-policies) to adjust sensitivity or customize automated response.
+
 
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_Governance.png](../2020-12-16-identity-security-monitoring/AzIdentity_MCAS_Governance.png)
     _Governance log shows actions (initiated by policies) of automated response on alerts (such as require user to sign-in again if a risky sign-in was detected)._
@@ -375,7 +380,7 @@ Examples:
 - "Password Spray" will be detected by "Identity Protection" and listed in MCAS as "Risky sign-in" (as you have seen in the screenshots of previous article section). But it is *not* visible in the "AlertInfo" table or as part of an Incident in "M365 Defender".
 - "Impossible Travel" is detected by MCAS and will be shown in the "Identity Protection" blade of Azure AD. But this risk detection is also listed as MCAS alert ("Impossible travel activity") and will be shown in the "Incident" view of "M365 Defender" and exists in the "[AlertInfo](https://docs.microsoft.com/en-us/microsoft-365/security/mtp/advanced-hunting-alertinfo-table?view=o365-worldwide)" table.
 
-    ![../2020-12-16-identity-security-monitoring/AzIdentity_M365_Incidents.png](../2020-12-16-identity-security-monitoring/AzIdentity_M365_Incidents.png)
+    ![../2020-12-16-identity-security-monitoring/AzIdentity_MTP_Incidents.png](../2020-12-16-identity-security-monitoring/AzIdentity_MTP_Incidents.png)
     _Alerts from MCAS (and MDI) will be summarized as "Incidents" in the "M365 Security Portal". Detections by "Azure AD Identity Protection" (e.g. Password Spray) are missing. Alerts from connected apps in MCAS are also not listed in this case (e.g. "Mass Download" from OneDrive or SharePoint) or custom activity alerts (e.g. Elevated GA to Azure Management in Azure Portal)._
 
     ![../2020-12-16-identity-security-monitoring/AzIdentity_MTP_MCASAlerts.png](../2020-12-16-identity-security-monitoring/AzIdentity_MTP_MCASAlerts.png)
