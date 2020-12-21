@@ -49,9 +49,9 @@ It supports also large or multi-site organizations to bring structure to the ten
 Microsoft has written a very good documentation on how to manage AUs and assignment of directory roles.
 Saying this, I like to reference on the related official Microsoft Docs:
 
-* [Manage administrative units](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-manage) with Azure Portal and PowerShell
-* Add and manage [users](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-users) and [groups](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-groups) in an AU
-* [Assign scoped roles](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-assign-roles) to an AU
+* [Manage administrative units](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-manage?WT.mc_id=M365-MVP-5003945) with Azure Portal and PowerShell
+* Add and manage [users](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-users?WT.mc_id=M365-MVP-5003945) and [groups](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-add-manage-groups?WT.mc_id=M365-MVP-5003945) in an AU
+* [Assign scoped roles](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-assign-roles?WT.mc_id=M365-MVP-5003945) to an AU
 
 ## Real-world use cases and scenarios of AUs
 In the past I’ve faced the following limitations or questions around the existing flat structure of Azure AD:
@@ -59,7 +59,7 @@ In the past I’ve faced the following limitations or questions around the exist
 * Delegated permission on geographical, organizational or intra-company units
 	* Example: Local helpdesk should be able to manage users and groups of local office only
 * Segmentation of privileged (sensitive) accounts and work (hybrid) accounts
-	* Example: User or Password Administrator are able to reset passwords for “non-administrator” only. Microsoft already [mentioned in the documentation](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles#user-administrator) that subscription owners (Azure resources) or privileged accounts outside of Azure AD RBAC/Directory Roles (such as Intune- or MDATP-RBAC) will be included as “non-administrators”. 
+	* Example: User or Password Administrator are able to reset passwords for “non-administrator” only. Microsoft already [mentioned in the documentation](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles#user-administrator?WT.mc_id=M365-MVP-5003945) that subscription owners (Azure resources) or privileged accounts outside of Azure AD RBAC/Directory Roles (such as Intune- or MDATP-RBAC) will be included as “non-administrators”. 
 	
 In my opinion these are good examples where AUs can supports to limit the scope.
 
@@ -85,7 +85,7 @@ Password Admins are able to reset user's password in the reduced UI. Option to �
 
 ![](../2020-04-29-azuread-administrative-units/mystaff-user.png)
 
-More details on the MyStaff portal and how to apply Conditional Access are described in [Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/my-staff-configure#apply-a-----conditional-access-policy-to-my-staff).  
+More details on the MyStaff portal and how to apply Conditional Access are described in [Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/my-staff-configure#apply-a-----conditional-access-policy-to-my-staff?WT.mc_id=M365-MVP-5003945).  
 
 ### Microsoft 365 Admin Portal
 Users with assigned directory roles of an AU-level are also able to use the Microsoft 365 Portal.
@@ -143,9 +143,9 @@ But keep in mind and consider the following limitations (at the time of writing 
 * Currently assignments of resources is limited to users and groups
 (no support for devices, service principals,…)
 * Using of automation or scripts is the only option to have a initially or dynamic assignment yet
-* Consider the [supported scenarios](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-administrative-units#administrative-unit-management) of using Graph API, Azure and M365 Portal for AU management
+* Consider the [supported scenarios](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-administrative-units#administrative-unit-management?WT.mc_id=M365-MVP-5003945) of using Graph API, Azure and M365 Portal for AU management
 * Be aware that users can be assigned to one or more AUs
-* Only a few [Directory Roles are available](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-assign-roles#roles-available) for assignment to AUs yet
+* Only a few [Directory Roles are available](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/roles-admin-units-assign-roles#roles-available?WT.mc_id=M365-MVP-5003945) for assignment to AUs yet
 * Azure AD PIM is currently not supported, Permanent assignment can be used only
 * This feature needs Azure AD P1 (or higher) for admins that are using AUs
 	* Therefore it seems not supported in B2C tenants
