@@ -6,7 +6,7 @@ categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
 image: assets/images/azurepim.jpg
 description: "Microsoft introduced Privileged Access Groups in Azure AD and PIM recently. I like to give an overview of current challenges in managing privileged access outside of Azure AD admin roles (for example in Azure DevOps, Intune or MDATP RBAC) and where PAG seems to offer new management capabilities."
-featured: false
+featured: true
 hidden: false
 ---
 
