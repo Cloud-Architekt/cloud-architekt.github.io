@@ -6,7 +6,7 @@ categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/consent-grant-attack.jpg
 description: "Popular phishing attacks are using illicit consent grant to gain company or user data. In this article we will cover the detection (with Microsoft Cloud App Security and Azure Sentinel) and mitigation with the latest feature of Azure AD."
-featured: true
+featured: false
 hidden: false
 ---
 

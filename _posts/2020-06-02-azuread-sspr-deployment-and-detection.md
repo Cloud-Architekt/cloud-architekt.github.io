@@ -6,7 +6,7 @@ categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread]
 image: assets/images/sspr.png
 description: "End-users are able to reset their passwords as part of the Azure AD „self-service password reset“ (SSPR) service. Including an option to write back passwords resets from Azure AD to on-premises AD. Consideration of security aspects and detection of any suspicious activity in the password reset process should be included in your implementation."
-featured: false
+featured: true
 hidden: false
 ---
 

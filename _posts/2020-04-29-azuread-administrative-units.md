@@ -6,7 +6,7 @@ categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/adminunits.jpg
 description: "Administrative Units (AUs) allow organizations to delegate admin permission to a custom scope and segment (such as region, department, business units) within a single Azure AD tenant. In this blog post I like to share my experience including use cases, considerations and limitations of the AU management (preview) feature"
-featured: false
+featured: true
 hidden: false
 ---
 

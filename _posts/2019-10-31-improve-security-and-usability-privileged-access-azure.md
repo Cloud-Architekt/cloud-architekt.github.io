@@ -6,7 +6,7 @@ categories: [ Azure, Security, AzureAD ]
 tags: [azure, azuread, security]
 image: assets/images/just-in-time-admin.jpg
 description: "Improve security and usability of privileged access in Azure even if you don't use (as recommended) a dedicated devices. This blog post give you some recommendations and advices to protect privileged identity, session and browser. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client."
-featured: true
+featured: false
 hidden: false
 ---
 
