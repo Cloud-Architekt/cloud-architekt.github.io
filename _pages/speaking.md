@@ -7,6 +7,7 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+*  [2021-02-08 Global SCCC - Securing Your Privileged Identity & Access inMicrosoft Azure (@aMS Germany)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-02-08%20GCC%20Securing-Privileged-Identity-and-Access.pdf)
 *  [2020-12-01 Design und Security Considerations eines Hybriden Azure AD (@aMS Germany)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-12-01%20aMS%20Germany%20-%20Design-Security-hybriden-AzureAD.pdf)
 *  [2020-11-26 Azure Governance - Best Practices (@GermanyClouds)](https://github.com/GregorReimling/Conferences/blob/master/1120%20Azure%20Governance%20Best%20Practice%20GermanyClouds%20with%20Thomas%20Naunheim.pdf)
 *  [2020-10-06 Ignite Recap - Azure AD (@Azure Meetup Bonn)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-10-06%20AzureBonn-Ignite-Recap-AzureAD.pdf) 
