@@ -90,8 +90,6 @@ This was a nice challenge and great opportunity to share my experiences from the
 
 But this was a good occasion to work on a prototype to demonstrate the capabilities in automation and operationalization of Azure AD with Microsoft Graph, PowerShell and Azure DevOps. There have already been many great community-driven solutions such as M365DSC or PowerShell scripts by Daniel Chronlund. It was my aim to show a simple implementation and a declared focus on benefits by using "DevOps approach" for identity security-critical configuration items. 
 
-Technical details on this implementation will be part of an upcoming blog post.
-
 ![../2021-04-13-community-engagements/aadops.jpeg](../2021-04-13-community-engagements/aadops.jpeg)
 
 ➡ Slides: [Securing Your Apps with Azure AD Conditional Access (@Azure Meetup Duesseldorf)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-03-15%20AzDUS%20-%20Securing-Your-Apps-Identities-with-AzureAD-CA.pdf)
