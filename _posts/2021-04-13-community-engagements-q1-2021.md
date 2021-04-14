@@ -4,7 +4,7 @@ title:  "Community Engagements and Recap of Q1/2021"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [community, azuread]
-image: assets/images/officedesktop.jpg
+image: assets/images/q1recap2021.jpg
 description: "Over the past 3 months, I spoke at community events and set my focus on research work. Unfortunately, there was no time left for blogging. But I'm planning to share the results of the recent community work also on my blog. Therefore I like to start with an overview and recap of my community contributions in the first quarter of 2021."
 featured: false
 hidden: false
