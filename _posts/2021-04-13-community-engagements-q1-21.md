@@ -12,7 +12,7 @@ hidden: false
 
 *Over the past 3 months, I spoke at community events and set my focus on research work. Unfortunately, there was no time left for blogging. But I'm planning to share the results of the recent community work also on my blog. Therefore I like to start with an overview and recap of my community contributions in the first quarter of 2021.*
 
-## Attack and Defense of Azure AD
+## "Attack and Defense of Azure AD" Playbook
 
 ### "Illicit Consent Grant" Attack
 
