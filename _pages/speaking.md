@@ -7,6 +7,8 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+
+*  [2021-04-16 Azure AD Identity Security (@Global Azure)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-04-16%20Global%20Azure%20-%20Azure%20AD%20Identity%20Security.pdf)
 *  [2021-04-08 Securing and Monitoring of your Azure AD Identities (@CloudCamp Quarterly Q1/21)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-04-08%20CloudCamp%20Q1%20-%20Securing-and-Monitoring-Your-Identities-with-AzureAD.pdf)
 *  [2021-03-15 Securing Your Apps & Identities with Azure AD Conditional Access (@Azure Meetup Duesseldorf)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-03-15%20AzDUS%20-%20Securing-Your-Apps-Identities-with-AzureAD-CA.pdf)
 *  [2021-02-28 Manage and Secure Your Customer Identities with Azure AD B2C (@Scottish Summit)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-02-27%20Scottish%20Summit%20Manage-and-securing-AzureAD-B2C.pdf)
