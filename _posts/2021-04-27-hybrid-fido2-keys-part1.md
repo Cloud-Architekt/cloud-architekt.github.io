@@ -7,7 +7,7 @@ tags: [security, azuread, azure]
 image: assets/images/fido2_part1.jpg
 description: "Microsoft has announced the GA of FIDO2 support in Azure AD at Ignite Spring 2021. Previously, passwordless authentication in hybrid environments was only possible by implementing Windows Hello for Business (WHfB). The first of a two part blog post, gives you an overview about FIDO2 security keys in hybrid environments and differences to WHfB. This covers the prerequisites, limitations and initial configuration and deep-dive on the “Azure AD Kerberos Server” objects".
 featured: false
-hidden: true
+hidden: false
 ---
 
 _Microsoft has announced the GA of FIDO2 support in Azure AD at Ignite Spring 2021. Previously, passwordless authentication in hybrid environments was only possible by implementing Windows Hello for Business (WHfB). The first of a two part blog post, gives you an overview about FIDO2 security keys in hybrid environments and differences to WHfB. This covers the prerequisites, limitations and initial configuration and deep-dive on the “Azure AD Kerberos Server” objects…_
