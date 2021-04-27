@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hybrid Authentication with FIDO2 Keys (1/2): Overview and configuration"
+title:  "FIDO2 Keys and Hybrid Identities (1/2): Overview and configuration"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
