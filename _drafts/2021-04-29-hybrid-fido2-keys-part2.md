@@ -29,9 +29,9 @@ _FIDO2 Security Keys are a passwordless and strong authentication method to sign
 In the first part of the blog post, you should have already seen the pre-requisites to enable “Temporary Access Pass” (TAP). In my use case, I’ve limited the creation of TAPs to a user deployment group and restrict them as “one-time use”:
 ![](2021-04-29-hybrid-fido2-keys-part2/authmethod_tap.png)
 
-Afterwards you should be able to [create a TAP for users](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass#create-a-temporary-access-pass) within this policy as well as [delegated Graph API](https://docs.microsoft.com/en-us/graph/api/temporaryaccesspassauthenticationmethod-post?view=graph-rest-beta&tabs=http) or  “[Azure AD Directory Role](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#authentication-administrator)” permissions are assigned.
+Afterwards you should be able to [create a TAP for users](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#create-a-temporary-access-pass) within this policy as well as [delegated Graph API](https://docs.microsoft.com/en-us/graph/api/temporaryaccesspassauthenticationmethod-post?WT.mc_id=AZ-MVP-5003945) or  “[Azure AD Directory Role](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#authentication-administrator)” permissions are assigned.
 
-_Important note from the [“Limitations” section of the TAP documentation](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass#limitations):_
+_Important note from the [“Limitations” section of the TAP documentation](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#limitations):_
 > When using a one-time Temporary Access Pass to register a Passwordless method such as FIDO2 or Phone sign-in, the user must complete the registration within 10 minutes of sign-in with the one-time Temporary Access Pass. This limitation does not apply to a Temporary Access Pass that can be used more than once.  
 
 I’m using the “Web Sign-in” option in Windows 10 to redeem the TAP for the first sign-in. This offers the opportunity to complete the user on-boarding and registration of the FIDO2 security key from the assigned device of the user or any shared device.
@@ -61,10 +61,10 @@ Now it’s time to sign-in with the provisioned FIDO2 keys on the Windows 10 dev
 
 ![](2021-04-29-hybrid-fido2-keys-part2/winlogon_signinoptions.png)
 
-_Note: A list of collected or related data to [troubleshoot FIDO2 key issues on Windows Clients](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#fido2-security-keys) are already documented on Microsoft Docs._
+_Note: A list of collected or related data to [troubleshoot FIDO2 key issues on Windows Clients](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-troubleshoot?WT.mc_id=AZ-MVP-5003945#troubleshoot) are already documented on Microsoft Docs._
 
 What happens behind the scene?
-The [process is described in the Microsoft Docs article](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#fido2-security-keys) as follows:
+The [process is described in the Microsoft Docs article](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless?WT.mc_id=AZ-MVP-5003945#fido2-security-keys) as follows:
 
 ![](2021-04-29-hybrid-fido2-keys-part2/winlogon_flow.png)  
 
@@ -105,7 +105,7 @@ Here we can find the “partial TGT” (incl. TgtMessage and TgtClientKey) from 
 
 ![](2021-04-29-hybrid-fido2-keys-part2/mimikatz_cloudap.png)
 
-Microsoft describes that the PRT request includes a claim that indicates the need of a TGT. In addition, the [process of PRT response will be describes in Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-faqs#what-does-the-http-requestresponse-look-like-when-requesting-prt-partial-tgt) as follows:
+Microsoft describes that the PRT request includes a claim that indicates the need of a TGT. In addition, the [process of PRT response will be describes in Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-faqs?WT.mc_id=AZ-MVP-5003945#what-does-the-http-requestresponse-look-like-when-requesting-prt-partial-tgt) as follows:
 
 > The HTTP request is a standard Primary Refresh Token (PRT) request. This PRT request includes a claim indicating a Kerberos Ticket Granting Ticket (TGT) is needed.  
 >   
@@ -123,7 +123,7 @@ The PRT allows users a SSO experience on Azure AD-integrated apps and resources 
 
 _Note: Consider to use supported browsers and be familiar with the SSO using the user’s PRT._
 
-Microsoft Docs article about “[Primary Refresh Tokens](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token#browser-sso-using-prt)” explains the Browser SSO process in details:
+Microsoft Docs article about “[Primary Refresh Tokens](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token?WT.mc_id=AZ-MVP-5003945#browser-sso-using-prt)” explains the Browser SSO process in details:
 
 ![](2021-04-29-hybrid-fido2-keys-part2/browser-sso-using-prt.png)
 
@@ -140,17 +140,17 @@ Explicit sign-ins (with a security key) to resources will showing you “FIDO2�
 _Note: AuthenticationMethods will only be shown in the “raw” Azure AD Sign-in logs. M365D Advanced Hunting logs are not including this information yet._
 
 ### Attack scenarios on PRT
-Implementing FIDO2 as secure authentication method will not protect you from all identity theft scenarios. One example which I like to mention is “Pass-the-PRT”. [Dirk-Jan Mollema has published a very interesting article about this scenario](https://dirkjanm.io/abusing-azure-ad-sso-with-the-primary-refresh-token/) which is strongly recommended to read. Another great blog post about this scenarios is written by Dr. Nestori Syynimaa: [Getting user’s access with “Pass-the-Token” and “Pass-the-Cert”](https://o365blog.com/post/prt/) 
+Implementing FIDO2 as secure authentication method will not protect you from all identity theft scenarios. One example which I like to mention is “Pass-the-PRT”. Dirk-Jan Mollema has published a [very interesting article about this scenario](https://dirkjanm.io/abusing-azure-ad-sso-with-the-primary-refresh-token/) which is strongly recommended to read. Another great blog post about this scenarios is written by Dr. Nestori Syynimaa: [Getting user’s access with “Pass-the-Token” and “Pass-the-Cert”](https://o365blog.com/post/prt/) 
 
 The following actions should be considered (in my opinion) to mitigate the risk of such attack scenarios and protect the PRT:
 
 * Avoid to assign local admin permissions to users
-* Create [Attack Surface Reduction Rules (ASR)](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/enable-attack-surface-reduction?view=o365-worldwide) rules in Microsoft Intune to protect LSAAS process
-* Enable [tamper protection](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection?view=o365-worldwide#manage-tamper-protection-for-your-organization-using-intune) to protect your client’s security settings (such as threat protection and real-time AV)
+* Create [Attack Surface Reduction Rules (ASR)](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/enable-attack-surface-reduction?WT.mc_id=AZ-MVP-5003945) rules in Microsoft Intune to protect LSAAS process
+* Enable [tamper protection](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection?WT.mc_id=AZ-MVP-5003945#manage-tamper-protection-for-your-organization-using-intune) to protect your client’s security settings (such as threat protection and real-time AV)
 * Actively monitor your endpoints to detect malicious credential theft tools (such as Mimikatz) 
-	* Evaluate and implement “[Azure Sentinel fusion](https://docs.microsoft.com/en-us/azure/sentinel/fusion#credential-harvesting-new-threat-classification)” rules that indicates e.g. that someone used known identity theft tools in combination of a suspicious Azure AD sign-in (Sign-in risk by Identity Protection).
-* Implement a process to [revoke refresh tokens](https://docs.microsoft.com/en-us/powershell/module/azuread/revoke-azureaduserallrefreshtoken?view=azureadps-2.0)  in case of lost devices
-* Use TPM chips to meets requirements if additional encryption or security capabilities are available.
+	* Evaluate and implement “[Azure Sentinel fusion](https://docs.microsoft.com/en-us/azure/sentinel/fusion#credential-harvesting-new-threat-classification?WT.mc_id=AZ-MVP-5003945)” rules that indicates e.g. that someone used known identity theft tools in combination of a suspicious Azure AD sign-in (Sign-in risk by Identity Protection).
+* Implement a process to [revoke refresh tokens](https://docs.microsoft.com/en-us/powershell/module/azuread/revoke-azureaduserallrefreshtoken?WT.mc_id=AZ-MVP-5003945)  (e.g. in case of lost or stolen devices)
+* Use TPM chips to meet requirements if additional encryption or security capabilities are available.
 
 ## VPN connectivity to on-premises network
 As already described in the first part of this blog post, I have configured an Azure VPN P2S to establish on-premises connectivity. This allows me easily to demonstrate the integrated support of Azure AD authentication and Conditional Access.
@@ -206,7 +206,7 @@ On the first view, there’s no difference in the TGS or “Resource Access” e
 
 ### Consideration of detections by “Microsoft Defender for Identity”
 The question is, therefore, how this affects the detections and recorded activities by “Microsoft Defender for Identity” (MDI).
-[Network name resolution](https://docs.microsoft.com/en-us/defender-for-identity/nnr-policy) is responsible to build a correlation between all captured raw events  and the entity (Computer).
+[Network name resolution](https://docs.microsoft.com/en-us/defender-for-identity/nnr-policy?WT.mc_id=AZ-MVP-5003945) is responsible to build a correlation between all captured raw events  and the entity (Computer).
 All methods that will be used to resolve IP address to computer names seems be unable to resolve the Kerberos authentication requests from Azure AD joined device (in my test scenario).
 
 During my research, I’ve seen that the name can not be retrieved when Kerberos Authentication was used. NTLM authentication will be resolved to the NetBIOS name of the device. The following screenshots shows the “User activity page” from the MDI portal:
@@ -232,7 +232,7 @@ This should enable you to build a correlation between the unresolved (VPN) clien
 ### Attack scenarios on Kerberos (Azure AD-joined device)
 Block and monitor access to LSASS.exe to avoid credential stealing from the Kerberos tickets. Mitigation actions from the “Pass-the-PRT scenario” are   mostly relevant for protecting all kinds of credentials on the client.
 
-In addition, Kerberos TGT and TGS must be specially protected on the Azure AD-joined devices. Even if it’s a modern managed device and has no domain membership in the Active Directory. Consider to deploy “[Windows Defender Credential Guard](https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage)” in combination of “[Hypervisor-protected code integrity](https://techcommunity.microsoft.com/t5/windows-it-pro-blog/comprehensive-protection-for-your-credentials-with-credential/ba-p/765314)” (HVCI). As already described, strictly avoid the delegation of local admin permissions or create manage local “Administrator” accounts without unique/rotating passwords. 
+In addition, Kerberos TGT and TGS must be specially protected on the Azure AD-joined devices. Even if it’s a modern managed device and has no domain membership in the Active Directory. Consider to deploy “[Windows Defender Credential Guard](https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage?WT.mc_id=AZ-MVP-5003945)” in combination of “[Hypervisor-protected code integrity](https://techcommunity.microsoft.com/t5/windows-it-pro-blog/comprehensive-protection-for-your-credentials-with-credential/ba-p/765314?WT.mc_id=AZ-MVP-5003945)” (HVCI). As already described, strictly avoid the delegation of local admin permissions or create manage local “Administrator” accounts without unique/rotating passwords. 
 
 Active monitoring of your Active Directory environments is always important in “hybrid identity” scenarios and therefore also relevant if you are using FIDO2 for on-premises access. As we already seen, “Microsoft Defender for Identity” should be used to detect suspicious activity (even from clients without “traditional” domain membership.
 
@@ -241,3 +241,7 @@ Otherwise, attackers will be able to gain on-premises access by using “Pass-th
 ![](2021-04-29-hybrid-fido2-keys-part2/mimikatz_kerberos.png)
 
 And finally, rotation of all “krbtgt” keys in your Active Directory domain (incl. krbtgt_AzureAD) should be part of your operational (security) tasks.
+<br>
+<br>
+<br>
+<span style="color:silver;font-style:italic;font-size:small">Original cover image by [cottonbro / Pexels](https://www.pexels.com/photo/hands-on-a-laptop-keyboard-5474285/)</span>
