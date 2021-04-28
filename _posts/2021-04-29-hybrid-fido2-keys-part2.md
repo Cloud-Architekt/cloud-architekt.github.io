@@ -68,15 +68,15 @@ The [process is described in the Microsoft Docs article](https://docs.microsoft.
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/winlogon_flow.png)  
 
-> 	1. The user plugs the FIDO2 security key into their computer.  
-> 	2.Windows detects the FIDO2 security key.  
-> 	3. Windows sends an authentication request.  
-> 	4. Azure AD sends back a nonce.  
-> 	5. The user completes their gesture to unlock the private key stored in the FIDO2 security key’s secure enclave.  
-> 	6. The FIDO2 security key signs the nonce with the private key.  
-> 	7. The primary refresh token (PRT) token request with signed nonce is sent to Azure AD.  
-> 	8. Azure AD verifies the signed nonce using the FIDO2 public key.  
-> 	9. Azure AD returns PRT to enable access to on-premises resources.  
+> 1. The user plugs the FIDO2 security key into their computer.  
+> 2.Windows detects the FIDO2 security key.  
+> 3. Windows sends an authentication request.  
+> 4. Azure AD sends back a nonce.  
+> 5. The user completes their gesture to unlock the private key stored in the FIDO2 security key’s secure enclave.  
+> 6. The FIDO2 security key signs the nonce with the private key.  
+> 7. The primary refresh token (PRT) token request with signed nonce is sent to Azure AD.  
+> 8. Azure AD verifies the signed nonce using the FIDO2 public key.  
+> 9. Azure AD returns PRT to enable access to on-premises resources.  
 
 But now let us consider what we can see on client- and Azure AD-side in my demo scenario.
 
