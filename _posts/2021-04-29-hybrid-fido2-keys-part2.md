@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "FIDO2 Keys and Hybrid Identities (1/2): Onboarding, Authentication and Monitoring"
+title:  "FIDO2 Keys and Hybrid Identities (2/2): Onboarding, Authentication and Monitoring"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
-image: assets/images/fido2_part2.png
+image: assets/images/fido2_part2.jpg
 description: "FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” blog post covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow and considerations in identity monitoring with Azure Sentinel/M365 Defender and token security."
 featured: false
-hidden: false
+hidden: true
 ---
 
 #### Table of Content:
