@@ -10,6 +10,8 @@ featured: false
 hidden: false
 ---
 
+_FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security._
+
 #### Table of Content:
 - <A href="#on-boarding-of-fido2-security-keys">On-Boarding of FIDO2 Security Keys</A><br>
 - <A href="#sign-in-on-windows-10-device">Sign-in on Windows 10 device</A><br>
@@ -22,8 +24,6 @@ hidden: false
      - <A href="#consideration-of-detections-by-microsoft-defender-for-identity">Consideration of detections by “Microsoft Defender for Identity”</A><br>
      - <A href="#analyzing-the-original-source-of-unresolved-device-names-by-ip-address">Analyzing the original source of unresolved “Device names” by IP address</A><br>
      - <A href="#attack-scenarios-on-kerberos-azure-ad-joined-device">Attack scenarios on Kerberos (Azure AD-joined device)</A><br>
-
-_FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security._
 
 ## On-Boarding of FIDO2 Security Keys
 In the first part of the blog post, you should have already seen the pre-requisites to enable “Temporary Access Pass” (TAP). In my use case, I’ve limited the creation of TAPs to a "user deployment group" and restrict them as “one-time use”:
