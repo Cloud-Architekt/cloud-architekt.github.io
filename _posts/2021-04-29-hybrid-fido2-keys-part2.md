@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "FIDO2 Keys and Hybrid Identities (2/2): Onboarding, Authentication and Monitoring"
+title:  "FIDO2 Keys and Hybrid Identities (2/2): On-boarding, Authentication and Monitoring"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
