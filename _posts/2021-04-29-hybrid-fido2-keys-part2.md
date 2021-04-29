@@ -5,9 +5,9 @@ author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
 image: assets/images/fido2_part2.jpg
-description: "FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” blog post covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow and considerations in identity monitoring with Azure Sentinel/M365 Defender and token security."
+description: "FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security."
 featured: false
-hidden: true
+hidden: false
 ---
 
 #### Table of Content:
@@ -23,13 +23,13 @@ hidden: true
      - <A href="#analyzing-the-original-source-of-unresolved-device-names-by-ip-address">Analyzing the original source of unresolved “Device names” by IP address</A><br>
      - <A href="#attack-scenarios-on-kerberos-azure-ad-joined-device">Attack scenarios on Kerberos (Azure AD-joined device)</A><br>
 
-_FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” blog post covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow and considerations in identity monitoring with Azure Sentinel/M365 Defender and token security._
+_FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security._
 
 ## On-Boarding of FIDO2 Security Keys
 In the first part of the blog post, you should have already seen the pre-requisites to enable “Temporary Access Pass” (TAP). In my use case, I’ve limited the creation of TAPs to a "user deployment group" and restrict them as “one-time use”:
 ![](../2021-04-29-hybrid-fido2-keys-part2/authmethod_tap.png)
 
-Afterwards, you should be able to [create a TAP for users](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#create-a-temporary-access-pass) within this policy as well as [delegated Graph API](https://docs.microsoft.com/en-us/graph/api/temporaryaccesspassauthenticationmethod-post?WT.mc_id=AZ-MVP-5003945) or  “[Azure AD Directory Role](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#authentication-administrator)” permissions are assigned.
+Afterwards, you should be able to [create a TAP for users](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#create-a-temporary-access-pass) within this policy as well as [delegated Graph API](https://docs.microsoft.com/en-us/graph/api/temporaryaccesspassauthenticationmethod-post?WT.mc_id=AZ-MVP-5003945&view=graph-rest-beta&tabs=http#permissions) or  “[Azure AD Directory Role](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#authentication-administrator)” permissions are assigned.
 
 _Important note from the [“Limitations” section of the TAP documentation](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#limitations):_
 > When using a one-time Temporary Access Pass to register a Passwordless method such as FIDO2 or Phone sign-in, the user must complete the registration within 10 minutes of sign-in with the one-time Temporary Access Pass. This limitation does not apply to a Temporary Access Pass that can be used more than once.  
@@ -54,7 +54,7 @@ Audit logs of Azure AD gives you an overview about the various steps of the secu
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_keyreg.png)
 
-_Note: As already described by Microsoft and mentioned in this blog post, I’ve seen no activity or changes in Azure AD Connect or Active Directory during the registration process._
+_Note: As already described by Microsoft and mentioned in this blog post, I’ve seen no activity or changes in "Azure AD Connect" or "Active Directory" during the registration process._
 
 ## Sign-in on Windows 10 device 
 Now it’s time to sign-in with the provisioned FIDO2 keys on the Windows 10 device. Choose “FIDO security key” in the “Sign-in options” on the login screen. After entering the PIN of the security key, the login should be successful. 
@@ -97,15 +97,15 @@ Sign-in logs of Azure AD includes the “Windows Sign-in” event with details o
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_winsignin.png)
 
-I haven’t seen any other event in the logs of Azure AD, Azure AD Connect or Active Directory.
+I haven’t seen any other related event in the logs of Azure AD, Azure AD Connect or Active Directory.
 
-Mimikatz allows us to see more details of the tokens in the “Cloud Authentication Provider” (CloudAP).
+Mimikatz allows us to see more details of the token(s) in the “Cloud Authentication Provider” (CloudAP).
 
 Here we can find the “partial TGT” (incl. TgtMessage and TgtClientKey) from Azure AD Kerberos alongside of the PRT:
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/mimikatz_cloudap.png)
 
-Microsoft describes that the PRT request includes a claim that indicates the need of a TGT. In addition, the [process of PRT response will be describes in Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-faqs?WT.mc_id=AZ-MVP-5003945#what-does-the-http-requestresponse-look-like-when-requesting-prt-partial-tgt) as follows:
+Microsoft describes that the "PRT request" includes a claim that indicates the need of a TGT. In addition, the [process of "PRT response" will be describes in Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-faqs?WT.mc_id=AZ-MVP-5003945#what-does-the-http-requestresponse-look-like-when-requesting-prt-partial-tgt) as follows:
 
 > The HTTP request is a standard Primary Refresh Token (PRT) request. This PRT request includes a claim indicating a Kerberos Ticket Granting Ticket (TGT) is needed.  
 >   
@@ -121,7 +121,7 @@ Nevertheless, it’s interesting to note that a NTLM hash isn’t available in t
 ## Authentication to Azure AD-integrated apps and resources
 The PRT allows users a "SSO experience" on Azure AD-integrated apps and resources (such as “Microsoft 365” services or any modern authentication app). In the following screenshots from my test lab, we will see a web access to “SharePoint Online” (by using Edge Chromium Browser).
 
-_Note: Consider to use supported browsers and be familiar with the SSO using the user’s PRT._
+_Note: Consider to use supported browsers and be familiar with the SSO authentication flow using the user’s PRT._
 
 Microsoft Docs article about “[Primary Refresh Tokens](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token?WT.mc_id=AZ-MVP-5003945#browser-sso-using-prt)” explains the Browser SSO process in details:
 
@@ -153,7 +153,7 @@ The following actions should be considered (in my opinion) to mitigate the risk 
 * Use TPM chips to meet requirements if additional encryption or security capabilities are available.
 
 ## VPN connectivity to on-premises network
-As already described in the first part of this blog post, I have configured an Azure VPN P2S to establish on-premises connectivity. This allows me easily to demonstrate the integrated support of "Azure AD authentication and" "Conditional Access".
+As already described in the first part of this blog post, I have configured an "Azure VPN P2S" to establish on-premises connectivity. This allows me easily to demonstrate the integrated support of "Azure AD authentication and" "Conditional Access".
 
 VPN client in Windows 10 is shown the configured Authentication Type “Azure AD”: 
 
@@ -169,7 +169,7 @@ nltest /dsgetdc:contoso /keylist /kdc
 ```
 
 ## Authentication to Active Directory and On-Premises Resources 
-In the final step, we will try to get access of a resource in the on-premises environment. In this case, I will try to access a file share to a member server of the Active Directory domain.
+In the final step, we will try to get access of a resource in the on-premises environment. In this case, I will try to access a file share from a member server of the Active Directory domain.
 
 After a successful access attempt, I use the “klist” command to check if a Kerberos Ticket is available on the "Azure AD joined-device". As we can see, TGT of the user and TGS (service ticket) for CIFS (file share) is available in the cache:
 
@@ -178,7 +178,7 @@ After a successful access attempt, I use the “klist” command to check if a K
 In the next step, the captured network traffic should helps us to see how the client trades the “partial TGT” (issued by Azure AD) for a fully formed TGT (from on-premises AD domain controller).
 
 I can not find any AS-REQ and -REP between Azure AD-joined device and the DCs in the network traces. And I was also not able to detect any “TGT request” (such as EventID 4768) in the audit logs on the domain controllers.
-But as you can see, TGS REQ/REP will be captured which shows the process to request the “krbtgt” ticket from the domain controllers:
+But as you can see, TGS REQ/REP will be captured which shows the process to request the “krbtgt” service ticket from the domain controllers:
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/wireshark_tgskrbtgt.jpg)
 
@@ -191,13 +191,13 @@ Logs of the domain controllers are confirming the described behavior.
 Service ticket “krbtgt” was requested by the client:
 ![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_krbtgt.png)
 
-Event data of the audit log entry shows the differences in the TGS-Request of krbtgt of FIDO2 authenticated user on Azure AD-joined device (left) and authentication from Hybrid Joined device (right):
+Event data of the audit log entry shows the differences in the TGS-Request of "krbtgt" from a "FIDO2" authenticated user on "Azure AD-joined device" (left) compare to a "password" authenticated user from "Hybrid Joined device" (right):
 ![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_compare_krbtgt.png)
 
 In the next step, we are looking for the event log of the TGS request which was used to gain access to the file share:
 ![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_tgsevent.png)
 
-On the first view, there’s no difference in the TGS or “Resource Access” events which we can see in the “IdentityLogonEvents” table in Microsoft 365 Defender…
+On the first view, there’s no difference in the “Resource Access” event which we can see in the “IdentityLogonEvents” table in Microsoft 365 Defender…
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/m365d_compare.png)
 
@@ -222,24 +222,29 @@ A query of the "VPN client"-IP address in the diagnostic logs of the P2S connect
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/azdiagnostics_connection.png)
 
-This “unique activity ID” helps us to find the log entry of the “AAD Token payload event” of this VPN session. I’ve already described this event in the first part of the blog post. As you can see all related information (on-premises SID, Device ID, Public IP address) are part of this Diagnostic log:
+The “unique activity ID” helps us to find the related log entry of the “AAD Token payload event” from this VPN session. I’ve already described this event in the first part of the blog post. As you can see all related information (on-premises SID, Device ID, Public IP address) are part of this Diagnostic log:
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/aadtokenpayload.png)
 
-This should enable you to build a correlation between the unresolved (VPN) client IP and the used device/user object in Azure AD to establish the connection.
+This should enable you to build a correlation between the unresolved (VPN) client IP and the related device/user object in Azure AD.
 
 ### Attack scenarios on Kerberos (Azure AD-joined device)
-Block and monitor access to LSASS.exe to avoid credential stealing from the Kerberos tickets. Mitigation actions from the “Pass-the-PRT scenario” are   mostly relevant for protecting all kinds of credentials on the client.
+Obviously it's important to protect Kerberos tickets on the Azure AD-joined devices even if it’s a modern managed device and has no (direct) domain membership in Active Directory.
 
-In addition, Kerberos TGT and TGS must be specially protected on the Azure AD-joined devices. Even if it’s a modern managed device and has no domain membership in the Active Directory. Consider to deploy “[Windows Defender Credential Guard](https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage?WT.mc_id=AZ-MVP-5003945)” in combination of “[Hypervisor-protected code integrity](https://techcommunity.microsoft.com/t5/windows-it-pro-blog/comprehensive-protection-for-your-credentials-with-credential/ba-p/765314?WT.mc_id=AZ-MVP-5003945)” (HVCI). As already described, strictly avoid the delegation of local admin permissions or create manage local “Administrator” accounts without unique/rotating passwords. 
+Therefore, restrict and monitor the access to the LSASS process which is one of the actions to avoid credential stealing.
 
-Active monitoring of your Active Directory environments is always important in “hybrid identity” scenarios and therefore also relevant if you are using FIDO2 for on-premises access. As we already seen, “Microsoft Defender for Identity” should be used to detect suspicious activity (even from clients without “traditional” domain membership.
+Consider to deploy “[Windows Defender Credential Guard](https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage?WT.mc_id=AZ-MVP-5003945)” in combination of “[Hypervisor-protected code integrity](https://techcommunity.microsoft.com/t5/windows-it-pro-blog/comprehensive-protection-for-your-credentials-with-credential/ba-p/765314?WT.mc_id=AZ-MVP-5003945)” (HVCI).
 
-Otherwise, attackers will be able to gain on-premises access by using “Pass-the-Ticket” attacks or other offensive techniques on the Azure AD-joined device:
+As already described, strictly avoid the delegation of local admin permissions or create manage local “Administrator” accounts without unique/rotating passwords.
+Mitigation actions from the “Pass-the-PRT scenario” should be also part of your defense to prevent most kinds of credential attacks on the client.
+
+Active monitoring of your Active Directory environments is always important in “hybrid identity” scenarios and therefore also essential if you are using FIDO2 for on-premises access. As we already seen, “Microsoft Defender for Identity” should be used to detect suspicious activity (even from clients without “traditional” domain membership).
+
+Otherwise, attackers will be able to gain on-premises access by using “Pass-the-Ticket” attacks or other offensive techniques on the Azure AD-joined device. As you can see in the following screenshot from mimikatz:
 
 ![](../2021-04-29-hybrid-fido2-keys-part2/mimikatz_kerberos.png)
 
-And finally, rotation of all “krbtgt” keys in your Active Directory domain (incl. krbtgt_AzureAD) should be part of your operational (security) tasks.
+And finally, rotation of all “krbtgt” keys in your Active Directory domain should be part of your operational (security) tasks. This should also include the "krbtgt_AzureAD" <A href="https://www.cloud-architekt.net/hybrid-fido2-keys-part1#management-of-azure-ad-kerberos-objects">as described in the first part of this article.</A>
 <br>
 <br>
 <br>

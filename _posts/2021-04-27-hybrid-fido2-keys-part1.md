@@ -227,7 +227,7 @@ In this case, the property seems to control which users are allowed for using FI
 <br>
 
 <br>
-➡ <A>Part 2: Onboarding, Authentication and Monitoring (available later this week!)</A><br>
+➡ <A href="https://www.cloud-architekt.net/hybrid-fido2-keys-part2/">Part 2: Onboarding, Authentication and Monitoring</A><br>
 <br>
 <br>
 <br>
