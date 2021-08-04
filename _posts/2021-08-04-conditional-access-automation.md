@@ -141,4 +141,4 @@ I can strongly recommend to use AADExporter as reporting tool to discover and an
 <br>
 <br>
 <br>
-<span style="color:silver;font-style:italic;font-size:small">Original Image by Mudassar Iqbal from Pixabay](https://pixabay.com/illustrations/developer-programmer-technology-3461405/)</span>
+<span style="color:silver;font-style:italic;font-size:small">[Original Image by Mudassar Iqbal from Pixabay](https://pixabay.com/illustrations/developer-programmer-technology-3461405/)</span>
