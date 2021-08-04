@@ -1,144 +1,251 @@
 ---
 layout: post
-title:  "Overview of Azure AD Conditional Access automation"
+title:  "Test"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
-image: assets/images/aad-config-automate.jpg
-description: "Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) "as code" which enables advanced automation and scaling options.
-For some time, there has been improvements in programmatic access but also community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies."
+image: assets/images/fido2_part2.jpg
+description: "FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security."
 featured: false
 hidden: false
 ---
 
-_Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) "as code" which enables advanced automation and scaling options.
-For some time, improvements in programmatic access and community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies._
+_FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security._
 
 #### Table of Content:
-- [Benefits of using DevOps approach in Azure AD](#benefits-of-using-devops-approach-in-azure-ad)
-- [Solutions to manage Conditional Access As Code](#solutions-to-manage-conditional-access-as-code)
-  - [Logic App and OneDrive (Microsoft Ignite Sample)](#logic-app-and-onedrive-microsoft-ignite-sample)
-  - [PowerShell Desired State Configuration (M365DSC)](#powershell-desired-state-configuration-m365dsc)
-  - [PowerShell modules and scripts](#powershell-modules-and-scripts)
-    - [Azure AD PowerShell Module / Microsoft Graph SDK](#azure-ad-powershell-module--microsoft-graph-sdk)
-    - [DCToolbox and PowerShell Scripts by Daniel Chronlund](#dctoolbox-and-powershell-scripts-by-daniel-chronlund)
-    - [Conditional Access as Code by Alex Filipin](#conditional-access-as-code-by-alex-filipin)
-  - [AADOps (Prototype/POC to manage AAD as IdentityOps)](#aadops-prototypepoc-to-manage-aad-as-identityops)
-  - [GraphAPI by Wesley Trust](#graphapi-by-wesley-trust)
-  - [AADExporter](#aadexporter)
+- <A href="#on-boarding-of-fido2-security-keys">On-Boarding of FIDO2 Security Keys</A><br>
+- <A href="#sign-in-on-windows-10-device">Sign-in on Windows 10 device</A><br>
+- <A href="#prt-and-partial-tgt-from-azure-ad">PRT and “partial TGT” from Azure AD</A><br>
+- <A href="#authentication-to-azure-ad-integrated-apps-and-resources">Authentication to Azure AD-integrated apps and resources</A><br>
+     - <A href="#monitoring-of-sign-in-events-to-cloud-resources">Monitoring of sign-in events to cloud resources</A><br>
+     - <A href="#attack-scenarios-on-prt">Attack scenarios on PRT</A><br>
+- <A href="#vpn-connectivity-to-on-premises-network">VPN connectivity to on-premises network</A><br>
+- <A href="#authentication-to-active-directory-and-on-premises-resources">Authentication to Active Directory/on-premises Resources</A><br>
+     - <A href="#consideration-of-detections-by-microsoft-defender-for-identity">Consideration of detections by “Microsoft Defender for Identity”</A><br>
+     - <A href="#analyzing-the-original-source-of-unresolved-device-names-by-ip-address">Analyzing the original source of unresolved “Device names” by IP address</A><br>
+     - <A href="#attack-scenarios-on-kerberos-azure-ad-joined-device">Attack scenarios on Kerberos (Azure AD-joined device)</A><br>
 
-## Benefits of using DevOps approach in Azure AD
+## On-Boarding of FIDO2 Security Keys
+In the first part of the blog post, you should have already seen the pre-requisites to enable “Temporary Access Pass” (TAP). In my use case, I’ve limited the creation of TAPs to a "user deployment group" and restrict them as “one-time use”:
+![](../2021-04-29-hybrid-fido2-keys-part2/authmethod_tap.png)
 
-Automation of Azure services by using DevOps (lifecycle) approach are enjoying strong demand - especially in large enterprise environments or by managed service providers. There are some real advantages in the implementation by a DevOps operating model. This includes:
+Afterwards, you should be able to [create a TAP for users](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#create-a-temporary-access-pass) within this policy as well as [delegated Graph API](https://docs.microsoft.com/en-us/graph/api/temporaryaccesspassauthenticationmethod-post?WT.mc_id=AZ-MVP-5003945&view=graph-rest-beta&tabs=http#permissions) or  “[Azure AD Directory Role](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#authentication-administrator)” permissions are assigned.
 
-- Using approval workflows and repository/branch policies for advanced governance
-- Version control which includes backup/restore and track changes of configuration items
-- Deploy and manage multi-tenant environments at scale and consider staging process
-- Compare configurations between staging or multi-tenant environments
-- Using standardized configuration or policy sets as default templates for new Azure AD tenants
-- Roll-out of [resilient access controls](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-resilient-controls?WT.mc_id=AZ-MVP-5003945) (e.g. in case of MFA disruption or emergency access)
-- Technical documentation by "Policy As Code"
-- Continuous improvement by analyzing telemetry from audit and sign-in logs to improve coverage and efficiency
-- Reduce manual efforts and costs
-- and many many more...
+_Important note from the [“Limitations” section of the TAP documentation](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-temporary-access-pass?WT.mc_id=AZ-MVP-5003945#limitations):_
+> When using a one-time Temporary Access Pass to register a Passwordless method such as FIDO2 or Phone sign-in, the user must complete the registration within 10 minutes of sign-in with the one-time Temporary Access Pass. This limitation does not apply to a Temporary Access Pass that can be used more than once.  
 
-*Side Note: There are several other security-related tasks or identity configuration tasks which are perfectly suitable for building an automated operational process based on the DevOps approach. Management of Service Principals/Enterprise Applications or Security Posture Management and Continuous Improvement with Identity Secure Score could be a topic for another blog post around this topic.* 🙂
+I’m using the “Web Sign-in” option in Windows 10 to redeem the TAP for the first sign-in. This offers the opportunity to complete the user on-boarding and registration of the FIDO2 security key from the assigned device of the user or any shared device.
 
-## Solutions to manage Conditional Access As Code
+![](../2021-04-29-hybrid-fido2-keys-part2/winlogon_websignin.png)
 
-All of the following solutions are using Microsoft Graph API.
-CRUD operations are available under the resource type "[conditionalAccessPolicy](https://docs.microsoft.com/en-us/graph/api/resources/conditionalaccesspolicy?WT.mc_id=AZ-MVP-5003945)".
+![](../2021-04-29-hybrid-fido2-keys-part2/winlogon_tap.png)
 
-### Logic App and OneDrive (Microsoft Ignite Sample)
+After the initial sign-in you should start with registering your FIDO2 key as your next step.
 
-At Ignite 2020, Microsoft has published [documentations to build "programmatic access" to manage CA policies as code](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-apis?WT.mc_id=AZ-MVP-5003945). This *includes a tutorial to build a lifecycle management of "Conditional Access Policies" which was published on GitHub.* This sample contains a full lifecycle management solution which is build on Logic Apps, OneDrive, Teams and Azure KeyVault. More details are available in the [GitHub repo](https://github.com/Azure-Samples/azure-ad-conditional-access-apis).
+![](../2021-04-29-hybrid-fido2-keys-part2/secreg.png)
 
-![](../2021-08-04-conditional-access-automation/aad-ca-workflow.png)
+Next, we will check the audit logs and properties of the users…
 
-*Microsoft's sample from Ignite 2020 covers the lifecycle phases of managing CA policies.*
+Azure AD’s sign-in logs shows the initial authentication with “Temporary Access Pass” to the “Microsoft Authentication Broker”:
 
-Details and the benefit of this solution was also shown during the "Ignite" session "[managing your Conditional Access policies at Scale](https://www.youtube.com/watch?v=2yYStaA2pfc)".
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_tapredeem.png)
 
-Using Logic Apps allows to deploy policies without any enormous investments in (DevOps) infrastructure. Furthermore, managed identities and integration of Microsoft Teams works natively.
+Audit logs of Azure AD gives you an overview about the various steps of the security key registration process:
 
-![](../2021-08-04-conditional-access-automation/aad-ca-logicapp1.png)
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_keyreg.png)
 
-![](../2021-08-04-conditional-access-automation/aad-ca-logicapp2.png)
+_Note: As already described by Microsoft and mentioned in this blog post, I’ve seen no activity or changes in "Azure AD Connect" or "Active Directory" during the registration process._
 
-But on the other hand, it is not providing full DevOps capabilities or a repository integration (in my opinion).
-It uses OneDrive instead of Git as source to manage the policies.
+## Sign-in on Windows 10 device 
+Now it’s time to sign-in with the provisioned FIDO2 keys on the Windows 10 device. Choose “FIDO security key” in the “Sign-in options” on the login screen. After entering the PIN of the security key, the login should be successful. 
 
-*This solution could be suitable for organizations without multi-tenant environments and/or possibility to use DevOps platform to manage CA.*
+![](../2021-04-29-hybrid-fido2-keys-part2/winlogon_signinoptions.png)
 
-### PowerShell Desired State Configuration (M365DSC)
+_Note: A list of collected or related data to [troubleshoot FIDO2 key issues on Windows Clients](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-troubleshoot?WT.mc_id=AZ-MVP-5003945#troubleshoot) are already documented on Microsoft Docs._
 
-M365DSC is a great solution if you are looking for a DevOps solution to manage Microsoft 365 services. This includes Conditional Access Policies in Azure AD as well. It allows to synchronize and export the configuration of multi-tenant environments and keeping their setup synchronized.
+What happens behind the scene?
+The [process is described in the Microsoft Docs article](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless?WT.mc_id=AZ-MVP-5003945#fido2-security-keys) as follows:
 
-![](../2021-08-04-conditional-access-automation/m365dsc.png)
+![](../2021-04-29-hybrid-fido2-keys-part2/winlogon_flow.png)  
 
-*Image source: [Microsoft365DSC - Configuration-As-Code for the Cloud](https://microsoft365dsc.com/)*
+> 1. The user plugs the FIDO2 security key into their computer.  
+> 2.Windows detects the FIDO2 security key.  
+> 3. Windows sends an authentication request.  
+> 4. Azure AD sends back a nonce.  
+> 5. The user completes their gesture to unlock the private key stored in the FIDO2 security key’s secure enclave.  
+> 6. The FIDO2 security key signs the nonce with the private key.  
+> 7. The primary refresh token (PRT) token request with signed nonce is sent to Azure AD.  
+> 8. Azure AD verifies the signed nonce using the FIDO2 public key.  
+> 9. Azure AD returns PRT to enable access to on-premises resources.  
 
-The project is hosted on [GitHub](https://github.com/microsoft/Microsoft365DSC) and lead by Microsoft engineers and driven by the community. Details on the configuration are very well-documented in the [M365DSC Whitepaper](https://microsoft365dsc.com/Pages/Resources/Whitepapers/Managing%20Microsoft%20365%20with%20Microsoft365Dsc%20and%20Azure%20DevOps.pdf).
-Check out the [YouTube videos](https://www.youtube.com/channel/UCveScabVT6pxzqYgGRu17iw) to learn more about the solution.
+But now let us consider what we can see on client- and Azure AD-side in my demo scenario.
 
-This could be your preferred option (in my opinion) if you already have experience with PowerShell DSC and you are looking for a comprehensive solution across Azure AD and other Microsoft 365 services.
+## PRT and “partial TGT” from Azure AD
+The results of the “dsregcmd /status” command shows you that I’m using a  Azure AD-joined (only) in my scenario:
 
-### PowerShell modules and scripts
+![](../2021-04-29-hybrid-fido2-keys-part2/dsregcmd.png)
 
-#### Azure AD PowerShell Module / Microsoft Graph SDK
+As you can see, Primary Refresh Token (PRT) was issued for SSO to Azure AD after the successful logon. So far, no surprise at all:
 
-The "official" PowerShell Module for Azure AD includes ready-to-use cmdlets for CRUD operations on CA policies. Microsoft offers several samples in the "[Manage CA policies like code](https://github.com/Azure-Samples/azure-ad-conditional-access-apis/tree/main/01-configure/powershell)" GitHub repo.
+![](../2021-04-29-hybrid-fido2-keys-part2/dsregcmd_prt.png)
 
-*Side Note: Microsoft has announced to set focus on the "Microsoft Graph SDK" for all current and future investments in automation of identity-related functions. Therefore I would recommend you to use the "Microsoft.Graph" PowerShell module as supported and "lightweight wrapper" for the Graph API. More details are available from the TechCommunity Blog post "[Automate and manage Azure AD tasks at scale with the Microsoft Graph PowerShell SDK](https://techcommunity.microsoft.com/t5/azure-active-directory-identity/automate-and-manage-azure-ad-tasks-at-scale-with-the-microsoft/ba-p/1942489?WT.mc_id=AZ-MVP-5003945)".*
+The command “klist” is not showing any Kerberos TGT in the cache:
 
-#### DCToolbox and PowerShell Scripts by Daniel Chronlund
+![](../2021-04-29-hybrid-fido2-keys-part2/klist_empty.png)
 
-Daniel Chronlund has done an excellent job and wrote a [PowerShell Module (DCToolbox)](https://danielchronlund.com/2020/11/09/dctoolbox-powershell-module-for-microsoft-365-security-conditional-access-automation-and-more/) which includes cmdlets to run CRUD operations on CA Policies (via Microsoft Graph API) in JSON-format. It supports the import and export of policy sets out of the box. Export of policy configuration as Excel sheet is also part of his PowerShell module. Check out [Daniel's GitHub repo](https://github.com/DanielChronlund/DCToolbox) to discover the included tools.
+Sign-in logs of Azure AD includes the “Windows Sign-in” event with details of the authentication method:
 
-#### Conditional Access as Code by Alex Filipin
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_winsignin.png)
 
-Alex Filipin has released ready-made policy sets and PowerShell scripts for automation on his [GitHub repo](https://github.com/AlexFilipin/ConditionalAccess). The policy templates are very well designed! The [wiki documentation](https://github.com/AlexFilipin/ConditionalAccess/wiki) describes the design approach and considered best practices in details. I very much recommend to take a look on his great work!
+I haven’t seen any other related event in the logs of Azure AD, Azure AD Connect or Active Directory.
 
-### AADOps (Prototype/POC to manage AAD as IdentityOps)
+Mimikatz allows us to see more details of the token(s) in the “Cloud Authentication Provider” (CloudAP).
 
-In spring, I've worked on a community session about "Conditional Access". Automation was also one of the objectives in this talk.  Therefore I've spent some time on a DevOps-style solution to manage the policies via Microsoft Graph API. Inspired by the AzOps project by Microsoft, I've decided to implement Alex Filipin's policy templates and some parts of Daniel Chronlund's and Alex's script as Azure DevOps project. In addition, I've developed and added some own-developed scripts to support "managed identities" and using pipelines to establish continuous integration/deployment (CI/CD) lifecycle for templates. Another key area was to automate the versioning and ring deployment in staging scenarios (intra- and inter-tenant).
-I‘ve named this personal project „AADOps“, similar to the role name „IdentityOps“ which is used in most of my community sessions about privileged IAM in Azure.
+Here we can find the “partial TGT” (incl. TgtMessage and TgtClientKey) from Azure AD Kerberos alongside of the PRT:
 
-It wasn't the goal to build a production-ready solution. This prototype should only demonstrate the capabilities in automation and lifecycle management of Azure AD assets with Azure DevOps, PowerShell and Microsoft Graph. It was my aim to show a simple implementation and a declared focus to address the advantages and security concerns of Azure DevOps in case of manage (identity) security-critical assets.
+![](../2021-04-29-hybrid-fido2-keys-part2/mimikatz_cloudap.png)
 
-"AADOps" is used as a "POC" to demonstrate all the before mentioned advantages to use "DevOps" approach for Azure AD:
+Microsoft describes that the "PRT request" includes a claim that indicates the need of a TGT. In addition, the [process of "PRT response" will be describes in Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-faqs?WT.mc_id=AZ-MVP-5003945#what-does-the-http-requestresponse-look-like-when-requesting-prt-partial-tgt) as follows:
 
-![](../2021-08-04-conditional-access-automation/aadops-features.png)
+> The HTTP request is a standard Primary Refresh Token (PRT) request. This PRT request includes a claim indicating a Kerberos Ticket Granting Ticket (TGT) is needed.  
+>   
+> Azure AD combines the encrypted client key and message buffer into the PRT response as additional properties. The payload is encrypted using the Azure AD Device session key.  
 
-*Side Note: Personally, I prefer to use Azure DevOps in this use case because of governance and compliance features which are required in enterprise- and security critical environments. There are some compliance features in Azure Pipelines that aren't exist to GitHub Actions yet. A great overview of the [key differences are listed in the blog post from Max Yermakhanov](https://medium.com/objectsharp/azure-pipelines-vs-github-actions-key-differences-45390ab132ee).*
+More investigation of the PRT request and response should be possible by capturing the HTTP traffic and analyze them with Fiddler.
 
-After working on my "AADOps" project, two other interesting projects was released which should be considered as option to build an automation solution for Azure AD:
+Nevertheless, it’s interesting to note that a NTLM hash isn’t available in the LSAAS process on the Windows 10 device and therefore not visible in “LogonPasswords” of Mimikatz:
 
-### GraphAPI by Wesley Trust
+![](../2021-04-29-hybrid-fido2-keys-part2/mimikatz_logonpasswords.png)
 
-Wesley Trust has build a great [GitHub project which includes Azure DevOps CI/CD pipelines and scripts to automate the configuration](https://github.com/wesley-trust/GraphAPI) of many areas of Azure AD (such as CA Policies, Groups, Subscriptions, Directory Roles, Named Locations,...). Check out his work which is also [well documented on his blog](https://www.wesleytrust.com/blog/)!
 
-### AADExporter
+## Authentication to Azure AD-integrated apps and resources
+The PRT allows users a "SSO experience" on Azure AD-integrated apps and resources (such as “Microsoft 365” services or any modern authentication app). In the following screenshots from my test lab, we will see a web access to “SharePoint Online” (by using Edge Chromium Browser).
 
-Several weeks ago, Microsoft has released the "[Azure AD Exporter](https://github.com/microsoft/azureadexporter)" PowerShell module.
-This solution is hosted on GitHub and allows you to export Azure AD configuration settings and assets (objects such as users, applications or groups).
-All data will be exported in JSON which allows to store, compare and analyze them in a Git repository.
+_Note: Consider to use supported browsers and be familiar with the SSO authentication flow using the user’s PRT._
 
-![](../2021-08-04-conditional-access-automation/aadexporter1.png)
-![](../2021-08-04-conditional-access-automation/aadexporter2.png)
+Microsoft Docs article about “[Primary Refresh Tokens](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token?WT.mc_id=AZ-MVP-5003945#browser-sso-using-prt)” explains the Browser SSO process in details:
 
-This module supports PowerShell Core and works on Linux and macOS agents/clients very well!
-I've implemented the AAD Exporter as part of just another DevOps pipeline which is also [documented by Microsoft on the GitHub project site](https://github.com/microsoft/azureadexporter#integrate-to-azure-devops-pipeline).
+![](../2021-04-29-hybrid-fido2-keys-part2/browser-sso-using-prt.png)
 
-I can strongly recommend to use AADExporter as reporting tool to discover and analyze your Azure AD settings. Even this solution supports only "export" of configs and not allows to "import" (push) changes from the repo to Azure AD.
 
-*Side Note: Microsoft.Graph PowerShell module is the basis of the AADExporter solution and also used for the authentication process. So keep in mind, caching of tokens on the local storage is enabled by default. Further details about this can be found in a [Twitter thread by Dr. Nestori Syynimaa](https://twitter.com/drazuread/status/1392066914197938179?s=21).*
+### Monitoring of sign-in events to cloud resources
+All sign-in event entries in the "Azure AD logs" includes details of the used authentication method. In this case, no indicator of using FIDO2 security key is available because of authentication as part of the Browser SSO flow.
 
-*In my lab environment, I've implemented a different way to gain an access token for the automated export in the pipeline tasks. My approach about using "Managed Identities" and KeyVault (optional in case of multi-tenant environments) will be part of the upcoming "AADOps" article.*
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_browsersso.png)
 
+Explicit sign-ins to resources (with a security key) will showing you “FIDO2” as authentication method. This can be easily reproduce by using "InPrivate session" of the browser (Browser SSO flow will not working):
+
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_signinfido.png)
+
+_Note: AuthenticationMethods will only be shown in the “raw” Azure AD Sign-in logs. M365D Advanced Hunting logs are not including this information yet._
+
+### Attack scenarios on PRT
+Implementing FIDO2 as secure authentication method will not protect you from all identity theft scenarios. One example which I like to mention is “Pass-the-PRT”. Dirk-Jan Mollema has published a [very interesting article about this scenario](https://dirkjanm.io/abusing-azure-ad-sso-with-the-primary-refresh-token/) which is strongly recommended to read. Another great blog post about this scenarios was written by Dr. Nestori Syynimaa: [Getting user’s access with “Pass-the-Token” and “Pass-the-Cert”](https://o365blog.com/post/prt/) 
+
+The following actions should be considered (in my opinion) to mitigate the risk of such attack scenarios and protect the PRT:
+
+* Avoid to assign local admin permissions to users
+* Create ["Attack Surface Reduction Rules" (ASR)](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/enable-attack-surface-reduction?WT.mc_id=AZ-MVP-5003945) rules in Microsoft Intune to protect LSAAS process
+* Enable ["tamper protection"](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/prevent-changes-to-security-settings-with-tamper-protection?WT.mc_id=AZ-MVP-5003945#manage-tamper-protection-for-your-organization-using-intune) to protect your client’s security settings (such as threat protection and real-time AV)
+* Actively monitor your endpoints to detect malicious credential theft tools (such as Mimikatz) 
+	* Evaluate and implement “[Azure Sentinel fusion](https://docs.microsoft.com/en-us/azure/sentinel/fusion#credential-harvesting-new-threat-classification?WT.mc_id=AZ-MVP-5003945)” rules that indicates e.g. that someone used known identity theft tools in combination of a suspicious Azure AD sign-in (Sign-in risk by Identity Protection).
+* Implement a process to [revoke refresh tokens](https://docs.microsoft.com/en-us/powershell/module/azuread/revoke-azureaduserallrefreshtoken?WT.mc_id=AZ-MVP-5003945)  (e.g. in case of lost or stolen devices)
+* Use TPM chips to meet requirements if additional encryption or security capabilities are available.
+
+## VPN connectivity to on-premises network
+As already described in the first part of this blog post, I have configured an "Azure VPN P2S" to establish on-premises connectivity. This allows me easily to demonstrate the integrated support of "Azure AD authentication and" "Conditional Access".
+
+VPN client in Windows 10 is shown the configured Authentication Type “Azure AD”: 
+
+![](../2021-04-29-hybrid-fido2-keys-part2/azvpn_client.jpg)
+
+Establishing the VPN connection will be audited in the “Azure Diagnostic logs” of the “VPN Gateway”. It also shows you the received "AAD Token payload" as part of the authentication process:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/azdiagnostics_aadpayload.png)
+ 
+The following command can be used to verify the connectivity and query DNS server for a list of AD domain controllers (DCs) from the client:
+```
+nltest /dsgetdc:contoso /keylist /kdc
+```
+
+## Authentication to Active Directory and On-Premises Resources 
+In the final step, we will try to get access of a resource in the on-premises environment. In this case, I will try to access a file share from a member server of the Active Directory domain.
+
+After a successful access attempt, I use the “klist” command to check if a Kerberos Ticket is available on the "Azure AD joined-device". As we can see, TGT of the user and TGS (service ticket) for CIFS (file share) is available in the cache:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/klist.png)
+
+In the next step, the captured network traffic should helps us to see how the client trades the “partial TGT” (issued by Azure AD) for a fully formed TGT (from on-premises AD domain controller).
+
+I can not find any AS-REQ and -REP between Azure AD-joined device and the DCs in the network traces. And I was also not able to detect any “TGT request” (such as EventID 4768) in the audit logs on the domain controllers.
+But as you can see, TGS REQ/REP will be captured which shows the process to request the “krbtgt” service ticket from the domain controllers:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/wireshark_tgskrbtgt.jpg)
+
+Afterwards, TGS for accessing the CFS on the domain member will be requested from the on-premises AD:
+![](../2021-04-29-hybrid-fido2-keys-part2/wireshark_tgscifs.jpg)
+
+
+###  Monitoring of sign-in events to Active Directory
+Logs of the domain controllers are confirming the described behavior.
+Service ticket “krbtgt” was requested by the client:
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_krbtgt.png)
+
+Event data of the audit log entry shows the differences in the TGS-Request of "krbtgt" from a "FIDO2" authenticated user on "Azure AD-joined device" (left) compare to a "password" authenticated user from "Hybrid Joined device" (right):
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_compare_krbtgt.png)
+
+In the next step, we are looking for the event log of the TGS request which was used to gain access to the file share:
+![](../2021-04-29-hybrid-fido2-keys-part2/sentinel_tgsevent.png)
+
+On the first view, there’s no difference in the “Resource Access” event which we can see in the “IdentityLogonEvents” table in Microsoft 365 Defender…
+
+![](../2021-04-29-hybrid-fido2-keys-part2/m365d_compare.png)
+
+…but on closer inspection it becomes clear that the IP address of AAD-joined device can’t be resolved to the DeviceName.
+
+### Consideration of detections by “Microsoft Defender for Identity”
+The question is, therefore, how this affects the detections and recorded activities by “Microsoft Defender for Identity” (MDI).
+[Network name resolution](https://docs.microsoft.com/en-us/defender-for-identity/nnr-policy?WT.mc_id=AZ-MVP-5003945) is responsible to build a correlation between all captured raw events  and the entity (Computer).
+All methods that will be used to resolve IP address to computer names seems be unable to resolve the Kerberos authentication requests from Azure AD joined device (in my test scenario).
+
+During my research, I’ve seen that the device name can not be retrieved when Kerberos Authentication was used. NTLM authentication will be resolved to the NetBIOS name of the device. The following screenshots shows the “User activity page” from the MDI portal:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/mdi_userpage.png)
+
+Detections of attacks such as “Brute Force” or “Data exfiltration over SMB” can be correlated to the device object in MCAS.
+![](../2021-04-29-hybrid-fido2-keys-part2/mdi_devicealerts.png)
+
+#### Analyzing the original source of unresolved “Device names” by IP address
+It may be necessary to build a correlation between the activity event which includes unresolved (VPN) Client IP and the event when the VPN connection was established. This provides you full details and context of the access path for investigation of a suspicious activity or in case of an incident.
+
+A query of the "VPN client"-IP address in the diagnostic logs of the P2S connection allows you to find detailed information. In this case, the “Connection successful” event includes a “message” property with the original “Username” and the related unique “OVPN activity ID”:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/azdiagnostics_connection.png)
+
+The “unique activity ID” helps us to find the related log entry of the “AAD Token payload event” from this VPN session. I’ve already described this event in the first part of the blog post. As you can see all related information (on-premises SID, Device ID, Public IP address) are part of this Diagnostic log:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/aadtokenpayload.png)
+
+This should enable you to build a correlation between the unresolved (VPN) client IP and the related device/user object in Azure AD.
+
+### Attack scenarios on Kerberos (Azure AD-joined device)
+Obviously it's important to protect Kerberos tickets on the Azure AD-joined devices even if it’s a modern managed device and has no (direct) domain membership in Active Directory.
+
+Therefore, restrict and monitor the access to the LSASS process which is one of the actions to avoid credential stealing.
+
+Consider to deploy “[Windows Defender Credential Guard](https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-manage?WT.mc_id=AZ-MVP-5003945)” in combination of “[Hypervisor-protected code integrity](https://techcommunity.microsoft.com/t5/windows-it-pro-blog/comprehensive-protection-for-your-credentials-with-credential/ba-p/765314?WT.mc_id=AZ-MVP-5003945)” (HVCI).
+
+As already described, strictly avoid the delegation of local admin permissions or create manage local “Administrator” accounts without unique/rotating passwords.
+Mitigation actions from the “Pass-the-PRT scenario” should be also part of your defense to prevent most kinds of credential attacks on the client.
+
+Active monitoring of your Active Directory environments is always important in “hybrid identity” scenarios and therefore also essential if you are using FIDO2 for on-premises access. As we already seen, “Microsoft Defender for Identity” should be used to detect suspicious activity (even from clients without “traditional” domain membership).
+
+Otherwise, attackers will be able to gain on-premises access by using “Pass-the-Ticket” attacks or other offensive techniques on the Azure AD-joined device. As you can see in the following screenshot from mimikatz:
+
+![](../2021-04-29-hybrid-fido2-keys-part2/mimikatz_kerberos.png)
+
+And finally, rotation of all “krbtgt” keys in your Active Directory domain should be part of your operational (security) tasks. This should also include the "krbtgt_AzureAD" <A href="https://www.cloud-architekt.net/hybrid-fido2-keys-part1#management-of-azure-ad-kerberos-objects">as described in the first part of this article.</A>
 <br>
-➡ <b>Follow up soon: Blog post about "AADOps" to implement a full DevOps lifecycle for CA Policies in Azure DevOps</b><br>
 <br>
 <br>
-<br>
-<span style="color:silver;font-style:italic;font-size:small">Original Image by Mudassar Iqbal from Pixabay](https://pixabay.com/illustrations/developer-programmer-technology-3461405/)</span>
+<span style="color:silver;font-style:italic;font-size:small">Original cover image by [cottonbro / Pexels](https://www.pexels.com/photo/hands-on-a-laptop-keyboard-5474285/)</span>
