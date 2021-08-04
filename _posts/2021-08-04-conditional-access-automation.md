@@ -1,16 +1,18 @@
 ---
 layout: post
-title:  "Test"
+title:  "Overview of Azure AD Conditional Access automation"
 author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
-image: assets/images/fido2_part2.jpg
-description: "FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security."
+image: assets/images/aad-config-automate.jpg
+description: "Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) "as code" which enables advanced automation and scaling options.
+For some time, there has been improvements in programmatic access but also community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies."
 featured: false
 hidden: false
 ---
 
-_FIDO2 Security Keys are a passwordless and strong authentication method to sign-in to Windows devices and can be used for single sign-on (SSO) access to cloud and on-premises resources. This second part of my “Hybrid FIDO2” article covers the on-boarding process with “Temporary Access Pass” (TAP), authentication flow, considerations in identity monitoring with Azure Sentinel/M365 Defender and token security._
+_Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) "as code" which enables advanced automation and scaling options.
+For some time, improvements in programmatic access and community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies._
 
 #### Table of Content:
 - <A href="#on-boarding-of-fido2-security-keys">On-Boarding of FIDO2 Security Keys</A><br>
