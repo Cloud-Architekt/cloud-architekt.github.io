@@ -5,7 +5,7 @@ author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
 image: assets/images/aad-config-automate.jpg
-description: "Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) "as code" which enables advanced automation and scaling options.
+description: "Cloud Managed Service Providers and many other organizations are mostly interested to manage their environments as code which enables advanced automation and scaling options.
 For some time, there has been improvements in programmatic access but also community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies."
 featured: false
 hidden: false
