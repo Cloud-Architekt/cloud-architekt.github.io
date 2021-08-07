@@ -5,7 +5,7 @@ author: thomas
 categories: [ Azure, Security, AzureAD ]
 tags: [security, azuread, azure]
 image: assets/images/aadops.jpg
-description: "*ADOps is a study project which sets out to demonstrate how "operationalization" of Azure AD in Azure DevOps could look like. In this blog post, we will have a scope on the scenario to build automation and lifecycle management of Conditional Access - as our Zero Trust policy. Furthermore, I like to share my security aspects and solution approaches from my lab implementation.*"
+description: "AADOps is a personal study and research project which sets out to demonstrate how "operationalization" of Azure AD in Azure DevOps could look like. In this blog post, I've set the scope on the scenario to build automation and lifecycle management of Conditional Access - as Zero Trust policy. Furthermore, I like to share security aspects and solution approaches from my lab implementation."
 featured: false
 hidden: true
 ---
@@ -13,9 +13,6 @@ hidden: true
 _AADOps is a personal study and research project which sets out to demonstrate how "operationalization" of Azure AD in Azure DevOps could look like. In this blog post, I've set the scope on the scenario to build automation and lifecycle management of Conditional Access - as Zero Trust policy. Furthermore, I like to share security aspects and solution approaches from my lab implementation._
 
 #### Table of Content:
-
-
-
 - [Introduction to AADOps](#introduction-to-aadops)
 - [Plan: Designing and drafting of a new policy](#plan-designing-and-drafting-of-a-new-policy)
   - [Definition of requirement and plan deployment](#definition-of-requirement-and-plan-deployment)
