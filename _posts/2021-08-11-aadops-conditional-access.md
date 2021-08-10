@@ -19,32 +19,31 @@ _AADOps is a personal study and research project which sets out to demonstrate h
   - [Plan and communicate deployment and changes](#plan-and-communicate-deployment-and-changes)
   - [Test and roll back plan for evaluation](#test-and-roll-back-plan-for-evaluation)
   - [Naming convention](#naming-convention)
-- [Code: Create "policy-as-code" template in repo](#code-create-policy-as-code-template-in-repo)
-  - [Azure DevOps Repo as "Source of Truth"](#azure-devops-repo-as-source-of-truth)
+- [Code: Create policy-as-code template in repo](#code-create-policy-as-code-template-in-repo)
+  - [Azure DevOps Repo as Source of Truth](#azure-devops-repo-as-source-of-truth)
   - [Content and structure of the repository](#content-and-structure-of-the-repository)
-  - [Ready-made templates for "Multi-Tenant" environments](#ready-made-templates-for-multi-tenant-environments)
-  - [Restrict access and protect "main" branch](#restrict-access-and-protect-main-branch)
-  - [Create "feature" Branches and Pull Requests to trigger deployments](#create-feature-branches-and-pull-requests-to-trigger-deployments)
+  - [Ready-made templates for Multi-Tenant environments](#ready-made-templates-for-multi-tenant-environments)
+  - [Restrict access and protect main branch](#restrict-access-and-protect-main-branch)
+  - [Create feature Branches and Pull Requests to trigger deployments](#create-feature-branches-and-pull-requests-to-trigger-deployments)
 - [Build: Verify JSON and publish pipeline artifacts](#build-verify-json-and-publish-pipeline-artifacts)
   - [Continuous integration of policy and template changes](#continuous-integration-of-policy-and-template-changes)
   - [Run build tasks on separated self-hosted agents](#run-build-tasks-on-separated-self-hosted-agents)
-  - [Get "Pull Requests" details from Azure DevOps API](#get-pull-requests-details-from-azure-devops-api)
+  - [Get Pull Requests details from Azure DevOps API](#get-pull-requests-details-from-azure-devops-api)
   - [Tagging of deployment type and target environment](#tagging-of-deployment-type-and-target-environment)
   - [Publish pipeline artifacts](#publish-pipeline-artifacts)
 - [Push Pipeline: Deployment of CA changes](#push-pipeline-deployment-of-ca-changes)
   - [Continuous deployment trigger to create release automatically](#continuous-deployment-trigger-to-create-release-automatically)
   - [Multi-stage deployment to integrate approval and rings](#multi-stage-deployment-to-integrate-approval-and-rings)
-  - [Access to Microsoft Graph by using "Self-hosted Agents" and KeyVault](#access-to-microsoft-graph-by-using-self-hosted-agents-and-keyvault)
+  - [Access to Microsoft Graph by using Self-hosted Agents and KeyVault](#access-to-microsoft-graph-by-using-self-hosted-agents-and-keyvault)
   - [Versioning of policy templates in push pipelines](#versioning-of-policy-templates-in-push-pipelines)
-  - [Automated "ring-based" deployment (Staging)](#automated-ring-based-deployment-staging)
+  - [Automated ring-based deployment (Staging)](#automated-ring-based-deployment-staging)
 - [Pull Pipeline: Import of current policy set in Azure AD](#pull-pipeline-import-of-current-policy-set-in-azure-ad)
   - [Update repository by changes outside of AADOps pipeline](#update-repository-by-changes-outside-of-aadops-pipeline)
   - [Same governance and approval workflow as other contributions to repository](#same-governance-and-approval-workflow-as-other-contributions-to-repository)
-- [AADOps as "serverless"?](#aadops-as-serverless)
+- [AADOps as serverless?](#aadops-as-serverless)
 - [Live demo of AADOps](#live-demo-of-aadops)
 
 #### Table of Content:
-
 
 ## Introduction to AADOps
 
@@ -129,11 +128,11 @@ It's is widely spread and a (general) valuable approach to use "personas" or "ca
 
 Version number could be also part of the naming pattern if you like to manage multiple versions of a single policy within one tenant (especially in case of intra-tenant staging).
 
-## Code: Create "policy-as-code" template in repo
+## Code: Create policy-as-code template in repo
 
 ![../2021-08-11-aadops-conditional-access/aadops4.png](../2021-08-11-aadops-conditional-access/aadops4.png)
 
-### Azure DevOps Repo as "Source of Truth"
+### Azure DevOps Repo as Source of Truth
 
 Storing policies of the "Zero Trust (ZT) Engine" in Azure Repos means also to protect and secure "Control plane" assets in Azure DevOps. Therefore, security of your Azure DevOps Organization is becoming also essential for the ZT + identity security in case of automation. Follow the best practices to secure repos, projects and pipelines. Consider potential privilege escalation paths and verify the posture management of the DevOps platform. More information are included in the [Azure AD Attack and Defense playbook about Service Principals and Azure DevOps.](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/ServicePrincipals-ADO.md#securing-azure-devops-environment)
 
@@ -153,7 +152,7 @@ The following two subfolders exists in my repository:
 
     ![../2021-08-11-aadops-conditional-access/aadops6.png](../2021-08-11-aadops-conditional-access/aadops6.png)
 
-### Ready-made templates for "Multi-Tenant" environments
+### Ready-made templates for Multi-Tenant environments
 
 I can recommend to use parameters to replace dynamic values of group names and IDs (e.g.  Groups of Exclusions, Synchronization Service Accounts and Emergency Access Accounts).
 
@@ -161,7 +160,7 @@ As you can seen, the template folder contains "blueprint" CA policies with param
 
 ![../2021-08-11-aadops-conditional-access/aadops7.png](../2021-08-11-aadops-conditional-access/aadops7.png)
 
-### Restrict access and protect "main" branch
+### Restrict access and protect main branch
 
 As already mentioned, the build/release pipelines are configured for continuous integration and deployment. Therefore it's important to establish a limited access to the "main" branch and implement governance workflow to verify changes of policies. Therefore, [branch policies](https://docs.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops) and [enforcement of Pull-Request (PR) workflow](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/secure/best-practices/secure-devops?WT.mc_id=AZ-MVP-5003945#restrict-access-to-protected-branches) in Azure DevOps are an important part of the AADOps project configuration.
 
@@ -177,7 +176,7 @@ Member of the "IdentityOps"-Team needs to review the changes of the policies and
 
 ![../2021-08-11-aadops-conditional-access/aadops10.png](../2021-08-11-aadops-conditional-access/aadops10.png)
 
-### Create "feature" Branches and Pull Requests to trigger deployments
+### Create feature Branches and Pull Requests to trigger deployments
 
 In the next step, we will create a new branch from the work-item view in "Azure Boards" to start working on the new policy template and see the approval workflow from perspective of a "Zero Trust Policy Contributor". It's needed to choose a name for the "feature" branch (e.g. including change number or relation to epic item) and make sure to create a link to work item(s). This allows to establish a relation to the pull requests. In this case, I'm using the work item because the branch will be used only for adding the template to the repository:
 
@@ -215,7 +214,7 @@ As already described, the build pipelines (Policies-CI and Templates-CI) will be
 
 All tasks will be executed on [self-hosted agent(s)](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?WT.mc_id=AZ-MVP-5003945) which are used and reserved for "control plane" (identity)-related automaton jobs only. Therefore, the host of the agent(s) must be designed as isolated and secured virtual machines (Windows Server Core) or containers with the highest security standards in your Azure infrastructure. This includes also to validate and verify integrated scripts and tasks (from the Azure DevOps marketplace) by a supply-chain security process. In this case, I'm using a 3rd party task ("[Files Validator](https://marketplace.visualstudio.com/items?itemName=roshkovski.Files-Validator)") to validate JSON and PowerShell files which was installed from the Visual Studio Marketplace. This extension and installation source has to be verified to pass security and governance requirements.
 
-### Get "Pull Requests" details from Azure DevOps API
+### Get Pull Requests details from Azure DevOps API
 
 The following example shows an implementation of the pipeline which is designed to apply added or changed policies only. Therefore, I'm calling the [Azure DevOps API to retrieve the commit files from the Pull Request](https://docs.microsoft.com/en-us/rest/api/azure/devops/git/pull%20requests/get%20pull%20request?WT.mc_id=AZ-MVP-5003945). This helps me to build a structure in the artifact folder which can be easily used by the release pipeline to identify added or updated (existing) policies.
 
@@ -304,7 +303,7 @@ This gives you the opportunity for advanced integration like the following sampl
 (integration to ITSM/Change Management systems)
 - Requests to work items in the Azure Boards.
 
-### Access to Microsoft Graph by using "Self-hosted Agents" and KeyVault
+### Access to Microsoft Graph by using Self-hosted Agents and KeyVault
 
 [Managed Identities](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview?WT.mc_id=AZ-MVP-5003945) (compared to service principals) are offering advantages in security and lifecycle management. This presupposes to use "self-hosted agents" for running agent jobs on the release pipeline. Protected and hardened "self-hosted agents" are already in configured for (build) agent jobs. Keep in mind, isolation and separation from Azure management or workload admins are essential. Follow [Microsoft‘s best practices to secure Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/security/resources?WT.mc_id=AZ-MVP-5003945), e.g. avoid privilege escalation (from Azure DevOps admins or project members).
 
@@ -363,7 +362,7 @@ At the end, the displayname of the deployed CA policy shows me the template ID (
 
 ![../2021-08-11-aadops-conditional-access/aadops27.png](../2021-08-11-aadops-conditional-access/aadops27.png)
 
-### Automated "ring-based" deployment (Staging)
+### Automated ring-based deployment (Staging)
 
 In the following example, the target environment ("CloudLab") has two stages ("CAN" and "ALL" ring). This means that all templates will be deployed to the stage "CAN" in the first step.
 The "ALL" ring includes all users of the target environment ("Production") and will be triggered after all [post-deployment conditions of the pre-stage are successfully and/or the pre-deployment approvals was made](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/approvals/approvals?WT.mc_id=AZ-MVP-5003945) (e.g. manual approve by reviewer).
@@ -429,7 +428,7 @@ After the final approval by the "Governance/Security Reviewer", the enabled poli
 
 ![../2021-08-11-aadops-conditional-access/aadops37.png](../2021-08-11-aadops-conditional-access/aadops37.png)
 
-## AADOps as "serverless"?
+## AADOps as serverless?
 
 Most of the functions and tasks in the AADOps pipelines are based on REST API Calls (to Microsoft Graph or Azure DevOps API). Therefore it would be also possible to trigger those actions as part of a Logic App. In this case, Azure Repos or GitHub can be still used as repository including PR request as trigger. Protection and workflows for the repository (as source of truth) are still in-place but the efforts (and costs) to manage servers (as hosted agents) will be reduced. This solutions seems to be a real „cloud-native“ solution. But on the other hand, compliance and security of a Logic App to manage critical assets on „Control plane“ must be also considered. This includes to enable a similar approval workflows as already described in the DevOps release pipelines (e.g. approving deployment to another stage). Conditional statement and various connectors to ITSM or collaboration tools in Logic Apps should allow such kind of integration. Therefore, I would like to build the next PoC of AADOps as serverless solution (with Azure Logic App and/or Azure Functions).
 
