@@ -117,13 +117,17 @@ In aspects of automation, it should be helpful to built a naming convention base
 As I already mentioned, it's up to you to modify or extend Microsoft's naming schema.
 Here are two very "different approaches" to name or design your policies:
 
-- Personas for grouping policy sets:
+Personas for grouping policy sets:
 "CA11 - Privileged Identities - Azure Management: Require MFA"
+```jsx
 <Tenant><SequenceNumber> - <Personas/Groups> - <Cloud App Target> : <Response>
+```
 
-- Using "Access level" from the "[Enterprise Access Model](https://docs.microsoft.com/en-us/security/compass/privileged-access-access-model?WT.mc_id=AZ-MVP-5003945)" to design user access pathways:
+Using "Access level" from the "[Enterprise Access Model](https://docs.microsoft.com/en-us/security/compass/privileged-access-access-model?WT.mc_id=AZ-MVP-5003945)" to design user access pathways:
 "303 - ALL - Control/Management Plane - Privileged interfaces or intermediaries: Require MFA"
+```jsx
 <SequenceNumber> - <Ring/Staging> - <AccessLevel> - <Target / Scope> : <Response>
+```
 
 It's is widely spread and a (general) valuable approach to use "personas" or "categories" to group and name a set of policies.
 
