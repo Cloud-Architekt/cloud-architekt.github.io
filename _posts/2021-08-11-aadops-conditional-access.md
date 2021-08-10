@@ -225,7 +225,7 @@ The following example shows an implementation of the pipeline which is designed 
 
 OAuth token of the build pipeline will be used for authorization to the Azure DevOps API.
 
-```jsx
+```powershell
 $Project = "$env:SYSTEM_TEAMPROJECT"
 $RepoId = "$env:BUILD_REPOSITORY_ID"
 $CommitId = "$env:BUILD_SOURCEVERSION"
@@ -251,7 +251,7 @@ Azure DevOps API will be used for just another use case at the end of the build 
 
 In the following sample, I'm using the sub-folder name ("<TenantName">) of the "AAD_CA" folder hierarchy to identify the target environment. 
 
-```jsx
+```powershell
 # Using Folder structure for taging (which AAD_CA and certain TenantName as ID for Policy changes and trigger CD pipeline)
 $Tags = (Get-ChildItem -Path $env:BUILD_STAGINGDIRECTORY -Depth 1).Name
 
@@ -316,7 +316,7 @@ There are two options to use the "Managed identity" of the self-hosted agents to
 
 1. If you are running the release pipeline to a single-tenant/-environment, delegate the required Microsoft Graph permissions directly to the "Managed Identity". The following few lines of the PowerShell cmdlets from the "Az" module allows you to get an Microsoft Graph API access token:
 
-    ```jsx
+    ```powershell
     Connect-AzAccount -Identity
     $AccessToken = (Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com").Token
     Disconnect-AzAccount
@@ -325,7 +325,7 @@ There are two options to use the "Managed identity" of the self-hosted agents to
 2. The following approach can be a valid option if you prefer to run a single pipeline to pull/push policies from various environments:
 "Azure KeyVault" stores the secrets or certificates (recommended) of the various service principal(s) to get access to the target environments. Managed Identity will be used to receive the secrets from the secret store:
 
-    ```jsx
+    ```powershell
     $AzConnect = Connect-AzAccount -Tenant $KeyVaultTenant -Identity
     $KVAEntryClientID = $PrefixSecretName + "ClientId"
     $KVAEntryClientSecret = $PrefixSecretName + "ClientSecret"
@@ -378,7 +378,7 @@ The variables of the pre-stage ("CAN") includes the parameter "RingName" which w
 
 ![../2021-08-11-aadops-conditional-access/aadops29.png](../2021-08-11-aadops-conditional-access/aadops29.png)
 
-```jsx
+```powershell
 Creating or receiving group: sug_AAD.CA.Inclusion.CAN.Users
 ObjectId for sug_AAD.CA.Inclusion.CAN.Users 4ce0b86e-a0eb-44f1-b86e-d66c3195724c
 Importing policy templates
