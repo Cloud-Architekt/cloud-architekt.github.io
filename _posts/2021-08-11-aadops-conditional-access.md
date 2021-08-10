@@ -120,6 +120,7 @@ Here are two very "different approaches" to name or design your policies:
 - Personas for grouping policy sets:
 "CA11 - Privileged Identities - Azure Management: Require MFA"
 <Tenant><SequenceNumber> - <Personas/Groups> - <Cloud App Target> : <Response>
+
 - Using "Access level" from the "[Enterprise Access Model](https://docs.microsoft.com/en-us/security/compass/privileged-access-access-model?WT.mc_id=AZ-MVP-5003945)" to design user access pathways:
 "303 - ALL - Control/Management Plane - Privileged interfaces or intermediaries: Require MFA"
 <SequenceNumber> - <Ring/Staging> - <AccessLevel> - <Target / Scope> : <Response>
