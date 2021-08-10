@@ -116,7 +116,7 @@ After working on my "AADOps" project, two other interesting projects was release
 
 ### GraphAPI by Wesley Trust
 
-Wesley Trust has build a great [GitHub project which includes Azure DevOps CI/CD pipelines and scripts to automate the configuration](https://github.com/wesley-trust/GraphAPI) of many areas of Azure AD (such as CA Policies, Groups, Subscriptions, Directory Roles, Named Locations,...). Check out his work which is also [well documented on his blog](https://www.wesleytrust.com/blog/)!
+Wesley Trust has build a great [GitHub project which includes Azure DevOps CI/CD pipelines and scripts to automate the configuration](https://github.com/wesley-trust/GraphAPI) of many areas of Azure AD (such as CA Policies, Groups, Subscriptions, Directory Roles, Named Locations,...). Check out his work which is also [well documented on his blog](https://www.wesleytrust.com)!
 
 ### AADExporter
 
