@@ -7,7 +7,7 @@ tags: [security, azuread, azure]
 image: assets/images/aadops2.jpg
 description: "AADOps is a personal study and research project which sets out to demonstrate how operationalization of Azure AD in Azure DevOps could look like. In this blog post, I've set the scope on the scenario to build automation and lifecycle management of Conditional Access - as Zero Trust policy. Furthermore, I like to share security aspects and solution approaches from my lab implementation."
 featured: false
-hidden: false
+hidden: true
 ---
 
 _AADOps is a personal study and research project which sets out to demonstrate how "operationalization" of Azure AD in Azure DevOps could look like. In this blog post, I've set the scope on the scenario to build automation and lifecycle management of Conditional Access - as Zero Trust policy. Furthermore, I like to share security aspects and solution approaches from my lab implementation._
@@ -445,9 +445,6 @@ AADOps as implementation example will be part of my session about "Deep Dive int
 If you are hosting a Azure Meetup or other community-driven events and you are interested in this topic, it would be a pleasure for me to share my insights and a demo of "AADOps" in a hands-on session at your event.
 
 Feel free to contact me if you have any feedback or interested to learn more.
-
-<br>
-<br>
 <br>
 <span style="color:silver;font-style:italic;font-size:small">Original cover image by [Vojtech Bruzek / Unsplash](https://unsplash.com/photos/Jb1ca3NO2f0)</span>
 <span style="color:silver;font-style:italic;font-size:small">DevOps lifecycle illustration by [
