@@ -7,6 +7,9 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+
+
+*  [2021-09-01 Deep Dive into Conditional Access (@Workplace Ninja Summit)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-09-01%20WPNinjaS%20-%20Deep-Dive-Conditional-Access.pdf)
 *  [2021-08-31 Securing your privileged identity and access in Azure AD (@Workplace Ninja Summit)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-08-31%20WPNinjaS%20-%20Securing-your-privileged-IAM-AzureAD.pdf)
 *  [2021-04-16 Azure AD Identity Security (@Global Azure)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-04-16%20Global%20Azure%20-%20Azure%20AD%20Identity%20Security.pdf)
 *  [2021-04-08 Securing and Monitoring of your Azure AD Identities (@CloudCamp Quarterly Q1/21)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-04-08%20CloudCamp%20Q1%20-%20Securing-and-Monitoring-Your-Identities-with-AzureAD.pdf)
