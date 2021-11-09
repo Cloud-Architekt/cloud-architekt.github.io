@@ -23,8 +23,8 @@ comments: false
 *  [2020-09-01 Azure Governance - Best Practices (@Azure Meetup Bonn)](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) 
 *  [2020-07-28 Securing your privileged identity and access in Azure / Azure AD
  (@TrustInTech Cologne)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-07-28-TrustInTech%20Securing-your-privileged-identity-and-access-Azure.pdf) 
-*  [2020-05-28 Securing and monitoring yourAzure AD identities (@Microsoft 365 Virtual Marathon)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-05-27%20M365VM%20-%20Securing-and-Monitoring-AzureAD-identities.pdf) 
-*  [2020-04-25 Securing and monitoring yourAzure AD user and privileged accounts (@Global Azure Virtual Cologne)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-04-25%20Global-Azure-Securing-and-Monitoring-AzureAD-Identities.pdf) 
+*  [2020-05-28 Securing and monitoring your Azure AD identities (@Microsoft 365 Virtual Marathon)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-05-27%20M365VM%20-%20Securing-and-Monitoring-AzureAD-identities.pdf) 
+*  [2020-04-25 Securing and monitoring your Azure AD user and privileged accounts (@Global Azure Virtual Cologne)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-04-25%20Global-Azure-Securing-and-Monitoring-AzureAD-Identities.pdf) 
 *  [2020-01-23 Design and Security Hybrid Azure AD (@VCNRW)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-01-23%20vcnrw-Design-Security-hybriden-AzureAD.pdf) 
 *  [2020-01-16 Design and Security Hybrid Azure AD (@Azure Meetup Thueringen)](https://github.com/Cloud-Architekt/meetups/blob/master/2020-01-16%20Az-Thueringen-Design-Security-Hybrid-AzureAD.pdf) 
 *   [2019-09-14 Design und Security eines hybriden Azure AD (@cim lingen)](https://github.com/Cloud-Architekt/meetups/blob/master/2019-09-14%20cimlingen-Design%20und%20Security%20eines%20hybriden%20Azure%20AD.pdf)
