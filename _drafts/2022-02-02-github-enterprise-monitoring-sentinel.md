@@ -279,7 +279,7 @@ AutomateMSGraph,5b0542ae-XXXX-XXXX-XXXX-XXXX,8ef8-XXXX-XXXX-XXXX-XXXX,,corp-clou
 
 *Side note: Consider to automate the creation of WatchList which includes all “Federated Identity Credentials”. This can be achieved by periodically run of a Logic Apps to get all applications with [federatedIdentityCredentials](https://docs.microsoft.com/en-us/graph/api/application-list-federatedidentitycredentials?WT.mc_id=AZ-MVP-5003945) via Microsoft Graph API.*
 
-[**GitHub Federated Credentials created for unknown entity or repository outside of organization**](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/FedCredCreatedForUnknownEntity.yaml)
+[**Federated credentials has been created for unknown GitHub entity or repository outside of organization**](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/FedCredCreatedForUnknownEntity.yaml)
 
 Federated identity credentials will be [configured with scope on a GitHub organization and repository](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust-github?tabs=azure-portal#configure-a-federated-identity-credential). Adding credentials outside for another GitHub organization or unknown entity can be a indicator for suspicious activity or configuration mistake from an administrator. This detection is using a “join” operator to check if the named repository exists (based on the GitHub audit information).
 
