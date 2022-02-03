@@ -5,7 +5,7 @@ author: thomas
 categories: [ GitHub, Security, Sentinel ]
 tags: [security, github, azure]
 image: assets/images/ghesentinel.jpg
-description: "GitHub Enterprise is more than a platform to manage developer's code in a repository. It will be also used to automate deployment of cloud resources and manage "infrastructure-as-code". This blog post gives you an overview about ingest audit data, write analytics rules and automate response with the latest solution in Microsoft Sentinel."
+description: 'GitHub Enterprise is more than a platform to manage developer's code in a repository. It will be also used to automate deployment of cloud resources and manage "infrastructure-as-code". This blog post gives you an overview about ingest audit data, write analytics rules and automate response with the latest solution in Microsoft Sentinel.'
 featured: false
 hidden: false
 ---
