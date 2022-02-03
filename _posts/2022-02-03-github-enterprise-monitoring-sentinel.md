@@ -249,7 +249,9 @@ A list of sensitive actions (some of them are already pre-defined) but also auth
 **[New GitHub App added to GitHub Enterprise organization](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/GitHubAppAddedToOrg.yaml)**
 
 Incident will be created if a [GitHub Apps has been installed](https://docs.github.com/en/developers/apps/managing-github-apps/installing-github-apps) outside of a list with “allowed apps” (defined as dynamic variable in this sample but can be also part of a watchlist).
+
 **[Invited "outside collaborators" as owner to GitHub organization](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/InvitedOutsideCollabsAsOwner.yaml)**
+
 This query is looking for members that have been invited from external (outside collaborator) and added as owner of the GitHub organization.
 
 **[GitHub repository becomes public](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/RepoVisibilityChangeToPublic.yaml)**
@@ -264,6 +266,7 @@ The following query was inspired by a similar rule template for Azure DevOps.
 Enforced pull request by using privileged permissions ([defined in branch protection rules](https://github.blog/changelog/2021-11-19-allow-bypassing-required-pull-requests/)) will be detected by this analytics rules. Reducing noise can be achieved by adding authorized GitHub users ("AuthorizedBypassers") to the query. In addition, a dynamic (historic) will be automatically included  ("historicBypassers") with actors which has been override the policy in the past.
 
 **[New GitHub workflow is using secrets - Historic allow list](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/NewWorkflowUsingSecrets.yaml)**
+
 Secrets in GitHub repositories will be used to store sensitive credentials or certificates (incl. Service Principals). This rule is written to detect workflows which used secrets for the very first time. A list to exclude repositories ("BypassRepositories") from this query can be defined. A dynamic “historic allow list” (as previously described) will be used to exclude existing workflows. Threshold for covering workflows only after a certain numbers of secret usage ("SecretUsageThreshold") but also a alert threshold ("NewSecretUsageThreshold") is included by default. I would recommend you to use this detection (in production) in combination of a [WatchList](https://docs.microsoft.com/en-us/azure/sentinel/watchlists?WT.mc_id=AZ-MVP-5003945).
 
 ### Abusing Azure AD Federated Identity Credentials in GitHub Actions
