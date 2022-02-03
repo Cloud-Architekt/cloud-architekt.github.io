@@ -7,7 +7,7 @@ tags: [security, github, azure]
 image: assets/images/ghesentinel.jpg
 description: "GitHub Enterprise is more than a platform to manage developer's code in a repository. It will be also used to automate deployment of cloud resources and manage "infrastructure-as-code". This blog post gives you an overview about ingest audit data, write analytics rules and automate response with the latest solution in Microsoft Sentinel."
 featured: false
-hidden: true
+hidden: false
 ---
 
 *GitHub Enterprise is more than a platform to manage developer's code in a repository. It will be also used to automate deployment of cloud resources and manage "infrastructure-as-code" or even the entire platform (M365DSC, AzOps). Compromised or unsecured DevOps platform could be leading in privileged escalation to take control of your cloud deployments. Let's have a look on the latest solution to monitor a GitHub Enterprise environment with Microsoft Sentinel.*
@@ -25,6 +25,7 @@ hidden: true
 - [Incident Enrichment and Automated Response](#incident-enrichment-and-automated-response)
   - [Block user in GitHub](#block-user-in-github)
   - [Disable repository or organization to use GitHub actions](#disable-repository-or-organization-to-use-github-actions)
+  - [Investigation of workflow run logs](#investigation-of-workflow-run-logs)  
   - [Correlation between GitHub and Azure AD user names](#correlation-between-github-and-azure-ad-user-names)
 - [Limitations in auditing](#limitations-in-auditing)
 - [Comparison to other solutions](#comparison-to-other-solutions)
@@ -39,7 +40,7 @@ Microsoft has been released (in December 2021) a solution with then name **“[C
 
 It can be installed for free from the “Content hub” blade in Microsoft Sentinel directly or by using the [Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoftcorporation1622712991604.sentinel4github?tab=overview).
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring.png)
 
 Installation of the solution is quite simple. Select your Microsoft Sentinel workspace and choose a "Display Name" of the workbook. That’s it...
 
@@ -65,7 +66,7 @@ GitHub Enterprise with multi-organization environments needs to create **separat
 
 After the token has been created, enter the value of the **PAT as “API key”** in the configuration field of the data connector:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring1.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring1.png)
 
 You’ll should be able to see the first entries in the custom table “GitHubAuditLogPolling_CL” after a few minutes (and some audited events in GitHub later). 🙂
 
@@ -73,7 +74,7 @@ You’ll should be able to see the first entries in the custom table “GitHubAu
 
 [Health Monitoring workbook](https://docs.microsoft.com/en-us/azure/sentinel/monitor-data-connector-health#use-the-health-monitoring-workbook?WT.mc_id=AZ-MVP-5003945) and  [SentinelHealth data table](https://docs.microsoft.com/en-us/azure/sentinel/monitor-data-connector-health#use-the-sentinelhealth-data-table-public-preview?WT.mc_id=AZ-MVP-5003945) are not supporting the GitHub data connector. Nevertheless, anomalies queries can be written to visualize and trigger alerts based on counted event entries:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring2.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring2.png)
 
 ```jsx
 GitHubAuditLogPolling_CL
@@ -88,13 +89,13 @@ GitHubAuditLogPolling_CL
 As already described, a workbook is also part of the **solution to visualize the ingested data**.
 The information is very basic and covers general status of repository and management activities:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring3.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring3.png)
 
 At next step, I would recommend you to **add existing and related (visualized) queries from other workbooks** (such as “sign-in statistics” from Azure AD or “User Traffic to GitHub” from MCAS Cloud Discovery) to extend the visibility of events to your GitHub organization (across data sources).
 
 Copy the existing queries and modify the scope to the GitHub application only:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring4.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring4.png)
 
 Creating **visualization on own-written queries** can be also a great addition to the workbook.
 Let’s start with a simple example which shows a count of all activities in your GitHub organization (stored in column ”action_s”).
@@ -105,11 +106,11 @@ GitHubAuditLogPolling_CL
 | summarize count() by action_s
 ```
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring5.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring5.png)
 
 *Side note: **GitHub Audit logs in Microsoft Sentinel also covers events from workflows** (GitHub Actions). Therefore I’ve divided the counting between GitHub (e.g. configuration and repository activities) and all workflow related events.*
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring6.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring6.png)
 
 Another custom workbook sample is covering the authentication from GitHub to deploy Azure resources. GitHub Actions supports Azure AD “[Workload identity federation](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation#supported-scenarios?WT.mc_id=AZ-MVP-5003945)” which will be later a focus and use case in writing custom analytics rules. One simple query allows us to **visualize changes on service principals with federated identity credentials.** In this case, entities of the workload identity (GitHub repository) will be displayed:
 
@@ -130,7 +131,7 @@ AuditLogs
   | summarize count() by repository
 ```
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring7.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring7.png)
 
 The previous query can be easily modified to show also the most used Azure AD account (column “initiatedby”) for changing objects of this type of service principals.
 
@@ -141,14 +142,14 @@ As you can see, there’s a couple of interesting charts that could be integrate
 **Templates for analytics rules** are also part of the GitHub solution.
 Four different detections are available and can be found in the analytics blade of Microsoft Sentinel:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring8.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring8.png)
 
 Two “Workspace functions” with the name **“GitHubAuditLog” and “GitHubRepoLog” have been installed as product-specific “Parsers”** to map the ingested data to “normalized” column names (such as IPaddress, OperationType,...). You’ll find them in the “Functions” tab of the “Log” blade in Microsoft Sentinel.
 
 Unfortunately the used table and column names **doesn’t fit to the related data connector**.
 It seems that Microsoft has deployed the [original parser from the previous solution to ingest audit data from the GitHub API](https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/protecting-your-github-assets-with-azure-sentinel/ba-p/1457721?WT.mc_id=AZ-MVP-5003945) via Logic Apps/Azure Functions.
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring9.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring9.png)
 
 I’ve created an [issue on the Azure Sentinel GitHub repository](https://github.com/Azure/Azure-Sentinel/issues/4042) to request an update for included parsers.
 
@@ -160,9 +161,9 @@ It’s also interesting to **compare the raw events from the source (GitHub audi
 
 Already on the first look in the GitHub UI, it becomes clear that not all data will be ingested from/to Microsoft Sentinel. For example, location of the audited event is not visible in Sentinel:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring10.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring10.png)
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring11.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring11.png)
 
 It seems the [REST API](https://docs.github.com/en/organizations/keeping-your-organization-secure/reviewing-the-audit-log-for-your-organization#using-the-rest-api) will be used by the data connector which does not contain some detailed information. This can be reproduced by using this PowerShell script to ingest data:
 
@@ -226,7 +227,7 @@ $query = 'query {
 
 Location and IP address of the actor will be part of the audit entry:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring12.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring12.png)
 
 On the other side, there's a couple of disadvantages in getting audit data from GraphQL API in relation to the REST API.
 **Git events can not be retrieved by GraphQL API** and events from GitHub Actions were not visible during my tests. Coverage of audit data by **GraphQL API (up to 90 to 120 days)** and **REST API calls (retained for up to seven months, Git events for 7 days)** are different.
@@ -333,24 +334,74 @@ Enable Managed Identity (MSI) for the Logic App for accessing the PAT from the K
 - Afterwards, create a Logic App with “Microsoft Sentinel Incident” trigger and [assign permission to Sentinel for triggering the playbook](https://azurecloudai.blog/2021/06/15/access-required-to-adjust-azure-sentinel-permissions-to-run-playbooks/).
 - We are using the "Account" entity from the incident (in this case the GitHub account name) to identify the target "GitHub user" for blocking action. Secrets can be (securely) read by using the native KeyVault connector.
     
-    ![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring13.png)
+    ![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring13.png)
     
 - The second part of the playbook is using a “foreach” function on the list of accounts from the incident entity. Add the HTTP action for the API request to GitHub and choose the secret from the KeyVault as part of the “Authorization” header:
     
-    ![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring14.png)
+    ![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring14.png)
     
 - Optional: As final step in the playbook, we can add a comment to the incident if blocking the user has been successful.
     
-    ![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring15.png)
+    ![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring15.png)
     
 
 Finally, a [playbook automation](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-respond-threats-playbook?WT.mc_id=AZ-MVP-5003945) will trigger the Logic App (on the defined rule conditions) to apply automated response. Comments in the incident show the result of our playbook:
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring16.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring16.png)
 
 ### Disable repository or organization to use GitHub actions
 
 Disabling repositories to use GitHub actions in your organization can be a automated response on critical/massive abuse of secrets or federated identity credentials. A simple API call is needed to [block further access to use workflows](https://docs.github.com/en/rest/reference/actions#disable-a-selected-repository-for-github-actions-in-an-organization), similar to the approach of blocking users.
+
+### Investigation of workflow run logs
+
+Insights of the executed tasks and jobs are visible from the [workflow run logs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/using-workflow-run-logs).
+It might be interesting for a security analytics to get this further information, in case of incidents related to a workflow run (e.g. “New GitHub workflow is using secrets”).
+
+Therefore, I’ve created a playbook with "alert" trigger which can be used during the investigation phase of the incident. A URL to download the log files will be requested [by using the GitHub API call](https://docs.github.com/en/rest/reference/actions#download-job-logs-for-a-workflow-run). The response contains a short-time URL (expired after 1 minute) to download the logs.
+
+The following line will be added to the related analytics rule to include the original GitHub API URL as result of the query:
+
+```powershell
+| extend WorkflowRunLogURL = strcat("https://api.github.com/repos/", repo_s, "/actions/runs/", replace_string(tostring(workflow_run_id_d), '.0', ''), '/logs')
+```
+
+We are able to use “[Custom details](https://docs.microsoft.com/en-us/azure/sentinel/surface-custom-details-in-alerts?WT.mc_id=AZ-MVP-5003945)” (from the tab “Set rule logic”) in the analytics rule configuration blade to ensure that this URL is also part of the alert information (ExtendedProperties):
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp.png)
+
+Next, we will create a new Logic App with “Microsoft Sentinel alert” trigger and the following actions:
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp1.png)
+
+Parsing “Custom Details” from “extended properties” of the alert information allows us to use the “GitHub API URL” in the Logic Apps without any further efforts.
+
+Afterwards, we are reading a PAT from the KeyVault and use a “foreach” action to run the API calls for every URL which is included in the array of “WorkflowRunLogURL”:
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp2.png)
+
+Calls to this GitHub API will end in a (HTTP) redirect to get the time-limited URL.
+Therefore we need to use a “Switch” action on “Status code” of the HTTP response for further actions.
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp3.png)
+
+*Keep in mind: Logic Apps will be stopped if “ActionFailed” which is the case in HTTP error 302 (redirect). Consider to modify [“run after” behavior setting](https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-exception-handling#customize-run-after-behavior?WT.mc_id=AZ-MVP-5003945).*
+
+Finally, we are parsing the HTTP header to get the time-limited URL and add them to the comments of the incident:
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp4.png)
+
+Security analyst can be trigger this playbook manually during the investigation or [as part of the automated response in the analytics rule](https://docs.microsoft.com/en-us/azure/sentinel/detect-threats-custom#set-automated-responses-and-create-the-rule?WT.mc_id=AZ-MVP-5003945):
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp5.png)
+
+Few seconds after running the playbook, the short-time download link will be available and can be used by the security analyst:
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp6.png)
+
+Downloaded zip file contains all raw logs from the suspicious workflow run and allows to trace the usage of secrets:
+
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/logicapp7.png)
 
 ### Correlation between GitHub and Azure AD user names
 
@@ -435,7 +486,7 @@ Unfortunately I was not able to test this feature because it seems to be exclude
 Microsoft’s Cloud Access Security Broker allows to [integrate GitHub Enterprise as “connected app”](https://docs.microsoft.com/en-us/defender-cloud-apps/protect-github?WT.mc_id=AZ-MVP-5003945).
 Audit events includes information about IP addresses (and Locations) and all source data will be normalized to the default schema. This allows to use the GitHub audit data in the “Advanced Hunting” tables from the “Microsoft 365 Defender” portal
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring17.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring17.png)
 
 You will be able to write custom queries, e.g. to search for alerts in “Microsoft 365 Defender” filtered by IP addresses in GitHub Audit logs:
 
@@ -451,7 +502,7 @@ on AlertId
 | summarize count() by Title, Severity, ServiceSource, IPAddress, AccountDisplayName
 ```
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring18.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring18.png)
 
 Azure AD sign-in events are also available in the advanced hunting tables.
 Let’s use this simple query to match IP addresses from GitHub activities with sign-in events in Azure AD which helps us to get a list of used devices and locations:
@@ -465,13 +516,13 @@ on IPAddress
 | summarize count() by AccountDisplayName, IPAddress, DeviceName, City, Country
 ```
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring19.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring19.png)
 
 Correlation between GitHub and SAML-SSO linked Azure AD account will not be resolved.
 All GitHub user accounts (invited/externals) are included in the “Accounts” overview.
 Owners of the GitHub organization will be marked as “Administrators” (Privileged Accounts).
 
-![Screenshot](../2022-02-02-github-enterprise-monitoring-sentinel/githubmonitoring20.png)
+![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring20.png)
 
 MDCA could be also use to trigger governance actions (suspend accounts in Azure AD) without the need to create a playbook in Microsoft Sentinel. Additional (app-specific) governance actions are not part of the "App Connector". Policy templates for GitHub activity covers the basic use cases (incl. Repository access level becomes public).
 Visibility of IP addresses from GitHub activities will be included in MDCA detections (such as ["Activity from anonymous IP address"](https://docs.microsoft.com/en-us/defender-cloud-apps/anomaly-detection-policy#activity-from-suspicious-ip-addresses?WT.mc_id=AZ-MVP-5003945)).
