@@ -267,6 +267,7 @@ Enforced pull request by using privileged permissions ([defined in branch protec
 
 **[New GitHub workflow is using secrets - Historic allow list](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/GitHub/NewWorkflowUsingSecrets.yaml)**
 
+
 Secrets in GitHub repositories will be used to store sensitive credentials or certificates (incl. Service Principals). This rule is written to detect workflows which used secrets for the very first time. A list to exclude repositories ("BypassRepositories") from this query can be defined. A dynamic “historic allow list” (as previously described) will be used to exclude existing workflows. Threshold for covering workflows only after a certain numbers of secret usage ("SecretUsageThreshold") but also a alert threshold ("NewSecretUsageThreshold") is included by default. I would recommend you to use this detection (in production) in combination of a [WatchList](https://docs.microsoft.com/en-us/azure/sentinel/watchlists?WT.mc_id=AZ-MVP-5003945).
 
 ### Abusing Azure AD Federated Identity Credentials in GitHub Actions
