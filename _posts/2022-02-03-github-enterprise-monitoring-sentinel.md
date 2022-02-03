@@ -146,12 +146,12 @@ Four different detections are available and can be found in the analytics blade 
 
 Two “Workspace functions” with the name **“GitHubAuditLog” and “GitHubRepoLog” have been installed as product-specific “Parsers”** to map the ingested data to “normalized” column names (such as IPaddress, OperationType,...). You’ll find them in the “Functions” tab of the “Log” blade in Microsoft Sentinel.
 
-Unfortunately the used table and column names **doesn’t fit to the related data connector**.
-It seems that Microsoft has deployed the [original parser from the previous solution to ingest audit data from the GitHub API](https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/protecting-your-github-assets-with-azure-sentinel/ba-p/1457721?WT.mc_id=AZ-MVP-5003945) via Logic Apps/Azure Functions.
+Currently the used table and column names **doesn’t fit to the related data connector**.
+I’ve created an [issue on the Azure Sentinel GitHub repository](https://github.com/Azure/Azure-Sentinel/issues/4042), the parsers should be updated very soon.
 
 ![Screenshot](../2022-02-03-github-enterprise-monitoring-sentinel/githubmonitoring9.png)
 
-I’ve created an [issue on the Azure Sentinel GitHub repository](https://github.com/Azure/Azure-Sentinel/issues/4042) to request an update for included parsers.
+
 
 ### Available data fields and columns in audit log
 
