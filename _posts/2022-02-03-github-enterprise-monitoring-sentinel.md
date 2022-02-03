@@ -535,3 +535,5 @@ Some audit events on organization-level and also **repository events (incl. chan
 GitHub **workflow events from the audit log are also not part of the activity logs in MDCA**.
 
 I would recommend you to use MDCA audit logs in combination with Microsoft Sentinel. Especially as long some entities are not collected by the new (public preview) data connector in Sentinel. [Real-time control in MDCA](https://techcommunity.microsoft.com/t5/security-compliance-and-identity/secure-your-github-deployment-using-microsoft-cloud-app-security/ba-p/1882423?WT.mc_id=AZ-MVP-5003945) is also a great addition to manage your governance and user access of GitHub Enterprise and should be a good argument to connect your GitHub organization.
+
+*Special thanks to Grant Holliday for review and feedback to this article.*
