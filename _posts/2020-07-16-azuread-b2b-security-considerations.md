@@ -158,7 +158,7 @@ Enabling of “Security defaults” for all other (free) Azure AD tenants is sup
 **Monitoring access to inviting tenant from privileged users without MFA**
 
 I've tried to write a simple Azure Sentinel / KQL query to detect sign-ins without MFA from (invited) privileged users. In many cases the sign-in logs of the inviting tenant shows that MFA requirement was satisfied by a claim in the token even if it wasn't required.
-The query can be used in the inviting tenant and filtered users by name prefix of your privileged accounts. This is still an experimental query without any warranty. You'll find the latest version in my GitHub repository: [azuresentinel/SignInFromExternalPrivilegedUserWithoutMFAClaim.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/SignInFromExternalPrivilegedUserWithoutMFAClaim.kusto)
+The query can be used in the inviting tenant and filtered users by name prefix of your privileged accounts. This is still an experimental query without any warranty. You'll find the latest version in my GitHub repository: [azuresentinel/SignInFromExternalPrivilegedUserWithoutMFAClaim.yaml](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/AAD-PrivilegedIdentities/SignInFromExternalPrivilegedUserWithoutMFAClaim.yaml)
 
 ### No enforcement of sign-in risk and user risk policy in inviting Azure AD tenants (without Identity Protection)
 
@@ -225,7 +225,7 @@ Blocked sign-in (disabled user) or forced password change of sensitive or privil
 _Note: Consider the lifetime and behaviour of various type of tokens if you need to revoke access. Microsoft publish a new article which includes a general overview on [revocation of user access in Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/users-revoke-access)._
 
 Detection of risky and "non-applied policies" sign-ins to Azure Portal seems to be possible.
-I've used the following query to detect sign-ins with risk detection and non-applied "Conditional Access policies" from the home tenant during my tests. This query is simple but also very experimental. Feel free to use it (without any warranty)! The latest version of this query is available from my GitHub repo: [azuresentinel/RiskySignInToAzurePortal.kusto](https://github.com/Cloud-Architekt/azuresentinel/blob/master/RiskySignInToAzurePortal.kusto)
+I've used the following query to detect sign-ins with risk detection and non-applied "Conditional Access policies" from the home tenant during my tests. This query is simple but also very experimental. Feel free to use it (without any warranty)! The latest version of this query is available from my GitHub repo: [azuresentinel/RiskySignInToAzurePortal.yaml](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/AAD-PrivilegedIdentities/RiskySignInToAzurePortal.yaml)
 
 Enabling sign-in and user risk policy in the inviting / resource tenant (if possible) should be the best mitigation. This will also enforce risk-based policies to your other company tenants. Consider that remediation of [user risk must be performed in the home tenant](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b#why-cant-i-remediate-risky-b2b-collaboration-users-in-my-directory) and [access could be blocked to resource tenant](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-b2b#what-do-i-do-if-a-b2b-collaboration-user-was-blocked-due-to-a-risk-based-policy-in-my-organization).
 

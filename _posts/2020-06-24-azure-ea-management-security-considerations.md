@@ -192,7 +192,7 @@ Regular review of created API account keys in the EA Portal are neccessary if yo
 
 ![](../2020-06-24-azure-ea-management-security-considerations/EA_MonitoringAzSentinel.png)
 
-*Alerting from Azure Sentinel is also an option if you are using it as your SIEM solution. The illustrated [query is available in my GitHub repository](https://github.com/Cloud-Architekt/azuresentinel/blob/master/WriteClassicAdministratorsOfAzSubscription.kusto) for free use as detection (without any warranty).*
+*Alerting from Azure Sentinel is also an option if you are using it as your SIEM solution. The illustrated [query is available in my GitHub repository](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/AAD-PrivilegedIdentities/WriteClassicAdministratorsOfAzSubscription.yaml) for free use as detection (without any warranty).*
 <br>
 
 
