@@ -7,6 +7,9 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+
+
+*  [2022-04-19 Protect Your Privileged Identities and DevOps Pipelines In Microsoft Azure! (@Limmerick DotNet User Group)](https://github.com/Cloud-Architekt/meetups/blob/master/2022-04-19%20LDNA%20-%20Protect-Your-Privileged-IAM-and-DevOps-Pipelines.pdf)
 *  [2021-12-02 Protect Your Privileged Identities and DevOps Pipelines In Microsoft Azure! (@Hybrid Identity Protection)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-12-02%20HIPC%20-%20Securing-privileged-identities-and-pipelines.pdf)
 *  [2021-11-16 Deep Dive into Conditional Access (@aMS Germany)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-11-16%20aMS%20Germany%20-%20Deep%20Dive%20Conditional%20Access.pdf)
 *  [2021-11-11 Securing your privileged IAM in Azure AD (@Nordic Virtual Summit 2021)](https://github.com/Cloud-Architekt/meetups/blob/master/2021-11-11%20NVSummit%20-%20Securing-privileged-identities-and-access-in-AAD.pdf)
