@@ -294,3 +294,4 @@ Limit local administrator permissions for macOS users to reduce attack surface o
 Microsoft protects cached tokens on OS-level in Windows. [Many features are included](https://twitter.com/dwizzzlemsft/status/1493761186092834817?s=21) to avoid exfiltration of “Primary Refresh Token” (PRT) and also detections from MDE. A [new risk detection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks#premium-user-risk-detections) is also available in “Azure AD Identity Protection” to ingest alert from Windows devices if someone try to access the PRT. This seems not be working on macOS. Therefore, unlock events from users to get access or dump Keychain entries should be strictly monitored.
 
 *Thanks to Nestori Syynimaa and Oliver Kieselbach for sparring on this topic.*
+*Cover image original by [Sergey Zolkin](from Unsplash)*
