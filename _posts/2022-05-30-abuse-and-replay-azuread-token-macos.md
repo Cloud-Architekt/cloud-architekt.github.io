@@ -40,7 +40,6 @@ hidden: false
 According to Microsoft docs, Keychain plays a central role to store cached tokens which provides [SSO between MSAL apps](https://docs.microsoft.com/en-us/azure/active-directory/develop/single-sign-on-macos-ios):
 
 > When the [Microsoft Authentication Library for iOS and macOS](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-overview) (MSAL) signs in a user, or refreshes a token, it tries to cache tokens in the keychain. Caching tokens in the keychain allows MSAL to provide silent single sign-on (SSO) between multiple apps that are distributed by the same Apple developer. SSO is achieved via the keychain access groups functionality.
-> 
 
 *Source: [Configure keychain - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-v2-keychain-objc?tabs=objc)*
 
@@ -64,13 +63,12 @@ blockquote {
 | Microsoft 365 Apps | Only between M365 Apps | application password | MicrosoftOffice15_2_Data:<br />ADAL:<UserObjectID>, com.microsoft.adalcache | com.microsoft | No secrets or tokens in Keychain |
 | Microsoft Teams | No | application password | Microsoft Teams Identities Cache, com.microsoft.oneauth.<UserObjectId> | Microsoft Teams | No secrets or tokens in Keychain |
 | Microsoft Edge | No | application password | com.microsoft.oneauth.<UserObjectID>, Microsoft Edge Safe Storage com.microsoft | UBF8T346G9.com.microsoft<br />.identity.universalstorage | After initial profile sync: Various refresh token, primary refresh and access token are stored. Reference to user’s objectId is included. |
-
+<br/>
 *Note: I’ve used an Azure AD unregistered device without [Enterprise SSO plug-in](https://docs.microsoft.com/en-us/azure/active-directory/develop/apple-sso-plugin)* *for the following tests and use cases. Token caching in Keychain (by using access group “com.microsoft.identity.universalstorage”) seems to be the default for apps using MSAL. Therefore, most of the research results should be covered scenarios with „Enterprise SSO plug-in“ as well.*
 
 *Side note: Azure CLI on macOS uses also MSAL in the recent versions. According to [Microsoft docs](https://docs.microsoft.com/en-us/cli/azure/msal-based-azure-cli), the cached tokens will be stored in files as cleartext if you are using Service Principals for authentication on macOS:*
 
 > *The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and MacOS.*
-> 
 
 Let’s have a closer look on the Edge profile sync with Azure AD account and the cached tokens...
 
@@ -98,7 +96,7 @@ The GUIDs after “accesstoken-” and “refreshtoken-” are representing the 
 | 2d7f3606-b07d-41d1-b9d2-0d0c9296a6e8  | Microsoft Bing Search for Microsoft Edge | Refresh, Access and ID Token |
 | ecd6b820-32c2-49b6-98a6-444530e5a77a | Microsoft.AAD.BrokerPlugin / Microsoft Edge | Access and ID Token  |
 
-
+<br/>
 All types of cached tokens are stored in JWT format and can be displayed by unlocking the associated Keychain entries with the credentials of the local macOS user. 
 
 It’s really interesting to see that these cached tokens are stored and readable from Keychain compared to other Microsoft products on macOS (such as Microsoft Teams or Microsoft Office apps). I was not able to see cached tokens on an equivalent way from those other products.
@@ -171,7 +169,6 @@ A keychain entry with the name “refreshtoken-1—” and “primaryrefreshtoke
 It’s interesting to see a “Primary Refresh Token” (PRT) on a macOS device. Microsoft docs describes the PRT artifact in relation to Windows, iOS and Android but without any words regarding macOS:
 
 > A Primary Refresh Token (PRT) is a key artifact of Azure AD authentication on Windows 10 or newer, Windows Server 2016 and later versions, iOS, and Android devices. It is a JSON Web Token (JWT) specially issued to Microsoft first party token brokers to enable single sign-on (SSO) across the applications used on those devices. In this article, we will provide details on how a PRT is issued, used, and protected on Windows 10 or newer devices.
-> 
 
 *Source: [Primary Refresh Token (PRT) and Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token)*
 
@@ -307,5 +304,4 @@ Limit local administrator permissions for macOS users to reduce attack surface o
 Microsoft protects cached tokens on OS-level in Windows. [Many features are included](https://twitter.com/dwizzzlemsft/status/1493761186092834817?s=21) to avoid exfiltration of “Primary Refresh Token” (PRT) and also detections from MDE. A [new risk detection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks#premium-user-risk-detections) is also available in “Azure AD Identity Protection” to ingest alert from Windows devices if someone try to access the PRT. This seems not be working on macOS. Therefore, unlock events from users to get access or dump Keychain entries should be strictly monitored.
 
 *Thanks to Nestori Syynimaa and Oliver Kieselbach for sparring on this topic.*
-
 *Cover image original by [Sergey Zolkin](from Unsplash)*
