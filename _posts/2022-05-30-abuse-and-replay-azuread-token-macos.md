@@ -41,7 +41,7 @@ According to Microsoft docs, Keychain plays a central role to store cached token
 
 > When the [Microsoft Authentication Library for iOS and macOS](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-overview) (MSAL) signs in a user, or refreshes a token, it tries to cache tokens in the keychain. Caching tokens in the keychain allows MSAL to provide silent single sign-on (SSO) between multiple apps that are distributed by the same Apple developer. SSO is achieved via the keychain access groups functionality.
 
-*Source: [Configure keychain - Microsoft identity platform | Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-v2-keychain-objc?tabs=objc)*
+*Source: [Configure keychain - Microsoft identity platform - Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-v2-keychain-objc?tabs=objc)*
 
 I have found the following Keychain entries in relation to authentication for various Microsoft products on a macOS device:
 
@@ -53,7 +53,7 @@ table, th, td {
    border: 1px solid black;
 }
 blockquote {
-    border-left: solid blue;
+    border-left: solid gray;
     padding-left: 5px;
 }
 </style>
@@ -65,7 +65,6 @@ blockquote {
 | Microsoft Edge | No | application password | com.microsoft.oneauth.<UserObjectID>, Microsoft Edge Safe Storage com.microsoft | UBF8T346G9.com.microsoft<br />.identity.universalstorage | After initial profile sync: Various refresh token, primary refresh and access token are stored. Reference to user’s objectId is included. |
 
 <br/>
-
 *Note: I’ve used an Azure AD unregistered device without [Enterprise SSO plug-in](https://docs.microsoft.com/en-us/azure/active-directory/develop/apple-sso-plugin)* *for the following tests and use cases. Token caching in Keychain (by using access group “com.microsoft.identity.universalstorage”) seems to be the default for apps using MSAL. Therefore, most of the research results should be covered scenarios with „Enterprise SSO plug-in“ as well.*
 
 *Side note: Azure CLI on macOS uses also MSAL in the recent versions. According to [Microsoft docs](https://docs.microsoft.com/en-us/cli/azure/msal-based-azure-cli), the cached tokens will be stored in files as cleartext if you are using Service Principals for authentication on macOS:*
@@ -306,4 +305,5 @@ Limit local administrator permissions for macOS users to reduce attack surface o
 Microsoft protects cached tokens on OS-level in Windows. [Many features are included](https://twitter.com/dwizzzlemsft/status/1493761186092834817?s=21) to avoid exfiltration of “Primary Refresh Token” (PRT) and also detections from MDE. A [new risk detection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks#premium-user-risk-detections) is also available in “Azure AD Identity Protection” to ingest alert from Windows devices if someone try to access the PRT. This seems not be working on macOS. Therefore, unlock events from users to get access or dump Keychain entries should be strictly monitored.
 
 *Thanks to Nestori Syynimaa and Oliver Kieselbach for sparring on this topic.*
+
 *Cover image original by [Sergey Zolkin](from Unsplash)*
