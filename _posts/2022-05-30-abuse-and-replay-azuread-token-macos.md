@@ -46,6 +46,19 @@ According to Microsoft docs, Keychain plays a central role to store cached token
 
 I have found the following Keychain entries in relation to authentication for various Microsoft products on a macOS device:
 
+<style>
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+blockquote {
+    border-left: solid blue;
+    padding-left: 5px;
+}
+</style>
+
 | Product | SSO | Item Type | Keychain Entry | Access (Group) to Keychain item | Token/Credentials |
 | --- | --- | --- | --- | --- | --- |
 | Microsoft 365 Apps | Only between M365 Apps | application password | MicrosoftOffice15_2_Data:<br />ADAL:<UserObjectID>, com.microsoft.adalcache | com.microsoft | No secrets or tokens in Keychain |
