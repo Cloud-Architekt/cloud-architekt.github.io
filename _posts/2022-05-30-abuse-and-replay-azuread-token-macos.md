@@ -12,7 +12,7 @@ hidden: true
 
 *Microsoft is using Keychain to store cached Azure AD tokens for “logged in” Edge profiles on macOS devices. Apple’s integrated password management system offers “encryption at rest” and built-in security features. Nevertheless, options to exfiltrate user’s token and abuse them for token replay attacks should be considered. In this blog post, I like to give an overview about the potential attack scenarios and some security considerations.*
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadkeychain_overview.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadkeychain_overview.png)
 
 *Overview of the sign-in, token cache flow and potential replay attack paths on macOS devices.*
 
@@ -65,7 +65,7 @@ Let’s have a closer look on the Edge profile sync with Azure AD account and th
 
 A Keychain entry with the name “Microsoft Edge Safe Storage” will be created immediately after initial startup. At next, a user sign-in to “Edge” profile for [using Azure AD SSO and satisfying (device compliant-based) Conditional Access Policies](https://docs.microsoft.com/en-us/deployedge/ms-edge-security-conditional-access#accessing-conditional-access-protected-resources-in-microsoft-edge).
 
-![edgeprofile_signin.png](../2022-05-31-abuse-and-replay-azuread-token-macos/edgeprofile_signin.png)
+![edgeprofile_signin.png](../2022-05-30-abuse-and-replay-azuread-token-macos/edgeprofile_signin.png)
 
 After synchronization has been finished, Microsoft Edge has assigned permissions for the following existing Keychain entries:
 
@@ -74,7 +74,7 @@ After synchronization has been finished, Microsoft Edge has assigned permissions
 
 In addition, token artifacts can be found in the Keychain after you signed into a Microsoft Edge profile with Azure AD credentials:
 
-![Screenshot 2022-05-02 at 08.47.21.png](../2022-05-31-abuse-and-replay-azuread-token-macos/aadkeychainitems_local.png)
+![Screenshot 2022-05-02 at 08.47.21.png](../2022-05-30-abuse-and-replay-azuread-token-macos/aadkeychainitems_local.png)
 
 The GUIDs after “accesstoken-” and “refreshtoken-” are representing the “ClientId” of 1st Party (Microsoft) Enterprise applications. The listed Azure AD tokens are issued for the following apps:
 
@@ -101,7 +101,7 @@ union SigninLogs, AADNonInteractiveUserSignInLogs
 | project TimeGenerated, Identity, AppDisplayName, ResourceDisplayName, AppId, Category
 ```
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos1.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos1.png)
 
 Refresh (RT) and access token (AT) will be updated in the Keychain immediately after launch.
 
@@ -152,7 +152,7 @@ Because of the various potential use cases, I’ve used the cached refresh token
 
 A keychain entry with the name “refreshtoken-1—” and “primaryrefreshtoken-1—” exists alongside of client-specific refresh and access tokens:
 
-![Screenshot 2022-05-02 at 09.02.58.png](../2022-05-31-abuse-and-replay-azuread-token-macos/aadkeychainitem_prt.png)
+![Screenshot 2022-05-02 at 09.02.58.png](../2022-05-30-abuse-and-replay-azuread-token-macos/aadkeychainitem_prt.png)
 
 It’s interesting to see a “Primary Refresh Token” (PRT) on a macOS device. Microsoft docs describes the PRT artifact in relation to Windows, iOS and Android but without any words regarding macOS:
 
@@ -175,7 +175,7 @@ During my research, I’ve discovered the following two “behaviours” which s
 
 Azure AD users are able to “sign out” from profile and choose "Clear favorites, history, passwords, and other browsing data from this device when signing out from profile:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos2.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos2.png)
 
 Microsoft Edge for macOS stores refresh tokens persistently (incl. PRT and session key) even if the user has been signed out from profile and deleted "all profile data".
 
@@ -191,7 +191,7 @@ All cached tokens from the Microsoft Edge profile synchronization will be synchr
 
 This offers an access path for users (or attackers) to “synchronize” the related tokens to other iCloud connected devices for token replay and satisfying MFA requirements and/or conditions by Conditional Access policies (part of token claims) from another device.
 
-![Screen Shot 2022-05-12 at 22.04.26.png](../2022-05-31-abuse-and-replay-azuread-token-macos/aadkeychainentries.png)
+![Screen Shot 2022-05-12 at 22.04.26.png](../2022-05-30-abuse-and-replay-azuread-token-macos/aadkeychainentries.png)
 
 ## Exfiltration and replay of (Primary) Refresh Token
 
@@ -208,33 +208,33 @@ or security exploit to dump (iCloud) keychain (for example, using a [CVE-2019-8
 
 In this example, I’m using the PowerShell module “TokenTactics” to demonstrate the replay and abuse of the described token(s). It allows to request new refresh and access tokens (RT/AT) for other 1st party applications in Microsoft Azure AD.
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos3.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos3.png)
 
 As already discussed, the refresh token of “Microsoft Bing Search for Microsoft Edge” (2d7f3606-b07d-41d1-b9d2-0d0c9296a6e8) is one of the “**Family Refresh Tokens” (FOCI).**
 
 The “Token handler” in the “TokenTactics” module uses the “ClientId” of “Microsoft Office” to get other refresh and access tokens to FOCI apps. But this can be also replaced by other FOCI apps (e.g. Microsoft Azure Management):
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos4.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos4.png)
 
 I’ve extracted the secret of “Microsoft Bing Search for Microsoft Edge” from the Keychain entry and provided them as “RefreshToken” parameter to the “RefreshTo-MSGraphToken” cmdlet:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos5.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos5.png)
 
 Even if Microsoft Graph is not a direct known FOCI "family" client, I’m able to get an access token to this resource as part of the “Microsoft Office” resource delegation. The issued access token can be used to get full scoped (delegated) access to the Microsoft Graph API. For example, by using „Microsoft.Graph SDK“ and using the “AccessToken” parameter in the “Connect-MgGraph“ cmdlet:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos6.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos6.png)
 
 Another example: I’m able to get a refresh and access token to Microsoft Outlook which includes also a wide range of user scope:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos7.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos7.png)
 
 Using “RefreshTo-AzureManagementToken” cmdlet allows to request a refresh or access token for “Azure Management” if the affected user has privileged access to Azure resources and no Conditional Access policy protects privileged interfaces (enforce usage of SAW/PAW devices with Device Filters). Otherwise, you should receive this error message:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos8.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos8.png)
 
 Sign-ins will be audited in the “non-interactive” sign-in logs and displays “Microsoft Office” as application because “Token Tactics” is using (by default) this “ClientId” to get access to other FOCI apps and delegated resources (Microsoft Graph):
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos9.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos9.png)
 
 ## Sign-in logs and detection options
 
@@ -247,7 +247,7 @@ union SigninLogs, AADNonInteractiveUserSignInLogs
 | project TimeGenerated, Category, IPAddress, AppDisplayName, ResourceDisplayName, operatingSystem, Browser, UserAgent
 ```
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos10.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos10.png)
 
 ### Risk Detection of Azure AD Identity Protection
 
@@ -256,7 +256,7 @@ Microsoft offers many different sign-in risk detections which also applies to re
 One of the latest added detections is named “Anomalous Token” which detects “abnormal characteristics” or if a token “has been played from a unfamiliar locations”.
 During my tests, this risk detection was triggered once.
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos11.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos11.png)
 
 There’s one challenge of all risk detection: Even a token was replayed from a source with a detected risky IP address, the exfiltrated refresh tokens contains a strong authentication (MFA) claim which allows to “pass” sign-in risk policies with “Require MFA” access control.
 
@@ -268,11 +268,11 @@ As already named, sign-in risk policy could be easily “by passed” (self-reme
 
 New session sign-in frequency option to require re-authentication can be scoped on users based on defined sign-in or user risk levels:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos12.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos12.png)
 
 This offers the opportunity to expire presented MFA claim in the replayed token:
 
-![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos13.png)
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadtokenmacos13.png)
 
 ### Continuous Access Evaluation (CAE) and Critical Event of User/Sign-in risk
 
