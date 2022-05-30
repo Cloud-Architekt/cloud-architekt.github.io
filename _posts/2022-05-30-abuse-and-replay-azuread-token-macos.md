@@ -7,7 +7,7 @@ tags: [azuread, security, macos]
 image: assets/images/azureadmacostokens.png
 description: "Microsoft is using Keychain to store cached Azure AD tokens for “logged in” Edge profiles on macOS devices. Apple’s integrated password management system offers “encryption at rest” and built-in security features. Nevertheless, options to exfiltrate user’s token and abuse them for token replay attacks should be considered. In this blog post, I like to give an overview about the potential attack scenarios and some security considerations.*."
 featured: false
-hidden: true
+hidden: false
 ---
 
 - [macOS Keychain items from Microsoft products](#macos-keychain-items-from-microsoft-products)
@@ -48,9 +48,9 @@ I have found the following Keychain entries in relation to authentication for va
 
 | Product | SSO | Item Type | Keychain Entry | Access (Group) to Keychain item | Token/Credentials |
 | --- | --- | --- | --- | --- | --- |
-| Microsoft 365 Apps | Only between M365 Apps (Word, Excel, PowerPoint,...) | application password | MicrosoftOffice15_2_Data:ADAL:<UserObjectID>, com.microsoft.adalcache | com.microsoft | No secrets or tokens in Keychain |
+| Microsoft 365 Apps | Only between M365 Apps | application password | MicrosoftOffice15_2_Data:<br />ADAL:<UserObjectID>, com.microsoft.adalcache | com.microsoft | No secrets or tokens in Keychain |
 | Microsoft Teams | No | application password | Microsoft Teams Identities Cache, com.microsoft.oneauth.<UserObjectId> | Microsoft Teams | No secrets or tokens in Keychain |
-| Microsoft Edge | No | application password | com.microsoft.oneauth.<UserObjectID>, Microsoft Edge Safe Storage com.microsoft | UBF8T346G9.com.microsoft.identity.universalstorage | After initial profile sync: Various refresh token, primary refresh and access token are stored. Reference to user’s objectId is included. |
+| Microsoft Edge | No | application password | com.microsoft.oneauth.<UserObjectID>, Microsoft Edge Safe Storage com.microsoft | UBF8T346G9.com.microsoft<br />.identity.universalstorage | After initial profile sync: Various refresh token, primary refresh and access token are stored. Reference to user’s objectId is included. |
 
 *Note: I’ve used an Azure AD unregistered device without [Enterprise SSO plug-in](https://docs.microsoft.com/en-us/azure/active-directory/develop/apple-sso-plugin)* *for the following tests and use cases. Token caching in Keychain (by using access group “com.microsoft.identity.universalstorage”) seems to be the default for apps using MSAL. Therefore, most of the research results should be covered scenarios with „Enterprise SSO plug-in“ as well.*
 
@@ -294,4 +294,5 @@ Limit local administrator permissions for macOS users to reduce attack surface o
 Microsoft protects cached tokens on OS-level in Windows. [Many features are included](https://twitter.com/dwizzzlemsft/status/1493761186092834817?s=21) to avoid exfiltration of “Primary Refresh Token” (PRT) and also detections from MDE. A [new risk detection](https://docs.microsoft.com/en-us/azure/active-directory/identity-protection/concept-identity-protection-risks#premium-user-risk-detections) is also available in “Azure AD Identity Protection” to ingest alert from Windows devices if someone try to access the PRT. This seems not be working on macOS. Therefore, unlock events from users to get access or dump Keychain entries should be strictly monitored.
 
 *Thanks to Nestori Syynimaa and Oliver Kieselbach for sparring on this topic.*
+
 *Cover image original by [Sergey Zolkin](from Unsplash)*
