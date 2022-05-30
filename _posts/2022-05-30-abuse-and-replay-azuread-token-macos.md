@@ -63,7 +63,9 @@ blockquote {
 | Microsoft 365 Apps | Only between M365 Apps | application password | MicrosoftOffice15_2_Data:<br />ADAL:<UserObjectID>, com.microsoft.adalcache | com.microsoft | No secrets or tokens in Keychain |
 | Microsoft Teams | No | application password | Microsoft Teams Identities Cache, com.microsoft.oneauth.<UserObjectId> | Microsoft Teams | No secrets or tokens in Keychain |
 | Microsoft Edge | No | application password | com.microsoft.oneauth.<UserObjectID>, Microsoft Edge Safe Storage com.microsoft | UBF8T346G9.com.microsoft<br />.identity.universalstorage | After initial profile sync: Various refresh token, primary refresh and access token are stored. Reference to user’s objectId is included. |
+
 <br/>
+
 *Note: I’ve used an Azure AD unregistered device without [Enterprise SSO plug-in](https://docs.microsoft.com/en-us/azure/active-directory/develop/apple-sso-plugin)* *for the following tests and use cases. Token caching in Keychain (by using access group “com.microsoft.identity.universalstorage”) seems to be the default for apps using MSAL. Therefore, most of the research results should be covered scenarios with „Enterprise SSO plug-in“ as well.*
 
 *Side note: Azure CLI on macOS uses also MSAL in the recent versions. According to [Microsoft docs](https://docs.microsoft.com/en-us/cli/azure/msal-based-azure-cli), the cached tokens will be stored in files as cleartext if you are using Service Principals for authentication on macOS:*
