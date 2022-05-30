@@ -10,12 +10,6 @@ featured: false
 hidden: true
 ---
 
-*Microsoft is using Keychain to store cached Azure AD tokens for “logged in” Edge profiles on macOS devices. Apple’s integrated password management system offers “encryption at rest” and built-in security features. Nevertheless, options to exfiltrate user’s token and abuse them for token replay attacks should be considered. In this blog post, I like to give an overview about the potential attack scenarios and some security considerations.*
-
-![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadkeychain_overview.png)
-
-*Overview of the sign-in, token cache flow and potential replay attack paths on macOS devices.*
-
 - [macOS Keychain items from Microsoft products](#macos-keychain-items-from-microsoft-products)
 - [AAD Authenticated Edge Profile and Keychain](#aad-authenticated-edge-profile-and-keychain)
   - [Microsoft Bing Search and Family Refresh Token](#microsoft-bing-search-and-family-refresh-token)
@@ -34,6 +28,12 @@ hidden: true
   - [Limit token lifetime on non-corporate or non-managed devices](#limit-token-lifetime-on-non-corporate-or-non-managed-devices)
   - [Securing managed macOS devices](#securing-managed-macos-devices)
   - [Monitoring of macOS devices](#monitoring-of-macos-devices)
+
+*Microsoft is using Keychain to store cached Azure AD tokens for “logged in” Edge profiles on macOS devices. Apple’s integrated password management system offers “encryption at rest” and built-in security features. Nevertheless, options to exfiltrate user’s token and abuse them for token replay attacks should be considered. In this blog post, I like to give an overview about the potential attack scenarios and some security considerations.*
+
+![Screenshot](../2022-05-30-abuse-and-replay-azuread-token-macos/aadkeychain_overview.png)
+
+*Overview of the sign-in, token cache flow and potential replay attack paths on macOS devices.*
 
 ## macOS Keychain items from Microsoft products
 
@@ -84,6 +84,7 @@ The GUIDs after “accesstoken-” and “refreshtoken-” are representing the 
 | d7b530a4-7680-4c23-a8bf-c52c121d2e87-<TenantID>  | Microsoft News Feed (enterprisenews.microsoft.com) | Refresh, Access and ID Token |
 | 2d7f3606-b07d-41d1-b9d2-0d0c9296a6e8  | Microsoft Bing Search for Microsoft Edge | Refresh, Access and ID Token |
 | ecd6b820-32c2-49b6-98a6-444530e5a77a | Microsoft.AAD.BrokerPlugin / Microsoft Edge | Access and ID Token  |
+
 
 All types of cached tokens are stored in JWT format and can be displayed by unlocking the associated Keychain entries with the credentials of the local macOS user. 
 
