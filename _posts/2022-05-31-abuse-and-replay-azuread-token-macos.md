@@ -65,7 +65,7 @@ blockquote {
 | Microsoft Edge | No | application password | com.microsoft.oneauth.<UserObjectID>, Microsoft Edge Safe Storage com.microsoft | UBF8T346G9.com.microsoft<br />.identity.universalstorage | Various refresh token, primary refresh and access token has been cached. Reference to user’s objectId is included. |
 
 <br/>
-Note: I’ve used an Azure AD unregistered device without [Enterprise SSO plug-in](https://docs.microsoft.com/en-us/azure/active-directory/develop/apple-sso-plugin?WT.mc_id=AZ-MVP-5003945)* *for the following tests and use cases. Token caching in Keychain (by using access group “com.microsoft.identity.universalstorage”) seems to be the default for apps using MSAL. Therefore, most of the research results should be covered scenarios with „Enterprise SSO plug-in“ as well.
+Note: I’ve used an Azure AD unregistered device without [Enterprise SSO plug-in](https://docs.microsoft.com/en-us/azure/active-directory/develop/apple-sso-plugin?WT.mc_id=AZ-MVP-5003945) for the following tests and use cases. Token caching in Keychain (by using access group “com.microsoft.identity.universalstorage”) seems to be the default for apps using MSAL. Therefore, most of the research results should be covered scenarios with „Enterprise SSO plug-in“ as well.
 
 *Side note: Azure CLI on macOS uses also MSAL in the recent versions. According to [Microsoft docs](https://docs.microsoft.com/en-us/cli/azure/msal-based-azure-cli?WT.mc_id=AZ-MVP-5003945), the cached tokens will be stored in files as cleartext if you are using Service Principals for authentication on macOS:*
 
@@ -82,7 +82,7 @@ A Keychain entry with the name “Microsoft Edge Safe Storage” will be created
 After synchronization has been finished, Microsoft Edge has assigned permissions for the following existing Keychain entries:
 
 - “com.microsoft.adalcache”
-- “com.microsoft.oneauth.*<UserObjectId>*”
+- “com.microsoft.oneauth.<UserObjectId>”
 
 In addition, token artifacts can be found in the Keychain after you signed into a Microsoft Edge profile with Azure AD credentials:
 
@@ -120,7 +120,7 @@ Refresh (RT) and access token (AT) will be updated in the Keychain immediately a
 
 ### Microsoft Bing Search and Family Refresh Token
 
-One of the cached tokens by using an authenticated Edge Profile needs to pay special attention. The token issued to “Microsoft Bing Search for Microsoft Edge” (2d7f3606-b07d-41d1-b9d2-0d0c9296a6e8) is one of the clients in the “Family of Client IDs Support”. Secureworks has done an amazing research work on this topic and published a [detailed documentation](https://github.com/secureworks/family-of-client-ids-research). Thanks to Nestori Syynimaa for discussing this interesting topic.
+One of the cached tokens by using an authenticated Edge Profile needs to pay special attention. The token issued to “Microsoft Bing Search for Microsoft Edge” (2d7f3606-b07d-41d1-b9d2-0d0c9296a6e8) is one of the clients in the “Family of Client IDs Support”. Secureworks has done an amazing research work on this topic and published a [detailed documentation](https://github.com/secureworks/family-of-client-ids-research). Thanks to Nestori Syynimaa for discussing this interesting topic with me.
 
 In summary, some [Microsoft client applications are compatible with each other](https://github.com/secureworks/family-of-client-ids-research#which-client-applications-are-compatible-with-each-other) which means refresh token can be redeemed for token as any other client in the family. This allows to take benefit from their scope.
 
@@ -149,7 +149,7 @@ groups : {2670b5ae-d1e0-4d31-ba6a-bd7317206e37, 66de7365-2b11-4432-8e0b-80138c8a
 appid  : d3590ed6-52b3-4102-aeff-aad2292ab01c <-- Application Id of "Microsoft Office"
 ```
 
-This  token allows get an access token to Azure Resource Manager (ARM) API with Azure RBAC role permissions of the user by using the “Az” PowerShell Module:
+This  token allows to get an access token for the Azure Resource Manager (ARM) API with Azure RBAC role permissions of the user by using the “Az” PowerShell Module:
 
 ```powershell
 PS C:\Attack\TokenTactics> Connect-AzAccount -AccessToken $AzureManagementToken.access_token -AccountId dc15ccec-73ad-48b1-8eb2-a4c4c1f1c73c
@@ -173,7 +173,7 @@ It’s interesting to see a “Primary Refresh Token” (PRT) on a macOS device.
 
 *Source: [Primary Refresh Token (PRT) and Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token)*
 
-The JWT of the “PRT” can be read in cleartext by local user after unlocking the related Keychain entry. It contains the “Secret” but also a “Session_Key”. PRT is defined as “credential_type” in “Protocol Version” 3.0. I was not able to replay or “pass” the PRT in combination with various offensive tools (such as [AADInternals](https://www.google.com/search?client=safari&rls=en&q=aadinternals&ie=UTF-8&oe=UTF-8) or [ROADtools](https://github.com/dirkjanm/ROADtools)). It seems to be “incompatible” because of the different PRT Protocol version.
+The JWT of the “PRT” can be read in cleartext by local user after unlocking the related Keychain entry. It contains the “Secret” but also a “Session_Key”. PRT is defined as “credential_type” in “Protocol Version” 3.0. I was not able to replay or “pass” the PRT in combination with various offensive tools (such as [AADInternals](https://www.google.com/search?client=safari&rls=en&q=aadinternals&ie=UTF-8&oe=UTF-8) or [ROADtools](https://github.com/dirkjanm/ROADtools)). It seems to be “incompatible” because of the different PRT Protocol version. Therefore it was not possible to verify if the PRT can be replayed as well.
 
 Compared to Windows 10 or newer devices, sensitive keys of the PRT will be not protected particular on macOS. The session key seems readable for the related user and value in the Keychain item is not encrypted by a transport key. On Windows devices, a “session key” can be only decrypted by using a “private transport key” which is secured by the TPM chip.
 
@@ -189,7 +189,7 @@ Azure AD users are able to “sign out” from profile and choose "Clear favorit
 
 ![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos2.png)
 
-Microsoft Edge for macOS stores refresh tokens persistently (incl. PRT and session key) even if the user has been signed out from profile and deleted "all profile data".
+Microsoft Edge for macOS stores refresh tokens persistently (incl. PRT and session key) even if the user has been signed out from profile and deleted "all profile data". The latest Edge browser version "101.0.1210.47" has been used for my tests.
 
 Cached tokens are still valid (until token lifetime has expired) and can be used for token replay. A user needs to enter their credentials for “re-signing” to the Edge profile. In this case, Microsoft Edge is not using the remaining cached tokens for re-authentication.
 
@@ -209,7 +209,7 @@ This offers an access path for users (or attackers) to “synchronize” the rel
 
 ### Access to token (secrets) from Keychain
 
-In my opinion the following examples of attack paths exists where user or attacker could gain access to the cached token in the keychain of the user:
+In my opinion, the following examples of attack paths exists where user or attacker could gain access to the cached token in the keychain of the user:
 
 - Compromised macOS user password and running local script to unlock Keychain item
 - Compromised iCloud account with access to the synchronized Keychain entries
@@ -265,12 +265,12 @@ union SigninLogs, AADNonInteractiveUserSignInLogs
 
 Microsoft offers many different sign-in risk detections which also applies to replay tokens from a macOS device and further requests of refresh or access tokens.
 
-One of the latest added detections is named “Anomalous Token” which detects “abnormal characteristics” or if a token “has been played from a unfamiliar locations”.
+One of the latest [added detections is named “Anomalous Token”](https://techcommunity.microsoft.com/t5/azure-active-directory-identity/more-coverage-to-protect-your-identities/ba-p/2365685) which detects “abnormal characteristics” or if a token “has been played from a unfamiliar locations”.
 During my tests, this risk detection was triggered once.
 
 ![Screenshot](../2022-05-31-abuse-and-replay-azuread-token-macos/aadtokenmacos11.png)
 
-There’s one challenge of all risk detection: Even a token was replayed from a source with a detected risky IP address, the exfiltrated refresh tokens contains a strong authentication (MFA) claim which allows to “pass” sign-in risk policies with “Require MFA” access control.
+There’s one challenge of all risk detection: Even a token was replayed from a source with a detected risky IP address, the replayed refresh tokens contains a strong authentication (MFA) claim which allows to “pass” sign-in risk policies with “Require MFA” access control.
 
 ## Reduced attack surface and mitigations
 
@@ -288,17 +288,18 @@ This offers the opportunity to expire presented MFA claim in the replayed token:
 
 ### Continuous Access Evaluation (CAE) and Critical Event of User/Sign-in risk
 
-Microsoft has been implemented [CAE to trigger re-evaluation of Conditional Access policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation) if a condition has been changed (e.g. IP/location change or risk state of user). Unfortunately, this works only if you are using a CAE-capable client. This isn’t the case in my described token replay scenarios.
+Microsoft has been implemented [CAE to trigger re-evaluation of Conditional Access policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation?WT.mc_id=AZ-MVP-5003945) if a condition has been changed (e.g. IP/location change or risk state of user). Unfortunately, this works only if you are using a CAE-capable client. This isn’t the case in my described token replay scenarios.
 
 Until now, CAE can not be enforced for certain users and clients. Therefore, the trigger event could not be used as solution to revoke the replayed token.
+Nevertheless, CAE is an essential improvement in token security and resiliency and will become more and more applicable.
 
 ### Limit token lifetime on non-corporate or non-managed devices
 
-The described scenarios includes a macOS device which is not full managed by Microsoft Intune. I would recommend you to limit the token lifetime of refresh token on such kind of devices. This session management settings reduces the time window for abusing a valid cached tokens.
+The described scenarios includes a macOS device which is not full managed by Microsoft Intune. I would recommend you to limit the token lifetime of refresh token on such kind of devices. [Session management settings (sign-in frequency control)](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-session-lifetime?WT.mc_id=AZ-MVP-5003945#policy-deployment) in Conditional Access allows to reduce the time window for abusing a valid cached tokens.
 
 ### Securing managed macOS devices
 
-Limit local administrator permissions for macOS users to reduce attack surface on changing (local) macOS user passwords to get access to the Keychain. Define strong device compliance including the risk score for detection on suspicious client activities.
+Limit local administrator permissions for macOS users to reduce attack surface on changing (local) macOS user passwords to get access to the Keychain. Define a strong device compliance including the machine risk score for detection on suspicious client activities by Microsoft Defender for Endpoint.
 
 ### Monitoring of macOS devices
 
