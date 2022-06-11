@@ -7,6 +7,8 @@ comments: false
 
 ## My Slides
 ### Meetup & Community Talks
+
+*  [2022-06-11 Deploying and Managing Conditional Access at Scale (@Scottish Summit 2022)](https://github.com/Cloud-Architekt/meetups/blob/master/2022-06-10%20ScottishSummit-Deploying-and-Managing-ConditionalAccess-at-Scale.pdf)
 *  [2022-05-25 Securing Azure Active Directory (@OWASP Frankfurt)](https://github.com/Cloud-Architekt/meetups/blob/master/2022-05-25%20OWASP%20Frankfurt%20-%20Securing%20Azure%20AD.pdf)
 *  [2022-05-19 Deep Dive into Azure AD Conditional Access (@aMS Berlin)](https://github.com/Cloud-Architekt/meetups/blob/master/2022-05-19%20aMS%20Berlin%20-%20Deep%20Dive%20Conditional%20Access.pdf)
 *  [2022-04-19 Protect Your Privileged Identities and DevOps Pipelines In Microsoft Azure! (@Limmerick DotNet User Group)](https://github.com/Cloud-Architekt/meetups/blob/master/2022-04-19%20LDNA%20-%20Protect-Your-Privileged-IAM-and-DevOps-Pipelines.pdf)
