@@ -1,23 +1,25 @@
 ---
-layout: post
-title:  "Community Project: Azure AD Attack and Defense Playbook"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [security, azuread, azure]
-image: assets/images/worldwidesecurity.jpg
-description: "In the recent weeks, I've worked together with Sami Lamppu on the first section of a playbook about common attack and defense scenarios in Azure AD. In this article I would like to talk about the motivation, objective of the document and invite everyone from the community to participate in this project."
-featured: false
-hidden: false
+title: "Community Project: Azure AD Attack and Defense Playbook"
+excerpt: "In the recent weeks, I've worked together with Sami Lamppu on the first section of a playbook about common attack and defense scenarios in Azure AD. In this article I would like to talk about the motivation, objective of the document and invite everyone from the community to participate in this project."
+header:
+  overlay_image: /assets/images/worldwidesecurity.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/worldwidesecurity.jpg
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - Security
+  - Community
+last_modified_at: 2020-11-19
 ---
-
-*In the recent weeks, I've worked together with Sami Lamppu on the first section of a playbook about common attack and defense scenarios in Azure AD.
-In this article I would like to talk about the motivation, objective of the document and invite everyone from the community to participate in this project.*
 
 ## Current assault on Azure AD
 
 There's no doubt... protection of identities is an essential part of the security architecture and strategy today. Over the years, transformation to the cloud and modernizing IT environments has led some companies to rethink about the existing security perimeter and move from traditional network to identity-driven / zero trust approach. The world-wide situation of the COVID-19 pandemic has enforced many organizations to enable employees working from home. On the other side, many attackers are trying to exploit the situation and riding attacks on infrastructure environments with weak protection or implementation gaps as a result of short-term implementation.
 
-![../2020-11-19-aad-playbook-project/msft_attackstatistics.png](../2020-11-19-aad-playbook-project/msft_attackstatistics.png)
+![../2020-11-19-aad-playbook-project/msft_attackstatistics.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-11-19-aad-playbook-project/msft_attackstatistics.png)
 
 *Microsoft shared current statistics on identity theft attacks at this years' Ignite conference.
 One of the key message: There are over 80 million identity attacks every single day with 98 percent precision.
@@ -40,7 +42,7 @@ I had the pleasure to meet other members of the community who are also intereste
 
 Microsoft has announced a new detection for "Password Spray Attacks" in August 20220. I was surprised to see that three detections are available in Microsoft's security products concerning this specific attack methods. Therefore, I thought it would be interesting to understand the differentiation, purpose of use or interaction of those detection methods.
 
-![../2020-11-19-aad-playbook-project/tweet_psattack.png](../2020-11-19-aad-playbook-project/tweet_psattack.png)
+![../2020-11-19-aad-playbook-project/tweet_psattack.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-11-19-aad-playbook-project/tweet_psattack.png)
 
 A few weeks later, I had a call with [Sami Lamppu](https://twitter.com/samilamppu), who [published many blog posts](https://samilamppu.com/) with detailed insights of MCAS and Identity Protection. We were of the opinion that we need to trigger some (simulated) attacks to identify the various existing detections and protection features under near real-world conditions.
 Therefore we decided to work together on this attack scenario and publish the results as part of an attack/defense playbook.
@@ -59,7 +61,7 @@ We were a little surprised how many details or conditions needs to be considered
 
 Nevertheless, the jointly research work was really a lot of fun! Once again, it has been shown that exchange or discussion of opinions and results from the lab are extremely valuable.
 
-![../2020-11-19-aad-playbook-project/teamscall.jpg](../2020-11-19-aad-playbook-project/teamscall.jpg)
+![../2020-11-19-aad-playbook-project/teamscall.jpg]({{ site.url }}{{ site.baseurl }}/assets/images/2020-11-19-aad-playbook-project/teamscall.jpg)
 
 *Regular video calls and joint editing of documents in Microsoft Teams has enabled us to work on this project.*
 

@@ -1,9 +1,10 @@
 ---
-layout: page
-title: Privacy
-permalink: /privacy
-comments: false
+permalink: /privacy/
+title: "Privacy"
+layout: single
+classes: wide
 ---
+
 ## Privacy Policy
 
 Personal data (usually referred to just as “data” below) will only be processed by us to the extent necessary and for the purpose of providing a functional and user-friendly website, including its contents, and the services offered there.

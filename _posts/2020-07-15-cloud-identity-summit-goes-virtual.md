@@ -1,13 +1,17 @@
 ---
-layout: post
-title:  "Cloud Identity Summit 2020 goes virtual...and global!"
-author: thomas
-categories: [ Azure, Community, AzureAD ]
-tags: [azure, azuread]
-image: assets/images/cis2020announcement.jpg
-description: "Cloud Identity Summit will be take place on October 22th as global virtual event. Find out more about this free Azure community event in my latest announcement."
-featured: false
-hidden: false
+title: "Cloud Identity Summit 2020 goes virtual...and global!"
+excerpt: "Cloud Identity Summit will be take place on October 22th as global virtual event. Find out more about this free Azure community event in my latest announcement."
+header:
+  overlay_image: /assets/images/cis2020announcement.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/cis2020announcement.jpg
+toc: false
+categories:
+  - Community
+tags:
+  - AzureAD
+  - Community
+last_modified_at: 2020-07-15
 ---
 
 Originally we had planned to run the 1st edition of the „Cloud Identity Summit“ as local event (in Koblenz, Germany).
@@ -25,4 +29,4 @@ The first round of speakers will be announced soon.
 Event details and the upcoming free registration will be available here: [www.identitysummit.cloud](https://www.identitysummit.cloud)
 Follow us on twitter ([@identitysummit](https://twitter.com/identitysummit)) to get latest updates around registration, schedule and speaker announcements.
 
-![](../2020-07-15-cloud-identity-summit-goes-virtual/cis_2020_virtual_announcement.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-07-15-cloud-identity-summit-goes-virtual/cis_2020_virtual_announcement.png)

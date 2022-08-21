@@ -1,16 +1,17 @@
 ---
-layout: post
-title:  "Review 2019 and next community engagements"
-author: thomas
-categories: [ Azure, Community ]
-tags: [azure, community]
-image: assets/images/community-events-2019.jpg
-description: "The year is nearly over… now is a great time to look back and see what’s next in the upcoming year."
-featured: false
-hidden: false
+title: "Review 2019 and next community engagements"
+excerpt: "The year is nearly over… now is a great time to look back and see what’s next in the upcoming year."
+header:
+  overlay_image: /assets/images/community-events-2019.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/community-events-2019.jpg
+toc: false
+categories:
+  - Community
+tags:
+  - Community
+last_modified_at: 2019-12-19
 ---
-
-_The year is nearly over… now is a great time to look back and see what’s next in the upcoming year._
 
 ## Review 2019
 I had the pleasure to talk at various meetups and conferences this year.

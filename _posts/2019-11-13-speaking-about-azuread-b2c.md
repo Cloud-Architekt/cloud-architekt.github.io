@@ -1,13 +1,18 @@
 ---
-layout: post
-title:  "Speaking about Azure Active Directory B2C at .NET User Group Koblenz"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [azure, azuread, security]
-image: assets/images/aadb2c-session.jpg
-description: "I have speaking about Azure AD B2C at the local .NET user group. You can find my slides here."
-featured: false
-hidden: false
+title: "Speaking about Azure Active Directory B2C at .NET User Group Koblenz"
+excerpt: "I have speaking about Azure AD B2C at the local .NET user group. You can find my slides here."
+header:
+  overlay_image: /assets/images/aadb2c-session.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/aadb2c-session.jpg
+toc: false
+categories:
+  - Azure AD B2C
+tags:
+  - AzureAD
+  - Community
+  - ExternalIdentities
+last_modified_at: 2019-11-13
 ---
 
 I have been speaking about Azure Active Directory B2C at the local “.NET User Group” in Koblenz (Germany) this week.

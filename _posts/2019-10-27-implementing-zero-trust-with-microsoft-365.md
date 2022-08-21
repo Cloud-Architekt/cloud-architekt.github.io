@@ -1,13 +1,18 @@
 ---
-layout: post
-title:  "Implementing Zero Trust with Microsoft 365 (Study collection)"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [azure, azuread, security]
-image: assets/images/zero-trust-network.jpg
-description: "Do you want to know how to implement a ZeroTrust security model with Microsoft 365? Take a look on my link collection to learn more about the modern approach to cybersecurity."
-featured: false
-hidden: false
+title: "Implementing Zero Trust with Microsoft 365 (Study collection)"
+excerpt: "Do you want to know how to implement a ZeroTrust security model with Microsoft 365? Take a look on my link collection to learn more about the modern approach to cybersecurity."
+header:
+  overlay_image: /assets/images/zero-trust-network.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/zero-trust-network.jpg
+toc: true
+toc_sticky: true
+categories:
+  - Azure
+tags:
+  - Azure
+  - Security
+last_modified_at: 2019-10-27
 ---
 
 _Building and implementing “Zero Trust networks” (ZTN) is essential to archive a new cyber security model in a world of modern IT and cloud transformation. Previous (traditional) perimeter-based network security depend on the paradigm that data is secure as long as it is located on-premises and within local (corporate) networks. This doesn’t fit in today’s business environment of cross-business collaboration, usage of (personal) mobile devices, specific protection of data security and cloud apps._ 
@@ -15,7 +20,7 @@ _Building and implementing “Zero Trust networks” (ZTN) is essential to archi
 It’s a mind shift from a model of implicit trust to one of explicit verification.
 In a brief summary this means: **“Always Verify. Never Trusts”**.
 
-![](../2019-10-27-implementing-zero-trust-with-microsoft-365/zero-trust-major-components.jpg)  
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-implementing-zero-trust-with-microsoft-365/zero-trust-major-components.jpg)  
 
 _Figure 1: Verficiation performed in each phase of Zero Trust.  
 Source: [Microsoft IT Showcase: Implementing a Zero Trust security model at Microsoft](https://www.microsoft.com/en-us/itshowcase/implementing-a-zero-trust-security-model-at-microsoft)_

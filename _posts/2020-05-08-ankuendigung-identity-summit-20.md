@@ -1,13 +1,17 @@
 ---
-layout: post
-title:  "Community Event: Cloud Identity Summit am 23.10.2020 in Koblenz"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [community, azuread]
-image: assets/images/identity-summit-20-logo.png
-description: "Am 23.10.2020 wird eine ganztägige Community-Veranstaltung zu Themen rund um Azure AD in Koblenz statt finden. Der Cloud Identity Summit setzt dabei besonders den Fokus auf den Austausch unter den Teilnehmern und Vorträge für Identity Experten."
-featured: false
-hidden: false
+title: "Community Event: Cloud Identity Summit am 23.10.2020 in Koblenz"
+excerpt: "Am 23.10.2020 wird eine ganztägige Community-Veranstaltung zu Themen rund um Azure AD in Koblenz statt finden. Der Cloud Identity Summit setzt dabei besonders den Fokus auf den Austausch unter den Teilnehmern und Vorträge für Identity Experten."
+header:
+  overlay_image: /assets/images/identity-summit-20-logo.png
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/identity-summit-20-logo.png
+toc: false
+categories:
+  - Community
+tags:
+  - AzureAD
+  - Community
+last_modified_at: 2020-05-08
 ---
 
 Ich freue mich sehr, ein besonderes Community-Event für den Herbst anzukündigen.
@@ -26,7 +30,7 @@ Wir haben bereits für Euch auch  Themenvorschläge vorbereitet, über die Ihr a
 
 Hinweis: **Alle Teilnehmer der Umfrage werden vorab informiert, sobald die Registrierung möglich ist.**
 
-![](../2020-05-08-ankuendigung-identity-summit-20/identity-summit-20-cover.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-05-08-ankuendigung-identity-summit-20/identity-summit-20-cover.png)
 
 Weitere Informationen und die Umfrage findet Ihr auch auf der Event-Webseite: [IdentitySummit.cloud](https://www.identitysummit.cloud/)
 

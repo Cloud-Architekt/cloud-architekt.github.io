@@ -1,13 +1,19 @@
 ---
-layout: post
-title:  "Privileged Access Groups: Manage privileged access outside of Azure AD admin roles with Azure PIM"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [security, azuread, azure]
-image: assets/images/azurepim.jpg
-description: "Microsoft introduced Privileged Access Groups in Azure AD and PIM recently. I like to give an overview of current challenges in managing privileged access outside of Azure AD admin roles (for example in Azure DevOps, Intune or MDATP RBAC) and where PAG seems to offer new management capabilities."
-featured: true
-hidden: false
+title: "Privileged Access Groups: Manage privileged access outside of Azure AD admin roles with Azure PIM"
+excerpt: "Microsoft introduced Privileged Access Groups in Azure AD and PIM recently. I like to give an overview of current challenges in managing privileged access outside of Azure AD admin roles (for example in Azure DevOps, Intune or MDATP RBAC) and where PAG seems to offer new management capabilities."
+header:
+  overlay_image: /assets/images/azurepim.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/azurepim.jpg
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - Security
+  - SecuringPrivilegedAccess
+last_modified_at: 2020-08-11
 ---
 
 *Azure Privileged Identity Management (PIM) allows to assign eligibility for membership as part of "Privileged Access Groups" (PAG). In this blog post I like to give an overview of current challenges and use cases of privileged access management outside of Azure AD roles (by using RBAC in Azure DevOps or Intune) and where PAG seems to offer new management capabilities.* 
@@ -50,7 +56,7 @@ All other general admin roles (e.g. Security- or Compliance-Administrator) are m
 
 I‘ve extended the following RBAC diagram (from the [Microsoft Security Compass](https://github.com/MarkSimos/MicrosoftSecurity/tree/master/Azure%20Security%20Compass%201.1) to give a high-level overview:
 
-![../2020-08-11-azurepim-pag-rbac/microsoftrbac.png](../2020-08-11-azurepim-pag-rbac/microsoftrbac.png)
+![../2020-08-11-azurepim-pag-rbac/microsoftrbac.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/microsoftrbac.png)
 
 Apart of using Azure AD admin roles to gain (comprehensive) access to several Microsoft cloud services, the option to delegate administrative tasks within the individual portal- or product-specific RBACs is also available. Flexibility to create custom roles and scopes are one of the advantages of well-designed RBAC models, as you can find in Microsoft Defender ATP (MDATP) or Intune.
 
@@ -76,7 +82,7 @@ Azure DevOps will be used mostly for automated deployment to Azure resources as 
 Some organizations are securing their privileged admin accounts in Microsoft Azure but aren't aware of privileged service identities in Azure DevOps.
 Developers or Project managers may also have (indirect) permission to use those service connections by other pipelines (as originally planned or delegated).
 
-![../2020-08-11-azurepim-pag-rbac/admindevopstier.png](../2020-08-11-azurepim-pag-rbac/admindevopstier.png)
+![../2020-08-11-azurepim-pag-rbac/admindevopstier.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/admindevopstier.png)
 
 Therefore it's recommended (in my opinion) to analyze who has permission to service connections and manage them as eligibility assignment by PIM (incl. approval workflows and auditing). 
 
@@ -86,55 +92,55 @@ _Note: Microsoft already documented some general recommendations on [securing a 
 
 Check that your DevOps admin user has currently no privileged access to Azure DevOps before we configure PAG for eligible assignment:
 
-![../2020-08-11-azurepim-pag-rbac/azdevops-accessednied.png](../2020-08-11-azurepim-pag-rbac/azdevops-accessednied.png)
+![../2020-08-11-azurepim-pag-rbac/azdevops-accessednied.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-accessednied.png)
 
 **Create PAG and configure role settings**
 
 1. Create a new PAG to manage assignment to Azure DevOps role "Team Project Collection" later.
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-newgroup.png](../2020-08-11-azurepim-pag-rbac/azdevops-newgroup.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-newgroup.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-newgroup.png)
 
 2. Enable "Privileged access" (preview feature) in the "Activity" area of the "Group" blade.
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-enablepag.png](../2020-08-11-azurepim-pag-rbac/azdevops-enablepag.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-enablepag.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-enablepag.png)
 
 3. Go to the Azure PIM blade and choose the new created PAG to assign eligible membership:
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-assignments.png](../2020-08-11-azurepim-pag-rbac/azdevops-assignments.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-assignments.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-assignments.png)
 
 4. In the next steps you are able to configure duration of the eligible assignment. The max. allowed eligible duration can be configured in the role setting of the PAG.
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-assignmentstime.png](../2020-08-11-azurepim-pag-rbac/azdevops-assignmentstime.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-assignmentstime.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-assignmentstime.png)
 
 5. The eligible assignment to the PAG should be visible in the "Privileged access" blade of PIM after few seconds.
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-privuseroverview.png](../2020-08-11-azurepim-pag-rbac/azdevops-privuseroverview.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-privuseroverview.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-privuseroverview.png)
 
 6. Optional: Go to the "Role settings" to adjust the default settings and configure further details (Activation, Assignment and Notification). Requirements for approval requests, enforcement of MFA or input of ticket information can be also configured here:
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-rolesettings.png](../2020-08-11-azurepim-pag-rbac/azdevops-rolesettings.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-rolesettings.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-rolesettings.png)
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-rolesettingsapproval.png](../2020-08-11-azurepim-pag-rbac/azdevops-rolesettingsapproval.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-rolesettingsapproval.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-rolesettingsapproval.png)
 
 **Assign PAG to Azure DevOps role group**
 
 1. Go to the Azure DevOps Organization settings and choose "Security" > "Permissions".
 2. The application group "Project Collection Administrator" will be used in this example for JIT access. Add the PAG (similar to other Azure AD Groups) to the members:
 
-![../2020-08-11-azurepim-pag-rbac/azdevops-permissions.png](../2020-08-11-azurepim-pag-rbac/azdevops-permission.png)
+![../2020-08-11-azurepim-pag-rbac/azdevops-permissions.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-permission.png)
 
 **Request PAG membership from your eligible user**
 
 1. Sign-in with credentials of the DevOps admin user and go to the [PIM portal](https://portal.azure.com/#blade/Microsoft_Azure_PIMCommon/CommonMenuBlade/aadgroup) for requesting membership as part of "My roles" blade.
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-useractivation.png](../2020-08-11-azurepim-pag-rbac/azdevops-useractivation.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-useractivation.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-useractivation.png)
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-userinput.png](../2020-08-11-azurepim-pag-rbac/azdevops-userinput.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-userinput.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-userinput.png)
 
 2. User will be added to the PAG in Azure AD immediately after successfull activation of the eligible assignment.
 Move to the Azure DevOps portal to validate if the requested DevOps role assignment is now effective.
 
-    ![../2020-08-11-azurepim-pag-rbac/azdevops-stream.png](../2020-08-11-azurepim-pag-rbac/azdevops-stream.png)
+    ![../2020-08-11-azurepim-pag-rbac/azdevops-stream.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/azdevops-stream.png)
 
 ### Scenario II: Scoped privileged access to Intune objects
 
@@ -144,7 +150,7 @@ Move to the Azure DevOps portal to validate if the requested DevOps role assignm
 
 I've tried to build a relation between the permission scope of (built-in) directory roles in Azure AD and (the already known) "[Tier model (ESAE)](https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/securing-privileged-access-reference-material?WT.mc_id=M365-MVP-5003945)" of Active Directory in my previous community talks. This analogy helps to understand the potential risk, scope and escalation path in delegation of administrative permission.  
 
-![../2020-08-11-azurepim-pag-rbac/admintiermodel.png](../2020-08-11-azurepim-pag-rbac/admintiermodel.png)
+![../2020-08-11-azurepim-pag-rbac/admintiermodel.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/admintiermodel.png)
 
 As example, Intune (Service) Administrators are [able to modify membership of Azure AD security groups as part of the built-in permission set](https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles?WT.mc_id=M365-MVP-5003945#intune-service-administrator-permissions). This allows "Endpoint Administrators" (Tier2) to modify permission of Azure RBAC (Tier1) resources or manage "Conditional Access Exclusions" (Tier0) if admins are using security groups for their assignments.
 
@@ -164,7 +170,7 @@ Intune allows custom roles but also scoped permissions of existing Intune (built
 
 One of my recommendation: You should separate and isolate admin- and non-admin objects in Intune and MDATP environments. Similar to separate any productivity- and privileged identities. 
 
-![../2020-08-11-azurepim-pag-rbac/microsoftrabcscopedelegate.png](../2020-08-11-azurepim-pag-rbac/microsoftrabcscopedelegate.png)
+![../2020-08-11-azurepim-pag-rbac/microsoftrabcscopedelegate.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/microsoftrabcscopedelegate.png)
 
 In my opinion this will increase the security of privileged access endpoints. For example, delegation to modify "Device or Compliance configuration" of Secure Admin Workstations (SAW) or Privileged Access Workstation (PAW) will be highly restricted.
 
@@ -174,7 +180,7 @@ Finally the "endpoint admins" (Tier2) should not be able to manage any high-priv
 
 Before we start, you should verify that your client admin has no permission to Intune (such as access to "Compliance Policies"):
 
-![../2020-08-11-azurepim-pag-rbac/intune-accessdenied.png](../2020-08-11-azurepim-pag-rbac/intune-accessdenied.png)
+![../2020-08-11-azurepim-pag-rbac/intune-accessdenied.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-accessdenied.png)
 
 **Create PAG and configure role settings**
 
@@ -188,9 +194,9 @@ Follow the instructions to create a PAG as described in the first scenario. In t
 1. Go to one of the existing built-in roles or create a custom role from the "Tenant admin" blade in your "Endpoint Manager admin center".
 2. Choose the assignment of the role and create for each scope (in this example "Default" and "SAW") a separately assignment to the according PAG. As follows you can see the properties of my SAW Client Admin assignment:
 
-    ![../2020-08-11-azurepim-pag-rbac/intune-policyassign.png](../2020-08-11-azurepim-pag-rbac/intune-policyassign.png)
+    ![../2020-08-11-azurepim-pag-rbac/intune-policyassign.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-policyassign.png)
 
-    ![../2020-08-11-azurepim-pag-rbac/intune-sawproperties.png](../2020-08-11-azurepim-pag-rbac/intune-sawproperties.png)
+    ![../2020-08-11-azurepim-pag-rbac/intune-sawproperties.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-sawproperties.png)
 
     I've used a scope tag and dynamic groups which includes all devices and users of my SAWs.
 
@@ -200,19 +206,19 @@ Follow the instructions to create a PAG as described in the first scenario. In t
 
 1. Request the eligible assignment to the PAG for managing SAWs:
 
-    ![../2020-08-11-azurepim-pag-rbac/intune-pagrequest.png](../2020-08-11-azurepim-pag-rbac/intune-pagrequest.png)
+    ![../2020-08-11-azurepim-pag-rbac/intune-pagrequest.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-pagrequest.png)
 
 2. Navigate to the Endpoint Admin portal to verify privileged access to "Compliance policies" of SAWs:
 
-    ![../2020-08-11-azurepim-pag-rbac/intune-complianceprop.png](../2020-08-11-azurepim-pag-rbac/intune-complianceprop.png)
+    ![../2020-08-11-azurepim-pag-rbac/intune-complianceprop.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-complianceprop.png)
 
 3. Deactivate your current eligible assignment or choose another user to request Intune permissions to manage all object within the scope of "Default".  
 
-    ![../2020-08-11-azurepim-pag-rbac/intune-pagrequestdefault.png](../2020-08-11-azurepim-pag-rbac/intune-pagrequestdefault.png)
+    ![../2020-08-11-azurepim-pag-rbac/intune-pagrequestdefault.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-pagrequestdefault.png)
 
 4. Now you should be able to modify your "Compliance Policies" of the requested scope only.  Deactivation of your PAG assignment to manage SAWs and activation of the new assignment for scope "Default" should limit the scope (as you can see in this screenshot):
 
-![../2020-08-11-azurepim-pag-rbac/intune-compliancepropdefault.png](../2020-08-11-azurepim-pag-rbac/intune-compliancepropdefault.png)
+![../2020-08-11-azurepim-pag-rbac/intune-compliancepropdefault.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-08-11-azurepim-pag-rbac/intune-compliancepropdefault.png)
 
 ## Limitations and Considerations of using PAGs
 

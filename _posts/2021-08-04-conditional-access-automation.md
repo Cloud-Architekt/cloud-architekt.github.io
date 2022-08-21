@@ -1,31 +1,21 @@
 ---
-layout: post
-title:  "Overview of Azure AD (Conditional Access) automation"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [security, azuread, azure]
-image: assets/images/aad-config-automate.jpg
-description: "Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) 'as code' which enables advanced automation and scaling options.
+title: "Overview of Azure AD (Conditional Access) automation"
+excerpt: "Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) 'as code' which enables advanced automation and scaling options.
 For some time, there has been improvements in programmatic access but also community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies."
-featured: false
-hidden: false
+header:
+  overlay_image: /assets/images/aad-config-automate.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/aad-config-automate.jpg
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - DevOps
+  - Automation
+last_modified_at: 2021-08-04
 ---
-
-_Cloud Managed Service Providers and many other organizations are mostly interested to manage their environment(s) "as code" which enables advanced automation and scaling options.
-For some time, improvements in programmatic access and community-driven projects for automation in Azure AD has been published. Therefore I want to give an overview about benefits and existing solutions to automate management of Conditional Access Policies._
-
-#### Table of Content:
-- [Benefits of using DevOps approach in Azure AD](#benefits-of-using-devops-approach-in-azure-ad)
-- [Solutions to manage Conditional Access As Code](#solutions-to-manage-conditional-access-as-code)
-  - [Logic App and OneDrive (Microsoft Ignite Sample)](#logic-app-and-onedrive-microsoft-ignite-sample)
-  - [PowerShell Desired State Configuration (M365DSC)](#powershell-desired-state-configuration-m365dsc)
-  - [PowerShell modules and scripts](#powershell-modules-and-scripts)
-    - [Azure AD PowerShell Module / Microsoft Graph SDK](#azure-ad-powershell-module--microsoft-graph-sdk)
-    - [DCToolbox and PowerShell Scripts by Daniel Chronlund](#dctoolbox-and-powershell-scripts-by-daniel-chronlund)
-    - [Conditional Access as Code by Alex Filipin](#conditional-access-as-code-by-alex-filipin)
-  - [AADOps (Prototype/POC to manage AAD as IdentityOps)](#aadops-prototypepoc-to-manage-aad-as-identityops)
-  - [GraphAPI by Wesley Trust](#graphapi-by-wesley-trust)
-  - [AADExporter](#aadexporter)
 
 ## Benefits of using DevOps approach in Azure AD
 
@@ -53,7 +43,7 @@ CRUD operations are available under the resource type "[conditionalAccessPolicy]
 
 At Ignite 2020, Microsoft has published [documentations to build "programmatic access" to manage CA policies as code](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/howto-conditional-access-apis?WT.mc_id=AZ-MVP-5003945). This *includes a tutorial to build a lifecycle management of "Conditional Access Policies" which was published on GitHub.* This sample contains a full lifecycle management solution which is build on Logic Apps, OneDrive, Teams and Azure KeyVault. More details are available in the [GitHub repo](https://github.com/Azure-Samples/azure-ad-conditional-access-apis).
 
-![](../2021-08-04-conditional-access-automation/aad-ca-workflow.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/aad-ca-workflow.png)
 
 *Microsoft's sample from Ignite 2020 covers the lifecycle phases of managing CA policies.*
 
@@ -61,9 +51,9 @@ Details and the benefit of this solution was also shown during the "Ignite" sess
 
 Using Logic Apps allows to deploy policies without any enormous investments in (DevOps) infrastructure. Furthermore, managed identities and integration of Microsoft Teams works natively.
 
-![](../2021-08-04-conditional-access-automation/aad-ca-logicapp1.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/aad-ca-logicapp1.png)
 
-![](../2021-08-04-conditional-access-automation/aad-ca-logicapp2.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/aad-ca-logicapp2.png)
 
 But on the other hand, it is not providing full DevOps capabilities or a repository integration (in my opinion).
 It uses OneDrive instead of Git as source to manage the policies.
@@ -74,7 +64,7 @@ It uses OneDrive instead of Git as source to manage the policies.
 
 M365DSC is a great solution if you are looking for a DevOps solution to manage Microsoft 365 services. This includes Conditional Access Policies in Azure AD as well. It allows to synchronize and export the configuration of multi-tenant environments and keeping their setup synchronized.
 
-![](../2021-08-04-conditional-access-automation/m365dsc.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/m365dsc.png)
 
 *Image source: [Microsoft365DSC - Configuration-As-Code for the Cloud](https://microsoft365dsc.com/)*
 
@@ -108,7 +98,7 @@ It wasn't the goal to build a production-ready solution. This prototype should o
 
 "AADOps" is used as a "POC" to demonstrate all the before mentioned advantages to use "DevOps" approach for Azure AD:
 
-![](../2021-08-04-conditional-access-automation/aadops-features.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/aadops-features.png)
 
 *Side Note: Personally, I prefer to use Azure DevOps in this use case because of governance and compliance features which are required in enterprise- and security critical environments. There are some compliance features in Azure Pipelines that aren't exist to GitHub Actions yet. A great overview of the [key differences are listed in the blog post from Max Yermakhanov](https://medium.com/objectsharp/azure-pipelines-vs-github-actions-key-differences-45390ab132ee).*
 
@@ -124,8 +114,8 @@ Several weeks ago, Microsoft has released the "[Azure AD Exporter](https://githu
 This solution is hosted on GitHub and allows you to export Azure AD configuration settings and assets (objects such as users, applications or groups).
 All data will be exported in JSON which allows to store, compare and analyze them in a Git repository.
 
-![](../2021-08-04-conditional-access-automation/aadexporter1.png)
-![](../2021-08-04-conditional-access-automation/aadexporter2.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/aadexporter1.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-08-04-conditional-access-automation/aadexporter2.png)
 
 This module supports PowerShell Core and works on Linux and macOS agents/clients very well!
 I've implemented the AAD Exporter as part of just another DevOps pipeline which is also [documented by Microsoft on the GitHub project site](https://github.com/microsoft/azureadexporter#integrate-to-azure-devops-pipeline).

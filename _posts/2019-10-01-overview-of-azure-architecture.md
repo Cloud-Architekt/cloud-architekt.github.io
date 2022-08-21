@@ -1,16 +1,18 @@
 ---
-layout: post
-title:  "Azure Architecture & Design Patterns (Study collection)"
-author: thomas
-categories: [ Azure, Architecture, DevOps ]
-tags: [azure, architecture]
-image: assets/images/overview-of-azure-architecture.png
-description: "Collection of various resources and study guides of Azure Architecture & Design Patterns."
-featured: false
-hidden: false
+title: "Azure Architecture & Design Patterns (Study collection)"
+excerpt: "Collection of various resources and study guides of Azure Architecture & Design Patterns"
+header:
+  overlay_image: /assets/images/overview-of-azure-architecture.png
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/overview-of-azure-architecture.png
+categories:
+  - Azure
+tags:
+  - Azure
+  - Architecture
+last_modified_at: 2019-10-01
+toc: true
 ---
-
-_If you want to learn more about architecture and design patterns in Azure this study collection might be interesting for you._
 
 # Architecture & Patterns
 ## Azure for Architects (Free Edition)

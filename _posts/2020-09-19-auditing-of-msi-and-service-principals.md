@@ -1,18 +1,20 @@
 ---
-layout: post
-title:  "Sign-in logs and auditing of Managed Identities and Service Principals"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [security, azuread, azure]
-image: assets/images/aadaudit.png
-description: "Recently, Microsoft added new categories for sign-in logs which finally included non-interactive, managed or service principals in Azure AD.
+title: "Sign-in logs and auditing of Managed Identities and Service Principals"
+excerpt: "Recently, Microsoft added new categories for sign-in logs which finally included non-interactive, managed or service principals in Azure AD.
 In this blog post I will describe the configuration steps to forward the new collections to Azure Sentinel, some considerations from my first tests and a few examples of correlation to activity logs and potentially Azure Sentinel analytic rules."
-featured: false
-hidden: false
+header:
+  overlay_image: /assets/images/aadaudit.png
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/aadaudit.png
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - WorkloadIdentities
+last_modified_at: 2020-09-19
 ---
-
-Recently, Microsoft added new categories for sign-in logs which finally included non-interactive, managed or service principals in Azure AD.
-In this blog post I will describe the configuration steps to forward the new collections to Azure Sentinel, some considerations from my first tests and a few examples of correlation to activity logs and potentially Azure Sentinel analytic rules.
 
 *Note: Currently there's no official statement or documentation around this feature. Please wait for Microsoft's documentation and consider the log volume estimation before enabling the new collection in your production environment.*
 
@@ -40,14 +42,14 @@ This seems to be also the reason for several Azure Feedback/User voice posts tha
 In the past, Microsoft allows already to route Azure AD audit and sign-ins logs to storage accounts, event hubs or Log Analytics workspaces. This is well described in the Microsoft Docs article "[Azure AD logs in Azure Monitor](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/concept-activity-logs-azure-monitor#supported-reports)". At the time of writing this article, the following new categories are not covered by Microsoft's documentation. However, there are already visible and configurable in the diagnostic settings of the Azure AD portal
 (Azure Portal > Azure AD Blade > Diagnostic Settings):
 
-![../2020-09-19-auditing-of-msi-service-principals/aad-diagnostics.png](../2020-09-19-auditing-of-msi-service-principals/aad-diagnostics.png)
+![../2020-09-19-auditing-of-msi-service-principals/aad-diagnostics.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/aad-diagnostics.png)
 
 The last three (new) categories can be configured as already described in the Docs article "[Create diagnostic settings to send platform logs and metrics to different destinations](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/diagnostic-settings?WT.mc_id=Portal-Microsoft_Azure_Monitoring)".
 
 You'll find the following tables (and entries) in your destination resource after the first records of the respective logs was forwarded from Azure Monitor successfully.
 In the following examples I've used Azure Sentinel / Log Analytics workspace.
 
-![../2020-09-19-auditing-of-msi-service-principals/sentinel-tablespng](../2020-09-19-auditing-of-msi-service-principals/sentinel-tables.png)
+![../2020-09-19-auditing-of-msi-service-principals/sentinel-tablespng]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sentinel-tables.png)
 
 ### Data schema of the new sign-in logs
 
@@ -76,7 +78,7 @@ was made by client secret or certificate
     - I've used the "[Workspace Usage report](https://techcommunity.microsoft.com/t5/azure-sentinel/usage-reporting-for-azure-sentinel/ba-p/1267383)" during my early tests in the Azure Sentinel playground environment. The latest version of the workbook is [available from GitHub](https://github.com/CliveW-MSFT/KQLpublic/blob/master/KQL/Workbooks/Workspace%20Usage%20report.workbook).
     It's super-helpful to get insights of table entries and sizes but also about latency.
 
-        ![../2020-09-19-auditing-of-msi-service-principals/workbook-usage.png](../2020-09-19-auditing-of-msi-service-principals/workbook-usage.png)
+        ![../2020-09-19-auditing-of-msi-service-principals/workbook-usage.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/workbook-usage.png)
 
 ## Scenarios and query examples
 
@@ -102,7 +104,7 @@ AADManagedIdentitySignInLogs
 
 As we can see in the screenshot, two events will be displayed because of using the Az-Connect cmdlet and sending the request to the Azure KeyVault:
 
-![../2020-09-19-auditing-of-msi-service-principals/msi-signin.png](../2020-09-19-auditing-of-msi-service-principals/msi-signin.png)
+![../2020-09-19-auditing-of-msi-service-principals/msi-signin.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/msi-signin.png)
 
 Sign-in log entry of the resource "Azure KeyVault" includes a ResourceIdentity which is a fixed application ID of this service. Unfortunately it can not be used to find out which KeyVault instance in the Azure environment was be accessed. More details about how and when the key vault was accessed is available in the operational insights / diagnostics logs of the service. 
 
@@ -118,7 +120,7 @@ AzureDiagnostics
 
 AuditEvent with detailed information about the resource operation should be displayed:
 
-![../2020-09-19-auditing-of-msi-service-principals/msi-kva.png](../2020-09-19-auditing-of-msi-service-principals/msi-kva.png)
+![../2020-09-19-auditing-of-msi-service-principals/msi-kva.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/msi-kva.png)
 
 *Note: In this sample, the CallerIPAddress will be shown as private IP address because of using a private endpoint for accessing Azure KeyVault.*
 
@@ -142,7 +144,7 @@ AADServicePrincipalSignInLogs
 
 Four different sign-in requests are visible in the logs and seems to be used from the CD pipeline during the deployment:
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-azop-signin.png](../2020-09-19-auditing-of-msi-service-principals/sp-azop-signin.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-azop-signin.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-azop-signin.png)
 
 Afterwards I've started a query to find all Azure Activity logs related to this service principal:
 
@@ -153,7 +155,7 @@ AzureActivity | where Caller == <ServicePrincipalId>
 
 ARM operations will be audited in details, as you can see in the following screenshot (even if  successful activities will be displayed only):
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-azops-activities.png](../2020-09-19-auditing-of-msi-service-principals/sp-azops-activities.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-azops-activities.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-azops-activities.png)
 
 *Note: I was able to find  activities from one of the four service principal sign-ins. The other 3 sign-ins from a single IP address (Azure data center in "West Europe") are without any activity log entry.*
 
@@ -176,17 +178,17 @@ AADServicePrincipalSignInLogs
 
 Similar to the previous use case, the "ResourceIdentity" contains only the fixed Application ID of LogAnalytics API. It gives us no further details about the certain Logic App that was used:
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-logic-signin.png](../2020-09-19-auditing-of-msi-service-principals/sp-logic-signin.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-logic-signin.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-logic-signin.png)
 
 However, in this use case we have another challenge then before. I was not able to find any relation between the Azure Logic App and the used service principal in the resource-level logs.
 So far as I can see, the timestamp and type of resource (based on the ResourceIdentity we know it is a Logic App) are the only indications to find the related resource activity log entry.
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-logic-activities.png](../2020-09-19-auditing-of-msi-service-principals/sp-logic-activities.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-logic-activities.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-logic-activities.png)
 
 Although there are detailed information about the Logic App workflow in the diagnostic logs, 
 but any indications to use the service principal is missing (e.g. Service Principal ID or caller IP address).
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-logic-activitiesdetail.png](../2020-09-19-auditing-of-msi-service-principals/sp-logic-activitiesdetail.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-logic-activitiesdetail.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-logic-activitiesdetail.png)
 
 All security-related logs of a Logic App can be filtered by the following query:
 
@@ -212,7 +214,7 @@ AADServicePrincipalSignInLogs
 
 The sign-in attempt of my Graph API call will be shows as follows:
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-graph-signin.png](../2020-09-19-auditing-of-msi-service-principals/sp-graph-signin.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-graph-signin.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-graph-signin.png)
 
 Now we are able to find the related operational tasks from the Azure AD Audit Log by filtering the ServicePrincipalId:
 
@@ -225,7 +227,7 @@ AuditLogs
 
 Details of the operation including ObjectId of the deleted policy are visible in the audit log entries:
 
-![../2020-09-19-auditing-of-msi-service-principals/sp-graph-activities.png](../2020-09-19-auditing-of-msi-service-principals/sp-graph-activities.png)
+![../2020-09-19-auditing-of-msi-service-principals/sp-graph-activities.png]({{ site.url }}{{ site.baseurl }}/assets/images/2020-09-19-auditing-of-msi-service-principals/sp-graph-activities.png)
 
 *Tip: Azure AD audit log is not showing the source IP address if modification was initiated by a service principal. Correlation between Audit and Service Principal sign-in log allows to discover the IP address now.*
 

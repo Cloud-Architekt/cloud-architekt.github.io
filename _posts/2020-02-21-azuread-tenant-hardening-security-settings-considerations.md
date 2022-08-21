@@ -1,18 +1,19 @@
 ---
-layout: post
-title:  "Azure AD Tenant Hardening - Considerations of default settings"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [azure, azuread, security]
-image: assets/images/tenant-settings.png
-description: "Every created Azure AD tenant has default configurations by Microsoft. These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. Using Secure Score and few settings needs particular attention."
-featured: false
-hidden: false
+title: "Azure AD Tenant Hardening - Considerations of default settings"
+excerpt: "Every created Azure AD tenant has default configurations by Microsoft. These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance. Using Secure Score and few settings needs particular attention."
+header:
+  overlay_image: /assets/images/tenant-settings.png
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/tenant-settings.png
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - Security
+last_modified_at: 2020-02-21
 ---
-
-_Every created Azure AD tenant has default configurations by Microsoft.
-These settings should be reviewed and cross checked with your security requirements, strategy of self-services and governance policies.
-In these blog post I like to give you an overview of using “Identity Secure Score” and few hardening settings that needs particular attention._
 
 **Microsoft’s default settings**
 
@@ -30,12 +31,12 @@ Providing every customer a built-in measurement of their “identity security co
 It is very easy to follow Microsoft’s security recommendations and guidance to improve your identity security posture.
 You’ll find the “[Identity secure score](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/identity-secure-score#how-do-i-get-my-secure-score)” in the “Azure AD Security” blade of your Azure Portal:
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score.png)
 
 On the one hand many findings are very clear and obviously (such as require MFA for privileged roles).
 But on the other hand some action descriptions and guidance should be well thought out and not followed blindly.
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score-action.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/identity-secure-score-action.png)
 
 In this example you should take care on your “Emergency access accounts” (“Break glass”) if you like to exclude them from MFA (as planned in case of MFA service outage). You’ll find more details [about managing these special kind of accounts for emergency scenarios on my blog](https://www.cloud-architekt.net/how-to-implement-and-manage-emergency-access-accounts/).
 
@@ -59,7 +60,7 @@ _Azure AD Portal > Properties > Manage Security Defaults_
 
 Security defaults was introduced in November 2019 to replace  “Baseline policies” in Azure AD Conditional Access. It is an "one-click" solution to implement Microsoft's most **basically** recommendations for your new Azure AD tenant. It’s available for every organization to achieve a basic level of security without extra costs. Design and scope of this minimal security level are [documented by Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/concept-fundamentals-security-defaults). Every organization should prefer to create custom “Conditional Access Policies” to implement their own security, identity and access strategy. Configuring exclusions (such as emergency access or temporary exclusions of users) are only possible with custom policies.
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/enable-security-defaults.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/enable-security-defaults.png)
 
 ### Default value:
 Every Tenant has enabled “security defaults” that was created after October 2019.
@@ -77,9 +78,9 @@ There are no excuses to postpone these steps after creation of the tenant.
 ## Application registrations and user consent
 _Azure AD Portal > User settings (> Enterprise applications)_
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/user-settings-app-reg.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/user-settings-app-reg.png)
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/user-settings-app-consent.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/user-settings-app-consent.png)
 
 
 ### Default value:
@@ -95,7 +96,7 @@ All users are able to proceed app registration and consent user permission. This
 ## Invitation of external users (B2B)
 _Azure AD Portal > User settings > Manage external collaboration settings_
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/b2b-invitation.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/b2b-invitation.png)
 
 ### Default value:
 Every user is able to invite “Guest users“ and even invited Guests are able to invite other Guests.
@@ -112,7 +113,7 @@ By default Guest users have limited permission in your tenant. Check the Microso
 ## Access to Azure Portal
 _Azure AD Portal > User settings_
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/restrict-access-portal.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/restrict-access-portal.png)
 
 ### Default value:
 Every user is able to access Azure AD administration portal and use default permissions (such as read users or groups). This behavior is roughly comparable to Active Directory (on-premises) and authenticated user that are able to browse the directory objects. 
@@ -128,7 +129,7 @@ There are a few [default permissions that can be restricted](https://docs.micros
 ## Access management for Azure resources
 _Azure AD Portal > Properties_
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/elevated-azure-permission.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/elevated-azure-permission.png)
 
 ### Default value:
 Global Admins are not allowed to manage access to all Azure subscription and management groups as “User Access Administrators”.
@@ -143,7 +144,7 @@ Global Admins are not allowed to manage access to all Azure subscription and man
 ## Local administrators on Azure AD joined devices
 _Azure AD Portal > Devices > Device settings_
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/devices-local-admin.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/devices-local-admin.png)
 
 ### Default value:
 No specific user is configured and shown in the portal as local administrator but the following 3 types of users are granted by default:
@@ -165,7 +166,7 @@ No specific user is configured and shown in the portal as local administrator bu
 ## Smart lockout thresholds and duration
 _Azure AD Security > Authentication Methods > Password protection_
 
-![](../2020-02-23-azuread-tenant-hardening-security-settings-considerations/smartlockout.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2020-02-23-azuread-tenant-hardening-security-settings-considerations/smartlockout.png)
 
 
 ### Default value:

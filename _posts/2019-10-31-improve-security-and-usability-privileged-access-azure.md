@@ -1,13 +1,19 @@
 ---
-layout: post
-title:  "Improve security and usability of privileged access in Microsoft Azure"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [azure, azuread, security]
-image: assets/images/just-in-time-admin.jpg
-description: "Improve security and usability of privileged access in Azure even if you don't use (as recommended) a dedicated devices. This blog post give you some recommendations and advices to protect privileged identity, session and browser. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client."
-featured: false
-hidden: false
+title: "Improve security and usability of privileged access in Microsoft Azure"
+excerpt: "Improve security and usability of privileged access in Azure even if you don't use (as recommended) a dedicated devices. This blog post give you some recommendations and advices to protect privileged identity, session and browser. This can be use as part of your PAW/Admin workstation implementation or decrease the risk by using your standard (productivity) client."
+header:
+  overlay_image: /assets/images/just-in-time-admin.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/just-in-time-admin.jpg
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - Security
+  - SecuringPrivilegedAccess
+last_modified_at: 2019-10-31
 ---
 
 It is recognized that privileged access and management of IT services needs particularly protection and high security policies. There are already some concepts for securing privileged access that has been proven very useful in management of an on-premises infrastructure. Some of them can be adopted to hybrid or cloud-native environments as well.
@@ -29,7 +35,7 @@ This article has no claim for completeness.
 # Identity and device access policies
 The following diagram shows recommended set of policies from Microsoft Docs. Some settings of the protection level “highly-regulated” environment can be adopted to protect your privileged accounts and devices:
 
-[![image-text](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)](../2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
+[![image-text]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/identity_device_access_policies_byplan.png)
 
 _Source: Microsoft Docs: [Common identity and device access policies - Microsoft 365 Enterprise](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)_
 
@@ -125,11 +131,11 @@ Jan Vidar Elven has written a great blog post about building an [Azure AD PIM Ap
 Azure Portal settings allows you to enable a "sign out" of users after specific time of inactivity. Idle timeout can be individually configured by the user.
 Click in the Azure Portal on the portal settings to choose the level timeout:
 
-![](../2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out1.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out1.png)
 
 It is also possible to configure the inactivity timeout on tenant-level (applied to every user). Click in the portal settings on “Configure directory level timeout” to move to to this config blade:
 
-![](../2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out2.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out2.png)
 
 Current users are able to override the directory level timeout for their account only. But the value must be more restrictive (allow less time) than the directory level policy it is overriding.
 
@@ -137,14 +143,14 @@ In case of inactivity it ensures that a user signed-out before the token expired
 
 _Advice: Keep in mind that MCAS and other admin portals have also the option to configure auto-log out:_
 
-![](../2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out3.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/sign-me-out3.png)
 
 
 # Non-persistent session und sign-in frequency
 Microsoft has implemented session controls as option in "Conditional Access" to control sign-in frequency and persistent of browser sessions.
 Both settings are currently in public preview.
 
-![](../2019-10-27-improve-security-and-usability-privileged-access-azure/session-restriction.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/session-restriction.png)
 
 
 **Sign-in frequency** allows to configure refresh token lifetimes. This feature will also replace the preview of [“Configure token lifetimes”](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-configurable-token-lifetimes).
@@ -162,7 +168,7 @@ _Advice: I can strongly recommended to read [Peter van der Woude](https://www.pe
 ## Passwordless authentication
 There is no doubt that passwordless authentication methods increase security and usability for administrators. This method also avoids to use (unsecure) MFA verification options such as phone call or text messages everyday. Microsoft has invested strongly to support passwordless options in Azure Active Directory in the recent months.
 
-![](../2019-10-27-improve-security-and-usability-privileged-access-azure/passwordless-convenience-security.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-27-improve-security-and-usability-privileged-access-azure/passwordless-convenience-security.png)
 
 _Source: Microsoft Docs: [Passwordless authentication options](https://docs.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-passwordless#enable-new-passwordless-authentication-methods)_
 

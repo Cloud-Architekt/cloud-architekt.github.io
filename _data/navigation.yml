@@ -1,0 +1,13 @@
+main:
+  - title: "About"
+    url: /about/  
+  - title: "Blog"
+    url: /blog/
+  - title: "Categories"
+    url: /categories/
+  - title: "Speaking"
+    url: /speaking/
+  - title: "Disclosure"
+    url: /disclosure/
+  - title: "Privacy"
+    url: /privacy/                

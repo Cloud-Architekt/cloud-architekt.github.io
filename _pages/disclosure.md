@@ -1,8 +1,9 @@
 ---
-layout: page
-title: Disclosure
-permalink: /disclosure
-comments: false
+permalink: /disclosure/
+title: "Disclosure"
+layout: single
+classes: wide
+author_profile: false
 ---
 
 ## Legal Disclosure

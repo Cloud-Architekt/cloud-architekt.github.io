@@ -1,60 +1,48 @@
 ---
-layout: default
-title: Home
+# You don't need to edit this file, it's empty on purpose.
+# Edit theme's home layout instead if you wanna make some changes
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+layout: splash
+author_profile: false
+header:
+  overlay_color: "#5e616c"
+  overlay_filter: rgba(94, 97, 108, 0.95)  
+  overlay_image: /assets/images/banner.jpg
+excerpt: 'This blog is about thoughts, research results and real-world experiences on IAM + Security in Microsoft Azure.'
+intro:
+  - excerpt: 'Top articles:'
+feature_row:
+  - image_path: /assets/images/aadops2.jpg
+    title: "AADOps: Operationalization of Conditional Access"
+    excerpt: "AADOps is a personal study and research project which sets out to demonstrate how “operationalization” of Azure AD in Azure DevOps could look like. Learn more about Conditional Access automated deployment."
+    btn_label: "Read More"
+    url: "aadops-conditional-access/"    
+  - image_path: /assets/images/azsentinel.png
+    title: "Identity Security Monitoring in Microsoft Cloud Services"
+    excerpt: "Microsoft offers several solutions and services for securing (hybrid) identities and protecting access to workloads such as Azure, Office 365 or other integrated apps in Azure Active Directory..."
+    btn_label: "Read More"
+    url: "/identity-security-monitoring/"
+  - image_path: /assets/images/community-events-2019.jpg
+    title: "Events and slides from my community talks"
+    excerpt: "Overview about upcoming speaker engagements on meetups or conferences but also download links to my slides from past talks and list of sessions which I like to share with the community." 
+    btn_label: "Read More"
+    url: "/identity-security-monitoring/"    
 ---
 
-{% if page.url == "/" %}
+{% for f in feature_row %}
+  {% assign f.title='test' %}
+  {% assign f.url='test' %}
+  {% assign f.btn_label='Read More' %}
+{% endfor %}
 
-<!-- Featured
-================================================== -->
-<section class="featured-posts">
-    <div class="section-title">
-        <h2><span>Top Articles</span></h2>
-    </div>
-    <div class="row">
+{% include feature_row id="intro" type="center" %}
 
-    {% for post in site.posts %}
+{% include feature_row %}
 
-        {% if post.featured == true %}
+<div class="feature__wrapper">
 
-            {% include featuredbox.html %}
+  {% for f in site.posts limit:2 %}
+     <!-- can stay the same as the current feature_row include -->
+  {% endfor %}
 
-        {% endif %}
-
-    {% endfor %}
-
-    </div>
-</section>
-
-{% endif %}
-
-<!-- Posts Index
-================================================== -->
-<section class="recent-posts">
-
-    <div class="section-title">
-
-        <h2><span>All Stories</span></h2>
-
-    </div>
-
-    <div class="row listrecent">
-
-        {% for post in paginator.posts %}
-
-        {% include postbox.html %}
-
-        {% endfor %}
-
-    </div>
-
-</section>
-
-<!-- Pagination
-================================================== -->
-<div class="bottompagination">
-<div class="pointerup"><i class="fa fa-caret-up"></i></div>
-<span class="navigation" role="navigation">
-    {% include pagination.html %}
-</span>
 </div>

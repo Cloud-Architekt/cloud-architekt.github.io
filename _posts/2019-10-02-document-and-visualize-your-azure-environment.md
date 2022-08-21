@@ -1,16 +1,18 @@
 ---
-layout: post
-title:  "Document your Azure environment"
-author: thomas
-categories: [ Azure, Architecture, Tools ]
-tags: [azure, architecture]
-image: assets/images/document-and-visualize-your-azure-env.png
-description: "Shapes, icons, tools and recommendations to document your Azure Environment!"
-featured: false
-hidden: false
+title: "Document your Azure environment"
+excerpt: "In this article I like to give you an overview about resources that helps you to visualize and document your Azure cloud solutions and environments"
+header:
+  overlay_image: /assets/images/document-and-visualize-your-azure-env.png
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/document-and-visualize-your-azure-env.png
+toc: false
+categories:
+  - Azure
+tags:
+  - Azure
+  - Architecture
+last_modified_at: 2019-10-02
 ---
-
-_In this article I like to give you an overview about resources that helps you to visualize and document your Azure cloud solutions and environments._
 
 # Shapes and icon sets
 ## Azure Design Visio VSSX

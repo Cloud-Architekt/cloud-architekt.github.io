@@ -1,16 +1,20 @@
 ---
-layout: post
-title:  "How to implement and manage Emergency Access Accounts / Break Glass"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [azure, azuread, security]
-image: assets/images/break-glass-account.jpg
-description: "Microsoft strongly recommends to implement emergency access accounts. This article gives an overview and step-by-step guide to configure and monitor this type of accounts!"
-featured: false
-hidden: false
+title: "How to implement and manage Emergency Access Accounts / Break Glass"
+excerpt: "Microsoft strongly recommends to implement emergency access accounts. This article gives an overview and step-by-step guide to configure and monitor this type of accounts!"
+header:
+  overlay_image: /assets/images/break-glass-account.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/break-glass-account.jpg
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - Security
+  - SecuringPrivilegedAccess
+last_modified_at: 2019-10-12
 ---
-
-_Microsoft strongly recommends to implement emergency access accounts. This article gives an overview and step-by-step guide to configure and monitor this type of accounts_
 
 # Overview of break glass accounts
 Emergency access accounts, also known as "break glass accounts", should be included in every deployment plan of Azure AD tenants. These accounts are an essential part in case of disaster recovery or emergency access. Outage and downtime of Microsoft’s Azure MFA service (as it happens in 2018 twice in a row) is just one real world example that shows the need of this kind of accounts.
@@ -117,14 +121,14 @@ Use the "Rule creation wizard" in Azure Sentinel to create a simple analytics:
 3. Choose or create a Playbook (based on Logic Apps) to automate response or interact with other systems (e.g. reporting to ticket system or trigger other workflows).
 4. The following analytic rule will be generated finally:
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertReview.png)
 
 
 
 ### Incident case based on created custom rule
 You will see an incident in Azure Sentinel in case of any sign-in attempt (successful or unsuccessful):
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertIncident.png)
 
 ### Alerting by Log Analytics / Azure Monitor Alerts
 You are able to use the same KQL query in Log Analytics even if you aren’t using Azure Sentinel. More details on how to implement Azure AD logs to Logs Analytics are available here: 
@@ -132,12 +136,12 @@ You are able to use the same KQL query in Log Analytics even if you aren’t usi
 
 Run the query in your "Logs" blade to validate the results and click on "New alert rule".
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitor.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitor.png)
 
 
 Configure your existing or a new action group to trigger Logic apps or other notify the Operations Team. 
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitorActionGroup.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/SignInAttemptAlertAzMonitorActionGroup.png)
 
 ## Alerting "Add Global Admin outside of PIM" with Azure Sentinel
 I can strongly recommended to create another custom rule for alerting
@@ -152,7 +156,7 @@ AuditLogs
 ```
 Finally the following custom analytic rule will be created:
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AddMemberOutsideOfPIM.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AddMemberOutsideOfPIM.png)
 
 _Note: OperationName must be set to "Add member to role" if you are not using Azure AD PIM. Filter the query to RoleID (62e90394-69f5-4237-9190-012177145e10) if you like to trigger the alert by "Global Admin" assignments only._
 
@@ -161,7 +165,7 @@ Identity Protection is essential for your emergency access accounts even if you 
 
 Get an overview of all incidents which may be linked to an emergency access account by implementing default or custom rule templates in Azure Sentinel:
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationList.png)
 
 _Note: Learn more about the out-of-box threat detections in Azure Sentinel on Microsoft Docs:_
 _[Investigate alerts with Azure Sentinel](https://docs.microsoft.com/en-us/azure/sentinel/tutorial-detect-threats-built-in)_
@@ -170,7 +174,7 @@ Microsoft Cloud App Security (MCAS) can also be used to monitor activities of br
 
 At the end you are able to investigate incidents as in the following example:
 
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/InvestigationGraph.png)
 
 
 Internal brute-force attack of emergency access account and successful sign-in (after several attempts) with administrative activity from a non-compliant device. Suspicious granting of permissions to an account was detected. 
@@ -185,4 +189,4 @@ AuditLogs
 ```
 
 Filtered out activities by security-critical operations as you can see in this example:
-![](../2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2019-10-12-how-to-implement-and-manage-emergency-access-accounts/AuditLog.png)

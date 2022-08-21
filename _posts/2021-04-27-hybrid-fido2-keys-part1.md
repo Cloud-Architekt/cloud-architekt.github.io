@@ -1,30 +1,20 @@
 ---
-layout: post
-title:  "FIDO2 Keys and Hybrid Identities (1/2): Overview and configuration"
-author: thomas
-categories: [ Azure, Security, AzureAD ]
-tags: [security, azuread, azure]
-image: assets/images/fido2_part1.jpg
-description: "Microsoft has announced the GA of FIDO2 support in Azure AD at Ignite Spring 2021. Previously, passwordless authentication in hybrid environments was only possible by implementing Windows Hello for Business (WHfB). The first of a two part blog post, gives you an overview about FIDO2 security keys in hybrid environments and differences to WHfB. This covers the prerequisites, limitations and initial configuration and deep-dive on the “Azure AD Kerberos Server” objects."
-featured: false
-hidden: false
+title: "FIDO2 Keys and Hybrid Identities (1/2): Overview and configuration"
+excerpt: "Microsoft has announced the GA of FIDO2 support in Azure AD at Ignite Spring 2021. Previously, passwordless authentication in hybrid environments was only possible by implementing Windows Hello for Business (WHfB). The first of a two part blog post, gives you an overview about FIDO2 security keys in hybrid environments and differences to WHfB. This covers the prerequisites, limitations and initial configuration and deep-dive on the “Azure AD Kerberos Server” objects."
+header:
+  overlay_image: /assets/images/fido2_part1.jpg
+  overlay_filter: rgba(102, 102, 153, 0.85)
+  teaser: /assets/images/fido2_part1.jpg  
+toc: true
+toc_sticky: true
+categories:
+  - Azure AD
+tags:
+  - AzureAD
+  - Security
+  - Azure
+last_modified_at: 2021-04-27
 ---
-
-_Microsoft has announced the GA of FIDO2 support in Azure AD at Ignite Spring 2021. Previously, passwordless authentication in hybrid environments was only possible by implementing Windows Hello for Business (WHfB). The first of a two part blog post, gives you an overview about FIDO2 security keys in hybrid environments and differences to WHfB. This covers the prerequisites, limitations, initial configuration and deep-dive on the “Azure AD Kerberos Server” objects…_
-
-#### Table of Content:
-- <A href="#passwordless-options-in-azure-ad">Passwordless Options in Azure AD</A><br>
-     - <A href="#authentication-of-hybrid-identities-with-whfb">Authentication of Hybrid Identities with WHfB</A><br>
-     - <A href="#comparing-fido2-and-whfb-in-hybrid-environments">Comparing FIDO2 and WHfB in Hybrid Environments</A><br>
-- <A href="#overview-of-fido2-support-in-hybrid-azure-ad-environments">Overview of FIDO2 support in hybrid Azure AD environments</A><br>
-- <A href="#pre-requisites-and-initial-configuration">Pre-requisites and initial configuration</A><br>
-     - <A href="#windows-10-clients">Windows 10 Clients</A><br>
-     - <A href="#azure-ad-and-intune-configuration">Azure AD and Intune Configuration</A><br>
-     - <A href="#hybrid-identity-components-and-active-directory">Hybrid Identity components and Active Directory</A><br>
-- <A href="#review-of-created-azure-ad-kerberos-server-objects">Review of created “Azure AD Kerberos Server” Objects</A><br>
-- <A href="#management-of-azure-ad-kerberos-objects">Management of “Azure AD Kerberos” Objects</A><br>
-- <A href="#security-policy-to-restrict-azure-ad-kerberos-server">Security Policy to restrict "Azure AD Kerberos Server"</A><br>
-
 
 ## Passwordless Options in Azure AD
 Azure AD supports three different passwordless options today:
@@ -52,7 +42,7 @@ Two deployment options are available to implement WHfB in a hybrid environment. 
 
 Regardless of the trust model, [Kerberos Authentication certificate for Domain Controllers](https://docs.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/hello-hybrid-aadj-sso-base?WT.mc_id=AZ-MVP-5003945#windows-server-2016-domain-controllers) are required and thus the need of a “Public Key Infrastructure” (PKI). Azure AD Connect is involved for [synchronizing the public key to Active Directory](https://docs.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/hello-hybrid-cert-whfb-settings-dir-sync?WT.mc_id=AZ-MVP-5003945). The value of the attribute (“msDS-KeyCredentialLink”) will be created during the registration process of the key trust model.
 
-![](../2021-04-27-hybrid-fido2-keys-part1/whfb-hybrid-keytrust.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/whfb-hybrid-keytrust.png)
 _Azure AD-joined devices allows SSO experiences to Azure AD and Active Directory in hybrid deployment models of WHfB. Both trust models of WHfB are relaying on valid and trusted KDC certificates._
 
 *More details and source of the image: ["How Windows Hello for Business works - Authentication" (Microsoft Docs)](https://docs.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/hello-how-it-works-authentication?WT.mc_id=AZ-MVP-5003945#azure-ad-join-authentication-to-active-directory-using-a-key)*
@@ -76,7 +66,7 @@ Before we go into the details to implement FIDO2 security keys for hybrid authen
 
 Microsoft Docs describes the [SSO proceeding of FIDO2 keys to on-premises resources](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-security-key-on-premises?WT.mc_id=AZ-MVP-5003945) as follows:
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-overview.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-overview.png)
 
 > 1. User signs in to their Windows 10 device with a FIDO2 security key and authenticates to Azure AD.  
 > 2. Azure AD checks the directory for a Kerberos server key matching the user’s on-premises AD domain.  
@@ -119,25 +109,25 @@ First of all, follow the checklist to verify that your client meets the requirem
 ## Review of created “Azure AD Kerberos Server” Objects
 We can found the following objects, which represents the “Azure AD Kerberos Server” in the AD domain, after running the cmdlet:
 
-### "CN=AzureADKerberos,OU=Domain Controllers,<domain-DN>"
+"CN=AzureADKerberos,OU=Domain Controllers,<domain-DN>"
 This object represent a “Computer” object and “looks like” a “Read-Only Domain Controller” (RODC). 
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-computerobj.jpg)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-computerobj.jpg)
 
 Microsoft Defender for Identity (MDI) has been tagged the “Computer Object” as “Sensitive” because of the “Read-only DC” security membership:
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-mdisensitive.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-mdisensitive.png)
 
-### "CN=krbtgt_AzureAD,CN=Users,<domain-DN>"
+"CN=krbtgt_AzureAD,CN=Users,<domain-DN>"
 Similar to regular deployments of RODC, the “Azure AD Kerberos Server” creates a separated “krbtgt” user object (SAMAccountName: krbtgt_<Number>). This user account will be used to sign and encrypt all Kerberos tickets. Microsoft’s seems to follow the same approach (as for RODC) to ensure a cryptographic security isolation between Azure AD’s Kerberos Sever Keys and On-Premises Domain Controllers. 
     
 This object will be also published to “Azure AD” as part of the “Set-AzureADKerberosServer” cmdlet and will be created in context of the user credentials (provided value in the “Cloud Credentials” parameter). You’ll find the following event in the “Azure AD Audit Logs” (Category: “KerberosDomain”):
     
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-krbtgtcreated.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-krbtgtcreated.png)
     
 _Note: The krbtgt_AzureAD account seems not be visible in the Azure AD as user or any other type of object._
 
-### "CN=900274c4-b7d2-43c8-90ee-00a9f650e335,CN=AzureAD,CN=System,<domain-DN>"
+"CN=900274c4-b7d2-43c8-90ee-00a9f650e335,CN=AzureAD,CN=System,<domain-DN>"
 This object stores metadata as “Service-Connection-Point” to establish a relation of all related “Azure AD Kerberos Server” objects. Attribute “keywords” includes the following values:
 * **Id**: GUID (unknown and undocumented value?)
 * **UserAccountSid**:
@@ -145,7 +135,7 @@ SID of “CN=krbtgt_AzureAD,CN=Users,<domain-DN>”
 * **ComputerAccountSid**:
 SID of “CN=AzureADKerberos,OU=Domain Controllers,<domain-DN>”
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-serviceconnection.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-serviceconnection.png)
 
 ## Management of “Azure AD Kerberos” Objects
 The PowerShell Module “AzureADKerberos” will be used to view details of the objects in Azure AD and Active Directory. This module is also needed for rotation of the encryption keys (on both sides of your hybrid identity environment).
@@ -175,7 +165,7 @@ Description of the properties are listed in the [Microsoft Docs article](https:/
 
 Detailed operational logs of executing the cmdlets are stored in the Azure AD Connect Trace logs: “C:\ProgramData\AADConnect\trace-*.log”
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-aadclogs.jpg)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-aadclogs.jpg)
 
 ### Rotation of Azure AD Kerberos encryption key
 You should consider to rotate the password of the “krbtgt_AzureAD” on a regular basis. Key rotation is strongly recommended for all “krbtgt” accounts and the [AzureADSSOAcc](https://docs.microsoft.com/en-us/azure/active-directory/hybrid/how-to-connect-sso-faq) (in case you have deployed the “Seamless SSO” feature) 
@@ -205,7 +195,7 @@ The key versions of Active Directory (KeyVersion) and Azure AD (CloudKeyVersion)
 Check the logs of "Azure AD connect" for any troubleshooting or detailed review of the rollover process.
 
 Azure AD Audit logs will shown two activities for this key rollover process:
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-krbtgtrollover.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-krbtgtrollover.png)
 
 ## Security Policy to restrict "Azure AD Kerberos Server"
 The FAQ of [“Hybrid FIDO2 security keys” in Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-authentication-passwordless-faqs?WT.mc_id=AZ-MVP-5003945#fido2-security-key-sign-in-isnt-working-for-my-domain-admin-or-other-high-privilege-accounts-why) describes a “security policy” that disallows grant permission to high privilege accounts.
@@ -216,14 +206,14 @@ Let’s have a closer look on the following two properties of the “Azure AD Ke
 This [property is used for RODCs](https://docs.microsoft.com/en-us/windows/win32/adschema/a-msds-neverrevealgroup?WT.mc_id=AZ-MVP-5003945) to manage the sensitive users/groups that should not be replicated to a RODC (“Denied replication”).
 By default, Microsoft blocks high privileged accounts to use “FIDO2 security keys” to get access for on-premises resources:
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-attrneverreveal.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-attrneverreveal.png)
 
 **msDS-RevealOnDemandGroup**
 [Another familiar property](https://docs.microsoft.com/en-us/windows/win32/adschema/a-msds-revealondemandgroup?WT.mc_id=AZ-MVP-5003945) which is used to define replication to RODCs.
 All domain users are included to allow caching their passwords on RODC.
 In this case, the property seems to control which users are allowed for using FIDO2 keys to get SSO to on-premises.
 
-![](../2021-04-27-hybrid-fido2-keys-part1/aadkerberos-attrrevealondemand.png)
+![]({{ site.url }}{{ site.baseurl }}/assets/images/2021-04-27-hybrid-fido2-keys-part1/aadkerberos-attrrevealondemand.png)
 <br>
 
 <br>
