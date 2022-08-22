@@ -14,6 +14,7 @@ author_profile: false
 <img src="/assets/images/cloudinspires_logo_quad.jpg" style="width:200px;"/>
 
 Podcast about stories and people behind "Cloud Transformation" with Gregor Reimling.
+Check out the [podcast website](https://www.cloudinspires.me) to get an overview of our published episodes.
 
 <iframe src="https://anchor.fm/cloudinspires/embed" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
@@ -36,8 +37,8 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 
 ## Guest on videocasts
 
-M365 im Alltag: Folge 11 - Delegierung von Adminaufgaben mit Administrative Units
+**M365 im Alltag: Folge 11 - Delegierung von Adminaufgaben mit Administrative Units**
 {% include video id="v1GmlzIi_-Y" provider="youtube" %}
 
-glueckkanja-gab Webcast: Azure meets Security
+**glueckkanja-gab Webcast: Azure meets Security**
 {% include video id="uRU-nUOgnDo" provider="youtube" %}
