@@ -19,6 +19,7 @@ locale                   : "en-US"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Thomas Naunheim"    
 title                    : "Thomas Naunheim"
+favicon                  : 'assets/images/favlogo.png'
 logo                     : 'assets/images/logo.png'
 description              : "Blog about Identity & Access + Security in Microsoft Azure"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
