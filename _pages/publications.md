@@ -42,3 +42,6 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 
 **glueckkanja-gab Webcast: Azure meets Security**
 {% include video id="uRU-nUOgnDo" provider="youtube" %}
+
+**Azure AMA - Wohngemeinschaft mit 4 MVPs**
+{% include video id="QFNgm0Em_a8" provider="youtube" %}
