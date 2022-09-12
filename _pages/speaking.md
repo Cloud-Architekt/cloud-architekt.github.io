@@ -14,6 +14,8 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
+| 2022-09-12  | Workplace Ninja Summit      | Demystify Azure AD workload identities                       | [Slides](
+https://github.com/Cloud-Architekt/meetups/blob/master/2022-09-12%20WPNinjaSummit-Demystify-AzureAD-Workload-Identities.pdf) | |
 | 2022-09-08  | Experts Live Germany        | Effektive Maßnahmen für mehr Sicherheit in Azure AD          | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-09-08%20ExpertsLiveGermany-Effektive-Massnahmen-fuer-mehr-AAD-Sicherheit.pdf) | |
 | 2022-06-11  | Scottish Summit 2022        | Deploying and Managing Conditional Access at Scale           | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-06-10%20ScottishSummit-Deploying-and-Managing-ConditionalAccess-at-Scale.pdf) | |
 | 2022-05-25  | OWASP Frankfurt             | Protect Your Privileged Identities and DevOps Pipelines      | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-05-25%20OWASP%20Frankfurt%20-%20Securing%20Azure%20AD.pdf) | |
