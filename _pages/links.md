@@ -2,7 +2,7 @@
 title: "Links"
 excerpt: "List of external resources or tools from #Azure community or cloud security vendors"
 header:
-  overlay_image: /assets/images/banner.jpg
+  overlay_image: /assets/images/library.jpg
   overlay_filter: rgba(102, 102, 153, 0.75)
 toc: true
 toc_sticky: true  
