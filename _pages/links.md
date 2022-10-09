@@ -1,0 +1,95 @@
+---
+title: "Links"
+excerpt: "Links to external resources or tools"
+header:
+  overlay_image: /assets/images/banner.jpg
+  overlay_filter: rgba(102, 102, 153, 0.75)
+toc: true
+toc_sticky: true  
+permalink: /links/
+author_profile: false
+---
+
+# Essential Azure AD Management and Security Tools
+
+## 🧰 PowerShell Modules and other Management Tools
+
+| Name | Description from Project/Repo page | Repository | Project page/Blog |
+| --- | --- | --- | --- |
+| AzureAD | The Windows Azure Active Directory Module for Windows PowerShell cmdlets can be used to accomplish many Windows Azure AD tenant-based administrative tasks such as user management, domain management and for configuring single sign-on (see Manage Azure AD using Windows PowerShell
+).
+
+This module is planned for deprecation. For more details on the deprecation plans, see the deprecation update | PowerShell Gallery: AzureAD | AzureAD Module |
+| Azure AD application secret rotator for Azure web sites | Azure AD App Secret Manager automates the rotation of your Azure web sites secrets integrated with user approval and notification in Microsoft Teams | Azure/AzureAD-AppSecretManager |  |
+| AzureADExporter | The Azure AD Exporter is a PowerShell module that allows you to export your Azure AD and Azure AD B2C configuration settings to local .json files.
+
+This module can be run as a nightly scheduled task or a DevOps component (Azure DevOps, GitHub, Jenkins) and the exported files can be version controlled in Git or SharePoint.
+
+This will provide tenant administrators with a historical view of all the settings in the tenant including the change history over the years. | microsoft/azureadexporter |  |
+| Azure AD Toolkit | The Azure AD Toolkit is a PowerShell module that providers helper cmdlets to manage the credentials of your application or service principal. | microsoft/AzureADToolkit |  |
+| AzADServicePrincipalInsights | Insights and change tracking on Azure Active Directory Service Principals (Enterprise Applications and Applications) | JulianHayward/AzADServicePrincipalInsights |  |
+| AzureADAssessment | Tooling for assessing an Azure AD tenant state and configuration | AzureAD/AzureADAssessmenta | AzureADAssessement and PowerBI Reports (icewolf.ch) |
+| Azure AD B2C Custom Policy Manager | This is a sample management tool for B2C Custom Policies. Custom policy allows you to customize every aspect of the authentication flow. | azure-ad-b2c/custom-policy-manager |  |
+| Azure AD B2C Load Tests | This sample intends to show how to create and run a load test of Azure AD B2C user flows and custom policies (including dependencies), and evaluate the results using the Azure Load Testing Service.
+
+Use this sample to perform a load test and determine your web application and B2C flows behavior under anticipated peak load conditions, identify bottlenecks and determine which element is causing degradation. | azure-ad-b2c/load-tests |  |
+| AzureAuth | CLI wrapper for performing AAD Authentication. It makes use of MSAL for authentication and MSAL Extensions for caching. The CLI is designed for authenticating and returning an access token for public client AAD applications. This acts like a credential provider for Azure Devops and any other public client app. | AzureAD/microsoft-authentication-cli |  |
+| DCToolbox | A PowerShell toolbox for Microsoft 365 security fans. | DanielChronlund/DCToolbox | DCToolbox PowerShell Module for Microsoft 365 Security, Conditional Access Automation, and more |
+| Fortigi ConditionalAccess | This solution consists of powershell functions, bundled in a module to help automate and regulate Conditional Access deployment and maintance. | Fortigi/ConditionalAccess |  |
+| IdentityProtectionTools | The Identity Protection Tools PowerShell module contains sample functions for:
+
+- Enumerating Risky Users by RiskLevel and date when their risk was last updated
+- Dismissing Risk for selected users for bulk operations
+- Confirming Compromise for selected users for bulk operations | AzureAD/IdentityProtectionTools |  |
+| Microsoft Graph SDK | The Microsoft Graph PowerShell SDK is a collection of PowerShell modules that contain commands for calling Microsoft Graph service. | microsoftgraph/msgraph-sdk-powershell | Microsoft Graph PowerShell SDK overview
+
+Samples:
+Graph PowerShell Samples Community |
+| Microsoft Identity Tools PowerShell Module | The Microsoft Identity Tools PowerShell module provides various tools for performing enhanced Identity administration activities. It is intended to address more complex business scenarios that can't be met solely with the use of MS Graph PowerShell SDK module. | AzureAD/MSIdentityTools |  |
+| Microsoft Identity DotNet Analyzers | Contains static analyzers to detect bad practices in the usage of .NET authentication libraries | AzureAD/microsoft-identity-dotnet-analyzers |  |
+| MSAL.PS | The MSAL.PS PowerShell module wraps MSAL.NET functionality into PowerShell-friendly cmdlets and is not supported by Microsoft. Microsoft support does not extend beyond the underlying MSAL.NET library. | AzureAD/MSAL.PS | Microsoft Graph using MSAL with PowerShell - darrenjrobinson |
+| Terraform Provider for Azure Active Directory | The Azure Provider can be used to configure infrastructure in Azure Active Directory
+ using the Microsoft Graph API. | hashicorp/azuread | Terraform Registry | Docs overview | hashicorp/azuread | Terraform Registry |
+
+## 🛡️ Offensive and Security Research Tools
+
+| Name | Description | Repository | Project page/Blog |
+| --- | --- | --- | --- |
+| AADInternals | AADInternals is PowerShell module for administering Azure AD and Office 365 | Gerenios/AADInternals: AADInternals  | AAD Internals (o365blog.com) |
+| Azure AD Incident Response PowerShell Module | The Azure Active Directory Incident Response PowerShell module provides a number of tools, developed by the Azure Active Directory Product Group in conjunction with the Microsoft Detection and Response Team (DART), to assist in compromise response. | AzureAD/Azure-AD-Incident-Response-PowerShell-Module |  |
+| AzTokenFinder | Is a small tool to extract JWT (or JWT like looking data) from different processes, like PowerShell, Excel, Word or others. The idea was from another tool which I read about on Twitter, but I could not find it anymore. Maybe someone could give me a hint. | HackmichNet/AzTokenFinder |  |
+| AzureRT | Helpful utilities dealing with access token based authentication, switching from Az to AzureAD  and az cli interfaces, easy to use pre-made attacks such as Runbook-based command execution and more. | mgeeky/AzureRT: AzureRT |  |
+| Bloodhound | BloodHound uses graph theory to reveal the hidden and often unintended relationships within an Active Directory or Azure environment. Attackers can use BloodHound to easily identify highly complex attack paths that would otherwise be impossible to quickly identify. Defenders can use BloodHound to identify and eliminate those same attack paths. Both blue and red teams can use BloodHound to easily gain a deeper understanding of privilege relationships in an Active Directory or Azure environment. | BloodHoundAD/BloodHound | BloodHound: Six Degrees of Domain Admin |
+| BloodHound Attack Research Kit /BARK) | BARK stands for BloodHound Attack Research Kit. It is a PowerShell script built to assist the BloodHound Enterprise team with researching and continuously validating abuse primitives. BARK currently focuses on Microsoft's Azure suite of products and services. | BloodHoundAD/BARK: BloodHound |  |
+| CrowdStrike Reporting Tool for Azure (CRT) | This tool queries the following configurations in the Azure AD/O365 tenant which can shed light on hard-to-find permissions and configuration settings in order to assist organizations in securing these environments. | CrowdStrike/CRT/CRT |  |
+| Mandiant Azure AD Investigator | This repository contains a PowerShell module for detecting artifacts that may be indicators of UNC2452 and other threat actor activity. Some indicators are "high-fidelity" indicators of compromise, while other artifacts are so called "dual-use" artifacts. Dual-use artifacts may be related to threat actor activity, but also may be related to legitimate functionality. | mandiant/Mandiant-Azure-AD-Investigator |  |
+| MicroBurst | MicroBurst includes functions and scripts that support Azure Services discovery, weak configuration auditing, and post exploitation actions such as credential dumping. It is intended to be used during penetration tests where Azure is in use. | NetSPI/MicroBurst | Various blog posts on:
+https://www.netspi.com/blog/ |
+| Monkey365 | Monkey365 is an Open Source security tool that can be used to easily conduct not only Microsoft 365, but also Azure subscriptions and Azure Active Directory security configuration reviews without the significant overhead of learning tool APIs or complex admin panels from the start. To help with this effort, Monkey365 also provides several ways to identify security gaps in the desired tenant setup and configuration. Monkey365 provides valuable recommendations on how to best configure those settings to get the most out of your Microsoft 365 tenant or Azure subscription. | silverhack/monkey365 |  |
+| ROADtools | ROADtools is a framework to interact with Azure AD. It currently consists of a library (roadlib) and the ROADrecon Azure AD exploration tool. | dirkjanm/ROADtools | Introducing ROADtools - The Azure AD exploration framework - dirkjanm.io |
+| SimuLand | SimuLand is an open-source initiative by Microsoft to help security researchers around the world deploy lab environments that reproduce well-known techniques used in real attack scenarios, actively test and verify effectiveness of related Microsoft 365 Defender, Azure Defender and Microsoft Sentinel detections, and extend threat research using telemetry and forensic artifacts generated after each simulation exercise.
+
+These lab environments will provide use cases from a variety of data sources including telemetry from Microsoft 365 Defender security products, Azure Defender and other integrated data sources through Microsoft Sentinel data connectors. | Azure/SimuLand | SimuLand: Understand adversary tradecraft and improve detection strategies - Microsoft Security Blog |
+| Stormspotter | Stormspotter creates an “attack graph” of the resources in an Azure subscription. It enables red teams and pentesters to visualize the attack surface and pivot opportunities within a tenant, and supercharges your defenders to quickly orient and prioritize incident response work. | Azure/Stormspotter |  |
+| TokenTactics | Azure access tokens allow you to authenticate to certain endpoints as a user who signs in with a device code. Even if they used multi-factor authentication. Once you have a user's access token, it may be possible to access certain apps such as Outlook, SharePoint, OneDrive, MSTeams and more.
+
+For instance, if you have a Graph or MSGraph token, you can then connect to Azure and dump users, groups, etc. You could then, depending on conditional access policies, switch to an Azure Core Management token and run AzureHound. Then, switch to an Outlook token and read/send emails or MS Teams and read/send teams messages! | rvrsh3ll/TokenTactics |  |
+
+## 🪄 Postman Collection
+
+| Collection Name | Link to Collection/Fork | Documentation |
+| --- | --- | --- |
+| Azure AD v2.0 Protocols  | Collection for Authentication Flows | Microsoft identity platform and OAuth 2.0  |
+| Microsoft Graph API | Microsoft Graph Collection | Use Postman with the Microsoft Graph API |
+| Microsoft Threat Protection | Microsoft-Threat-Protection/Postman at master · richlilly2004 |  |
+| Verified ID | VerifiedID Request API
+
+VerifiedID Admin API | active-directory-verifiable-credentials/Postman |
+
+## 🧑‍💻 Visual Studio Code Extensions
+
+| Extension Name | Description | Project repository | Marketplace |
+| --- | --- | --- | --- |
+| Azure AD B2C | The Azure AD B2C extension for VS Code lets you quickly navigate through Azure AD B2C custom policies. Create elements like technical profiles and claim definitions. For more information, see Get started with custom policies
+. | azure-ad-b2c/vscode-extension | Azure AD B2C |
+| MS Graph Completion | This VSCode extension allows you to auto-complete the Microsoft Graph API URLs you are writing. You get the most useful Microsoft Graph Explorer functionality in your favorite editor. | estruyf/vscode-msgraph-autocomplete | MS Graph Completion |

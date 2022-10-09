@@ -9,6 +9,8 @@ main:
     url: /speaking/
   - title: "Publications"
     url: /publications/    
+  - title: "Links"
+    url: /links/      
   - title: "Disclosure"
     url: /disclosure/
   - title: "Privacy"
