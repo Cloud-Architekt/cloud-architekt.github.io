@@ -14,7 +14,7 @@ _These links are being provided as a convenience and for informational purposes 
 I'm not responsibility for the accuracy, legality or content of the external site or for that of subsequent links.
 Contact the external site for answers to questions regarding its content._
 
-# Essential Azure AD Management and Security Tools
+# Azure AD Management and Security Tools
 
 ## 🧰 PowerShell Modules and other Management Tools
 
@@ -61,7 +61,7 @@ Contact the external site for answers to questions regarding its content._
 
 
 
-## 🪄 Postman Collection
+## 🪄 Postman Collections
 
 | Collection Name | Link to Collection/Fork | Documentation |
 | --- | --- | --- |
