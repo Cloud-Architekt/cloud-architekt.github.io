@@ -40,7 +40,7 @@ Contact the external site for answers to questions regarding its content._
 
 
 
-## 🛡️ Offensive and Security Research Tools
+## 🛡️ Security Research Tools
 
 | Name | Description | Repository | Project page/Blog |
 | --- | --- | --- | --- |
