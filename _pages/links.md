@@ -1,6 +1,6 @@
 ---
 title: "Links"
-excerpt: "List of external resources or tools from #Azure community or cloud security vendors"
+excerpt: "List of external resources and tools for IAM Security + Management from #Azure community, Microsoft and cloud (security) vendors"
 header:
   overlay_image: /assets/images/library.jpg
   overlay_filter: rgba(102, 102, 153, 0.75)
