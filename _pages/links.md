@@ -1,6 +1,6 @@
 ---
 title: "Links"
-excerpt: "List of external resources or tools"
+excerpt: "List of external resources or tools from #Azure community or cloud security vendors"
 header:
   overlay_image: /assets/images/banner.jpg
   overlay_filter: rgba(102, 102, 153, 0.75)
@@ -9,6 +9,10 @@ toc_sticky: true
 permalink: /links/
 author_profile: false
 ---
+
+_These links are being provided as a convenience and for informational purposes only; they do not constitute an endorsement or an approval me.
+I'm not responsibility for the accuracy, legality or content of the external site or for that of subsequent links.
+Contact the external site for answers to questions regarding its content._
 
 # Essential Azure AD Management and Security Tools
 
@@ -62,7 +66,7 @@ author_profile: false
 | Collection Name | Link to Collection/Fork | Documentation |
 | --- | --- | --- |
 | Azure AD v2.0 Protocols  | [Collection for Authentication Flows](https://app.getpostman.com/run-collection/f77994d794bab767596d) | [Microsoft identity platform and OAuth 2.0](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)  |
-| Microsoft Graph API | Microsoft Graph Collection[](https://www.postman.com/microsoftgraph/workspace/microsoft-graph/collection/455214-085f7047-1bec-4570-9ed0-3a7253be148c/fork) | [Use Postman with the Microsoft Graph API](https://learn.microsoft.com/en-us/graph/use-postman) |
+| Microsoft Graph API | [Microsoft Graph Collection](https://www.postman.com/microsoftgraph/workspace/microsoft-graph/collection/455214-085f7047-1bec-4570-9ed0-3a7253be148c/fork) | [Use Postman with the Microsoft Graph API](https://learn.microsoft.com/en-us/graph/use-postman) |
 | Microsoft Threat Protection | [Microsoft-Threat-Protection/Postman at master · richlilly2004](https://github.com/richlilly2004/Microsoft-Threat-Protection/tree/master/Postman) |  |
 | Verified ID | [VerifiedID Request API](https://www.postman.com/aadverifiablecredentials/workspace/ms-entra-verifiedid-api/collection/18012404-fc35776e-afb7-4795-83d8-713701882c07/fork), [VerifiedID Admin API](https://www.postman.com/aadverifiablecredentials/workspace/ms-entra-verifiedid-api/collection/18012592-bcfa1b7a-b449-4d70-98eb-96b69f32c877/fork) | [active-directory-verifiable-credentials/Postman](https://github.com/Azure-Samples/active-directory-verifiable-credentials/tree/main/Postman) |
 
@@ -72,3 +76,9 @@ author_profile: false
 | --- | --- | --- | --- |
 | Azure AD B2C | The Azure AD B2C extension for VS Code lets you quickly navigate through Azure AD B2C custom policies. Create elements like technical profiles and claim definitions. For more information, see Get started with custom policies. | [azure-ad-b2c/vscode-extension](https://github.com/azure-ad-b2c/vscode-extension) | [Azure AD B2C ](https://marketplace.visualstudio.com/items?itemName=AzureADB2CTools.aadb2c)|
 | MS Graph Completion | This VSCode extension allows you to auto-complete the Microsoft Graph API URLs you are writing. You get the most useful Microsoft Graph Explorer functionality in your favorite editor. | [estruyf/vscode-msgraph-autocomplete](https://github.com/estruyf/vscode-msgraph-autocomplete) | [MS Graph Completion](https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-msgraph-autocomplete) |
+
+<br>
+<br>
+<br>
+
+Image by <a href="https://pixabay.com/users/stocksnap-894430/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2596809">StockSnap</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2596809">Pixabay</a>
