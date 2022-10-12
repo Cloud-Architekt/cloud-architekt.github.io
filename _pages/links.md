@@ -46,7 +46,7 @@ Contact the external site for answers to questions regarding its content._
 
 | Name | Description from Project/Repo page  | Repository | Project page/Blog |
 | --- | --- | --- | --- |
-| AADInternals | AADInternals is PowerShell module for administering Azure AD and Office 365 | [Gerenios/AADInternals: AADInternals](https://github.com/Gerenios/AADInternals)  | [AAD Internals (o365blog.com)](https://o365blog.com/aadinternals/) |
+| AADInternals | AADInternals is PowerShell module for administering Azure AD and Office 365 | [Gerenios/AADInternals: AADInternals](https://github.com/Gerenios/AADInternals)  | [AAD Internals (aadinternals.com)](https://aadinternals.com/aadinternals/) |
 | Azure AD Incident Response PowerShell Module | The Azure Active Directory Incident Response PowerShell module provides a number of tools, developed by the Azure Active Directory Product Group in conjunction with the Microsoft Detection and Response Team (DART), to assist in compromise response. | [AzureAD/Azure-AD-Incident-Response-PowerShell-Module](https://github.com/AzureAD/Azure-AD-Incident-Response-PowerShell-Module) |  |
 | AzTokenFinder | Is a small tool to extract JWT (or JWT like looking data) from different processes, like PowerShell, Excel, Word or others. | [HackmichNet/AzTokenFinder](https://github.com/HackmichNet/AzTokenFinder) |  |
 | AzureRT | Helpful utilities dealing with access token based authentication, switching from Az to AzureAD  and az cli interfaces, easy to use pre-made attacks such as Runbook-based command execution and more. | [mgeeky/AzureRT: AzureRT](https://github.com/mgeeky/AzureRT) |  |
