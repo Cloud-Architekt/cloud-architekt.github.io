@@ -8,6 +8,15 @@ toc: true
 toc_sticky: true  
 permalink: /publications/
 author_profile: false
+gallery:
+  - url: /assets/images/visualizations/IPC-Integration.png
+    image_path: /assets/images/visualizations/IPC-Integration.png
+    alt: "Azure AD Idenitty Protection Incident and Data Flow"
+    title: "Azure AD Idenitty Protection Incident and Data Flow"
+  - url: /assets/images/visualizations/M365-TieringModel.png
+    image_path: /assets/images/visualizations/M365-TieringModel.png
+    alt: "Draft of Tiering Model in Microsoft 365"
+    title: "Draft of Tiering Model in Microsoft 365"
 ---
 
 ## Podcast "CloudInspires"
@@ -24,6 +33,9 @@ Check out the [podcast website](https://www.cloudinspires.me) to get an overview
 This publication is a collection of various common attack scenarios on Azure Active Directory and how they can be mitigated or detected. All of the included scenarios, insights and comments are based on experiences from the contributors during their attack simulations, hands-on or real-world scenarios.
 
 Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense)
+
+## Visualizations of Azure and Identity Security
+{% include gallery caption="This is an overview about visualizations which I have been used in community sessions or shared on social media." %}
 
 ## Guest on podcasts
 
