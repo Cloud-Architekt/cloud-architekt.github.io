@@ -17,7 +17,13 @@ gallery:
     image_path: /assets/images/visualizations/M365-TieringModel.png
     alt: "Draft of Tiering Model in Microsoft 365"
     title: "Draft of Tiering Model in Microsoft 365"
+  - url: /assets/images/visualizations/M365D-SentinelOverview.png
+    image_path: /assets/images/visualizations/M365D-SentinelOverview.png
+    alt: "Overview of Identity Security Monitoring with Microsoft 365 Defender and Microsoft Sentinel"
+    title: "Overview of Identity Security Monitoring with Microsoft 365 Defender and Microsoft Sentinel"
 ---
+
+
 
 ## Podcast "CloudInspires"
 <img src="/assets/images/cloudinspires_logo_quad.jpg" style="width:200px;"/>
