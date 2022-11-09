@@ -25,3 +25,5 @@ In 2020 I was awarded as "Most Valuable Professional" (MVP) in the category "Azu
 I was also recognized with the "Most Valuable Mentor" by Microsoft in October 2020.<br>
 This is my personal blog. Opinions are my own and possibly not the views of my employer.<br><br>	
 <span style="color:silver;font-style:italic;font-size:small">Photo by [Sebastian Tillenburg](https://twitter.com/d_eiti?lang=de)</span>
+
+<a rel="me" href="https://infosec.exchange/@thomasnaunheim">Follow me on Mastodon</a>
