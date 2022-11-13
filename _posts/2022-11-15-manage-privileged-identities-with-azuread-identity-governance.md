@@ -2,9 +2,9 @@
 title: "Manage user lifecycle of Privileged Identities with Azure AD Identity Governance"
 excerpt: "Microsoft has been released a feature to automate on- and off-boarding tasks for Azure AD accounts. Lifecycle workflows offers built-in workflow templates but also the option to integrate Logic Apps as custom extensions. In this blog post, I like to show, how to use this feature to automate the lifecycle of privileged accounts in association with a hiring and termination process"
 header:
-  overlay_image: /assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
+  overlay_image: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
+  teaser: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
 search: true
 toc: true
 toc_sticky: true
@@ -14,7 +14,7 @@ tags:
   - AzureAD
   - PrivilegedIAM
   - IdentityGovernance 
-last_modified_at: 2022-11-14
+last_modified_at: 2022-11-15
 ---
 
 *Microsoft has been released a feature to automate on- and off-boarding tasks for Azure AD accounts. Lifecycle workflows offers built-in workflow templates but also the option to integrate Logic Apps as custom extensions. In this blog post, I like to show, how to use this feature to automate the lifecycle of privileged accounts in association with a hiring and termination process.*
@@ -26,7 +26,7 @@ last_modified_at: 2022-11-14
  
 Microsoft recommends using cloud-only and dedicated user accounts for privileged access. They should be mastered in Azure Active Directory (without synchronization or dependency from Active Directory) to isolate those accounts in the case of an on-premises compromise. In the past, it was a challenge to manage the lifecycle of those accounts. Custom scripts, 3rd party solutions or manual processes have been implemented for (de)provisioning of privileged accounts. Built-in capabilities of [Cloud HR-driven user provisioning](https://learn.microsoft.com/en-us/azure/active-directory/app-provisioning/what-is-hr-driven-provisioning?WT.mc_id=AZ-MVP-5003945) needs to have supported systems in place (e.g. WorkDay or SAP SuccessFactor).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/M365AdminIsolation.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/M365AdminIsolation.png)
 
 *Overview of isolated Azure AD and Microsoft 365 administration from Microsoft Docs article "[Protecting Microsoft 365 from on-premises attacks](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/protect-m365-from-on-premises-attacks?WT.mc_id=AZ-MVP-5003945)”. TL;DR: “No on-premises accounts should have administrative privileges in Microsoft 365.”* 
 
@@ -59,7 +59,7 @@ Even if you are using Active Directory as source of authority to trigger (de)pro
 
 *Side Note: Even I’m using the terminology or object name “privileged users”, those accounts are not assigned to privileged roles or permissions at the time of onboarding. Afterwards, a separated process for (Privileged) Entitlement Management will be responsible to verify and assign those privileges.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow2.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow2.png)
 
 *Lifecycle Management in Microsoft Entra is the heart of Azure AD to automate the provisioning of users. Lifecyle workflows enables you to implement built-in templates for on- and offboarding but also create custom workflows for integration of advanced scenarios. Logic Apps are the platform to create custom extensions. Image Source: [User Lifecycle Management - Product Page](https://www.microsoft.com/en-us/security/business/identity-access/azure-active-directory-lifecycle-management-software).*
 
@@ -71,11 +71,11 @@ Lifecycle workflows will be triggered based on the attributes `EmployeeHireDate`
 
 The attributes `EmployeeHireDate`  but also `EmployeeLeaveDate`  are synchronized (via Cloud HR solutions) or has been manual updated on the pre-created work account in Azure AD. The attribute can be listed and [modified via Microsoft Graph API](https://learn.microsoft.com/en-us/graph/api/user-update?WT.mc_id=AZ-MVP-5003945):
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow3.png){:width="80%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow3.png){:width="80%"}
 
 *Update of Employee Hire and Leave Date can be managed via Microsoft Graph API requests. Date must be in the format “YYYY-MM-DDThh:mm:ssZ”*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow4.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow4.png)
 
 *Azure AD user blade shows `EmployeeHireDate`  (“Employee hire date”) in the properties. In addition, attributes such as `jobTitle` , `department` and `employeeId`  are maintained which will be used later in the provisioning process. At this time, the work account is disabled.*
 
@@ -83,9 +83,9 @@ The attributes `EmployeeHireDate`  but also `EmployeeLeaveDate`  are synchronize
 
 The source system is able to synchronize `EmployeeHireDate` and `EmployeeLeaveDate`  of the user object (work account) to a custom attribute in Active Directory. Both attributes don’t exist in the Active Directory Schema, therefore you need to choose an attribute (e.g. `ExtensionAttribute1`). Azure AD Connect-Server and -Cloud Sync are configured to [synchronize the attributes to Azure AD](https://learn.microsoft.com/en-us/azure/active-directory/governance/how-to-lifecycle-workflow-sync-attributes?WT.mc_id=AZ-MVP-5003945#how-to-create-a-custom-synch-rule-in-azure-ad-connect-for-employeehiredate).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow5.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow5.png)
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow6.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow6.png)
 
 *The chosen “source attributes” in this sample are rather unsuitable. I was enforced to use them in this case because of limited availability of custom attributes in my environment (no Exchange custom attributes are available). In general, I would recommend using some custom / extension attributes.*
 
@@ -97,19 +97,19 @@ The source system is able to synchronize `EmployeeHireDate` and `EmployeeLeaveDa
 
 The first workflow is designed to be executed for onboarding a pre-hire IT employee (seven days before `EmployeeHireDate`). I’ve used the built-in template “Onboard pre-hire employee” as basis to customize the workflow for IT employees.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow7.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow7.png)
 
 **Execution Conditions**
 
 The conditions for executing the workflow have been modified to the scope of users with the value “IT” in the property `department` :
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow8.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow8.png)
 
 **Defined tasks in workflow**
 
 The first two tasks are part of the workflow template and only the task name (yellow marked) has been modified. Those tasks are only related to the work account which has been already pre-created. I’ve added a “Custom task extension” on task order number 3 which will create a disabled privileged account for the pre-hire employee:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow9.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow9.png)
 
 The Process to create a (disabled) privileged account is included, alongside of the standard tasks for the work account (e.g. “Generate TAP…” or “Send Welcome Mail”).
 
@@ -122,19 +122,19 @@ The logic app includes the following task steps:
 
 **Phase 1: Get user details from work account**
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow10.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow10.png)
 
 **Phase 2: Classify type of privileged account based on attribute**
 
 I’ve chosen the design approach to implement a classification (already at the provisioning phase) to identify if the privileged account will be later used for managing Control- or Management Plane. You need to have an attribute which can be used to classify the intended use. In this case, I’m using the attribute `jobTitle`  which can be an indicator for the scope of privileged access (e.g. IAM Administrator often require Control Plane access).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow11.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow11.png)
 
 **Phase 3: Provisioning of Privileged Accounts**
 
 The next action will create the privileged account with all required attributes including the `EmployeeHireDate`  as condition for the next Lifecycle workflow. `EmployeeId` will be used to generate the privileged account name (based on the naming convention). Furthermore, [“plus addressing” in Exchange Online](https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/plus-addressing-in-exchange-online) will be set to ensure the mail redirection to the work account (for PIM notification). This was a great tip on [Twitter by Merill Fernando](https://twitter.com/merill/status/1567337464788058113).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow12.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow12.png)
 
 But one important attribute for creating the account is still missing.
 We need to generate a password which is required for our Graph API call.
@@ -146,11 +146,11 @@ There’s no built-in action to generate a complex password but a couple of idea
 
 However, we need to take care on the value of the expression which needs to be protected and shouldn’t be visible in the workflow history or logs. Therefore, I’m using the expression within the HTTP action and enable “Secure Inputs and Outputs” in the settings:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow13.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow13.png)
 
 This protects also the output value from the API response.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow14.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow14.png)
 
 More details on [secure your logic apps](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-securing-a-logic-app?tabs=azure-portal#secure-data-in-run-history-by-using-obfuscation) are available from Microsoft Docs.
 
@@ -160,13 +160,13 @@ More details on [secure your logic apps](https://learn.microsoft.com/en-us/azure
 
 After the account has been created successfully, the classification of the privileged account but also the relation to the work account will be stored in a custom security attribute (`associatedWorkAccount` and  `associatedPrivilegedAccount`) 
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow15.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow15.png)
 
 The information about the relation between the user accounts will be stored as Object GUID reference (to the associated account) on both user objects:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow16.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow16.png)
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow17.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow17.png)
 
 **Side Note: In this example I’ve used a multi-value field on the custom security attribute of the work account. This allows me to build relations to multiple privileged accounts (e.g. if account isolation to other environments or separated for Tier levels are required).**
 
@@ -184,7 +184,7 @@ Content-type: application/json
 }
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow18.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow18.png)
 
 Managed Identity of the Logic App has a scoped “Attribute assignment administrator” role to the attribute set (based on `directoryScopeId` ).
 
@@ -196,13 +196,13 @@ The workflow for enabling the pre-created accounts will be triggered on the defi
 
 The process for enabling the work account has been created from the template “Onboard new hire employee” and will be also the basis for the process to enable the privileged account.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow19.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow19.png)
 
 **Execution Conditions**
 
 Conditions to trigger the workflows are set on `EmployeeHireDate`  and based on the same scope as the previous workflows (`department` equal “IT”)
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow20.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow20.png)
 
 ### Workflow: Onboard privileged account for new hire employee
 
@@ -218,11 +218,11 @@ This workflow will be triggered on the `EmployeeHireDate`  which has been added 
 
 There are only two tasks for onboard the privileged account for the new employee.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow21.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow21.png)
 
 Generating the Temporary Access Pass (TAP) will be part of a custom extensions to send it to the account owner. There’s already a built-in task to generate a TAP and send the pass via email to user’s manager:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow22.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow22.png)
 
 For the following scenario, I’ve preferred to choose a custom extension (Logic App) which gives you more flexible about the recipient and way how the TAP will be delivered. [Jan Bakker](https://twitter.com/janbakker_?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor) has written an [excellent blog post](https://janbakker.tech/automate-issuing-temporary-access-pass-for-joiners-with-lifecycle-workflows/) about this scenario and gives a detail description on an advanced scenario (using SMS and mail). I’m strongly recommend to read the article to learn more about his great solution! This allows the user to onboard their FIDO2 security key or Windows Hello for Business for password-less authentication.
 
@@ -232,13 +232,13 @@ Finally, a built-in task will enable the account in this workflow
 
 The following Logic App has granted permissions to the Azure AD admin role “[Authentication Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#authentication-administrator)” to create the TAP. I’ve created an Administrative Units (AU) which assigned the pre-created accounts based on a dynamic filter. This helps me to reduce the scope of this sensitive role to disabled (pre-created) privileged accounts only:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow23.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow23.png)
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow24.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow24.png)
 
 *The pre-created privileged account for IT employees is assigned to the Administrative Unit “Tier1-ManagementPlane.OnOffBoarded”. All disabled privileged accounts (based on accountEnable attribute and naming convention) on the specific Enterprise Access (Tier) Level (shared attribute filter with classification from lifecycle workflow) are assigned to the AU.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow25.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow25.png)
 
 *Managed Identity of the Logic App has granted permissions on Administrative Unit-Scope only.
 Privileged Accounts will be out of scope of this AU after they have been enabled and the dynamic filter has updated the user assignments.*
@@ -247,19 +247,19 @@ Privileged Accounts will be out of scope of this AU after they have been enabled
 
 In the beginning of the workflow a variable need to be initialized for storing the mail address of the shared mailbox (for sending the TAP). Afterwards user details of the pre-created user account will be collected.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow26.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow26.png)
 
 **Step 2: Create Temporary Access Pass for Initial Onboarding**
 
 Microsoft Graph API can be used to create the TAP with specific parameters (such as lifetime or one time use). The action is also configured to use “[secure in- and output](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-securing-a-logic-app?WT.mc_id=AZ-MVP-5003945#secure-data-in-run-history-by-using-obfuscation)” to protect the secret of the TAP.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow27.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow27.png)
 
 **Step 3: Send TAP from shared mailbox to the account owner**
 
 In next step, delivery of the TAP (to the associated work account) will be defined. In this sample, I’m using a shared mailbox to send the pass via mail. Alternatively, you can also use other communication channel (Microsoft Teams, ticket system, password manager) and use another recipient.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow28.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow28.png)
 
 #### Built-in task: Enable account
 
@@ -275,7 +275,7 @@ In this sample, I’m using a combined workflow to start the actions based on th
 
 There are two templates which can be used for (scheduled/planned) employee termination:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow29.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow29.png)
 
 Choose the right template which fits better to your scenario and to the right time when the privileged account should be offboarded. In addition, there’s also an “on-demand” workflow template if you like to trigger the employee termination manually or “in real-time” (short-term dismissal). 
 
@@ -287,7 +287,7 @@ In my example, I’m using the day of the `EmployeeLeaveDate` to trigger this wo
 
 Built-in tasks will be used in the offboarding workflow to disable the user account but also remove group memberships and access of the work account.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow30.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow30.png)
 
 A custom extension with the name “Disable-AADPrivilegedAccount” takes care, that all associated privileged accounts will be disabled.
 
@@ -299,11 +299,11 @@ A custom extension with the name “Disable-AADPrivilegedAccount” takes care, 
 
 The first tasks will be used to initialize variables. Later on, they will be used if disabling the privileged account has been failed.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow31.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow31.png)
 
 **Step 2: Using custom security attributes to get all associated privileged accounts**
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow32.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow32.png)
 
 In the next steps, the custom security attribute of `associatedPrivilegedAccount`  needs to be collected for building a correlation to the other privileged account(s) which should be also terminated. The variable “privilegedAccount” will be initialized as “Array” to support multi-values from the custom security attribute.
 
@@ -312,7 +312,7 @@ In the next steps, the custom security attribute of `associatedPrivilegedAccount
 The foreach loop iterates over the list of associated privileged accounts.
 Revocation of sign-in sessions and set `AccountEnabled` to “false” (Disable account) are the following actions. A notification to the previous named recipient (e.g. “Identity Operations Team”) will be sent in case the request to disable the account from Microsoft Graph has been failed
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png){:width="80%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png)
 
 Activities to disable and revoke sessions of privileged accounts needs extensive permissions.
 User accounts with membership to privileged access/role-assignable groups or directory roles are particularly protected by Azure AD. More details are available from Microsoft Docs: [Azure AD built-in roles - Who can perform sensitive actions - Microsoft Entra](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#who-can-perform-sensitive-actions)
