@@ -5,7 +5,7 @@ header:
   overlay_image: /assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
   overlay_filter: rgba(102, 102, 153, 0.85)
   teaser: /assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
-search: false
+search: true
 toc: true
 toc_sticky: true
 categories:
@@ -314,7 +314,7 @@ In the next steps, the custom security attribute of `associatedPrivilegedAccount
 The foreach loop iterates over the list of associated privileged accounts.
 Revocation of sign-in sessions and set `AccountEnabled` to “false” (Disable account) are the following actions. A notification to the previous named recipient (e.g. “Identity Operations Team”) will be sent in case the request to disable the account from Microsoft Graph has been failed
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png){:width="300px"}
 
 Activities to disable and revoke sessions of privileged accounts needs extensive permissions.
 User accounts with membership to privileged access/role-assignable groups or directory roles are particularly protected by Azure AD. More details are available from Microsoft Docs: [Azure AD built-in roles - Who can perform sensitive actions - Microsoft Entra](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#who-can-perform-sensitive-actions)
