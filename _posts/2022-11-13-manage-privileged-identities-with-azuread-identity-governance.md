@@ -23,14 +23,12 @@ last_modified_at: 2022-11-14
 <br>
 
 ## Foundation of Privileged Accounts
-
+ 
 Microsoft recommends using cloud-only and dedicated user accounts for privileged access. They should be mastered in Azure Active Directory (without synchronization or dependency from Active Directory) to isolate those accounts in the case of an on-premises compromise. In the past, it was a challenge to manage the lifecycle of those accounts. Custom scripts, 3rd party solutions or manual processes have been implemented for (de)provisioning of privileged accounts. Built-in capabilities of [Cloud HR-driven user provisioning](https://learn.microsoft.com/en-us/azure/active-directory/app-provisioning/what-is-hr-driven-provisioning) needs to have supported systems in place (e.g. WorkDay or SAP SuccessFactor).
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/M365AdminIsolation.png)
 
 *Overview of isolated Azure AD and Microsoft 365 administration from Microsoft Docs article "[Protecting Microsoft 365 from on-premises attacks](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/protect-m365-from-on-premises-attacks)”. TL;DR: “No on-premises accounts should have administrative privileges in Microsoft 365.”* 
-
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png)
 
 ### Why should you isolate between work and privileged account?
 
@@ -38,8 +36,8 @@ In my opinion, separation between work account (for productivity tasks) and priv
 
 Additional references to Microsoft’s recommendations:
 
-- [Secure access practices for administrators in Azure AD - Microsoft Entra | Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/roles/security-planning#ensure-separate-user-accounts-and-mail-forwarding-for-global-administrator-accounts)
-- [Step 2. Protect your Microsoft 365 privileged accounts - Microsoft 365 Enterprise | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/enterprise/protect-your-global-administrator-accounts?view=o365-worldwide)
+[Secure access practices for administrators in Azure AD - Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/roles/security-planning#ensure-separate-user-accounts-and-mail-forwarding-for-global-administrator-accounts)
+[Step 2. Protect your Microsoft 365 privileged accounts - Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/enterprise/protect-your-global-administrator-accounts?view=o365-worldwide)
 
 ### Definition and requirements of Azure AD privileged accounts
 
@@ -63,7 +61,7 @@ Even if you are using Active Directory as source of authority to trigger (de)pro
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow2.png)
 
-*Lifecycle Management in Microsoft Entra is the heart of Azure AD to automate the provisioning of users. Lifecyle workflows enables you to implement built-in templates for on- and offboarding but also create custom workflows for integration of advanced scenarios. Logic Apps are the platform to create custom extensions. Image Source: [User Lifecycle Management Software | Microsoft Security](https://www.microsoft.com/en-us/security/business/identity-access/azure-active-directory-lifecycle-management-software).*
+*Lifecycle Management in Microsoft Entra is the heart of Azure AD to automate the provisioning of users. Lifecyle workflows enables you to implement built-in templates for on- and offboarding but also create custom workflows for integration of advanced scenarios. Logic Apps are the platform to create custom extensions. Image Source: [User Lifecycle Management - Product Page](https://www.microsoft.com/en-us/security/business/identity-access/azure-active-directory-lifecycle-management-software).*
 
 ### Trigger the provisioning process in relation to work account
 
@@ -73,7 +71,7 @@ Lifecycle workflows will be triggered based on the attributes `EmployeeHireDate`
 
 The attributes `EmployeeHireDate`  but also `EmployeeLeaveDate`  are synchronized (via Cloud HR solutions) or has been manual updated on the pre-created work account in Azure AD. The attribute can be listed and [modified via Microsoft Graph API](https://learn.microsoft.com/en-us/graph/api/user-update?view=graph-rest-1.0&tabs=http):
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow3.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow3.png){:width="60%"}
 
 *Update of Employee Hire and Leave Date can be managed via Microsoft Graph API requests. Date must be in the format “YYYY-MM-DDThh:mm:ssZ”*
 
@@ -314,7 +312,7 @@ In the next steps, the custom security attribute of `associatedPrivilegedAccount
 The foreach loop iterates over the list of associated privileged accounts.
 Revocation of sign-in sessions and set `AccountEnabled` to “false” (Disable account) are the following actions. A notification to the previous named recipient (e.g. “Identity Operations Team”) will be sent in case the request to disable the account from Microsoft Graph has been failed
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png){:width="300px"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png){:width="600px"}
 
 Activities to disable and revoke sessions of privileged accounts needs extensive permissions.
 User accounts with membership to privileged access/role-assignable groups or directory roles are particularly protected by Azure AD. More details are available from Microsoft Docs: [Azure AD built-in roles - Who can perform sensitive actions - Microsoft Entra](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#who-can-perform-sensitive-actions)
