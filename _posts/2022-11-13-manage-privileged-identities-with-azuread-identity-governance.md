@@ -24,11 +24,11 @@ last_modified_at: 2022-11-14
 
 ## Foundation of Privileged Accounts
  
-Microsoft recommends using cloud-only and dedicated user accounts for privileged access. They should be mastered in Azure Active Directory (without synchronization or dependency from Active Directory) to isolate those accounts in the case of an on-premises compromise. In the past, it was a challenge to manage the lifecycle of those accounts. Custom scripts, 3rd party solutions or manual processes have been implemented for (de)provisioning of privileged accounts. Built-in capabilities of [Cloud HR-driven user provisioning](https://learn.microsoft.com/en-us/azure/active-directory/app-provisioning/what-is-hr-driven-provisioning) needs to have supported systems in place (e.g. WorkDay or SAP SuccessFactor).
+Microsoft recommends using cloud-only and dedicated user accounts for privileged access. They should be mastered in Azure Active Directory (without synchronization or dependency from Active Directory) to isolate those accounts in the case of an on-premises compromise. In the past, it was a challenge to manage the lifecycle of those accounts. Custom scripts, 3rd party solutions or manual processes have been implemented for (de)provisioning of privileged accounts. Built-in capabilities of [Cloud HR-driven user provisioning](https://learn.microsoft.com/en-us/azure/active-directory/app-provisioning/what-is-hr-driven-provisioning?WT.mc_id=AZ-MVP-5003945) needs to have supported systems in place (e.g. WorkDay or SAP SuccessFactor).
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/M365AdminIsolation.png)
 
-*Overview of isolated Azure AD and Microsoft 365 administration from Microsoft Docs article "[Protecting Microsoft 365 from on-premises attacks](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/protect-m365-from-on-premises-attacks)”. TL;DR: “No on-premises accounts should have administrative privileges in Microsoft 365.”* 
+*Overview of isolated Azure AD and Microsoft 365 administration from Microsoft Docs article "[Protecting Microsoft 365 from on-premises attacks](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/protect-m365-from-on-premises-attacks?WT.mc_id=AZ-MVP-5003945)”. TL;DR: “No on-premises accounts should have administrative privileges in Microsoft 365.”* 
 
 ### Why should you isolate between work and privileged account?
 
@@ -36,8 +36,8 @@ In my opinion, separation between work account (for productivity tasks) and priv
 
 Additional references to Microsoft’s recommendations:
 
-[Secure access practices for administrators in Azure AD - Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/roles/security-planning#ensure-separate-user-accounts-and-mail-forwarding-for-global-administrator-accounts)
-[Step 2. Protect your Microsoft 365 privileged accounts - Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/enterprise/protect-your-global-administrator-accounts?view=o365-worldwide)
+- [Secure access practices for administrators in Azure AD - Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/roles/security-planning#ensure-separate-user-accounts-and-mail-forwarding-for-global-administrator-accounts?WT.mc_id=AZ-MVP-5003945)
+- [Step 2. Protect your Microsoft 365 privileged accounts - Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/enterprise/protect-your-global-administrator-accounts?WT.mc_id=AZ-MVP-5003945)
 
 ### Definition and requirements of Azure AD privileged accounts
 
@@ -53,7 +53,7 @@ So, let’s summarize what are the key aspects and requirements for the user typ
 
 ## Identity Lifecycle Workflows
 
-I’ve chosen the public preview of the new “[Lifecycle Workflow](https://learn.microsoft.com/en-us/azure/active-directory/governance/what-are-lifecycle-workflows)” feature from (“Microsoft Entra Identity Governance”) to automate the on- and offboarding process for privileged accounts. This allows to use information from the source of authority (HR system but also Azure AD or Active Directory) to trigger the process and get required attributes for (de)provisioning of the privileged account.
+I’ve chosen the public preview of the new “[Lifecycle Workflow](https://learn.microsoft.com/en-us/azure/active-directory/governance/what-are-lifecycle-workflows?WT.mc_id=AZ-MVP-5003945)” feature from (“Microsoft Entra Identity Governance”) to automate the on- and offboarding process for privileged accounts. This allows to use information from the source of authority (HR system but also Azure AD or Active Directory) to trigger the process and get required attributes for (de)provisioning of the privileged account.
 
 Even if you are using Active Directory as source of authority to trigger (de)provisioning of privileged accounts, a comprehensive isolation is given (in my opinion). Only the trigger event to create and disable a user account relies on the Active Directory. From my point of view, an abuse and impact are very limited in case of a compromise. 
 
@@ -69,9 +69,9 @@ Lifecycle workflows will be triggered based on the attributes `EmployeeHireDate`
 
 **Cloud-only work accounts: Provisioning from Azure Active Directory** 
 
-The attributes `EmployeeHireDate`  but also `EmployeeLeaveDate`  are synchronized (via Cloud HR solutions) or has been manual updated on the pre-created work account in Azure AD. The attribute can be listed and [modified via Microsoft Graph API](https://learn.microsoft.com/en-us/graph/api/user-update?view=graph-rest-1.0&tabs=http):
+The attributes `EmployeeHireDate`  but also `EmployeeLeaveDate`  are synchronized (via Cloud HR solutions) or has been manual updated on the pre-created work account in Azure AD. The attribute can be listed and [modified via Microsoft Graph API](https://learn.microsoft.com/en-us/graph/api/user-update?WT.mc_id=AZ-MVP-5003945):
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow3.png){:width="60%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow3.png){:width="80%"}
 
 *Update of Employee Hire and Leave Date can be managed via Microsoft Graph API requests. Date must be in the format “YYYY-MM-DDThh:mm:ssZ”*
 
@@ -81,7 +81,7 @@ The attributes `EmployeeHireDate`  but also `EmployeeLeaveDate`  are synchronize
 
 **Synchronized work accounts: Provisioning from Active Directory via Azure AD Connect:**
 
-The source system is able to synchronize `EmployeeHireDate` and `EmployeeLeaveDate`  of the user object (work account) to a custom attribute in Active Directory. Both attributes don’t exist in the Active Directory Schema, therefore you need to choose an attribute (e.g. `ExtensionAttribute1`). Azure AD Connect-Server and -Cloud Sync are configured to [synchronize the attributes to Azure AD](https://learn.microsoft.com/en-us/azure/active-directory/governance/how-to-lifecycle-workflow-sync-attributes#how-to-create-a-custom-synch-rule-in-azure-ad-connect-for-employeehiredate).
+The source system is able to synchronize `EmployeeHireDate` and `EmployeeLeaveDate`  of the user object (work account) to a custom attribute in Active Directory. Both attributes don’t exist in the Active Directory Schema, therefore you need to choose an attribute (e.g. `ExtensionAttribute1`). Azure AD Connect-Server and -Cloud Sync are configured to [synchronize the attributes to Azure AD](https://learn.microsoft.com/en-us/azure/active-directory/governance/how-to-lifecycle-workflow-sync-attributes?WT.mc_id=AZ-MVP-5003945#how-to-create-a-custom-synch-rule-in-azure-ad-connect-for-employeehiredate).
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow5.png)
 
@@ -115,8 +115,8 @@ The Process to create a (disabled) privileged account is included, alongside of 
 
 #### Custom task extension “Create-AADPrivilegedAccount”
 
-Logic Apps can be triggered based on [custom task extension](https://learn.microsoft.com/en-us/azure/active-directory/governance/trigger-custom-task) and will be created right from the Lifecycle workflow blade. I’ve assigned the application permissions “User.Read.Write.All” to the managed identity of the Logic App.
-*Side Note: Currently, there’s no option to assign application permissions or custom roles to limit permissions on create user accounts (User.Create). I hope there will be a support for AU-scoped creation of users ([similar to create a group in AUs](https://learn.microsoft.com/en-us/azure/active-directory/roles/admin-units-members-add#create-a-new-group-in-an-administrative-unit-1)) in the near future.* 
+Logic Apps can be triggered based on [custom task extension](https://learn.microsoft.com/en-us/azure/active-directory/governance/trigger-custom-task?WT.mc_id=AZ-MVP-5003945) and will be created right from the Lifecycle workflow blade. I’ve assigned the application permissions “User.Read.Write.All” to the managed identity of the Logic App.
+*Side Note: Currently, there’s no option to assign application permissions or custom roles to limit permissions on create user accounts (User.Create). I hope there will be a support for AU-scoped creation of users ([similar to create a group in AUs](https://learn.microsoft.com/en-us/azure/active-directory/roles/admin-units-members-add?WT.mc_id=AZ-MVP-5003945#create-a-new-group-in-an-administrative-unit-1)) in the near future.* 
 
 The logic app includes the following task steps:
 
@@ -154,7 +154,7 @@ This protects also the output value from the API response.
 
 More details on [secure your logic apps](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-securing-a-logic-app?tabs=azure-portal#secure-data-in-run-history-by-using-obfuscation) are available from Microsoft Docs.
 
-*Side Note: This sample shows the exclusion from the “Password expiration policy” and “no password change enforcement at next logon”. Microsoft recommends [ensuring that administrators has changed passwords](https://learn.microsoft.com/en-us/azure/active-directory/roles/security-planning#ensure-the-passwords-of-administrative-accounts-have-recently-changed) (at least 90 days). In my lab, I’m using Passwordless authentication methods and TAP only which is also enforced by Authentication Strength policies. Therefore, I’ve described and set no further scope on the user password management. But I would strongly recommend taking care on the initial password and further rotation and password protection.*
+*Side Note: This sample shows the exclusion from the “Password expiration policy” and “no password change enforcement at next logon”. Microsoft recommends [ensuring that administrators has changed passwords](https://learn.microsoft.com/en-us/azure/active-directory/roles/security-planning?WT.mc_id=AZ-MVP-5003945#ensure-the-passwords-of-administrative-accounts-have-recently-changed) (at least 90 days). In my lab, I’m using Passwordless authentication methods and TAP only which is also enforced by Authentication Strength policies. Therefore, I’ve described and set no further scope on the user password management. But I would strongly recommend taking care on the initial password and further rotation and password protection.*
 
 **Phase 4: Assignment of Custom Security Attributes**
 
@@ -170,7 +170,7 @@ The information about the relation between the user accounts will be stored as O
 
 **Side Note: In this example I’ve used a multi-value field on the custom security attribute of the work account. This allows me to build relations to multiple privileged accounts (e.g. if account isolation to other environments or separated for Tier levels are required).**
 
-It’s needed to assign the Azure AD admin role as “[Attribute Assignment Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#attribute-assignment-administrator)” (58a13ea3-c632-46ae-9ee0-9c0d43cd7f3d) on the scope of the attribute set to the managed identity. This allows to assign and update the attributes of  `privilegedUsers` . The attribute set will be used for classification and account association only (no relation to Attribute-based Access Control use cases). 
+It’s needed to assign the Azure AD admin role as “[Attribute Assignment Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#attribute-assignment-administrator)” (58a13ea3-c632-46ae-9ee0-9c0d43cd7f3d) on the scope of the attribute set to the managed identity. This allows to assign and update the attributes of  `privilegedUsers` . The attribute set will be used for classification and account association only (no relation to Attribute-based Access Control use cases). 
 
 ```jsx
 POST https://graph.microsoft.com/beta/roleManagement/directory/roleAssignments
@@ -230,7 +230,7 @@ Finally, a built-in task will enable the account in this workflow
 
 #### Custom task extension “Generate-AADPrivilegedAccountTAP”
 
-The following Logic App has granted permissions to the Azure AD admin role “[Authentication Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#authentication-administrator)” to create the TAP. I’ve created an Administrative Units (AU) which assigned the pre-created accounts based on a dynamic filter. This helps me to reduce the scope of this sensitive role to disabled (pre-created) privileged accounts only:
+The following Logic App has granted permissions to the Azure AD admin role “[Authentication Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#authentication-administrator)” to create the TAP. I’ve created an Administrative Units (AU) which assigned the pre-created accounts based on a dynamic filter. This helps me to reduce the scope of this sensitive role to disabled (pre-created) privileged accounts only:
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow23.png)
 
@@ -251,7 +251,7 @@ In the beginning of the workflow a variable need to be initialized for storing t
 
 **Step 2: Create Temporary Access Pass for Initial Onboarding**
 
-Microsoft Graph API can be used to create the TAP with specific parameters (such as lifetime or one time use). The action is also configured to use “[secure in- and output](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-securing-a-logic-app?tabs=azure-portal#secure-data-in-run-history-by-using-obfuscation)” to protect the secret of the TAP.
+Microsoft Graph API can be used to create the TAP with specific parameters (such as lifetime or one time use). The action is also configured to use “[secure in- and output](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-securing-a-logic-app?WT.mc_id=AZ-MVP-5003945#secure-data-in-run-history-by-using-obfuscation)” to protect the secret of the TAP.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow27.png)
 
@@ -267,7 +267,7 @@ At this time, the account has no assignments to privileged roles or permission (
 
 ### Workflow “Offboard an IT employee”
 
-As already described, Lifecycle Workflows can be used to trigger the offboarding of accounts as part of the employee termination process. This can be done by updating the `EmployeeLeaveDate`  property via [Microsoft Graph API](https://learn.microsoft.com/en-us/graph/tutorial-lifecycle-workflows-set-employeeleavedatetime?tabs=http) or synchronizing the attribute from Azure AD Connect.
+As already described, Lifecycle Workflows can be used to trigger the offboarding of accounts as part of the employee termination process. This can be done by updating the `EmployeeLeaveDate`  property via [Microsoft Graph API](https://learn.microsoft.com/en-us/graph/tutorial-lifecycle-workflows-set-employeeleavedatetime?WT.mc_id=AZ-MVP-5003945) or synchronizing the attribute from Azure AD Connect.
 
 In this sample, I’m using a combined workflow to start the actions based on the `EmployeeLeaveDate`  attribute of the work account. This allows me to use a single trigger for offboarding of privileged account(s).
 
@@ -312,10 +312,10 @@ In the next steps, the custom security attribute of `associatedPrivilegedAccount
 The foreach loop iterates over the list of associated privileged accounts.
 Revocation of sign-in sessions and set `AccountEnabled` to “false” (Disable account) are the following actions. A notification to the previous named recipient (e.g. “Identity Operations Team”) will be sent in case the request to disable the account from Microsoft Graph has been failed
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png){:width="600px"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-14-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow33.png){:width="80%"}
 
 Activities to disable and revoke sessions of privileged accounts needs extensive permissions.
-User accounts with membership to privileged access/role-assignable groups or directory roles are particularly protected by Azure AD. More details are available from Microsoft Docs: [Azure AD built-in roles - Who can perform sensitive actions - Microsoft Entra](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#who-can-perform-sensitive-actions)
+User accounts with membership to privileged access/role-assignable groups or directory roles are particularly protected by Azure AD. More details are available from Microsoft Docs: [Azure AD built-in roles - Who can perform sensitive actions - Microsoft Entra](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#who-can-perform-sensitive-actions)
 
 Unfortunately, it’s needed to assign sensitive permissions to the Logic App if you want to automate this process. Assignments of the “Privileged Authenticator Admin” directory role to the Managed Identity are needed to disable those accounts. Alternatively, you need to remove all privileged group or access package assignments of the account before this workflow will be executed.
 Moving to a half-automated process for disabling high-privileged accounts (create ticket to disable account) can be another option. Currently, there’s no way to build an Administrative Unit to delegate the “Privileged Authenticator Admin” role on a limited scope.
