@@ -1,5 +1,5 @@
 ---
-title: "Manage user lifecycle of Privileged Identities with Azure AD Identity Governance"
+title: "Automated Lifecycle Workflows for Privileged Identities with Azure AD Identity Governance"
 excerpt: "Microsoft has been released a feature to automate on- and off-boarding tasks for Azure AD accounts. Lifecycle workflows offers built-in workflow templates but also the option to integrate Logic Apps as custom extensions. In this blog post, I would like to give an example, how to use this feature to automate the lifecycle of privileged accounts in association with a hiring and termination process"
 header:
   overlay_image: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/OverviewPrivUserIdentityWorkflow.png
