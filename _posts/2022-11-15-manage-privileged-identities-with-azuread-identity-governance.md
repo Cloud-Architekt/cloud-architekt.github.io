@@ -91,7 +91,7 @@ The source system is able to synchronize `EmployeeHireDate` and `EmployeeLeaveDa
 
 The first workflow is designed to be executed for onboarding a pre-hire IT employee (seven days before `EmployeeHireDate`). I’ve used the built-in template "Onboard pre-hire employee" as basis to customize the workflow for IT employees.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow7.png){:width="30%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow7.png){:width="40%"}
 
 **Execution Conditions**
 
@@ -126,7 +126,7 @@ The Logic App workflows includes the following actions:
 
 I’ve chosen the design approach to implement a classification (already at the provisioning phase) to identify if the privileged account will be later used for managing "Control- or Management Plane". You need to have an attribute in-place which can be used to classify the intended use. In this case, I’m using the attribute `jobTitle`  which can be an indicator for the scope of privileged access (e.g. IAM Administrator often require Control Plane access).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow11.png){:width="60%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow11.png){:width="90%"}
 
 **Phase 3: Provisioning of Privileged Accounts**
 
@@ -148,11 +148,11 @@ _Side Note: In this sample, I'm using a simplified approach to generate the pass
 
 However, we need to take care on the value of the expression which needs to be protected and shouldn’t be visible in the workflow history or logs. Therefore, I’m using the expression within the HTTP action and enable "Secure Inputs and Outputs" in the settings:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow13.png){:width="40%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow13.png){:width="70%"}
 
 This protects also the output value from the API response.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow14.png){:width="40%"}
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow14.png){:width="70%"}
 
 More details on [secure your logic apps](https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-securing-a-logic-app?tabs=azure-portal#secure-data-in-run-history-by-using-obfuscation) are available from Microsoft Docs.
 
@@ -198,7 +198,7 @@ The workflow for enabling the pre-created accounts will be triggered on the defi
 
 The process for enabling the work account has been created from the template "Onboard new hire employee" and will be also the basis for the process to enable the privileged account.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow19.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow19.png){:width="40%"}
 
 **Execution Conditions**
 
@@ -206,7 +206,7 @@ Conditions to trigger the workflows are set on `EmployeeHireDate`  and based on 
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow20.png)
 
-### Workflow: Onboard privileged account for new hire employee
+### Workflow: "Onboard privileged account for new hire employee"
 
 **Creating workflow from template**
 
@@ -252,7 +252,7 @@ You can get the following workflow as defintion (code) here:
 
 In the beginning of the workflow a variable need to be initialized for storing the mail address of the shared mailbox (for sending the TAP). Afterwards user details of the pre-created user account will be collected.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow26.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow26.png){:width="70%"}
 
 **Step 2: Create Temporary Access Pass for Initial Onboarding**
 
@@ -280,7 +280,7 @@ In this sample, I’m using a combined workflow to start the actions based on th
 
 There are two templates which can be used for (scheduled/planned) employee termination:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow29.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow29.png){:width="70%"}
 
 Choose the right template which fits better to your scenario and will be scheduled to the right time when the privileged account should be offboarded. In addition, there’s also an "on-demand" workflow template if you like to trigger the employee termination manually or "in real-time" (short-term dismissal).
 
