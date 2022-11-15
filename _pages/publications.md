@@ -21,6 +21,10 @@ gallery:
     image_path: /assets/images/visualizations/M365D-SentinelOverview.png
     alt: "Overview of Identity Security Monitoring with Microsoft 365 Defender and Microsoft Sentinel"
     title: "Overview of Identity Security Monitoring with Microsoft 365 Defender and Microsoft Sentinel"
+  - url: /assets/images/visualizations/OverviewPrivUserIdentityWorkflow.png
+    image_path: /assets/images/visualizations/OverviewPrivUserIdentityWorkflow.png
+    alt: "Overview of using Identity Lifecycle and Entitlement Management for Privileged Users"
+    title: "Overview of using Identity Lifecycle and Entitlement Management for Privileged Users"
 ---
 
 

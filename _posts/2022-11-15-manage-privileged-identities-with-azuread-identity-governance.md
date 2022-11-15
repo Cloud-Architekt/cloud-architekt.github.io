@@ -2,9 +2,9 @@
 title: "Manage user lifecycle of Privileged Identities with Azure AD Identity Governance"
 excerpt: "Microsoft has been released a feature to automate on- and off-boarding tasks for Azure AD accounts. Lifecycle workflows offers built-in workflow templates but also the option to integrate Logic Apps as custom extensions. In this blog post, I like to show, how to use this feature to automate the lifecycle of privileged accounts in association with a hiring and termination process"
 header:
-  overlay_image: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
+  overlay_image: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/OverviewPrivUserIdentityWorkflow.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/PrivUserLifeycleWorkflow1.png
+  teaser: /assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/OverviewPrivUserIdentityWorkflow.png
 search: true
 toc: true
 toc_sticky: true
@@ -40,6 +40,9 @@ Additional references to Microsoft’s recommendations:
 - [Step 2. Protect your Microsoft 365 privileged accounts - Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/enterprise/protect-your-global-administrator-accounts?WT.mc_id=AZ-MVP-5003945)
 
 ### Definition and requirements of Azure AD privileged accounts
+
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-11-15-manage-privileged-identities-with-azuread-identity-governance/OverviewPrivUserIdentityWorkflow.png)
+*Overview of planned Identity Lifecycle Workflows for the following use case of managing privileged users with Microsoft Entra Identity Governance*
 
 So, let’s summarize what are the key aspects and requirements for the user type of privileged identities in my following use case:
 
@@ -327,6 +330,8 @@ As already mentioned, the used Custom Extensions (Logic Apps) are using high-pri
 ## Post-onboarding tasks and processes
 
 ### Optional: Verified ID for Employees with Privileged Accounts
+
+Debashis Choudhury (Principal Engineering Manager, Microsoft) has [announced a private preview which integrates Microsoft Entra Verified ID](https://twitter.com/MrDebChoudhury/status/1558174911520157697) to Entitlement Management. This will allow to add an additional (and secure) layer of user verification for requesting privileged access after privileged user onboarding. I would also recommend to use “Verifiable Credentials“ to verify IT employees during sensitive self-service scenarios such as requesting access package. But it also provides a secure and digital way for user verification in case of service or incident request and communication (between user and Helpdesk/Security Operations).
 
 Issuing the Verified ID should be separated from the previous named “Identity Lifecycle” process.
 
