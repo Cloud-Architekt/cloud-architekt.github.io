@@ -14,7 +14,7 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
-| 2022-10-25  | M365 Security & Compliance User Group    | IAADOps: Deploying and Managing Conditional Access at Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-11-30%20M365SANDCUG-AADOps-Operationalization-of-Conditional%20Access.pdf) | |
+| 2022-11-30  | M365 Security & Compliance User Group    | AADOps: Deploying and Managing Conditional Access at Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-11-30%20M365SANDCUG-AADOps-Operationalization-of-Conditional%20Access.pdf) | |
 | 2022-10-25  | Azure Meetup Bonn     | Ignite 2022 Recap: Microsoft Entra                       | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-10-25%20AzBonn-Ignite-Recap-2022.pdf) | |
 | 2022-10-11  | HIP Conference Germany      | Absicherung und Management von Azure AD Workload Identities  | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-10-11%20HIPGermany-Absicherung-und-Management-AzureAD-WorkloadIdentities.pdf) | |
 | 2022-09-12  | Workplace Ninja Summit      | Demystify Azure AD Workload Identities                       | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-09-12%20WPNinjaSummit-Demystify-AzureAD-Workload-Identities.pdf) | |
