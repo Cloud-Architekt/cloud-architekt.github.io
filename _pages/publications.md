@@ -17,6 +17,10 @@ gallery:
     image_path: /assets/images/visualizations/M365-TieringModel.png
     alt: "Draft of Tiering Model in Microsoft 365"
     title: "Draft of Tiering Model in Microsoft 365"
+  - url: /assets/images/visualizations/Az-TieringModel.jpg
+    image_path: /assets/images/visualizations/Az-TieringModel.jpg
+    alt: "Draft of Tiering Model in Microsoft Azure"
+    title: "Draft of Tiering Model in Microsoft Azure"    
   - url: /assets/images/visualizations/M365D-SentinelOverview.png
     image_path: /assets/images/visualizations/M365D-SentinelOverview.png
     alt: "Overview of Identity Security Monitoring with Microsoft 365 Defender and Microsoft Sentinel"
