@@ -93,7 +93,7 @@ In near future, it would be possible to force the requester to verify the identi
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2022-12-20-securing-privileged-access-conditionalaccess-governance/PrivUserCaElm4.png){:width="30%"}
 
-Enforcing user verification (with Microsoft Entra Verified ID) when requesting access packages will be available soon (currently in private preview). Source: [Twitter (@MrDebChoudhury)](https://twitter.com/MrDebChoudhury/status/1558174911520157697)
+Enforcing additional user verification (with Microsoft Entra Verified ID) when requesting access packages will be available in future. Microsoft is working on a private preview. Source of information and image: [Twitter (@MrDebChoudhury)](https://twitter.com/MrDebChoudhury/status/1558174911520157697)
 
 *Side Note: Additional advanced scenarios can be achieved by [trigger a custom logic app](https://learn.microsoft.com/en-us/azure/active-directory/governance/entitlement-management-logic-apps-integration?WT.mc_id=AZ-MVP-5003945) after an assignment request or approval has been made. This could include requests to check detailed employee information (user details matches to privilege role profile) or requesting identity security status.*
 
