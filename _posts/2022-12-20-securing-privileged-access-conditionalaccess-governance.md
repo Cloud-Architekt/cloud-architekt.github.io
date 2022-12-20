@@ -37,12 +37,10 @@ In the [previous blog post](https://www.cloud-architekt.net/manage-privileged-id
 
 _Overview of work and privileged account provisioning. In this article, I will describe the implementation that governs the process for privileged access assignments and enforcing access controls in context of privileged access with Conditional Access Policies._
 
-## Enforce Tiered Administration Model by policies in Identity Governance and Conditional Access
-In general, the goal is to enforce principles of tiering model and avoid unauthorized access paths by establishing security boundaries. Furthermore, the implementation of the following role-based access and persona model allows us to identify, monitor, and govern sensitive privileged accounts.
+## Principles of Tiered Administration Model
+The goal is to provide an approach which supports the principles of tiering model and avoid unauthorized access paths by establishing security boundaries. Furthermore, the implementation of the following role-based access and persona model should allows us to identify, monitor, and govern sensitive privileged accounts.
 
-<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2022-12-20-securing-privileged-access-conditionalaccess-governance/IdentityGovCaPoliciesOverview2.png"><img src="{{ site.url }}{{ site.baseurl }}/assets/images/2022-12-20-securing-privileged-access-conditionalaccess-governance/IdentityGovCaPoliciesOverview2.png" alt="Overview" /></a>
-
-In summary, the following objectives will be addressed:
+In summary, the following objectives will be try to be addressed:
 - Isolation between Privileged and User Access, Work accounts ("User Access Plane") have no option to request privilege access and interfaces
 - Tiered administration level of three different personas:
   - "Control Plane": Dedicated accounts for Identity Administrators with access to critical assets in Azure AD (such as Conditional Access, PIM) and Microsoft Azure (Authorization, Identity SOAR, Domain Controllers) which has direct or indirect impact of the (identity-driven) perimeter. This includes also the definition and management of Identity Governance, Privileged Identity and Access.
@@ -58,6 +56,10 @@ In summary, the following objectives will be addressed:
 - Automated response to identity and device threats in Zero Trust policy engine (Conditional Access)
 - Access outside of pre-defined role groups will be blocked by access policies
 - Enforce using [device profiles](https://learn.microsoft.com/en-us/security/compass/privileged-access-devices#device-roles-and-profiles?WT.mc_id=AZ-MVP-5003945) and authentication methods with high security standards
+
+<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2022-12-20-securing-privileged-access-conditionalaccess-governance/IdentityGovCaPoliciesOverview2.png"><img src="{{ site.url }}{{ site.baseurl }}/assets/images/2022-12-20-securing-privileged-access-conditionalaccess-governance/IdentityGovCaPoliciesOverview2.png" alt="Overview" /></a>
+_Overview of personas in a "Tiered Administration Model" and their requests to gain privileged access with applied policies._
+
 
 ## Privileged user journey after onboarding
 
