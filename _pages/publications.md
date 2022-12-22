@@ -29,6 +29,10 @@ gallery:
     image_path: /assets/images/visualizations/OverviewPrivUserIdentityWorkflow.png
     alt: "Overview of using Identity Lifecycle and Entitlement Management for Privileged Users"
     title: "Overview of using Identity Lifecycle and Entitlement Management for Privileged Users"
+  - url: /assets/images/visualizations/IdentityGovCaPoliciesOverview.png
+    image_path: /assets/images/visualizations/IdentityGovCaPoliciesOverview.png
+    alt: "Overview of Identity Governance and Conditional Access for Privileged Users"
+    title: "Overview of Identity Governance and Conditional Access for Privileged Users"
 ---
 
 
@@ -62,6 +66,9 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 | 2020-09-11  | Geeksprech Podcast          | [Folge 44: Azure AD Security](https://geeksprech.de/geeksprech-podcast-folge-44-azure-ad-security/)
 
 ## Guest on videocasts
+
+**Microsoft Security Insights Show Episode 131: Azure AD Posture Management and privilege escalation from on-prem**
+{% include video id="Z6XmKIu5Xfg" provider="youtube" %
 
 **M365 im Alltag: Folge 11 - Delegierung von Adminaufgaben mit Administrative Units**
 {% include video id="v1GmlzIi_-Y" provider="youtube" %}
