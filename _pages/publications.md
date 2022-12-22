@@ -68,7 +68,7 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 ## Guest on videocasts
 
 **Microsoft Security Insights Show Episode 131: Azure AD Posture Management and privilege escalation from on-prem**
-{% include video id="Z6XmKIu5Xfg" provider="youtube" %
+{% include video id="Z6XmKIu5Xfg" provider="youtube" %}
 
 **M365 im Alltag: Folge 11 - Delegierung von Adminaufgaben mit Administrative Units**
 {% include video id="v1GmlzIi_-Y" provider="youtube" %}
