@@ -38,7 +38,7 @@ In addition, there is also a way for programmatically access by using the [“Mi
 [More information about Live Response](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response?view=o365-worldwide) are available from Microsoft Learn.
 There are also a couple of great blog articles by the community which explains this feature and related use cases:
 
-- [Using Microsoft Defender for Endpoint during investigation | Microsoft 365 Security (m365internals.com)](https://m365internals.com/2021/05/14/using-microsoft-defender-for-endpoint-during-investigation/)
+- [Using Microsoft Defender for Endpoint during investigation - Microsoft 365 Security (m365internals.com)](https://m365internals.com/2021/05/14/using-microsoft-defender-for-endpoint-during-investigation/)
 - [Using Defender for Endpoint Live response API with Sentinel Playbooks/ Automation (jeffreyappel.nl)](https://jeffreyappel.nl/using-defender-for-endpoint-live-response-api-with-sentinel-playbooks-automation/)
 - [Microsoft Defender ATP – Live Response – Anything about IT (verboon.info)](https://www.verboon.info/2019/06/microsoft-defender-atp-live-response/)
 
@@ -108,9 +108,9 @@ I like to describe two attack scenario where privileged user or workload identit
 
 In addition you should considered also indirect privilege escalation paths by other privileged user and workload identities which are able to takeover accounts or groups with “Live Response” permissions.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse4.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png)(https://www.cloud-architekt.net/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png)
 
-_Overview about related configurations and dependencies for establishing “Live Response Session” from the portal or by us MDE API_
+_Overview about related configurations and dependencies for establishing “Live Response Session” from the portal or by MDE API.
 
 ### Create Domain Admin Account on Active Directory Domain Controllers
 
@@ -381,7 +381,7 @@ The following two log sources can be integrated to Microsoft Sentinel by using A
 
 ## Which mitigation steps could be applied?
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse24.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png)(https://www.cloud-architekt.net/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png)
 
 _Overview of mitigations and considerations to secure privileges and access for Live Response_
 
