@@ -2,9 +2,9 @@
 title: "Abuse and Detection of M365D Live Response for privilege escalation on Tier0 assets"
 excerpt: "Live Response in Microsoft 365 Defender can be used to execute PowerShell scripts on protected devices for advanced incident investigation. But it can be also abused by Security Administrators for privilege escalation, such as creating (Active Directory) Domain Admin account or “phishing” access token from (Azure AD) Global Admin on a PAW device. In this blog post, I like to describe the potential attack paths and a few approaches for detection but also mitigation."
 header:
-  overlay_image: /assets/images/2023-03-19-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
+  overlay_image: /assets/images/2023-03-20-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2023-03-19-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
+  teaser: /assets/images/2023-03-20-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
 search: true
 toc: true
 toc_sticky: true
@@ -14,7 +14,7 @@ tags:
   - AzureAD
   - PrivilegedIAM
   - IdentityGovernance 
-last_modified_at: 2022-03-19
+last_modified_at: 2022-03-20
 ---
 
 # Abuse and Detection of M365D Live Response for privilege escalation on Tier0 assets
@@ -25,13 +25,13 @@ _Live Response in Microsoft 365 Defender can be used to execute PowerShell scrip
 
 Security Operations Teams need to establish a remote session to managed devices for in-depth investigation (including collection of forensic evidence). Live Response offers a native way to establish this kind of access to onboarded devices for running a number of supported operations, this includes also executing PowerShell scripts or accessing files. This feature has been integrated to the Microsoft 365 Defender Portal and can be enabled from the “[Advanced features](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-features?view=o365-worldwide)” blade. Live Response sessions can be started from the “Device Inventory” or “Incident” page by authorized admins and provides a cloud-based interactive shell with support for some basic commands. A defined [list for the supported commands (also in relation to platform support)](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response?view=o365-worldwide#basic-commands) is very well documented by Microsoft.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse.png)
 
 _Using live response command console from Microsoft 365 Defender portal to get a list of supported commands_
 
 In addition, there is also a way for programmatically access by using the [“Microsoft Defender for Endpoint API” endpoint](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/run-live-response?view=o365-worldwide) (hereinafter referred to as “MDE API”) under the API endpoint `MachineAction`.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse1.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse1.png)
 
 *Request a file from an MDE onboarded device by using Live Response via MDATP API (aka MDE API)*
 
@@ -61,7 +61,7 @@ As we can see later in the event logs, mainly two services are involved in the a
 
 It’s necessary to upload script files to the library before you are able to run them on the endpoints via Live Response. The library stores all script files on tenant-level and not for the individual user. Those files can be also [managed from the MDE API](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response-library-methods?view=o365-worldwide) as well.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse2.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse2.png)
 
 _Upload of scripts to the library from M365D portal_
 
@@ -98,7 +98,7 @@ Manage permissions for upload and download files to library
 - **Machine.Read.All**
 Required permission to read machine actions which includes history of Live Response APIs and other Action Center activities
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse3.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse3.png)
 
 _App registration with assigned permission has similar Live Response and Library access as “Security Admin”._
 
@@ -108,9 +108,9 @@ I like to describe two attack scenario where privileged user or workload identit
 
 In addition you should considered also indirect privilege escalation paths by other privileged user and workload identities which are able to takeover accounts or groups with “Live Response” permissions.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png)(https://www.cloud-architekt.net/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png)
 
-_Overview about related configurations and dependencies for establishing “Live Response Session” from the portal or by MDE API.
+_Overview about related configurations and dependencies for establishing “Live Response Session” from the portal or by MDE API._
 
 ### Create Domain Admin Account on Active Directory Domain Controllers
 
@@ -131,21 +131,21 @@ net group "Domain Admins" $User /ADD /DOMAIN
 
 The few lines of PowerShell script allows to create an AD user with a pre-defined password and add them to the “Domain Admins” group. The script can be executed remotely from the command console and shows the following result:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse5.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse5.png)
 
 _Command console displays the result from the executed PowerShell script and used Net command_
 
 Operations to create user account and add them to “Domain Admins” group will be executed by Local System (Computer Object) and will be shown in the event log:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse6.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse6.png)
 
 Transcript will be stored alongside to other temporary files in the following folder on the endpoint:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse7.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse7.png)
 
 All executed commands will be visible in the command log:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse8.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse8.png)
 
 As you can see in the screenshot, I’ve also used the `getfile` command to get an copy of the NTDS database file. In general, many malicious activities can be executed within security context.
 
@@ -181,7 +181,7 @@ $Content = '
 New-Item -Path "$ModulePath\PostImportScripts" -Name "Token.ps1" -ItemType "File" -Value $Content -Force
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse9.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse9.png)
 
 *PowerShell script creates a script file in the Az.Resources module folder of the targeted user*
 
@@ -191,18 +191,18 @@ Let’s take a closer look what happens when the privileged user starts using Az
 - Afterwards a cmdlet for managing Azure Resources will be used which requires to load the “Az.Resources” module.
 - The script “Token.ps1” from the “PostImportScripts” folder will be executed and the access token (in this sample with scope to Microsoft Graph API) will be requested and stored in the attacker’s blob storage:
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse10.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse10.png)
     
 
 _Result: Access Token from Azure PowerShell has been replayed._
 
 *Access token has been exfiltrated and copied to blob storage. URL of blob storage endpoints are mostly not blocked (even on a PAW/SAW device) which allows accessing container with SAS key.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse11.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse11.png)
 
 Access token includes DeviceId and Authentication claims from the privileged user on the endpoint but also a comprehensive scope of “Directory.AccessAsUser.All”. 
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse12.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse12.png)
 
 Token could be used for further malicious activities by creating or manipulating objects in Azure AD via Microsoft Graph API. For example, creating secret for privileged workload identity as backdoor.
 
@@ -214,11 +214,11 @@ Other replay techniques with scope on other token artifact types can be implemen
 
 Audit of live response commands will be shown in the “History” tab of the “Action Center” (from M365D Portal). It displays the commands which has been entered in the portal UI or requested via API call. All initiated actions from privileged user and workload identities are covered.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse13.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse13.png)
 
 Details and PowerShell Transcript can be downloaded from the “Command log”:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse14.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse14.png)
 
 ### List of “runliveresponse” (Machine Actions) via API
 
@@ -301,7 +301,7 @@ Live Response operations from the Microsoft 365 Defender Portal seems not to be 
 _Side Note: There’s also pre-built “Get list of machine actions” from the “Microsoft Defender ATP” connector which also supports Managed Identity. Nevertheless, I preferred to use HTTP actions for more flexibility._
 1. Last but not least, we add the “Send Data” action from “Azure Log Analytics Data Collector” to ingest the data to a custom table (named “machineActions”) in the Microsoft Sentinel workspace._
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse15.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse15.png)
 
 _Overview of the Logic App to ingest the machineAction activities to Microsoft Sentinel._
 
@@ -309,7 +309,7 @@ _Overview of the Logic App to ingest the machineAction activities to Microsoft S
 
 In this sample, the built-in Watchlist “[High Value Assets](https://learn.microsoft.com/en-us/azure/sentinel/watchlist-schemas#high-value-assets)” will be used for tagging Control plane/Tier0-related assets:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse16.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse16.png)
 
 The following KQL query combines this tagging with events from custom table which stores all Machine Action events:
 
@@ -324,13 +324,13 @@ machineActions_CL
 | project TimeGenerated, id, type, status, commands, computerDnsName, Tags, requestor, requestorComment
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse17.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png)
 
 ### Timeline and hunting queries to get insights from live response commands
 
 Insights of the live response activities are visible in the timeline of the affected devices. You will find also a dedicated Action Type and entry with the name “Event of type [LiveResponseCommand] observed on device” in this view.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse18.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse18.png)
 
 _Events from Live Response activities on domain controller to create a domain admin account_
 
@@ -342,11 +342,11 @@ union DeviceProcessEvents,DeviceNetworkEvents,DeviceFileEvents,DeviceEvents
 | project Timestamp, DeviceName, ActionType, FileName, RemoteUrl, InitiatingProcessAccountSid, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessParentFileName, InitiatingProcessParentId
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse19.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse19.png)
 
 *List of audited events during establishing connection to Live Response session and creating script file*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse20.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse20.png)
 
 **Details of events are showing process tree on initialized session**
 
@@ -358,7 +358,7 @@ union DeviceProcessEvents
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, ProcessCommandLine, ProcessId, InitiatingProcessParentId, InitiatingProcessParentFileName
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse21.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse21.png)
 
 _Command line details of using “net” is visible in relation of created process by SenseIR_
 
@@ -369,19 +369,19 @@ Both related MDE services are creating event entries and are available as provid
 - **Microsoft-Windows-SENSE:**
 Event of initializing SenseIR seems to be audited
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse22.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse22.png)
     
 - **Microsoft-Windows-SenseIR**:
 The listed connection details are covering “Action Id” which can be used for correlation to Transcript.
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse23.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse23.png)
     
 
 The following two log sources can be integrated to Microsoft Sentinel by using Azure Monitor Agent.
 
 ## Which mitigation steps could be applied?
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png)(https://www.cloud-architekt.net/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png)
 
 _Overview of mitigations and considerations to secure privileges and access for Live Response_
 
@@ -389,7 +389,7 @@ _Overview of mitigations and considerations to secure privileges and access for 
 
 Live Response is a very useful feature for incident investigation. Therefore I would not recommend to disable this one. Nevertheless you should review if it’s needed to allow execution of unsigned scripts. The related setting can be found on the “Advanced Feature” blade:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse25.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse25.png)
 
 ### Scoped permissions and isolated Control Plane (Tier0) assets
 
@@ -397,7 +397,7 @@ In my opinion, it’s necessary to implement a scoped permission model for Micro
 
 I can recommend to create “Device Groups” which helps to restrict and select group of privileged users which should have access to the included devices.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse26.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse26.png)
 
 _Configuration of Device Groups (based Enterprise Access Model) which are assigned to related administrators by using role-assignable groups._
 
@@ -405,10 +405,10 @@ _Configuration of Device Groups (based Enterprise Access Model) which are assign
 
 As already described, custom roles can be created to include/exclude permissions for Live Response. I would recommend to have dedicated roles for assigning this sensitive permissions.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-19-abuse-detection-live-response-tier0/LiveResponse27.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse27.png)
 
 **Dedicated role (Security Responder) with custom permissions on using Basic and Advanced live response. This sensitive role could be assigned to a role-assignable group with enabled Just-in-Time access (Azure PIM for Groups) and approval process.**
 
 ### Monitoring of Live Response activities
 
-There are a couple of data sources which can be used to create alerts in case of Live Response activities (e.g., SenseIR prlocess events). Timeline allows to get an comprehensive view on executed commands and modified files.
+There are a couple of data sources which can be used to create alerts in case of Live Response activities (e.g., SenseIR process events) on Tier0 assets. Timeline allows to get an comprehensive view on executed commands and modified files which should be particular reviewed after established Live Response sessions.
