@@ -1,6 +1,6 @@
 ---
 title: "Abuse and Detection of M365D Live Response for privilege escalation on Control Plane (Tier0) assets"
-excerpt: "Live Response in Microsoft 365 Defender can be used to execute PowerShell scripts on protected devices for advanced incident investigation. But it can be also abused by Security Administrators for privilege escalation, such as creating (Active Directory) Domain Admin account or “phishing” access token from (Azure AD) Global Admin on a PAW device. In this blog post, I like to describe the potential attack paths and a few approaches for detection but also mitigation."
+excerpt: "Live Response in Microsoft 365 Defender can be used to execute PowerShell scripts on protected devices for advanced incident investigation. But it can be also abused by Security Administrators for privilege escalation, such as creating (Active Directory) Domain Admin account or “phishing” access token from (Azure AD) Global Admin on a PAW device. In this blog post, I will describe the potential attack paths and a few approaches for detection but also mitigation."
 header:
   overlay_image: /assets/images/2023-03-20-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
   overlay_filter: rgba(102, 102, 153, 0.85)
@@ -19,17 +19,15 @@ last_modified_at: 2022-03-20
 
 # Abuse and Detection of M365D Live Response for privilege escalation on Control Plane (Tier0) assets
 
-_Live Response in Microsoft 365 Defender can be used to execute PowerShell scripts on protected devices for advanced incident investigation. But it can be also abused by Security Administrators for privilege escalation, such as creating (Active Directory) Domain Admin account or “phishing” access token from (Azure AD) Global Admin on a PAW device. In this blog post, I like to describe the potential attack paths and a few approaches for detection but also mitigation._
-
 ## What is Live Response?
 
-Security Operations Teams need to establish a remote session to managed devices for in-depth investigation (including collection of forensic evidence). Live Response offers a native way to establish this kind of access to onboarded devices for running a number of supported operations, this includes also executing PowerShell scripts or accessing files. This feature has been integrated to the Microsoft 365 Defender Portal and can be enabled from the “[Advanced features](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-features?view=o365-worldwide)” blade. Live Response sessions can be started from the “Device Inventory” or “Incident” page by authorized admins and provides a cloud-based interactive shell with support for some basic commands. A defined [list for the supported commands (also in relation to platform support)](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response?view=o365-worldwide#basic-commands) is very well documented by Microsoft.
+Security Operations Teams need the ability to establish a remote session to managed devices for in-depth investigation (including collection of forensic evidence). Live Response offers the option to establish this kind of access to onboarded devices for running a number of supported operations, this includes also executing PowerShell scripts or accessing files. This feature has been integrated to the Microsoft 365 Defender Portal and can be enabled from the “[Advanced features](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-features?WT.mc_id=AZ-MVP-5003945)” blade. Live Response sessions can be started from the “Device Inventory” or “Incident” page by authorized admins and provides a cloud-based interactive shell with support for some basic commands. A defined [list for the supported commands (also in relation to platform support)](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response?WT.mc_id=AZ-MVP-5003945#basic-commands) is very well documented by Microsoft.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse.png)
 
 _Using live response command console from Microsoft 365 Defender portal to get a list of supported commands_
 
-In addition, there is also a way for programmatic access by using the [“Microsoft Defender for Endpoint API” endpoint](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/run-live-response?view=o365-worldwide) (hereinafter referred to as “MDE API”) under the API endpoint `MachineAction`.
+In addition, there is also a way for programmatic access by using the [“Microsoft Defender for Endpoint API” endpoint](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/run-live-response?WT.mc_id=AZ-MVP-5003945) (hereinafter referred to as “MDE API”) under the API endpoint `MachineAction`.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse1.png)
 
@@ -44,22 +42,22 @@ There are also a couple of great blog articles by the community which explains t
 
 ## Which components are involved?
 
-Microsoft has shared some details about connectivity dependencies in the [FAQ section of troubleshooting live response issues](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/troubleshoot-live-response?view=o365-worldwide#slow-live-response-sessions-or-delays-during-initial-connections). This can be summarized as follows:
+Microsoft has shared some details about connectivity dependencies in the [FAQ section of troubleshooting live response issues](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/troubleshoot-live-response?WT.mc_id=AZ-MVP-5003945#slow-live-response-sessions-or-delays-during-initial-connections). This can be summarized as follows:
 
 > Live response leverages Defender for Endpoint sensor registration with **WNS service** in Windows. The **WpnService** (Windows Push Notifications System Service) interacts with WNS cloud service to initialize the connection.
 > 
 
 The following docs articles covers further references to understand the WpnService in detail:
 
-- [Windows Push Notification Services (WNS) overview](https://learn.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/windows-push-notification-services--wns--overview)
-- [Enterprise Firewall and Proxy Configurations to Support WNS Traffic](https://learn.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/firewall-allowlist-config)
+- [Windows Push Notification Services (WNS) overview](https://learn.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/windows-push-notification-services--wns--overview?WT.mc_id=AZ-MVP-5003945)
+- [Enterprise Firewall and Proxy Configurations to Support WNS Traffic](https://learn.microsoft.com/en-us/windows/uwp/design/shell/tiles-and-notifications/firewall-allowlist-config?WT.mc_id=AZ-MVP-5003945)
 - [Microsoft Push Notifications Service (MPNS) Public IP ranges](https://www.microsoft.com/download/details.aspx?id=44535)
 
 As we can see later in the event logs, mainly two services are involved in the activities: **MsSense.exe** is the main service executable for MDE and will start **SenseIR.exe** as child process which creates processes or files for the related Live Response actions.
 
 ### Library for upload/download scripts
 
-It’s necessary to upload script files to the library before you can run them on the endpoints via Live Response. The library stores all script files at tenant-level and not for the individual user. Those files can be also [managed from the MDE API](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response-library-methods?view=o365-worldwide) as well.
+It’s necessary to upload script files to the library before you can run them on the endpoints via Live Response. The library stores all script files at tenant-level and not for the individual user. Those files can be also [managed by using the MDE API](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/live-response-library-methods?view=o365-worldwide) as well.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse2.png)
 
@@ -71,19 +69,19 @@ _Upload of scripts to the library from M365D portal_
 
 The following members to Azure AD admin roles (alongside of Global Admin) have direct or indirect permissions to interact with Response API and manage library:
 
-- [Security Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-administrator)
-- [Security Operator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
+- [Security Administrator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#security-administrator)
+- [Security Operator](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference?WT.mc_id=AZ-MVP-5003945#security-operator)
 
 ### Microsoft 365 Defender RBAC
 
-Microsoft has introduced a new Microsoft 365 Defender RBAC model which allows granular scoping for permissions. This includes also the delegation of the two custom permissions in relation to Live Response API. The permission are [described in the Microsoft Learning article](https://learn.microsoft.com/en-us/microsoft-365/security/defender/manage-rbac?view=o365-worldwide) as follows:
+Microsoft has introduced a new Microsoft 365 Defender RBAC model which allows granular scoping for permissions. This includes also the delegation of the two custom permissions in relation to Live Response API. The permission are [described in the Microsoft Learning article](https://learn.microsoft.com/en-us/microsoft-365/security/defender/manage-rbac?WT.mc_id=AZ-MVP-5003945) as follows:
 
 - **Basic live response**
 Initiate a live response session, download files, and perform read-only actions on devices remotely.
 - **Advanced live response**
 Create live response sessions and perform advanced actions, including uploading files and running scripts on devices remotely.
 
-Azure AD cross-service admin roles (e.g., Global and Security Admin) can still access M365D features and data, even the [RBAC model has been activated](https://learn.microsoft.com/en-us/microsoft-365/security/defender/activate-defender-rbac?view=o365-worldwide).
+Azure AD cross-service admin roles (e.g., Global and Security Admin) can still access M365D features and data, even the [RBAC model has been activated](https://learn.microsoft.com/en-us/microsoft-365/security/defender/activate-defender-rbac?WT.mc_id=AZ-MVP-5003945).
 
 _Side Note: I’ve decided to set the scope on using the new RBAC model for further scenarios and mitigations._
 
@@ -100,7 +98,7 @@ Required permission to read machine actions which includes history of Live Respo
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse3.png)
 
-_App registration with assigned permission has similar Live Response and Library access as “Security Admin”._
+_App registration with assigned permission has similar permissions for Live Response and Library access as “Security Admin”._
 
 ## How can it be abused to gain privileged access?
 
@@ -108,7 +106,7 @@ I would like to describe two attack scenarios where privileged users or workload
 
 In addition, you should consider also indirect privilege escalation paths by other privileged user and workload identities which are able to takeover accounts or groups with “Live Response” permissions.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png)
+<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png"><img src="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewAbuse.png" alt="Overview" /></a>
 
 _Overview about related configurations and dependencies for establishing “Live Response Session” from the portal or by MDE API._
 
@@ -135,11 +133,11 @@ The few lines of PowerShell script allow to create an AD user with a pre-defined
 
 _Command console displays the result from the executed PowerShell script and used Net command_
 
-Operations to create user account and add them to “Domain Admins” group will be executed by Local System (Computer Object) and will be shown in the event log:
+Operations to create user account and add them to “Domain Admins” group will be executed by Local System and will be shown in the event log:
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse6.png)
 
-Transcript will be stored alongside to other temporary files in the following folder on the endpoint:
+Transcript will be stored (alongside to other temporary files) in the following folder on the endpoint:
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse7.png)
 
@@ -148,8 +146,6 @@ All executed commands will be visible in the command log:
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse8.png)
 
 As you can see in the screenshot, I’ve also used the `getfile` command to get a copy of the NTDS database file. In general, many malicious activities can be executed within the given security context.
-
-**Result: Domain Admin with pre-defined user name and password has been created successfully.** 
 
 ### Exfiltrate access tokens of Global Admin from Azure PowerShell by adding custom PostImportScript
 
@@ -185,22 +181,20 @@ New-Item -Path "$ModulePath\PostImportScripts" -Name "Token.ps1" -ItemType "File
 
 *PowerShell script creates a script file in the Az.Resources module folder of the targeted user*
 
-Let’s take a closer look at what happens when the privileged user starts using Azure PowerShell.
+Let’s take a closer look at what happens when the privileged user starts using Azure PowerShell:
 
 - First of all, the cmdlet `Connect-AzAccount` will be used by the administrator for establishing an authenticated session to Microsoft Azure.
 - Afterwards a cmdlet for managing Azure Resources will be used which requires to load the “Az.Resources” module.
-- The script “Token.ps1” from the “PostImportScripts” folder will be executed and the access token (in this sample with scope to Microsoft Graph API) will be requested and stored in the attacker’s blob storage:
+- The script “Token.ps1” from the “PostImportScripts” folder will be executed and the access token (in this sample for Microsoft Graph API) will be requested and stored in a blob storage:
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse10.png)
     
 
-_Result: Access Token from Azure PowerShell has been replayed._
-
-*Access token has been exfiltrated and copied to blob storage. URL of blob storage endpoints are mostly not blocked (even on a PAW/SAW device) which allows accessing container with SAS key.*
+Access token has been exfiltrated and copied to blob storage. URL of blob storage endpoints are mostly not blocked (even on a PAW/SAW device) which allows accessing container with SAS key.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse11.png)
 
-Access token includes DeviceId and Authentication claims from the privileged user on the endpoint but also a comprehensive scope of “Directory.AccessAsUser.All”. 
+The replayed token includes `DeviceId` and `amr` (authentication method) of the privileged user from the endpoint but also a comprehensive scope of “Directory.AccessAsUser.All”.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse12.png)
 
@@ -283,7 +277,7 @@ https://api.securitycenter.microsoft.com/api/machineactions/ID/GetLiveResponseRe
 ```
 
 Unfortunately, the list of “Machine Action" seems to covers Live Response API activities only.
-Live Response operations from the Microsoft 365 Defender Portal seems not to be included!
+Session operations from the Microsoft 365 Defender Portal UI seems not to be included!
 
 **Integration of Machine Action in Microsoft Sentinel**
 
@@ -308,7 +302,7 @@ _Overview of the Logic App to ingest the machineAction activities to Microsoft S
 
 **Analytics Rule and Hunting Query**
 
-In this sample, the built-in Watchlist “[High Value Assets](https://learn.microsoft.com/en-us/azure/sentinel/watchlist-schemas#high-value-assets)” will be used for tagging Control plane/Tier0-related assets:
+In this sample, the built-in Watchlist “[High Value Assets](https://learn.microsoft.com/en-us/azure/sentinel/watchlist-schemas?WT.mc_id=AZ-MVP-5003945#high-value-assets)” will be used for tagging Control plane/Tier0-related assets:
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse16.png)
 
@@ -327,9 +321,11 @@ machineActions_CL
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png)
 
+_MachineAction events will be correlated with classification of "High Value Assets" which allows to filter for Tier0 assets_
+
 ### Timeline and hunting queries to get insights from live response commands
 
-Insights of the live response activities are visible in the timeline of the affected devices. You will also find a dedicated Action Type and entry with the name “Event of type [LiveResponseCommand] observed on device” in this view.
+Insights of the live response activities are visible in the timeline of the affected devices. You will also find a dedicated "Action Type" and entry with the name “Event of type [LiveResponseCommand] observed on device” in this view.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse18.png)
 
@@ -382,8 +378,7 @@ The following two log sources can be integrated into Microsoft Sentinel Workspac
 
 ## Which mitigation steps could be applied?
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png)
-
+<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png"><img src="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponseOverviewMitigate.png" alt="Overview" /></a>
 _Overview of mitigations and considerations to secure privileges and access for Live Response_
 
 ### Live Response options
@@ -396,7 +391,7 @@ Live Response is an especially useful and essential feature for incident investi
 
 It’s necessary to implement a scoped permission model for Microsoft 365 Defender (in my opinion). All privileged users and workload identities with unscoped permission should be considered as Control Plane (Tier0) users. This includes all members of “Security Administrator” role and Service Principals with API Permissions. It is important to reduce the numbers of these high-privileged principals and implement a particular monitoring for these privileged identities.
 
-I can recommend to creating “Device Groups” which helps to restrict and select groups of privileged users which should have access to the included devices.
+I can recommend to creating “Device Groups” which helps to restrict and select groups of privileged users which should have access to the included devices. In addition, role-assignable groups should be used to [protect assigned users and the group objects](https://learn.microsoft.com/en-us/azure/active-directory/roles/groups-concept#how-are-role-assignable-groups-protected) from other directory roles.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse26.png)
 
@@ -408,8 +403,9 @@ As already described, custom roles can be created to include/exclude permissions
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse27.png)
 
-**Dedicated role (Security Responder) with custom permissions on using Basic and Advanced live response. This sensitive role could be assigned to a role-assignable group with enabled Just-in-Time access (Azure PIM for Groups) and approval process.**
+_Dedicated role (Security Responder) with custom permissions on using Basic and Advanced live response. This sensitive role could be assigned to a role-assignable group with enabled Just-in-Time access (Azure PIM for Groups) and approval process_
+
 
 ### Monitoring of Live Response activities
 
-There are a couple of data sources which can be used to create alerts in case of Live Response activities (e.g., SenseIR process events) on Tier0 assets. Timeline allows to get a comprehensive view on executed commands and modified files which should be particularly reviewed after established Live Response sessions.
+There are a couple of data sources which can be used to create alerts in case of Live Response activities (e.g., SenseIR process events or initialized connections) on Tier0 assets. Timeline allows to get a comprehensive view on executed commands and modified files which should be particularly reviewed after detection of established Live Response sessions.
