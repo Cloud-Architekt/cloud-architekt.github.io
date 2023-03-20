@@ -13,7 +13,7 @@ categories:
 tags:
   - AzureAD
   - PrivilegedIAM
-  - IdentityGovernance 
+  - M365Defender 
 last_modified_at: 2022-03-20
 ---
 
@@ -319,7 +319,7 @@ machineActions_CL
 | project TimeGenerated, id, type, status, commands, computerDnsName, Tags, requestor, requestorComment
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png)
+<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png"><img src="{{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png" alt="KQL query" /></a>
 
 _MachineAction events will be correlated with classification of "High Value Assets" which allows to filter for Tier0 assets_
 
