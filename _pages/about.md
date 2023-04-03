@@ -13,7 +13,7 @@ author_profile: false
 ![About](/assets/images/about.jpg)
 </div>
 Welcome to my blog about Identity + Security in Microsoft Azure.<br>
-My name is Thomas Naunheim. I’m working as Cloud Architect in Koblenz, Germany.<br>
+My name is Thomas Naunheim. I’m working as Cyber Security Architect in Koblenz, Germany.<br>
 I have specialized in designing and implementing of cloud-native, identity and security solutions in Microsoft Azure.<br>
 
 My subject areas are cloud-native, identity and security solutions on Microsoft Cloud platform.<br>
@@ -24,6 +24,6 @@ I'm also part of the "Azure Meetup Bonn" and "Cloud Identity Summit" organizatio
 In 2020 I was awarded as "Most Valuable Professional" (MVP) in the category "Azure" for my community contributions by Microsoft.<br>
 I was also recognized with the "Most Valuable Mentor" by Microsoft in October 2020.<br>
 This is my personal blog. Opinions are my own and possibly not the views of my employer.<br><br>	
-<span style="color:silver;font-style:italic;font-size:small">Photo by [Sebastian Tillenburg](https://twitter.com/d_eiti?lang=de)</span>
+<span style="color:silver;font-style:italic;font-size:small">Photo by [Jonathan Grillenmeier](https://jonaphotography.de/)</span>
 
 <a rel="me" href="https://infosec.exchange/@thomasnaunheim">Follow me on Mastodon</a>
