@@ -9,7 +9,7 @@ author_profile: false
 
 # Hi Guys!
 
-<div style="float:left;margin:0 10px 10px 0" markdown="1">
+<div style="float:left;margin:0 10px 10px 0;width:300px;height:300px" markdown="1">
 ![About](/assets/images/about.jpg)
 </div>
 Welcome to my blog about Identity + Security in Microsoft Azure.<br>
