@@ -68,8 +68,7 @@ Contact the external site for answers to questions regarding its content._
 | Stormspotter | Stormspotter creates an “attack graph” of the resources in an Azure subscription. It enables red teams and pentesters to visualize the attack surface and pivot opportunities within a tenant, and supercharges your defenders to quickly orient and prioritize incident response work. | [Azure/Stormspotter](https://github.com/Azure/Stormspotter) |  |
 | TokenMan | Token Man is a tool for supporting post-exploitation activities using AAD access and/or refresh tokens. | [secureworks/TokenMan](https://github.com/secureworks/TokenMan) |  |
 | TokenTactics | Azure access tokens allow you to authenticate to certain endpoints as a user who signs in with a device code. Even if they used multi-factor authentication. Once you have a user's access token, it may be possible to access certain apps such as Outlook, SharePoint, OneDrive, MSTeams and more. For instance, if you have a Graph or MSGraph token, you can then connect to Azure and dump users, groups, etc. You could then, depending on conditional access policies, switch to an Azure Core Management token and run AzureHound. Then, switch to an Outlook token and read/send emails or MS Teams and read/send teams messages! | [rvrsh3ll/TokenTactics](https://github.com/rvrsh3ll/TokenTactics) |  |
-
-
+| TokenTactics v2 | A fork of TokenTactics with support for CAE and token endpoint v2. Detailed output for `Parse-JWTtoken` to display related information for longer-lived (CAE-capable) tokens. | [f-bader/TokenTacticsV2](https://github.com/f-bader/TokenTacticsV2) | [Continuous access evaluation - CloudBrothers.info](https://cloudbrothers.info/en/continuous-access-evaluation/) |
 
 ## 🪄 Postman Collections
 
