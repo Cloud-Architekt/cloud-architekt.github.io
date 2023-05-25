@@ -14,6 +14,7 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
+| 2023-05-25  | Experts Live Netherlands    | Demystify Azure AD workload identities | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-05-25%20ExpertsLiveNL%20Demystify-Workload-Identities.pdf) | |
 | 2023-01-24  | Azure Ruhrgebiet Meetup     | Securing your privileged access in Microsoft Azure           | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-01-24%20Azure-Ruhrgebiet%20-%20Securing-privileged-access-Azure.pdf) | |
 | 2022-11-30  | M365 Security & Compliance User Group    | AADOps: Deploying and Managing Conditional Access at Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-11-30%20M365SANDCUG-AADOps-Operationalization-of-Conditional%20Access.pdf) | |
 | 2022-10-25  | Azure Meetup Bonn           | Ignite 2022 Recap: Microsoft Entra                           | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2022-10-25%20AzBonn-Ignite-Recap-2022.pdf) | |
