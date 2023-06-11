@@ -2,9 +2,9 @@
 title: "Restricted Management of Privileged Identities and Access by Azure AD Administrative Units"
 excerpt: “Restricted Management Administrative Unit (RMAU) allows to protect objects from modification by Azure AD directory-level role members. Management permissions needs to be granted particular by Azure AD roles on scope level of the RMAU. In this blog post, we will have a look on this feature and how you can automate management of RMAUs with Microsoft Graph API. In addition, I will explain use cases and why this feature becomes an essential part to implement a tiered administration model"
 header:
-  overlay_image: /assets/images/2023-03-20-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
+  overlay_image: /assets/images/2023-06-11-administrative-units-restricted-management/rmau3.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2023-03-20-abuse-detection-live-response-tier0/AbuseLiveResponseTeaser.png
+  teaser: /assets/images/2023-06-11-administrative-units-restricted-management/rmau3.png
 search: false
 toc: true
 toc_sticky: true
@@ -23,7 +23,7 @@ last_modified_at: 2023-06-14
 
 *In this blog post I like to describe and explain the new option for “Restricted Management Administrative Units” (RMAUs) which allows to restrict management of assigned objects from Azure AD directory-level role members. Permissions on assigned resources in the RMAU will be restricted to the administrators scoped on the level of an Administrative Unit (AU). A focus will be also set to automated management of RMAUs via Microsoft Graph API. In addition, I will explain use cases and why this feature becomes an essential part to implement a tiered administration model (”[Enterprise Access Model](https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model)”) in Microsoft but also which scenarios are unsupported.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-11-administrative-units-restricted-management/Untitled.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-11-administrative-units-restricted-management/rmau17.png)
 
 *Azure Active Directory has a flat hierarchy by default. In the past, Administrative Units already allows to scope some directory roles on “Administrative Units” instead of the “Directory” scope. Nevertheless, Azure AD role assignment on directory-level has been inherited to all objects in AUs.* 
 
@@ -302,7 +302,7 @@ Review all users with EA roles and consider to protect those accounts by assigni
 
 Organizations which has been implemented “Azure Active Directory B2C” tenants are mostly using accounts from the organization’s tenant for privileged access. Those accounts will be invited as B2B guest users and assigned to directory roles in the B2C tenant.
 
-![abc.png]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-11-administrative-units-restricted-management/rmau17.png)
+![abc.png]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-11-administrative-units-restricted-management/rmau16.png)
 
 *User account in organization’s tenant will be invited to B2C tenants for management.*
 
