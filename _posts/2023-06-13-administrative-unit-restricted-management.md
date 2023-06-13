@@ -1,6 +1,6 @@
 ---
 title: "Protection of Privileged Users and Groups by Azure AD Restricted Management Administrative Units"
-excerpt: "Restricted Management Administrative Unit (RMAU) allows to protect objects from modification by Azure AD directory-level role members. Management permissions needs to be granted particular by Azure AD roles on scope level of the RMAU. In this blog post, we will have a look on this feature and how you can automate management of RMAUs with Microsoft Graph API. In addition, I will explain use cases and why this feature becomes an essential part to implement a tiered administration model"
+excerpt: "Restricted Management Administrative Unit (RMAU) allows to protect objects from modification by Azure AD role members on directory-level scope. Management permissions will be restricted to granted Azure AD roles on scope of the particular RMAU. In this blog post, we will have a look on this feature and how you can automate management of RMAUs with Microsoft Graph API. In addition, I will explain use cases, limitations and why this feature support to implement a tiered administration model."
 header:
   overlay_image: /assets/images/2023-06-13-administrative-units-restricted-management/rmau3.png
   overlay_filter: rgba(102, 102, 153, 0.85)
@@ -21,11 +21,11 @@ last_modified_at: 2023-06-13
 
 *Protection of privileged users and groups outside of Azure AD roles needs particular care to prevent privileged escalation because those objects are not protected by default in Azure AD. For example, service-specific Azure AD roles (e.g. Intune or Windows 365 Administrator) has been able to modify security groups with assigned privileges in Azure RBAC or any other non-Azure AD RBAC.*
 
-*In this blog post I like to describe and explain the new option for "Restricted Management Administrative Units" (RMAUs) which allows to restrict management of assigned objects from Azure AD role members on tenant-level. Permissions on assigned resources in the RMAU will be restricted to the administrators scoped on the level of an Administrative Unit (AU). A focus will be also set to automated management of RMAUs via Microsoft Graph API. In addition, I will explain use cases and why this feature becomes an essential part to implement a tiered administration model ("[Enterprise Access Model](https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model)") in Microsoft but also which scenarios are unsupported.*
+*In this blog post I like to describe and explain the new option for "Restricted Management Administrative Units" (RMAUs) which allows to restrict management of assigned objects from Azure AD role members on tenant-level. Permissions on assigned resources in the RMAU will be restricted to the administrators scoped on the level of an Administrative Unit (AU). A focus will be also set to automated management of RMAUs via Microsoft Graph API. In addition, I will explain use cases and why this feature becomes an important part to implement a tiered administration model ("[Enterprise Access Model](https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model)") but also which scenarios are unsupported.*
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-13-administrative-units-restricted-management/rmau17.png)
 
-*Azure Active Directory has a flat hierarchy by default. In the past, Administrative Units already allowed to scope some directory roles on "Administrative Units" instead of the "Directory" scope. Nevertheless, Azure AD role assignment on tenant-level has been inherited to all objects in AUs.* 
+*Azure Active Directory has a flat hierarchy by default. In the past, Administrative Units already allowed to scope some directory roles on "Administrative Units" instead of the "Directory" (tenant-level) scope. Nevertheless, Azure AD role assignment on tenant-level has been inherited to all objects in AUs.* 
 
 ## Overview of Restricted Management Administrative Units (RMAU)
 
@@ -45,20 +45,20 @@ Protecting users and groups on "[Management and Data/Workload plane](https://doc
 
 *Security group will be mostly used on "Management and Workload/Data plane" (such as Azure DevOps, Azure resources or Microsoft 365 RBAC systems). This includes the risk of manipulation by privileged identities with "Group Management" permissions. Helpdesk, User Administrators or other similar roles has been able to "take over" accounts with privileges outside of Azure AD. Limitation on fine-grained scoping or custom directory roles has been a "blocker" to avoid privilege escalation paths in the past.*
 
-Restricted Management Administrative Units (RMAU) allows to restrict management of assigned users and groups by Azure AD role assignments on directory scope. For example, "User Administrators" will not be able to change password of RMAU assigned accounts (for example: CEO, Developers) by default. An administrator with assigned "Group Administrator" role on "tenant-level" can be prevented from changing membership of security groups if they are assigned to a RMAU.
+Restricted Management Administrative Units (RMAU) allows to restrict management of assigned users and groups by Azure AD role assignments on "Directory" scope. For example, "User Administrators" will not be able to change password of RMAU assigned accounts (for example, CEO, Developers) by default. An administrator with assigned "Group Administrator" role can be prevented from changing membership of security groups if they are assigned to a RMAU.
 
 **In summary, you need an explicitly assigned permission to modify objects which are assigned to an RMAU. Keep in mind, this means that additional assigned directory roles with scope on RMAU-level are needed if management permissions by specific workflows and administrators  shall be maintained.**
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-13-administrative-units-restricted-management/rmau3.png)
 
-_Restricted AUs block inheritance of Azure AD roles on directory roles, particular role assignments on AU level is needed to manage assigned objects._
+_Restricted AUs block inheritance of Azure AD roles on directory roles, particular role assignments on AU level is needed to manage assigned objects. Keep in mind, only a limited set of built-in roles are supported for RMAU-level role assignments. Custom roles are supported and gives you advanced capabilities for limit permission set on least privilege principle._
 
 ### Supported objects and other limitations
 Supported object types for Restricted AUs are users, security groups and devices. Unfortunately, security groups which are managed in Azure AD PIM ("PIM for Groups") as well as mail-enabled and Microsoft 365 Groups aren’t not supported.
 
 An overview about the [supported objects types](https://learn.microsoft.com/en-us/azure/active-directory/roles/admin-units-restricted-management#what-objects-can-be-members) are documented in Microsoft Learn.
 
-RMAUs do not cover an restriction to manage those objects as group members outside of the restricted management. This includes also protection for RMAU-assigned objects outside of the Azure AD management (e.g., device objects in Intune or mailbox settings in Exchange). Keep this in mind for other scenarios, e.g. protecting devices from assignments to device policies in Intune. A full overview of [supported operations](https://learn.microsoft.com/en-us/azure/active-directory/roles/admin-units-restricted-management#what-types-of-operations-are-blocked)s are listed in Microsoft Learn.
+RMAUs do not cover an restriction to manage those objects as group members outside of the restricted management. This includes also protection for RMAU-assigned objects outside of the Azure AD management (e.g., device objects in Intune or mailbox settings in Exchange). Keep this in mind for other scenarios, e.g. protecting devices from assignments to device policies in Intune. A full overview of [supported operations](https://learn.microsoft.com/en-us/azure/active-directory/roles/admin-units-restricted-management#what-types-of-operations-are-blocked) are listed in Microsoft Learn.
 
 
 
@@ -71,11 +71,11 @@ By default, inherited permissions of (tenant-level) directory roles will no long
 
 _By design, Global Admins are blocked from managing objects which have been assigned to RMAU. An assignment as "User Administrator" in scope of the certain RMAU is needed to manage objects from a RMAU._
 
-_*Important note*: There’s a conflict for managing objects which are assigned to RMAU but also protected by Azure AD privileged assignments (such as active assignment to role-assignable groups or active/eligible assignment to Azure AD admin roles). Those objects are already restricted to be managed by GA and PRA only. If you add those objects to an RMAU, the inheritance will be disable and there’s no option to assign GA or PRA role particular on RMAU-Level. Therefore, make sure that protected objects by Azure AD roles and role-assignable groups will not be also protected by RMAU. Otherwise, you have no option to manage them until the RMAU assignment will be removed._
+**Important note**: _There’s a conflict for managing objects which are assigned to RMAU but also protected by Azure AD privileged assignments (such as active assignment to role-assignable groups or active/eligible assignment to Azure AD admin roles). Those objects are already restricted to be managed by GA and PRA only. If you add those objects to an RMAU, the inheritance will be disable and there’s no option to assign GA or PRA role particular on RMAU-Level. Therefore, make sure that protected objects by Azure AD roles and role-assignable groups will not be also protected by RMAU. Otherwise, you have no option to manage them until the RMAU assignment will be removed._
 
 ### Owner of Role-Assignable Groups (with/without enabled PIM for Groups)
 
-Delegation to manage role-assignable groups as permanent or eligible "Owner" will be restricted when the groups are member of a RMAU. Assigning RMAU-scoped permissions as "Group Administrators" will also not allow to manage this group. As already mentioned in the side note and described in the previous table, this type of objects will be already protected by another built-in protection and layer in Azure AD. You should consider managing these objects outside of RMAU and ask yourself if additional protection by RMAU is really needed.
+Delegation to manage role-assignable groups as permanent or eligible "Owner" will be restricted when the groups are member of a RMAU. Assigning RMAU-scoped permissions as "Group Administrators" will also not allow to manage this group. As already mentioned in the side note and described in the previous table, this type of objects will be already protected by another built-in protection layer in Azure AD. You should consider managing these objects outside of RMAU and ask yourself if additional protection by RMAU is really needed.
 
 Microsoft has documented this behavior as [limitation of RMAUs](https://learn.microsoft.com/en-us/azure/active-directory/roles/admin-units-restricted-management#limitations).
 
@@ -85,11 +85,11 @@ Delegation to manage security groups by any tenant-level Azure AD admin role but
 
 ###  Microsoft Graph API Permissions
 
-Service Principals with `AdministrativeUnit.ReadWrite.All`  permissions are able to add or remove members of RMAU. But the service principals will no longer been able to manage objects after the object has been added to RMAU. Permissions such as `User.WriteRead.All` or `Groups.ReadWrite.All` will be also restricted (similar to the tenant-level role assignments of "User or Group Administrator").
+Service Principals with `AdministrativeUnit.ReadWrite.All`  permissions are able to add or remove members of RMAU. But the service principals will no longer been able to manage objects after the object has been added to RMAU. Permissions such as `User.WriteRead.All` or `Groups.ReadWrite.All` will be also restricted (similar to role assignments of "User or Group Administrator" on tenant-level). You will receive the following error message:
 
 >Insufficient privileges to complete the operation. Target object is a member of a restricted management administrative unit and can only be modified by administrators scoped to that administrative unit. Check that you are assigned a role that has permission to perform the operation for this restricted management administrative unit. Learn more: https://go.microsoft.com/fwlink/?linkid=2197831
 
-Currently you can grant permission to manage objects from a RMAU by assigning the API Permission `Directory.Write.Restricted` which establishes the access on a tenant-level scope. I would recommend you verify if an assigned RMAU-scoped directory roles to the service principals would be a better solution in aspects on a "least privilege" approach.
+Currently you can grant permission to manage objects from a RMAU by assigning the API Permission `Directory.Write.Restricted` which establishes the access on a tenant-level scope. Verify if an assigned RMAU-scoped directory roles to the service principals would be a better solution in aspects of a "least privilege" approach.
 
 But keep in mind, removing objects from the RMAU to use management permissions have always been possible (as part of the `AdministrativeUnit.ReadWrite.All` permission).
 
@@ -101,16 +101,16 @@ During my tests, I’ve tried some privileged access paths outside of Azure AD r
 - Assignment of membership to groups in RMAUs by using "Access Packages" in Identity Governance continued to function as expected. Keep in mind, delegated administrators ("Access package assignment manager" or "Access package manger") will be able [to assign or create access packages](https://twitter.com/Thomas_Live/status/1481538197930889218) in Entitlement Management which includes groups from RMAUs.
 
 ## Overview of protection and delegation capabilities by using RMAU and role assignable groups
-As already described in detail a couple of scenarios using role-assignable groups or PIM for Groups are not supported or suitable in combination with RMAU. The following table should help to keep an overview about restriction of members as assignment of RMAU but also in relation to role assignable group.
+As already described in detail, a couple of scenarios using role-assignable groups or "PIM for Groups" are not supported or suitable in combination with RMAU. The following table should help to keep an overview about restriction of members as assignment of RMAU but also in relation to role assignable group.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-13-administrative-units-restricted-management/rmau_summary.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-13-administrative-units-restricted-management/rmau_overview.png)
 
-_Side Note: All data without warranty because of the limited time and huge scope of scenarios._
+_Side Note: All data without warranty! I will continue some additional tests to double check the results because of the huge scope of scenarios and combinations. Feedback is always welcome!_
 
 From my point of view, the following use cases (as an example) could be evaluated to decide if role-assignable groups or protection by RMAU (based on the previous named considerations) are usable for you:
 
 * Use "role assignable groups" for Azure AD roles and protecting high-privileged users (on "Control Plane/Tier0" in Azure AD or high-sensitive permissions on "Management Plane/Tier1" or Cloud Platform) but avoid assignments for those group types and assigned members to RMAU.
-* Assign privileged or sensitive security groups which are not managed in Azure AD PIM ("PIM for Groups") and should be restricted from Azure AD admins with "Group Management" permissions (for example, sensitive configuration or provisioning groups). This includes also groups with eligible assignments to Azure (Resources) PIM.
+* Assign privileged or sensitive security groups which are not managed in Azure AD PIM ("PIM for Groups") and should be restricted from Azure AD admins with "Group Management" permissions (e.g., sensitive configuration or provisioning groups). This includes also groups with eligible assignments to Azure (Resources) PIM.
 * Assign privileged or sensitive users (for example: C-Level accounts, DevOps) without protection by role-assignable groups or Azure AD role assignmenet to RMAU for establishing a restricted management (marked above "Unrestricted*"). This can also cover eligible member of "PIM for Groups".
 * Assign privileged or sensitive device objects to RMAU to protect extension attribute (e.g., used in Device Filters).
 
@@ -122,7 +122,7 @@ In the next section I would like to give some code samples about managing RMAU w
 
 ### Create and manage RMAUs by Microsoft Graph API
 
-The cmdlet "Invoke-MgGraphRequest" from the Microsoft Graph SDK will be used in the first sample to call the API endpoint. But there are also cmdlets to manage AUs directly, as you can see in the other samples as well. I’m using the Service Principal needs AdministrativeUnit.ReadWrite.All" but no other or special permissions for creating RMAUs.
+The cmdlet `Invoke-MgGraphRequest` from the Microsoft Graph SDK will be used in the first sample to call the API endpoint. But there are also cmdlets to manage AUs directly, as you can see in the other samples as well. I’m using a Service Principal which needs AdministrativeUnit.ReadWrite.All" but no other or special permissions for creating RMAUs.
 
 ```powershell
 $Body = '
@@ -174,7 +174,7 @@ $AzurePrivilegedObjects | foreach-object {
 *Side notes from my tests and automation jobs:*
 
 - [Memberships of Administrative Units](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/administrative_unit_member) can be also automated by Azure AD Terraform Provider.
-- In the past, there was no no `Remove-MgDirectoryAdministrativeUnitMember*` cmdlet in "Microsoft.Graph" PowerShell module. Therefor,e I’ve have been chosen the ["Delete" method on the API call](https://docs.microsoft.com/en-us/graph/api/administrativeunit-delete-members?view=graph-rest-1.0), like I did by using `Invoke-MgGraphRequest`.
+- In the past, there was no `Remove-MgDirectoryAdministrativeUnitMember*` cmdlet in "Microsoft.Graph" PowerShell module. Therefor,e I’ve have been chosen the ["Delete" method on the API call](https://docs.microsoft.com/en-us/graph/api/administrativeunit-delete-members?view=graph-rest-1.0), like I did by using `Invoke-MgGraphRequest`.
 
 ### Identify which objects are protected by RMAU
 
@@ -248,24 +248,24 @@ AuditLogs
 
 ## Samples from my "Enterprise Access Model" implementations
 
-In the following section, I would like to give you an overview about some use cases in a tiered administration environment where RMAUs offers a great security benefit in restricted management. Unfortunately, security groups (using PIM for Group) and role-assignable groups (Azure AD PIM) are not supported or appropriated. Using "PIM for Groups" and RMAU would be a perfect match to combine protection with the capability of Just-in-Time (JIT) access.
+In the following section, I would like to give you an overview about some use cases in a tiered administration environment where RMAUs offers a great security benefit in restricted management. Unfortunately, security groups (using "PIM for Groups") and role-assignable groups (Azure AD PIM) are not supported or appropriated. Using "PIM for Groups" and RMAU would be a perfect match to combine protection with the capability of Just-in-Time (JIT) access.
 Nevertheless, there are a couple of scenarios where users are assigned to groups with eligible roles to Azure RBAC.
 
 The described examples are part of my solution to implement an "Enterprise Access Model" and result of continuous research (started three years ago), development and experiences to find a practical approach to implement a tier model in Microsoft Azure and Azure AD.
 
 *Are you interested in learning more about my implementation of Enterprise Access Model?
-I’m speaking at TEC 2023 in a deep dive session about this solution and share more insights how you can protect privileged identities in Azure AD. More information and tickets:* [The Experts Conference (TEC) 2023](https://theexpertsconference.cventevents.com/event/ff6b61dc-386d-422c-a142-8bd9b3b75453/websitePage:55dc8fd7-e500-4550-9055-6b1fde364777)
+I’m speaking at TEC 2023 in a deep dive session about entire solution and share more insights how you can protect privileged identities in Azure AD. More information and tickets:* [The Experts Conference (TEC) 2023](https://theexpertsconference.cventevents.com/event/ff6b61dc-386d-422c-a142-8bd9b3b75453/websitePage:55dc8fd7-e500-4550-9055-6b1fde364777)
 
 ### Security principals in Azure RBAC role assignments
 
 Protecting privileged users and groups on management and workload plane in Microsoft Azure was one of the previously named use cases. This is even more important, especially for those sensitive role definitions which have "Owner" or "Contributor" permission on Landing Zones (Workloads).
 
-_Side Note: I would recommend to use role-assignable groups as primary "role group" for comprehensive horizontal scope (such as "PlatformOps" or "SecOps") on management plane which offers also the capability to use this groups for delegation to scoped Azure AD roles (e.g., managing Landing Zone security groups in a RMAU)._
-
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-06-13-administrative-units-restricted-management/rmau9.png)
 
 *Overview of my Enterprise Access and Tiered Administration Model.
-Users and groups with permissions on the different tiered levels are assigned to the related RMAUs.*
+Users and groups with permissions on the different tiered levels are assigned to the related RMAUs or AUs.
+For example, user accounts with sensitive workload plane permissions (Contributor of Resource Group) are assigned to RMAU "Workload Plane Accounts"."*
+_Side Note: I would recommend to use role-assignable groups as primary "role group" for comprehensive horizontal scope (such as "PlatformOps" or "SecOps") on management plane which offers also the capability to use this groups for delegation to scoped Azure AD roles (e.g., managing Landing Zone security groups in a RMAU)._
 
 An overview and sample of my defined Azure roles and classification in the "Tired Administration" design can be found [here](https://github.com/Cloud-Architekt/AzureRBAC/blob/main/EAS_EAM_AzureRBAC_TabularSummary.pdf).
 
@@ -302,7 +302,7 @@ Abuse of privileged service connections (defined in service connection) or manip
 Modification of the assigned security groups from Azure AD is another access path.
 Review sensitive permission assignments of your Azure AD objects on organization- and project-level. [Vinicius Moura](https://vinijmoura.medium.com/?source=post_page-----54f73a20a4c7-----------------------------------) has written a blog post about using Azure DevOps CLI to get [a list of all users and group permissions](https://vinijmoura.medium.com/how-to-list-all-users-and-group-permissions-on-azure-devops-using-azure-devops-cli-54f73a20a4c7) in Azure DevOps.
 
-Members with privileged access on "Organization- and Collection-Level" should be also restricted (e.g., Project Collection Administrators). But also, users with assigned "Project- or Object-level" permissions should be considered. For example, when you are using Azure DevOps Projects to automate Azure and Azure AD environment (e.g., M365DSC) and users can modify Branch Policies, Service Connection or any other sensitive action.
+Members with privileged access on "Organization- and Collection-Level" should be also restricted (e.g., Project Collection Administrators). But also, users with assigned "Project- or Object-level" permissions should be considered. e.g., when you are using Azure DevOps Projects to automate Azure and Azure AD environment (e.g., M365DSC) and users can modify Branch Policies, Service Connection or any other sensitive action.
 
 ### Billing role members from Azure Enterprise Agreement Management
 
