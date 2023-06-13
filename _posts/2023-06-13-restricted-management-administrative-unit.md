@@ -1,5 +1,5 @@
 ---
-title: "Protection of Privileged Users and Groups by Azure AD Restricted Management Administrative Units"
+title: "Protection of privileged users and groups by Azure AD Restricted Management Administrative Units"
 excerpt: "Restricted Management Administrative Unit (RMAU) allows to protect objects from modification by Azure AD role members on directory-level scope. Management permissions will be restricted to granted Azure AD roles on scope of the particular RMAU. In this blog post, we will have a look on this feature and how you can automate management of RMAUs with Microsoft Graph API. In addition, I will explain use cases, limitations and why this feature support to implement a tiered administration model."
 header:
   overlay_image: /assets/images/2023-06-13-administrative-units-restricted-management/rmau3.png
