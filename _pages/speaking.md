@@ -14,6 +14,7 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
+| 2023-06-17  | Data Saturday Rheinland 2023 | Azure Governance Best Practices and Enterprise-Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-06-17%20Data%20Saturday%20Rheinland%20-%20Azure-Gov-Best-Practices.pdf) | |
 | 2023-06-14  | Global Security and Compliance Conference | Azure AD Identity Security Posture Management | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-06-14%20GSCC-AzureAD-Security-Posture-Management.pdf) | |
 | 2023-05-25  | Experts Live Netherlands    | Demystify Azure AD workload identities | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-05-25%20ExpertsLiveNL%20Demystify-Workload-Identities.pdf) | |
 | 2023-01-24  | Azure Ruhrgebiet Meetup     | Securing your privileged access in Microsoft Azure           | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-01-24%20Azure-Ruhrgebiet%20-%20Securing-privileged-access-Azure.pdf) | |
