@@ -77,10 +77,9 @@ The following summary table gives you a quick overview about the different types
 | Relation to workload | No relation or allocation to workload or resource | Relation to Issuer/Entity of the federated provider | Allocation to resource 1:1 | Allocation to resource N:1 |
 | Lifecycle Management | Managed by admin or automated process | Managed by admin or automated process | Managed by Azure  | Standalone Azure resource (managed by admin or automated process) |
 | Secret Management | Key or Certificate Renewal required | No particular secret rotation required | Managed by Azure | Managed by Azure |
-| Token Lifetime / Cache | 1h (Default), 24h (CAE)
-   | less than or equal to 1h | 24h (https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization) |   24h (https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization) |
+| Token Lifetime / Cache | 1h (Default), 24h (CAE) | less than or equal to 1h | [up to 24h](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization) | [up to 24h](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization) |
 
-* Single Tenant Application only, but access can be granted to Azure RBAC and resources in other tenants via Azure Lighthouse
+*Single Tenant Application only, but access can be granted to Azure RBAC and resources in other tenants via Azure Lighthouse
 
 ### Challenges in managing Non-Human Identities
 
@@ -153,7 +152,7 @@ However, the users’ default permissions can be restricted and should be disabl
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-19-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg9.png)
 
-****Disable default permission to register application should be disabled and particular delegated to developer accounts or integrated to a managed workload identity lifecycle.****
+_Disable default permission to register application should be disabled and particular delegated to developer accounts or integrated to a managed workload identity lifecycle._
 
 This setting is named `allowedToCreateApps` and will be defined in the `authorizationPolicy` which can be also managed in Microsoft Graph API:
 
@@ -167,9 +166,9 @@ The value `permissionGrantPoliciesAssigned` is shown the “Policy Id” of a bu
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-19-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg11.png)
 
-******Consent and permissions can be configured in the Azure portal but without advanced options (such as assigning a custom policy).******
+**Consent and permissions can be configured in the Azure portal but without advanced options (such as assigning a custom policy).**
 
-***Side Note: Configuration of User and Admin Consent Permissions (incl. Policy Framework) is an essential and huge topic for identity security. If you are interested in to learn more about the attack scenarios and security configuration, check out the Azure AD Attack & Defense playbook about “[Consent Grant](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/ConsentGrant.md)”.*
+_Side Note: Configuration of User and Admin Consent Permissions (incl. Policy Framework) is an essential and huge topic for identity security. If you are interested in to learn more about the attack scenarios and security configuration, check out the Azure AD Attack & Defense playbook about “[Consent Grant](https://github.com/Cloud-Architekt/AzureAD-Attack-Defense/blob/main/ConsentGrant.md)”._
 
 ## Entra ID admins roles and ownership for delegation
 
