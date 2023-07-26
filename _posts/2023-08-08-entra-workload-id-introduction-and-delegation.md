@@ -2,9 +2,9 @@
 title: "Microsoft Entra Workload ID - Introduction and Delegated Permissions"
 excerpt: "Workload identities will be used by applications, services or cloud resources for authentication and accessing other services and resources. Especially, organizations which follows a DevOps approach and high automation principals needs to manage those identities at scale and implement policies. In the first part of a blog post series, I would like to give an overview about some aspects and features which are important in delegating management of Workload ID in Microsoft Entra: Who can see and create apps? Why you should avoid assigning 'owner' to service principals or application objects?"
 header:
-  overlay_image: /assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro.png
+  overlay_image: /assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro.png
+  teaser: /assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro.png
 search: true
 toc: true
 toc_sticky: true
@@ -16,7 +16,7 @@ tags:
   - Microsoft Entra
   - Workload ID
   - Azure
-last_modified_at: 2023-07-27
+last_modified_at: 2023-07-08
 ---
 
 This blog post is part of a series about Microsoft Entra Workload ID:
@@ -24,14 +24,14 @@ This blog post is part of a series about Microsoft Entra Workload ID:
 - Lifecycle Management and Operational Monitoring
 - Advanced Monitoring and Security
 
-## Introduction of Workload Identities
+## Introduction of Workload ID
 
 Microsoft has introduced “Workload Identities” as overriding notion for non-human identities but also as “new product” as part of Microsoft Entra. The product name has been renamed from "Azure AD Workload Identities" to "Microsoft Entra Workload ID" in early July 2023. The premium licenses covers some features which has been available as public preview before (such as Conditional Access support for Service Principals). I will shown some use cases for the capabilities of Microsoft Entra Workload ID in the next part of this blog series.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg0.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg0.png)
 
 *Workload Identity Premium features in the Microsoft Entra Portal.
-You’ll find a overview about the features and capabilities which are included in Microsoft Entra Workload ID Premium and which ones are free at the [Microsoft Entra Workload ID FAQ page](https://learn.microsoft.com/en-us/azure/active-directory/develop/workload-identities-faqs).*
+You’ll find a overview about the features and capabilities which are included in Microsoft Entra Workload ID Premium and which ones are free at the [Microsoft Entra Workload ID FAQ page](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identities-faqs#what-features-are-included-in-workload-identities-premium-plan-and-which-features-are-frees).*
 
 Provisioning and general usage of Service Principals are still free in Microsoft Entra ID (formely known as Entra ID), only certain new capabilities are part of the new “premium plan” for Workload ID.
 
@@ -44,13 +44,13 @@ The following common use cases should provide some examples of the terminology a
 - **Application identities** will be created in the “App Registration” blade and used for integration of applications for using modern authentication and/or access to other Entra ID-protected resources. They can be also used for multi-tenancy, which allows to provide access to an application outside of the own organization (common for SaaS scenario). Access to the resources can be assigned with delegation or application API permissions and requires a [consent from the admin or user](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/user-admin-consent-overview).
     - **[Delegated API Permissions](https://learn.microsoft.com/en-us/graph/auth-v2-user)** allows the application to get access on behalf of the signed-in user. This will be mostly used for interactive sessions and limited to the scope of the specific user.
         
-        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg1.png)
+        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg1.png)
         
         Example: Application accessing Microsoft Graph API with scoped and delegated token of the user
         
     - **[Application API Permissions](https://learn.microsoft.com/en-us/graph/auth-v2-service)** enables the application to access a resource without signed-in user and will be typically used for background or automation workflows.
         
-        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg2.png)
+        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg2.png)
         
         Example: Application accessing Microsoft Graph API with permissions assigned to the Application object.
         
@@ -61,7 +61,7 @@ The following common use cases should provide some examples of the terminology a
     
     Application API Permissions and also authorization as part of RBAC assignments can be granted to Managed Identities. As far as I know, calls on using delegated permissions are not applicable. The management of API permissions is restricted to Graph API (no support in Portal UI).
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg3.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg3.png)
     
     Example: Managed Identity has been assigned or federated to a workload. Assignment to an Azure RBAC role exists allows to call the Azure Resource Manager API for deployment of resources.
     
@@ -85,7 +85,7 @@ The following summary table gives you a quick overview about the different types
 
 Microsoft has shared some interesting statistics at the “[2023 State of Cloud Permissions Risks Report](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RW10qzO)”. This includes also the ratio between user and workload identities but also the numbers of stale identities:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg4.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg4.png)
 
 *Summary of related statics about workload identities. Source: Microsoft “2023 State of Cloud Permissions Risks Report”*
 
@@ -104,7 +104,7 @@ Sign-in reports of service principals has been introduced in September 2020. Nev
 
 ### Entra ID Objects of Application Identities
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg5.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg5.png)
 
 **Application object** has been created in the “App Registration” blade and defines the API permissions, credentials and general properties (incl. authentication settings).
 An instance of the application has been created based on the Application object and will be represented by the **Service Principal.** It exists in the local directory (”home tenant”) where the application was registered but also in other tenants (”resource tenant”) in case of multi-tenant application. This object will be used for assigning memberships to Entra ID groups but also role assignments in other RBAC systems.
@@ -117,11 +117,11 @@ Owners can be assigned to the Application and Service Principal objects which de
 
 ### Entra ID Objects of Managed Identities
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg6.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg6.png)
 
 Managed Identities exists as **Resource in Azure** but also as Service Principal in the associated Entra ID Tenant. There’s no (visible) Application object for Managed Identities. **Certificates as credentials are created and maintained by Microsoft** on the Service Principal-Object. Assignments to API Permissions needs to be configured on this object type as well. The name of the Enterprise App (Service Principal) is equal to the related Azure Resource Name.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg7.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg7.png)
 
 Certificates of Managed Identities have an expiration of 90 days and will be rolled after 45 days by Azure. More details on limitations and technical backgrounds are [described in the FAQ section on Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identities-faq).*
 
@@ -137,7 +137,7 @@ By design, all members have the default permission to read properties of the App
 - External user has been changed from user type “Guest” to “Member”
 - Assignment of built-in (e.g., “Directory Readers”) or custom Entra ID role (with permission to read properties of the objects) [to allow browsing all objects](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-external-users#guest-user-cannot-browse-users-groups-or-service-principals-to-assign-roles) in the tenant.
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg8.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg8.png)
     
     Example of “[Custom Entra ID role](https://learn.microsoft.com/en-us/azure/active-directory/roles/custom-create)” which allows every assigned member to read properties of related Application Identities object. Role members are able to access Azure or Entra portal when [user access is restricted](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/users-default-permissions#restrict-member-users-default-permissions).*
     
@@ -150,13 +150,13 @@ By default, members are able to register applications and create an Application 
 
 However, the users’ default permissions can be restricted and should be disabled in my opinion. Otherwise, you will allow the provisioning and management of workload identities by any member account.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg9.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg9.png)
 
 _Disable default permission to register application should be disabled and particular delegated to developer accounts or integrated to a managed workload identity lifecycle._
 
 This setting is named `allowedToCreateApps` and will be defined in the `authorizationPolicy` which can be also managed in Microsoft Graph API:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg10.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg10.png)
 
 ****Authorization Policy allows to restrict a few default member permissions.****
 
@@ -164,7 +164,7 @@ As you can see, another entry of the `authorizationPolicy` been marked in the sc
 An [app consent policy](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/manage-app-consent-policies?pivots=ms-powershell) will be defined for members to govern the permissions for user consent.
 The value `permissionGrantPoliciesAssigned` is shown the “Policy Id” of a built-in (begins with “microsoft-”) or a custom policy. The default setting will be also shown in the [Portal UI](https://portal.azure.com/#view/Microsoft_AAD_IAM/ConsentPoliciesMenuBlade/~/UserSettings):
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg11.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg11.png)
 
 **Consent and permissions can be configured in the Azure portal but without advanced options (such as assigning a custom policy).**
 
@@ -176,7 +176,7 @@ _Side Note: Configuration of User and Admin Consent Permissions (incl. Policy Fr
 
 Permission to register application can be delegated by assigning “[Application Developer](https://learn.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#application-developer)” role.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg12.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg12.png)
 
 ***Built-in role “Application Developer” allows members to create application identities even the default user permission has been restricted***
 
@@ -223,13 +223,13 @@ Monitor all Entra ID admin roles and assignments which includes (for example) th
 
 As already described, previous roles have sensitive permissions which should avoided to be granted on directory-level. It’s possible to assign the “Cloud Application Administrator” role on object-level of the application and service principal:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg13.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg13.png)
 
 ***Role assignment of “Cloud Application Administrator” allows to select scope on object-level***
 
 This gives you also the opportunity to replace owner permission with object-level permissions to the Entra ID role. This includes all benefits of using Entra ID roles, such as eligible membership (managed by PIM) or group-based assignment. 
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg14.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg14.png)
 
 **Eligible Assignment of “Cloud Application Administrator” on scope of app registration “b2xapp”.**
 
@@ -237,7 +237,7 @@ This gives you also the opportunity to replace owner permission with object-leve
 
 Microsoft has integrated many permissions related to Application and Service Principals objects to Entra ID Custom Roles. This allows us to create a custom role on specific permissions and follow the least-privilege approach. In addition, the custom role can be also assigned to all directory- and object-level.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-07-27-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg15.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-08-entra-workload-id-introduction-and-delegation/workloadid-intro-deleg15.png)
 
 ***Delegation of specific tasks can be achieved by custom roles (e.g., creating role permission set to managed application properties without updating credentials).***
 
