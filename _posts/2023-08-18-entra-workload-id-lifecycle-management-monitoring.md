@@ -1,10 +1,11 @@
 ---
 title: "Microsoft Entra Workload ID - Lifecycle Management and Operational Monitoring"
-excerpt: "Workload identities should be covered by lifecycle management and processes to avoid identity risks such as over-privileged permissions but also inactive (stale) accounts. Regular review of the provisioned identities and permissions should be part of identity operations. In this article, we will go through the different lifecycle phases and other aspects to manage non-human identities in your Microsoft Entra environment."
+excerpt: "Workload identities should be covered by lifecycle management and processes to avoid identity risks such as over-privileged permissions but also inactive (stale) accounts. Regular review of the provisioned non-human identities and permissions should be part of identity operations. In this article, we will go through the different lifecycle phases and other aspects to workload identities in your Microsoft Entra environment."
 header:
-  overlay_image: /assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifcycle.png
+  overlay_image: /assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifcycle.png
+  teaser: /assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle.png
+
 search: true
 toc: true
 toc_sticky: true
@@ -46,17 +47,17 @@ Results can be exported as HTML (with visualization) but also as JSON and CSV ex
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle2.png)
 
-*Pull Request in AzADSPI to compare changes of Workload Identity since latest pipeline run. In this example, a sensitive API permission has and a short term client secret has been assigned.*
+*Pull Request in AzADSPI to compare changes of Workload Identity since latest pipeline run. In this example, a sensitive API permission and a short term client secret has been assigned.*
 
 The tool provides an classification for API Permission with critical and medium sensitivity which can be also customized.
 
-*Side Note: Options to integrate this tool to your Microsoft Sentinel environment (for example to build advanced logic and enrichments in analytics rules) will be one of the major topics in the next part of this blog post series. I’ve shown this approach in scenarios for enrichment of analytics rules and hunting in my community talk about Workload Identities in the recent years. Last year, I’ve started to [work on an automation for classification of privileged access](https://devblogs.microsoft.com/identity/azure-ad-recommendations-adal/) based on Microsoft’s Enterprise Access Model. This feature will be part of my “AADOps” PoC project and [will be covered all major RBAC systems in Microsoft Cloud](https://twitter.com/Thomas_Live/status/1688797242633699328) (Azure, Entra ID, Intune, Graph API, Identity Governance) across all types of identities (including workload identities).*
+*Side Note: Options to integrate this tool to your Microsoft Sentinel environment (for example to build advanced logic and enrichments in analytics rules) will be one of the major topics in the next part of this blog post series. I’ve shown this approach in scenarios for enrichment of analytics rules and hunting in my community talks about Workload Identities in the recent years. Last year, I’ve started to [work on an automation for classification of privileged access](https://devblogs.microsoft.com/identity/azure-ad-recommendations-adal/) based on Microsoft’s Enterprise Access Model. This feature will be part of my “AADOps” PoC project and [covers all major RBAC systems in Microsoft Cloud](https://twitter.com/Thomas_Live/status/1688797242633699328) (Azure, Entra ID, Intune, Graph API, Identity Governance) across all types of identities (including workload identities). But this is topic for another community talks and blog posts in the near future.*
 
-*Tip: There’s is also a tool by Joosua Santasalo (https://github.com/jsa2/AADAppAudit) which gives you insights to your application and workload identities.* 
+*Tip: There’s is also a tool by [Joosua Santasalo](https://github.com/jsa2/AADAppAudit) which gives you comprehensive insights to your application and workload identities with option to ingest the data to Log Analytics.* 
 
 ## Lifecycle Management of Application Objects
 
-In the following section, I would like to evoke simply the keywords (including a short description) what should be considered in lifecycle management from my point of view.
+In the following section, I would like to evoke simply the keypoints (including a short description) what should be considered in lifecycle management from my point of view.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle3.png)
 
@@ -77,7 +78,7 @@ In the following section, I would like to evoke simply the keywords (including a
     
     *Tip: [Merill Fernando](https://twitter.com/merill) has written a great blog post about “[Entra ID multi- vs. single tenant app](https://merill.net/2023/04/azure-ad-multi-tenant-app-vs-single-tenant-app/)” which I can strongly recommended to read.*
     
-    Consider to enable “[Application instance lock](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-configure-app-instance-property-locks)” to protect sensitive properties of the multi-tenant app in other tenants.
+    - Consider to enable “[Application instance lock](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-configure-app-instance-property-locks)” to protect sensitive properties of the multi-tenant app in other tenants.
     
 - [Follow Microsoft’s best practices](https://learn.microsoft.com/en-us/azure/active-directory/develop/security-best-practices-for-app-registration) for application configuration which covers security related aspects of Redirect URIs, authentication flow, Application and secret management.
     - [Integration assistant](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/plan-an-application-integration) in Entra ID portal should also support you in verifying the recommended configuration and go trough a checklist.
@@ -89,11 +90,11 @@ In the following section, I would like to evoke simply the keywords (including a
 
 ### Classification and Service Mapping of Service Principals
 
-- Classify policy requirements for user access to the application as custom security attribute. This could include attributes related the target audience of the app or the policy requirements to access the application:
+- Classify policy requirements for user access to the application as custom security attribute. This could include attributes related to the target audience of the app or the policy requirements to access the application:
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle4.png)
     
-    This implementation allows you to use the classification in the App Filter for Conditional Access Targeting:
+    The assignment of the custom security attribute allows you to use the classification in the App Filter for Conditional Access Targeting:
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle5.png)
     
@@ -103,13 +104,13 @@ In the following section, I would like to evoke simply the keywords (including a
     
     *Workbook of EntraOps Privileged EAM to identify highly sensitive workload identities and their privileges in Azure, Entra and to Resource Apps. API permission to “User.ReadWrite.All” will be classified to “Control plane” (Tier 0) because of the wide range of permissions to modify user accounts. The service principal needs to be protected particularly (by Conditional Access and Identity Protection for Workload Identities).*
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-classification.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-classification.png)
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle6.png)
     
     *Custom security attributes will be used to “label” classification and target them in policy (for example, all control plane access should be blocked if Identity Protection has detected a high risk of the workload identity.*
     
-- Require user assignment for sensitive or restricted applications but also block users to sign-in to any other workload identity. This setting is also important if you consent delegated permission to the application identity and want to manage the scope of users.
+- Require user assignment for sensitive or restricted applications to the target end-user audience. This setting is also important if an application identity has sensitive delegated permission and you want to manage the scope of users.
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle7.png)
     
@@ -134,13 +135,13 @@ In the following section, I would like to evoke simply the keywords (including a
     There are some great blog posts by the community about client secret rotation. Check out the following articles and samples:
     
     - [How to automatically rotate Entra ID app registration client secrets using Azure Functions (with Java) and Key Vault – Jordan Bean Dev Blog](https://jordanbeandev.com/how-to-automatically-rotate-azure-ad-app-registration-client-secrets-using-azure-functions-with-java-and-key-vault/)
-    - [Implement automatic key rotation on Azure DevOps service connections | by Koos Goossens | Medium](https://koosg.medium.com/implement-automatic-key-rotation-on-azure-devops-service-connections-13804b92157c)
+    - [Implement automatic key rotation on Azure DevOps service connections by Koos Goossens](https://koosg.medium.com/implement-automatic-key-rotation-on-azure-devops-service-connections-13804b92157c)
     - https://github.com/Azure/AzureAD-AppSecretManager
-- **Certificate:** Use KeyVault or your trusted Certificate Authority of choice to create the private key and avoid delegating any permissions or options to export the sensitive cryptographic information. Only the public key needs to be imported to the associated. app registration.
+- **Certificate:** Use KeyVault or your trusted Certificate Authority of choice to create the private key and avoid delegating any permissions or options to export the sensitive cryptographic information. Only the public key needs to be imported to the associated app registration.
     - Choose the “new” RBAC permission model (over the classic “Vault Access Policy” permission model) to use Azure PIM and Azure Activity Logs for privileged access governance.
     - Implement a renewal process for certificates as already described in the scenario with client secrets.
 
-*Side Note: Applications can also roll their own existing keys. More details about how to implement it and the usage of `Application.ReadWrite.OwnedBy`  is very well described in a the blog post “[Using Application.ReadWrite.OwnedBy and addKey methods for Graph API](https://securecloud.blog/2021/12/29/using-application-readwrite-ownedby-and-addkey-methods-for-graph-api/)” by [Joosua Santasalo](https://twitter.com/SantasaloJoosua).*
+    *Side Note: Applications can also roll their own existing keys. More details about how to implement it and the usage of `Application.ReadWrite.OwnedBy`  is very well described in a the blog post “[Using Application.ReadWrite.OwnedBy and addKey methods for Graph API](https://securecloud.blog/2021/12/29/using-application-readwrite-ownedby-and-addkey-methods-for-graph-api/)” by [Joosua Santasalo](https://twitter.com/SantasaloJoosua).*
 
 - **Federated Credentials:** This credential type offers many benefits over secrets or certificates from security and operational perspective. Choose this credential type if your [workload scenario is supported](https://learn.microsoft.com/en-us/azure/active-directory/workload-identities/workload-identity-federation#supported-scenarios). A subject identifier should be chosen with a strong scope on your workload and a reliable and secure external Identity Provider (IdP) for establishing a trust relationship.
 
@@ -267,7 +268,7 @@ Furthermore, the results of these reports are also accessible from Microsoft Gra
 Last sign-ins (with Time Stamp and Request Id) from app-only (application permissions) or user access (delegated permissions) will be covered in the report. `lastSignInRequestId`  can be used for searching the related user or service principal sign-in in the Entra ID sign-logs.
 
 ```powershell
-[https://graph.microsoft.com/beta/reports/servicePrincipalSignInActivities](https://graph.microsoft.com/beta/reports/servicePrincipalSignInActivities)
+https://graph.microsoft.com/beta/reports/servicePrincipalSignInActivities
 ```
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle16.png)
@@ -311,7 +312,7 @@ The Portal UI allows you to filter for the expiration time window, certificate t
 All details of the report can be also listed by using the following Graph API call:
 
 ```powershell
-[https://graph.microsoft.com/beta/reports/appCredentialSignInActivities](https://graph.microsoft.com/beta/reports/appCredentialSignInActivities)
+https://graph.microsoft.com/beta/reports/appCredentialSignInActivities
 ```
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle21.png)
@@ -397,7 +398,7 @@ App Governance gives you the option to analyze the usage of Graph API Permission
 
 *Side Note: Microsoft seems to be working on a new data source in Entra ID logs to get insights about Microsoft Graph Activities. There are some reports about the [private preview on Twitter](https://twitter.com/DrAzureAD/status/1646396172804784129). The [log schema is already available in Microsoft Learn](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/microsoftgraphactivitylogs) and gives some interesting impressions which information will be covered. In my opinion, this would also allow to provide detections in Microsoft Sentinel for unused/over-privileged API permissions but detecting abuse and exfiltration of data from/to Graph.*
 
-*Entra Permissions Management (EPM) for Multi-Cloud Permissions*
+**Entra Permissions Management (EPM) for Multi-Cloud Permissions**
 
 Over-privileged permissions in cloud infrastructure environments can be analyzed with Entra Permissions Management (EPM). Currently, Google Cloud Platform (GCP), Amazon Web Services (AWS) and Azure are supported. A score of unused or excessive permissions will be calculated with the option to create a custom role assignment based on the used and required permissions.
 
@@ -413,11 +414,11 @@ Identity Governance supports access review for service principal role assignment
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle32.png)
 
-**Configuration of Access Review for Service Principals for high-privileged directory roles.**
+*Configuration of Access Review for Service Principals for high-privileged directory roles.*
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle33.png)
 
-**Automated actions can be configured in case the reviewer doesn’t respond to confirm the need of the required permissions.**
+*Automated actions can be configured in case the reviewer doesn’t respond to confirm the need of the required permissions.*
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle34.png)
 
@@ -445,7 +446,8 @@ Entra ID offers an option to recover supported objects within a 30-day time wind
 | Lifecycle Management | Managed by admin or automated process | Managed by admin or automated process | Managed by Azure  | Standalone Azure resource (managed by admin or automated process) |
 | Recovery Options | Soft Deletion | Soft Deletion | N/A | N/A |
 | Token Lifetime / Cache | 1h (Default), 24h (CAE) | less than or equal to 1h | [up to 24h](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization) |   [up to 24h](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization) |
-| Delegation and Ownership | Application/Enterprise App Owner Entra ID Role (Directory, Object) | Application/Enterprise App Owner, Entra ID Role (Directory, Object) | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner | | Recovery Options | Soft Deletion | Soft Deletion | N/A | N/A |
+| Delegation and Ownership | Application/Enterprise App Owner Entra ID Role (Directory, Object) | Application/Enterprise App Owner, Entra ID Role (Directory, Object) | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner |
+| Recovery Options | Soft Deletion | Soft Deletion | N/A | N/A |
 
 *Next: Advanced Monitoring and Security*
 
