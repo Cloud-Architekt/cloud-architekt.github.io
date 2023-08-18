@@ -2,9 +2,9 @@
 title: "Microsoft Entra Workload ID - Lifecycle Management and Operational Monitoring"
 excerpt: "Workload identities should be covered by lifecycle management and processes to avoid identity risks such as over-privileged permissions but also inactive (stale) accounts. Regular review of the provisioned non-human identities and permissions should be part of identity operations. In this article, we will go through the different lifecycle phases and other aspects to workload identities in your Microsoft Entra environment."
 header:
-  overlay_image: /assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle.png
+  overlay_image: /assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle.png
+  teaser: /assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle.png
 
 search: true
 toc: true
@@ -17,7 +17,7 @@ tags:
   - Microsoft Entra
   - Workload ID
   - Azure
-last_modified_at: 2023-08-18
+last_modified_at: 2023-08-22
 ---
 
 ## Inventory and initial review of Service Principals
@@ -28,7 +28,7 @@ I would recommend having a initial review for full visibility and insights of th
 
 The report covers analyses about owner, credentials, app and directory role assignments of Application and Service Principal objects (all different types).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-azadspinsights.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-azadspinsights.png)
 
 *AzADSPI provides a comprehensive report of application and service principal objects in your Entra ID environment*
 
@@ -43,9 +43,9 @@ There are many questions you should try to answer by analyzing the report, for e
 
 Results can be exported as HTML (with visualization) but also as JSON and CSV export. Julian is also providing pre-configured pipeline files for Azure DevOps and GitHub which allows to export the report data to a repository automatically. The approach is similar what I have built with [AADOps for Conditional Access](https://www.cloud-architekt.net/aadops-conditional-access/).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle1.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle1.png)
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle2.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle2.png)
 
 *Pull Request in AzADSPI to compare changes of Workload Identity since latest pipeline run. In this example, a sensitive API permission and a short term client secret has been assigned.*
 
@@ -59,7 +59,7 @@ The tool provides an classification for API Permission with critical and medium 
 
 In the following section, I would like to evoke simply the keypoints (including a short description) what should be considered in lifecycle management from my point of view.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle3.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle3.png)
 
 *Overview on tasks during the lifecycle phases of application objects (as an example)*
 
@@ -92,38 +92,40 @@ In the following section, I would like to evoke simply the keypoints (including 
 
 - Classify policy requirements for user access to the application as custom security attribute. This could include attributes related to the target audience of the app or the policy requirements to access the application:
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle4.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle4.png)
     
     The assignment of the custom security attribute allows you to use the classification in the App Filter for Conditional Access Targeting:
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle5.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle5.png)
+
+    *Require trusted device and block access from BYOD to all classified sensitive business apps (based on classification in custom security attribute)*
     
 - Classify application permissions of the Service Principal (e.g. sensitive Graph API Permissions) to protect them by Conditional Access for Workload Identities. I’ve started to create a [classification definition for Microsoft Graph API](https://github.com/Cloud-Architekt/AzurePrivilegedIAM/blob/main/Classification/Classification_MsGraphPermissions.json) based on the Enterprise Access Model which will be applied by an automation (as part of my PoC project “EntraOps”):
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-workbook.jpg)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-workbook.jpg)
     
-    *Workbook of EntraOps Privileged EAM to identify highly sensitive workload identities and their privileges in Azure, Entra and to Resource Apps. API permission to “User.ReadWrite.All” will be classified to “Control plane” (Tier 0) because of the wide range of permissions to modify user accounts. The service principal needs to be protected particularly (by Conditional Access and Identity Protection for Workload Identities).*
+    *Workbook of EntraOps Privileged EAM helps to identify highly sensitive workload identities and their privileges in Azure, Entra and to Resource Apps. API permission to “User.ReadWrite.All” will be classified to “Control plane” (Tier 0) because of the wide range of permissions to modify user accounts. The service principal needs to be protected particularly (by Conditional Access and Identity Protection for Workload Identities).*
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-classification.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-classification.png)
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle6.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle6.png)
     
     *Custom security attributes will be used to “label” classification and target them in policy (for example, all control plane access should be blocked if Identity Protection has detected a high risk of the workload identity.*
     
 - Require user assignment for sensitive or restricted applications to the target end-user audience. This setting is also important if an application identity has sensitive delegated permission and you want to manage the scope of users.
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle7.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle7.png)
     
     Groups can be used to assign permissions to get access to those apps or APIs. In addition, Identity Governance offers an effective way to request, manage and review user access to applications.
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle8.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle8.png)
     
     *Access to Graph Explorer and Microsoft Graph PowerShell is restricted and will be granted with access package for privileged role assignments*
     
 - Use a custom security attribute or `notes` attribute to store information about service owner or application developer. I would prefer to choose a custom security attribute to keep the relation private to avoid discovery and reconnaissance by attackers.
     - Other entity relations should be also stored in custom security attributes which could be later used in Microsoft Sentinel (WatchLists) for building correlations in analytics rules, hunting queries or scoping „Conditional Access for Workload Identities“. For example: Details about hosting or running the workload (pipeline name, environment or relation other cloud resources/accounts) and classification of permissions (according to own-defined sensitivity levels or tiering model):
         
-        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle9.png)
+        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle9.png)
         
         *A service principal which will be used in Azure Pipelines for sensitive operations (in this case, Entra ID automation) offers information about the classification and details on the associated pipelines in the custom security attributes.*
         
@@ -151,7 +153,7 @@ In the following section, I would like to evoke simply the keypoints (including 
 
 Microsoft allows to lock properties of the “Service Principal” object for Multi-Tenant Apps. This prevents admins or owners of the object in the Resource Tenant from adding credentials and impersonate the application identity. This feature is in preview and well [documented in Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-configure-app-instance-property-locks).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle10.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle10.png)
 
 *App Instance property lock can be configured in the “Authentication” blade of the App Registration*
 
@@ -224,15 +226,15 @@ The following checks are included in the recommendations blade and are available
 
 You’ll find the overview of recommendations in the [Entra ID portal](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview) and as [deep link in the “Workload Identities” blade](https://entra.microsoft.com/#view/Microsoft_Azure_ManagedServiceIdentity/WorkloadIdentitiesBlade) from the Microsoft Entra portal:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle11.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle11.png)
 
 *Overview of Workload Identities in the Microsoft Entra portal*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle12.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle12.png)
 
 *Recommendations covers a few checks for app registrations/service principals including unused permissions and credentials.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle13.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle13.png)
 
 *Details on impacted resources and remediation steps are available for every recommendation. Status will be automatically updated if the application or service principals have been modified according to the action plan. You can also change the status manually (active, dismissed or postponed).*
 
@@ -244,7 +246,7 @@ Using a filter on `ImpactType` give us the option to get only findings regarding
 https://graph.microsoft.com/beta/directory/recommendations?$filter=impactType eq 'apps'
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle14.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle14.png)
 
 *Programmatically access to the recommendation by using Microsoft Graph API by using Graph Explorer*
 
@@ -254,7 +256,7 @@ As you can see in the previous screenshot, the impacted resources are missing. A
 https://graph.microsoft.com/beta/directory/recommendations/<TenantId>_Microsoft.Identity.IAM.Insights.ApplicationCredentialExpiry/impactedResources
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle15.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle15.png)
 
 *Details on the impacted resource (service principal or application) from the recommendation.*
 
@@ -271,13 +273,13 @@ Last sign-ins (with Time Stamp and Request Id) from app-only (application permis
 https://graph.microsoft.com/beta/reports/servicePrincipalSignInActivities
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle16.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle16.png)
 
 **Entra ID application activity**
 
 This report shows a summary of all users’ sign-in attempts to an application including error codes.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle17.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle17.png)
 
 *Report displays the error description of the sign-in failures and counts and timeline of all user sign-ins*
 
@@ -287,7 +289,7 @@ The API endpoint “[applicationSignInSummary](https://learn.microsoft.com/en-us
 https://graph.microsoft.com/beta/reports/getAzureADApplicationSignInSummary(period='D7')
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle18.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle18.png)
 
 *Summary of application sign-in report within the last 30 days (maximum time range).*
 
@@ -297,7 +299,7 @@ Another API call to “[applicationSignInDetailedSummary](https://learn.microsof
 https://graph.microsoft.com/beta/reports/applicationSignInDetailedSummary
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle19.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle19.png)
 
 The response shows the single records of the report which will be aggregated regularly and includes additional details about the `failureReason` .
 
@@ -305,7 +307,7 @@ The response shows the single records of the report which will be aggregated reg
 
 Monitoring to expiring of client secrets and certificates is one of the essential operational tasks during the maintenance phase of application and workload identities. The following reports give a detailed overview of expiring credentials.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle20.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle20.png)
 
 The Portal UI allows you to filter for the expiration time window, certificate types and recent sign-in activities. This feature is in preview and I’ve running into some issues with outdated data and filter.
 
@@ -315,7 +317,7 @@ All details of the report can be also listed by using the following Graph API ca
 https://graph.microsoft.com/beta/reports/appCredentialSignInActivities
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle21.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle21.png)
 
 *Credential activity report covers not only expiration of specific credentials, but it’s also shows the latest sign-in activity. Unfortunately, there are some issues with the quality of data, as you can see in the screenshot (example: `lastSignInDateTime`*)
 
@@ -329,7 +331,7 @@ The following examples should give you an overview about the capabilities and op
 
 This is an integrated workbook from the Entra ID monitoring blade and visualizes the numbers of successful sign-ins and failures (like previous described Usage & Insights report “Application Activity”). But it offers longer time ranges (based on your workspace data retention), customized views and an overall status.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle22.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle22.png)
 
 *Tip: Error Codes will be only displayed in some scenarios of troubleshooting sign-in issues. Check out the references of [AADSTS error codes](https://learn.microsoft.com/en-us/azure/active-directory/develop/reference-error-codes#aadsts-error-codes) but also the [integrated lookup tool for resolving the code numbers](https://learn.microsoft.com/en-us/azure/active-directory/develop/reference-error-codes#lookup-current-error-code-information).*
 
@@ -342,7 +344,7 @@ This should help to identify outdated versions from Microsoft Authentication Lib
 In my opinion, you should use the latest version to avoid security vulnerabilities, known issues with core features (such as token caching) and missing features (e.g., support for CAE).
 The query can be also used for visualization as you can see in the following sample:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle23.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle23.png)
 
 *Side Note: Recently, Microsoft has announced a check in “Entra ID Recommendation” for [identifying ADAL Applications](https://devblogs.microsoft.com/identity/azure-ad-recommendations-adal/). Keep this in mind, if you are looking for implementations of this deprecated Authentication Library.*
 
@@ -352,7 +354,7 @@ Continuous access evaluation (CAE) is also available for workload identities. Bu
 
 You can get insights about this one in the Entra ID sign-in blade by filtering on “Is CAE token” and check the “Additional Details” tab:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle24.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle24.png)
 
 Unfortunately, the details if CAE token has been issued are not available in the Diagnostic Logs of `AADServicePrincipalSignInLogs` yet. 
 
@@ -362,23 +364,23 @@ Microsoft has been released “App Governance” as add-on feature for “Micros
 
 This tool gives you an comprehensive overview and insights about your applications in different areas (data and permission usage, access to sensitive data or delegated access by sensitive accounts).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle25.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle25.png)
 
 “*App Governance” is fully integrated to “Microsoft 365 Defender” portal and shows many compliance & security related insights.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle26.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle26.png)
 
 Summary of applications gives you an overview about certification and publisher verification which should be important to review for multi-tenant and SaaS applications. But also, deep links to related “Entra ID recommendations” have been integrated.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle27.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle27.png)
 
-*Policy templates but also custom policies can be configured for monitoring and detection of different scenarios. Alerts for “unused apps”, “unused credentials” or “expiring credentials” are available as well. So, there are some overlapping features between Entra ID recommendations and App Governance.*
+*Policy templates but also custom policies can be configured for monitoring and detection of different scenarios. Alerts for “unused apps”, “unused credentials” or “expiring credentials” are available as well. So, there are some overlapping features between Entra ID recommendations and App Governance. Therefore, app hygiene features will be [only available in MDA for customers with Entra Workload ID Premium license](https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-secure-apps-app-hygiene-features).*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle28.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle28.png)
 
 *Alert integration to Microsoft 365 Defender/Microsoft Sentinel, custom app scope and automated response (disable app) could be one of the reason to prefer the features in App Governance over Entra ID recommendations. More details about [App hygiene policies](https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-secure-apps-app-hygiene-features) are available from Microsoft Learn.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle29.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle29.png)
 
 *Statistics about data usage of an app to OneDrive (via Microsoft Graph API) and  overview about users which has been defined as priority/sensitive account.*
 
@@ -392,7 +394,7 @@ Regular review of assigned permissions should be considered for workload identit
 
 App Governance gives you the option to analyze the usage of Graph API Permissions for Exchange Online, SharePoint, OneDrive and Teams in the recent 90 days. This can be also integrated as a policy to trigger an alert but also for correlation to other built-in threat detections (”[Increase in data usage by an overprivileged or highly privileged app](https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-investigate-predefined-policies#increase-in-data-usage-by-an-overprivileged-or-highly-privileged-app)”).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle30.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle30.png)
 
 *Overview of Assigned Permissions to Exchange Online (Mail.ReadWrite) and User.Read (Entra ID). “In Use” can be only analyzed for certain endpoints of Microsoft 365 services.*
 
@@ -402,7 +404,7 @@ App Governance gives you the option to analyze the usage of Graph API Permission
 
 Over-privileged permissions in cloud infrastructure environments can be analyzed with Entra Permissions Management (EPM). Currently, Google Cloud Platform (GCP), Amazon Web Services (AWS) and Azure are supported. A score of unused or excessive permissions will be calculated with the option to create a custom role assignment based on the used and required permissions.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle31.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle31.png)
 
 *Example: Microsoft Sentinel Playbook is running with a system-assigned managed identity which has comprehensive permissions as part of the role assignment to “Microsoft Sentinel Contributor”. But only one role action (“incidents/comments/write”) will be used from the role definition set of over 700 actions. Reducing the set of assigned permissions can be achieved by the remediation features in EPM and supports you to follow the approach of least privileges.*
 
@@ -412,19 +414,19 @@ I can strongly recommend evaluating EPM in your environment by using the free tr
 
 Identity Governance supports access review for service principal role assignments in Entra ID or Azure Resources. This feature has been already [introduced in June 2021](https://techcommunity.microsoft.com/t5/microsoft-entra-azure-ad-blog/introducing-azure-ad-access-reviews-for-service-principals/ba-p/1942488) and requires “Workload Identity Premium License” in addition to Entra ID Premium P2.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle32.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle32.png)
 
 *Configuration of Access Review for Service Principals for high-privileged directory roles.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle33.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle33.png)
 
 *Automated actions can be configured in case the reviewer doesn’t respond to confirm the need of the required permissions.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle34.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle34.png)
 
 *Reviewer will be notified about the access review and needs to approve or deny the continuing validity of the requirements to use this directory or RBAC role assignment. There seems to be no support for “recommended actions” which gives insights about the current usage. A deep link to the recent activities as part of the Azure (AD) Audit Logs is available from the review page.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle35.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle35.png)
 
 *Privileged Identity Management (PIM) gives you a total number of directory role assignments. Unfortunately, assignments on Administrative Unit- or Object-Level have not been recognized in my test environment.*
 
@@ -432,7 +434,7 @@ Identity Governance supports access review for service principal role assignment
 
 Entra ID offers an option to recover supported objects within a 30-day time window. Those objects will not be permanently deleted and remains in a suspended state for this time period. App Registrations are one of these supported objects which can be [restored when they have been removed recently](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-restore-app). Managed Identities are a special type of service principals and are not covered. Some of the configurations can not be recovered from the Portal UI or not included in the recovery process yet. Check the [deletion and recovery FAQ](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/delete-recover-faq) for more details.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-18-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle36.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-lifecycle36.png)
 
 *You’ll find the options to delete an application permanently or recover the object by clicking on the “Deleted application” tab on the “App Registration” blade.*
 
@@ -449,6 +451,6 @@ Entra ID offers an option to recover supported objects within a 30-day time wind
 | Delegation and Ownership | Application/Enterprise App Owner Entra ID Role (Directory, Object) | Application/Enterprise App Owner, Entra ID Role (Directory, Object) | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner |
 | Recovery Options | Soft Deletion | Soft Deletion | N/A | N/A |
 
-*Next: Advanced Monitoring and Security*
+*Next part of the blog series: Advanced Monitoring and Security*
 
 *I’ve already mentioned in this part of the blog post series some Microsoft Security but also community tools for monitoring. In the next part we will go into details about using the capabilities of this solutions for detection and response of workload identities. Estimated publication date date is around end of September/Early October.*
