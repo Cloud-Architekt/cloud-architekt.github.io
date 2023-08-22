@@ -24,9 +24,9 @@ last_modified_at: 2023-08-22
 
 I would recommend having a initial review for full visibility and insights of the service principals which has been already created, especially in an environment without an establish lifecycle workflow or governance framework.
 
-[Julian Hayward](https://www.linkedin.com/in/julianhayward/) has published an awesome tool with the name “[AzADServicePrincipalInsight](https://github.com/JulianHayward/AzADServicePrincipalInsights)” (AzADSPI) which allows you to create a report across all types of workload identities. This can be also used for regular reviews and integrated to your monitoring and review process.
+[Julian Hayward](https://www.linkedin.com/in/julianhayward/) has published an awesome tool with the name “[AzADServicePrincipalInsights](https://github.com/JulianHayward/AzADServicePrincipalInsights)” (AzADSPI) which allows you to create a report across all types of workload identities. This can be also used for regular reviews and integrated to your monitoring and review process.
 
-The report covers analyses about owner, credentials, app and directory role assignments of Application and Service Principal objects (all different types).
+The report covers analysis about owner, credentials, app and directory role assignments of Application and Service Principal objects (all different types).
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-azadspinsights.png)
 
@@ -39,6 +39,7 @@ There are many questions you should try to answer by analyzing the report, for e
 - Which objects are owned by a service principal?
 - Are you aware of the existing user-assigned identities in Azure and the resources which can to use them?
 - Do you trust the Identity Providers and entities which are defined in Federated Identity Credentials?
+- Are there orphaned Managed Identities?
 - …
 
 Results can be exported as HTML (with visualization) but also as JSON and CSV export. Julian is also providing pre-configured pipeline files for Azure DevOps and GitHub which allows to export the report data to a repository automatically. The approach is similar what I have built with [AADOps for Conditional Access](https://www.cloud-architekt.net/aadops-conditional-access/).
