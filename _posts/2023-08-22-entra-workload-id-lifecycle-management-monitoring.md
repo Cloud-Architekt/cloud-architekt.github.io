@@ -105,7 +105,7 @@ In the following section, I would like to evoke simply the keypoints (including 
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-workbook.jpg)
     
-    *Workbook of EntraOps Privileged EAM helps to identify highly sensitive workload identities and their privileges in Azure, Entra and to Resource Apps. API permission to “User.ReadWrite.All” will be classified to “Control plane” (Tier 0) because of the wide range of permissions to modify user accounts. The service principal needs to be protected particularly (by Conditional Access and Identity Protection for Workload Identities).*
+    *Workbook of EntraOps Privileged EAM helps to identify highly sensitive workload identities and their privileges in Azure, Entra and to Resource Apps. API permission to “User.ReadWrite.All” will be classified to “Control plane” (Tier 0) because of the wide range of permissions to modify user accounts. The identified sensitive service principals needs to be protected and monitored particularly.*
     
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-08-22-entra-workload-id-lifecycle-management-monitoring/workloadid-classification.png)
     
@@ -136,10 +136,11 @@ In the following section, I would like to evoke simply the keypoints (including 
 - **Client Secret** (only if other credential types are not supported): Use KeyVault to transfer and provide secret to the workload. Avoid long lifetimes by implementing a process and way to rotate the secrets regularly. Configure a secret expiration date to take advantage of [notification trigger](https://learn.microsoft.com/en-us/azure/key-vault/general/event-grid-logicapps).
     
     There are some great blog posts by the community about client secret rotation. Check out the following articles and samples:
-    
+
+    - [Azure AD application secret rotator for Azure web sites](https://github.com/Azure/AzureAD-AppSecretManager)    
     - [How to automatically rotate Entra ID app registration client secrets using Azure Functions (with Java) and Key Vault – Jordan Bean Dev Blog](https://jordanbeandev.com/how-to-automatically-rotate-azure-ad-app-registration-client-secrets-using-azure-functions-with-java-and-key-vault/)
     - [Implement automatic key rotation on Azure DevOps service connections by Koos Goossens](https://koosg.medium.com/implement-automatic-key-rotation-on-azure-devops-service-connections-13804b92157c)
-    - https://github.com/Azure/AzureAD-AppSecretManager
+
 - **Certificate:** Use KeyVault or your trusted Certificate Authority of choice to create the private key and avoid delegating any permissions or options to export the sensitive cryptographic information. Only the public key needs to be imported to the associated app registration.
     - Choose the “new” RBAC permission model (over the classic “Vault Access Policy” permission model) to use Azure PIM and Azure Activity Logs for privileged access governance.
     - Implement a renewal process for certificates as already described in the scenario with client secrets.
@@ -211,7 +212,7 @@ As far as I know, there are no options to restrict federated credentials on Appl
 
 ## Operational Monitoring and Maintenance
 
-There are a couple of sources and signals in Entra ID but also Microsoft 365 Defender and Microsoft Entra product family which should be included in the operational monitoring.
+There are a couple of sources and signals in Microsoft Entra products but also governance capabilities in Microsoft 365 Defender which should be included in the operational monitoring.
 
 ### Entra ID Recommendations on Workload Identities
 
@@ -391,7 +392,7 @@ More policies and capabilities for detecting anomalous activities are available 
 
 Regular review of assigned permissions should be considered for workload identities. App Governance has a strong focus on permissions to API Permissions. But also, other privileges to RBAC assignments (such as Entra ID roles or Azure RBAC) and even Groups should be included in the access review.
 
-**MDA App Governance for Microsoft API Permissions**
+**MDA App Governance for Microsoft Graph API Permissions**
 
 App Governance gives you the option to analyze the usage of Graph API Permissions for Exchange Online, SharePoint, OneDrive and Teams in the recent 90 days. This can be also integrated as a policy to trigger an alert but also for correlation to other built-in threat detections (”[Increase in data usage by an overprivileged or highly privileged app](https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-investigate-predefined-policies#increase-in-data-usage-by-an-overprivileged-or-highly-privileged-app)”).
 
