@@ -173,29 +173,29 @@ A tenant-wide policy (`tenantAppManagementPolicy`) can be created which applies 
             {
                 "restrictionType": "passwordLifetime",
                 "maxLifetime": "P90D",
-                "restrictForAppsCreatedAfterDateTime": "2017-01-01T10:37:00Z"
+                "restrictForAppsCreatedAfterDateTime": "2023-08-01T10:00:00Z"
             },
             {
                 "restrictionType": "symmetricKeyAddition",
                 "maxLifetime": null,
-                "restrictForAppsCreatedAfterDateTime": "2021-01-01T10:37:00Z"
+                "restrictForAppsCreatedAfterDateTime": "2023-08-01T10:00:00Z"
             },
             {
                 "restrictionType": "customPasswordAddition",
                 "maxLifetime": null,
-                "restrictForAppsCreatedAfterDateTime": "2015-01-01T10:37:00Z"
+                "restrictForAppsCreatedAfterDateTime": "2023-08-01T10:00:00Z"
             },
             {
                 "restrictionType": "symmetricKeyLifetime",
                 "maxLifetime": "P40D",
-                "restrictForAppsCreatedAfterDateTime": "2015-01-01T10:37:00Z"
+                "restrictForAppsCreatedAfterDateTime": "2023-08-01T10:00:00Z"
             }
         ],
         "keyCredentials": [
             {
                 "restrictionType": "asymmetricKeyLifetime",
                 "maxLifetime": "P365D",
-                "restrictForAppsCreatedAfterDateTime": "2015-01-01T10:37:00Z"
+                "restrictForAppsCreatedAfterDateTime": "2023-08-01T10:00:00Z"
             }
         ]
     }
@@ -240,7 +240,7 @@ You’ll find the overview of recommendations in the [Entra ID portal](https://p
 
 *Details on impacted resources and remediation steps are available for every recommendation. Status will be automatically updated if the application or service principals have been modified according to the action plan. You can also change the status manually (active, dismissed or postponed).*
 
-All recommendations can be [listed and modified by Microsoft Graph API](https://learn.microsoft.com/en-us/graph/api/resources/recommendations-api-overview?view=graph-rest-beta#types-of-recommendations). This allows you to implement the insights to your existing operational monitoring or dashboard solution.
+All recommendations can be [listed and updated (incl. status and owner) by Microsoft Graph API](https://learn.microsoft.com/en-us/graph/api/resources/recommendations-api-overview?view=graph-rest-beta#types-of-recommendations). This allows you to implement the insights to your existing operational monitoring or dashboard solution.
 
 Using a filter on `ImpactType` give us the option to get only findings regarding resource types “Applications” which also includes Service Principals:
 
