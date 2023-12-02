@@ -319,7 +319,7 @@ machineActions_CL
 | project TimeGenerated, id, type, status, commands, computerDnsName, Tags, requestor, requestorComment
 ```
 
-<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png"><img src="{{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png" alt="KQL query" /></a>
+<a href="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png"><img src="{{ site.url }}{{ site.baseurl }}/assets/images/2023-03-20-abuse-detection-live-response-tier0/LiveResponse17.png" alt="KQL query" /></a>
 
 _MachineAction events will be correlated with classification of "High Value Assets" which allows to filter for Tier0 assets_
 
