@@ -1,6 +1,6 @@
 ---
 title: "Microsoft Entra Workload ID - Threat detection with Microsoft Defender XDR and Sentinel"
-excerpt: "Attack techniques (has shown that service principals will be used for initial and persistent access (to create a backdoor in Microsoft Entra ID). This has been used, for example as part of the NOBELIUM attack path. Abuse of privileged Workload identities for exfiltration and privilege escalation are just another further steps in such attack scenarios. In this part, we will have a closer look on monitoring workload identities with Identity Threat Detection Response (ITDR) by Microsoft Defender XDR, Microsoft Entra ID Protection and Microsoft Sentinel."
+excerpt: "Attack techniques has shown that service principals will be used for initial and persistent access to create a backdoor in Microsoft Entra ID. This has been used, for example as part of the NOBELIUM attack path. Abuse of privileged Workload identities for exfiltration and privilege escalation are just another further steps in such attack scenarios. In this part, we will have a closer look on monitoring workload identities with Identity Threat Detection Response (ITDR) by Microsoft Defender XDR, Microsoft Entra ID Protection and Microsoft Sentinel."
 header:
   overlay_image: /assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidthreatdetection.png  png
   overlay_filter: rgba(102, 102, 153, 0.85)
@@ -66,9 +66,11 @@ Below you will find a short comparison of the application and managed identity t
 | --- | --- | --- | --- |
 | Security Boundary | Single- or multi-tenant | Single- or multi-tenant | Single-tenant* |
 | Delegated  Management | Application/Enterprise App Owner, Enterprise App Owner, Entra ID role | Application/Enterprise App Owner, Enterprise App Owner, Entra ID role | Entra ID role on Directory or Object-level Azure RBAC Role/Resource Owner |
-| Security Dependencies | Secure storing of credentials, Protection of App Reg/Service Principal object | Security of Federated Workload/IdP, Protection of App Reg/SP object | Security and restricted management of Azure Resource(s) and SP object | | Restrict token acquisition | Conditional Access (Single Tenant only) | Conditional Access (Single Tenant only) | Not Available | | Detection for Identity Attacks | Identity Protection, Sign-in logs | Identity Protection, Correlation between Entra ID and Trusted IdP AuthN/AuthZ logs | Limited Sign-in logs | | Response time to invalid issued token | 1h (Default), Few minutes when CAE is supported | 1h (Default), Few minutes when CAE is supported | 24h (https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization), No support for CAE |
+| Security Dependencies | Secure storing of credentials, Protection of App Reg/Service Principal object | Security of Federated Workload/IdP, Protection of App Reg/SP object | Security and restricted management of Azure Resource(s) and SP object |
+| Restrict token acquisition | Conditional Access (Single Tenant only) | Conditional Access (Single Tenant only) | Not Available | | Detection for Identity Attacks | Identity Protection, Sign-in logs | Identity Protection, Correlation between Entra ID and Trusted IdP AuthN/AuthZ logs | Limited Sign-in logs |
+Response time to invalid issued token | 1h (Default), Few minutes when CAE is supported | 1h (Default), Few minutes when CAE is supported | 24h (https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization), No support for CAE |
 
-*Assigned permissions to other tenants via Microsoft Lighthouse delegation
+_*Assigned permissions to other tenants via Microsoft Lighthouse delegation_
 
 ### No built-in protection by assigned (sensitive) roles and permissions
 
