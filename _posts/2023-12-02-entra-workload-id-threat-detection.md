@@ -2,9 +2,9 @@
 title: "Microsoft Entra Workload ID - Threat detection with Microsoft Defender XDR and Sentinel"
 excerpt: "Attack techniques (has shown that service principals will be used for initial and persistent access (to create a "backdoor" in Microsoft Entra ID). This has been used, for example as part of the NOBELIUM attack path. Abuse of privileged Workload identities for exfiltration and privilege escalation are just another further steps in such attack scenarios. In this part, we will have a closer look on monitoring workload identities with Identity Threat Detection Response (ITDR) by Microsoft Defender XDR, Microsoft Entra ID Protection and Microsoft Sentinel."
 header:
-  overlay_image: /assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidthreatdetection.png
+  overlay_image: /assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidthreatdetection.png
   overlay_filter: rgba(102, 102, 153, 0.85)
-  teaser: /assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidthreatdetection.png
+  teaser: /assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidthreatdetection.png
 search: true
 toc: true
 toc_sticky: true
@@ -30,7 +30,7 @@ There are a couple of ways a Workload ID can be used in attack paths. They have 
 
 As we can see in the following example from “Solorigate” attacks, service principals have been used for (persistent) access to exfiltrate data from the Microsoft Graph API.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon0.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon0.png)
 
 *In the past, “[Solorigate](https://techcommunity.microsoft.com/t5/microsoft-entra-azure-ad-blog/understanding-quot-solorigate-quot-s-identity-iocs-for-identity/ba-p/2007610)” was one of the known attack paths which used an existing privileged application to gain access to sensitive data.*
 
@@ -95,29 +95,29 @@ In the past, threat detection alerts for various OAuth app activities have been 
 
 More details about Defender for Cloud Apps' transition from alerts to behaviors can be found at [Microsoft Learn](https://learn.microsoft.com/en-us/defender-cloud-apps/behaviors#defender-for-cloud-apps-transition-from-alerts-to-behaviors).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon1.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon1.png)
 
 *Some of the anomaly detections has been disabled as alert, as we can see in the “policies” in the Microsoft 365 Defender portal.*
 
 Nevertheless, some detections (such as “Unusual ISP for an OAuth App”) are still available as enabled “Threat detection” policy and should be considered (in my opinion) for your ITDR implementation. In this example, I have replayed a token from an Azure Managed Identity which leads to the following (true-positive) alert.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon2.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon2.png)
 
 Usage Pattern of access from Workload ID (in this case a Managed Identity) was involved in this alert to identify a potential compromise. An incident in Microsoft Sentinel will be generated when using the Microsoft 365 Defender Data Connector.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon3.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon3.png)
 
 The shown incident is available in Microsoft Sentinel and displays related IP address but not the impacted Service Principal as Entity. Similar incidents from other data sources works (based on IP address entity) and allows to show context to other detections in Microsoft Defender for Cloud (”MicroBurst exploration toolkit used”) but also similar alerts from Microsoft Sentinel Analytics Rules.
 
 The required information for entity mapping to the OAuth application is included in the `SecurityAlert` entry and could be used for building an own mapping by implementing an Analytic Rule in Microsoft Sentinel.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon4.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon4.png)
 
 *Details of the Service Principal (oauth-application) are included in the entities even if they are considered by Microsoft Sentinel for entity mapping.*
 
 Some other detections has been moved to Behaviors (e.g., “Unusual addition of credentials to an OAuth app”) and are documented in the [associated Microsoft Learn article](https://learn.microsoft.com/en-us/defender-cloud-apps/behaviors#supported-detections).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon5.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon5.png)
 
 *Advanced hunting allows us to get details of the behavior detections (from the table `BehaviorInfo`) including enriched information from  "App Governance" about the Entra ID application (formerly known as [OAuth app inventory](https://learn.microsoft.com/en-us/defender-cloud-apps/manage-app-permissions) in MDA). This includes also to getting a list of all delegated or application permissions.*
 
@@ -131,9 +131,9 @@ BehaviorInfo
 
 A custom detection can be created (by using the button named “Create detection rule”) right from the “Advanced hunting” page. This allows us to create an incident when a behavior-based detection is available. OAuth apps are not listed as “Impacted entities” and  the behaviors table cannot be used in Microsoft Sentinel (Microsoft 365 Defender Data Connector is not covering this table). Nevertheless,  custom detection seems is able to add the Entities to the incident.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon6.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon6.png)
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon7.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon7.png)
 
 ### Microsoft Defender 365 App Governance
 
@@ -142,21 +142,21 @@ The add-on feature for Microsoft Defender for Cloud Apps (MDA) is available with
 
 A list of the built-in threat detections including severity, description, TTP mapping and recommended detections are available in the [investigation guide for App Governance](https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-get-started#licensing).
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon8.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon8.png)
 
 *In addition, templates but also custom policies can be configured to create alerts based on self-defined conditions and scopes. For example, detections for increased data usage for application without verified (ISV) publisher.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon9.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon9.png)
 
 *Alert will be generated with the evidence of the related OAuth application in Microsoft 365 Defender.* 
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon10.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon10.png)
 
 *The alert will be forwarded to Microsoft Sentinel as incident (via M365D connector).*
 
 Unfortunately, the entity mapping to the OAuth application is not included. Furthermore, there is no single value in the `SecurityAlert` event which can be used to build a correlation and mapping to the application. However, the description includes the `OAuthAppId` as part of the deep link to the OAuth app summary page in M365D Portal.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon11.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon11.png)
 
 The following KQL query shows how we could extract the `OAuthAppId`from the URL:
 
@@ -179,32 +179,32 @@ SecurityAlert
 
 The result of the query is a list of all App Governance Alerts and the related `App Id`
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon12.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon12.png)
 
 This query can be used to implement a analytics rule to create incidents in Microsoft Sentinel with the mapping of the AppId to the entity type “Cloud Application”:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon13.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon13.png)
 
 ### Entra ID Protection for Workload Identities
 
 Microsoft has introduced “Identity Protection for Workload Identities” as part of Microsoft Entra Workload ID Premium. This offers a couple of [Risk detection](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/concept-workload-identity-risk#workload-identity-risk-detections) which will be considered to calculate the sign-in and risk of workload identities. One of my favorite capabilities are the behavior-based detections for “Suspicious sign-ins” and “Anomalous service principal activity”.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon14.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon14.png)
 
 *The risk detections and details are available from the Entra ID Protection blade.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon15.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon15.png)
 
 *Alerts are also visible in the Microsoft 365 Defender portal but without any assets or evidence details.*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon16.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon16.png)
 
 *Incidents will be created also in Microsoft Sentinel but without any mapping to the “Cloud Application” entity type.*
 *Side note: A few alerts will be only forwarded when “All alerts” are configured (instead of “High-impact alerts only”) which needs to be configured in the [Alert service settings](https://learn.microsoft.com/en-us/microsoft-365/security/defender/investigate-alerts?view=o365-worldwide#configure-microsoft-entra-ip-alert-service).*
 
 Details about the related Service Principal to the risk detection are available in the `SecurityAlert` event entry, as we can see in the following screenshot:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon17.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon17.png)
 
 This allows the correlation to other alerts based on the `AppId`. For example, enrichment of Risk Detections with App Governance alerts of an application.
 
@@ -224,7 +224,7 @@ on $left.AppId == $right.AppId
 
 This query can be used to build an analytic rule with mapping to the “Cloud Application” entity type.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon18.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon18.png)
 
 *Incident entity mapping by using `AppId` for “Cloud Application” entity type.*
 
@@ -234,7 +234,7 @@ This query can be used to build an analytic rule with mapping to the “Cloud Ap
 
 Microsoft has released a [security operations guide](https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications) for Microsoft Entra which also covers  recommendations for applications. This includes what type of activities and events should be monitored and where to find them. Rule templates for Microsoft Sentinel are available for the most named detection use cases and can be found as a link in the document. Nevertheless, you should verify the logic behind the queries and consider customizing them to your environment and requirements. Enrichment can help to reduce noise or implement dynamic severity of incidents based on environment-specific conditions. In the next part of this blog post series, we will have a look on the use case “Changes to application ownership” in combination with enrichment of the included entities.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon19.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon19.png)
 
 *Content Hub Solution “Azure Active Directory” offers many rule templates for Application security monitoring. Keep an eye on the entity mapping of analytics rules. They should include  the entity type “Application” for building correlation to other incidents. As we can see in the “Similar incidents” area of the incident page, correlation to other incidents will be established and increased visibility for multi-stage attacks.*
 
@@ -252,7 +252,7 @@ BehaviorAnalytics
 | project TimeGenerated, ActivityType, ActionType, ActivityInsights, UserPrincipalName, SourceIPAddress, SourceIPLocation, InvestigationPriority
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon20.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon20.png)
 
 *UEBA includes an Investigation Priority Score and insights about the activity. In this case, it is a first-time operation from this user’s location.*
 
@@ -264,7 +264,7 @@ Anomalies
 | project AnomalyTemplateName, RuleName, Description, Tactics, Techniques, AnomalyDetails, AnomalyReasons
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon21.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon21.png)
 
 *Detailed anomaly insights of a user who performed an app role assignment for the very first time.*
 
@@ -272,7 +272,7 @@ Anomalies
 
 Microsoft Sentinel Fusion is also correlating [suspicious sign-in events (detected by Entra ID protection) which leads to rare application consent](https://learn.microsoft.com/en-us/azure/sentinel/fusion-scenario-reference#rare-application-consent-following-suspicious-sign-in) (detected by the associated scheduled analytics rules). A multi-stage attack incident will also be created if entities mapped in combination of this kind of anomalies.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidsecmon22.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-02-entra-workload-id-threat-detection/workloadidsecmon22.png)
 
 *Various incidents from analytics rules with entity mapping of the same IP address and user names matches with an anomaly detection  of Azure operations*
 
