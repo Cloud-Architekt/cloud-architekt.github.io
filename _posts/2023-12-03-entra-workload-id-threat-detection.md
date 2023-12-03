@@ -2,7 +2,7 @@
 title: "Microsoft Entra Workload ID - Threat detection with Microsoft Defender XDR and Sentinel"
 excerpt: "Attack techniques has shown that service principals will be used for initial and persistent access to create a backdoor in Microsoft Entra ID. This has been used, for example as part of the NOBELIUM attack path. Abuse of privileged Workload identities for exfiltration and privilege escalation are just another further steps in such attack scenarios. In this part, we will have a closer look on monitoring workload identities with Identity Threat Detection Response (ITDR) by Microsoft Defender XDR, Microsoft Entra ID Protection and Microsoft Sentinel."
 header:
-  overlay_image: /assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidthreatdetection.png  png
+  overlay_image: /assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidthreatdetection.png
   overlay_filter: rgba(102, 102, 153, 0.85)
   teaser: /assets/images/2023-12-03-entra-workload-id-threat-detection/workloadidthreatdetection.png
 
