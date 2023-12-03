@@ -66,6 +66,8 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 | 2020-09-11  | Geeksprech Podcast          | [Folge 44: Azure AD Security](https://geeksprech.de/geeksprech-podcast-folge-44-azure-ad-security/)
 
 ## Guest on videocasts
+**Trimarc Happy Hour: Talk about Entra ID Security and Workload Identities**
+{% include video id="v%253D0dLthL6gyx8" provider="youtube" %}
 
 **Microsoft Security Insights Show Episode 131: Azure AD Posture Management and privilege escalation from on-prem**
 {% include video id="Z6XmKIu5Xfg" provider="youtube" %}
