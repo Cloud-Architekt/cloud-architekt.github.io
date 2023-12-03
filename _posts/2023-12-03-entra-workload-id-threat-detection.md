@@ -77,7 +77,7 @@ Below you will find a short comparison of the application and managed identity t
 | Security Dependencies | Secure storing of credentials, Protection of App Reg/Service Principal object | Security of Federated Workload/IdP, Protection of App Reg/SP object | Security and restricted management of Azure Resource(s) and SP object |
 | Restrict token acquisition | Conditional Access (Single Tenant only) | Conditional Access (Single Tenant only) | Not Available |
 | Detection for Identity Attacks | Identity Protection, Sign-in logs | Identity Protection, Correlation between Entra ID and Trusted IdP AuthN/AuthZ logs | Limited Sign-in logs |
-Response time to invalid issued token | 1h (Default), Few minutes when CAE is supported | 1h (Default), Few minutes when CAE is supported | [24h (by design)] (https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization), No support for CAE |
+Response time to invalid issued token | 1h (Default), Few minutes when CAE is supported | 1h (Default), Few minutes when CAE is supported | [24h (by design)](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/managed-identity-best-practice-recommendations#limitation-of-using-managed-identities-for-authorization), No support for CAE |
 
 _*Assigned permissions to other tenants via Microsoft Lighthouse delegation_
 
