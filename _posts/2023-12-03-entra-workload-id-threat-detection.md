@@ -20,6 +20,13 @@ tags:
 last_modified_at: 2023-12-03
 ---
 
+This blog post is part of a series about Microsoft Entra Workload ID:
+- [Introduction and Delegated Permissions](https://www.cloud-architekt.net/entra-workload-id-introduction-and-delegation)
+- [Lifecycle Management and Operational Monitoring](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/)
+- [Threat detection with Microsoft Defender XDR and Sentinel](https://www.cloud-architekt.net/entra-workload-id-threat-detection)
+- Advanced Detection and Enrichment (coming soon)
+- Incident Response (coming soon)
+
 ## Overview of techniques and tactics
 
 There are a couple of ways a Workload ID can be used in attack paths. They have become popular for attackers because of weakness in security configuration and monitoring:

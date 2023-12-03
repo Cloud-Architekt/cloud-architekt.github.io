@@ -20,9 +20,11 @@ last_modified_at: 2023-08-03
 ---
 
 This blog post is part of a series about Microsoft Entra Workload ID:
-- Introduction and Delegated Permissions
-- Lifecycle Management and Operational Monitoring
-- Advanced Monitoring and Security
+- [Introduction and Delegated Permissions](https://www.cloud-architekt.net/entra-workload-id-introduction-and-delegation)
+- [Lifecycle Management and Operational Monitoring](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/)
+- [Threat detection with Microsoft Defender XDR and Sentinel](https://www.cloud-architekt.net/entra-workload-id-threat-detection)
+- Advanced Detection and Enrichment (coming soon)
+- Incident Response (coming soon)
 
 ## Introduction of Workload ID
 
@@ -257,6 +259,5 @@ Read and Assign User Assigned Identity
 
 Both roles have the permission to assign a managed identity to another resource. The related Resource Provider and Action namespace is named `Microsoft.ManagedIdentity` and can be also used for creating custom Azure RBAC roles. Other roles with [a wildcard on the action scope](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions#role-definition-example) (such as Owner and Contributor) has also the permissions to modify and assign user-assigned identities.
 
-***Next: Implementing a Lifecycle and Operational Monitoring***
-
-*In the second part of the blog post series, I will describe some aspects which could be included in your strategy to implement a lifecycle monitoring. There are also solutions by Microsoft and the community which helps you to monitor your workload identities. The focus will be set on application identities because of the missing relation to a workload and credential management.*
+## Next: Implementing a Lifecycle and Operational Monitoring***
+In the [second part of the blog post series](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/), I will describe some aspects which could be included in your strategy to implement a lifecycle monitoring. There are also solutions by Microsoft and the community which helps you to monitor your workload identities. The focus will be set on application identities because of the missing relation to a workload and credential management.

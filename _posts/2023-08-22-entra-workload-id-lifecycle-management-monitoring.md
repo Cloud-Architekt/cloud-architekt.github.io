@@ -20,6 +20,13 @@ tags:
 last_modified_at: 2023-08-22
 ---
 
+This blog post is part of a series about Microsoft Entra Workload ID:
+- [Introduction and Delegated Permissions](https://www.cloud-architekt.net/entra-workload-id-introduction-and-delegation)
+- [Lifecycle Management and Operational Monitoring](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/)
+- [Threat detection with Microsoft Defender XDR and Sentinel](https://www.cloud-architekt.net/entra-workload-id-threat-detection)
+- Advanced Detection and Enrichment (coming soon)
+- Incident Response (coming soon)
+
 ## Inventory and initial review of Service Principals
 
 I would recommend having a initial review for full visibility and insights of the service principals which has been already created, especially in an environment without an establish lifecycle workflow or governance framework.
@@ -453,6 +460,5 @@ Entra ID offers an option to recover supported objects within a 30-day time wind
 | Delegation and Ownership | Application/Enterprise App Owner Entra ID Role (Directory, Object) | Application/Enterprise App Owner, Entra ID Role (Directory, Object) | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner | Enterprise App Owner, Entra ID Role, Azure RBAC Role/Resource Owner |
 | Recovery Options | Soft Deletion | Soft Deletion | N/A | N/A |
 
-*Next part of the blog series: Advanced Monitoring and Security*
-
-*I’ve already mentioned in this part of the blog post series some Microsoft Security but also community tools for monitoring. In the next part we will go into details about using the capabilities of this solutions for detection and response of workload identities. Estimated publication date date is around end of September/Early October.*
+## Next: Threat detection with Microsoft Defender XDR and Sentinel
+I’ve already mentioned some Microsoft Security but also community tools for monitoring in this article. In the [next part of the blog post series](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/) we will go into details about using the capabilities of this solutions for detection and response of workload identities.
