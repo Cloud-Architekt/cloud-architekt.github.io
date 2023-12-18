@@ -23,7 +23,7 @@ This blog post is part of a series about Microsoft Entra Workload ID:
 - [Introduction and Delegated Permissions](https://www.cloud-architekt.net/entra-workload-id-introduction-and-delegation)
 - [Lifecycle Management and Operational Monitoring](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/)
 - [Threat detection with Microsoft Defender XDR and Sentinel](https://www.cloud-architekt.net/entra-workload-id-threat-detection)
-- Advanced Detection and Enrichment (coming soon)
+- [Advanced Detection and Enrichment in Microsoft Sentinel](https://www.cloud-architekt.net/entra-workload-id-advanced-detection-enrichment)
 - Incident Response (coming soon)
 
 ## Introduction of Workload ID
