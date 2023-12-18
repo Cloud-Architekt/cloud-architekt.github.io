@@ -166,13 +166,15 @@ I’ve used some code from my EntraOps PoC project to gather various details abo
 
 I’ve [published a definition of the Enterprise Access Model](https://github.com/Cloud-Architekt/AzurePrivilegedIAM) to classify and identify resources in Microsoft Entra ID. This classification model is part of my PoC project "EntraOps" and shared as community-driven project. Julian Hayward has implemented the EntraOps classification to [AzAdvertizer](https://www.azadvertizer.net/azEntraIdAPIpermissionsAdvertizer.html) and will be also available out-of-the-box in a future release of [AzADSPI](https://github.com/JulianHayward/AzADServicePrincipalInsights).
 
-The classification files can be also used in KQL for enrichment and allows to identify App Roles and Directory Role assignment in relation to the definition of "Control Plane" privileges.
 
+The classification files can be also used in KQL for enrichment and allows to identify App Roles and Directory Role assignment in relation to the definition of "Control Plane" privileges.
 Therefore, I’ve created Microsoft Sentinel functions for AzADSPI and WorkloadIdentityInfo which allows to apply the classification (as external data from the JSON file on the GitHub project) by executing the KQL query.
 
-- Function **"PrivilegedAzADSPI" for "AzADSPI" (Custom Table)**
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect25.png){: width="80%" }
+
+🔗 Function **"PrivilegedAzADSPI" for "AzADSPI" (Custom Table)**
 [AzureSentinel/Functions/AzADSPI_EnrichedByEntraOps.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/AzADSPI_EnrichedByEntraOps.yaml)
-- Function **"PrivilegedWorkloadIdentity" for "WorkloadIdentityInfo" (WatchList)**
+🔗 Function **"PrivilegedWorkloadIdentity" for "WorkloadIdentityInfo" (WatchList)**
 [AzureSentinel/Functions/PrivilegedIdentityInfo.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/PrivilegedWorkloadIdentityInfo.yaml)
 
 ### Classification of App Owner or Delegated Role Member
@@ -198,7 +200,9 @@ SensitiveUsers
 
 In addition, I’ve created just another function which allows you to get a combined list of all identities (human and workload identities) which are available from the `IdentityInfo` and the custom solution `WorkloadIdentityInfo` . This includes also the classification enrichment.
 
-- Function "**UnifiedIdentityInfo**" for WatchList "WorkloadIdentityInfo" and UEBA table "IdentityInfo"
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect26.png){: width="80%" }
+
+🔗 Function "**UnifiedIdentityInfo**" for WatchList "WorkloadIdentityInfo" and UEBA table "IdentityInfo"
 [AzureSentinel/Functions/UnifiedIdentityInfo.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/UnifiedIdentityInfo.yaml)
 
 ### **List of privileged assignments outside of Custom Table or WatchList**
@@ -207,7 +211,7 @@ Sometimes it’s required to get a list of the recent added privileged assignmen
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect11.png)
 
-- Function "**RecentAddedPrivileges"** to get latest MS Graph API and Entra ID role assignments from Audit Logs:
+🔗 Function "**RecentAddedPrivileges"** to get latest MS Graph API and Entra ID role assignments from Audit Logs:
 [AzureSentinel/Functions/RecentAddedPrivileges.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/RecentAddedPrivileges.yaml)
 
 ## Enriched Incidents from Microsoft Security products
