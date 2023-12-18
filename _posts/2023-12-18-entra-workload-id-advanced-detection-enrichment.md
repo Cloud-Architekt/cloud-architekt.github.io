@@ -55,7 +55,7 @@ Those single configuration steps are well documented in Microsoft Learn. Therefo
 1. [Create data collection endpoint](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#create-data-collection-endpoint)
 In my example, I’m using the same subscription as Microsoft Sentinel for creating a data collection endpoint and rule. Make sure that Data Collection Endpoint and Rule are created in the same but in a dedicated resource group.
 
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect2.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect2.png){: width="70%" }
 
 2. [Create new table in Log Analytics workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/tutorial-logs-ingestion-portal#create-new-table-in-log-analytics-workspace)
 
@@ -129,8 +129,8 @@ I’ve used some code from my EntraOps PoC project to gather various details abo
     - Microsoft.SecurityInsights/Watchlists/delete
 4. Add the SentinelEnrichment PowerShell Module by using the [import function from the PowerShell Gallery](https://learn.microsoft.com/en-us/azure/automation/shared-resources/modules#import-modules-from-the-powershell-gallery). Choose PowerShell 7.2 as runtime environment.
 
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect23.png)
-        ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect24.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect23.png){: width="70%" }
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect24.png)
 
 5. Verify that the module "SentinelEnrichment" has been successfully imported as module.
 
@@ -224,7 +224,7 @@ Leaked credentials of Workload Identity has been detected by Entra ID Protection
 
 Below you’ll see the differences between the original incident on the left side and the enriched incident details (including privileged classification and entity details) from my custom analytics rules on the right side.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect12.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect12.png){: width="75%" }
 
 You will find the analytics rule templates on my repository:
 🧪 [**Workload ID Protection Alerts with Enriched Information**](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/EID-WorkloadIdentities/Workload%20ID%20Protection%20Alerts%20with%20Enriched%20Information.yaml)
