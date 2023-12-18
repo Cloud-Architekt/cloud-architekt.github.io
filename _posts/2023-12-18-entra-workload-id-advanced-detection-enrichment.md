@@ -129,7 +129,7 @@ I’ve used some code from my EntraOps PoC project to gather various details abo
     - Microsoft.SecurityInsights/Watchlists/delete
 4. Add the SentinelEnrichment PowerShell Module by using the [import function from the PowerShell Gallery](https://learn.microsoft.com/en-us/azure/automation/shared-resources/modules#import-modules-from-the-powershell-gallery). Choose PowerShell 7.2 as runtime environment.
 
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect23.png){: width="70%" }
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect23.png){: width="90%" }
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect24.png)
 
 5. Verify that the module "SentinelEnrichment" has been successfully imported as module.
@@ -200,7 +200,7 @@ SensitiveUsers
 
 In addition, I’ve created just another function which allows you to get a combined list of all identities (human and workload identities) which are available from the `IdentityInfo` and the custom solution `WorkloadIdentityInfo` . This includes also the classification enrichment.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect26.png){: width="80%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect26.png)
 
 🔗 Function "**UnifiedIdentityInfo**" for WatchList "WorkloadIdentityInfo" and UEBA table "IdentityInfo"
 [AzureSentinel/Functions/UnifiedIdentityInfo.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/UnifiedIdentityInfo.yaml)
@@ -224,7 +224,7 @@ Leaked credentials of Workload Identity has been detected by Entra ID Protection
 
 Below you’ll see the differences between the original incident on the left side and the enriched incident details (including privileged classification and entity details) from my custom analytics rules on the right side.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect12.png){: width="75%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect12.png)
 
 You will find the analytics rule templates on my repository:
 🧪 [**Workload ID Protection Alerts with Enriched Information**](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Detections/EID-WorkloadIdentities/Workload%20ID%20Protection%20Alerts%20with%20Enriched%20Information.yaml)
@@ -248,7 +248,7 @@ You will find the analytics rule templates on my repository:
 
 Microsoft Defender XDR includes a few [anomaly detection policies](https://learn.microsoft.com/en-us/defender-cloud-apps/anomaly-detection-policy#anomaly-detection-policies) for OAuth apps (e.g., [Unusual ISP for an OAuth App](https://learn.microsoft.com/en-us/defender-cloud-apps/anomaly-detection-policy#unusual-isp-for-an-oauth-app)). We are using just another analytics rules to use the entry from the `SecurityAlert` to create an enriched incident.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect15.png){: width="75%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect15.png){: width="70%" }
 
 The previous named templates can be found here:
 
@@ -373,7 +373,7 @@ Replay of tokens from unsecured DevOps or other workload environments has been o
 
 Dynamic severity can be set on conditions if the IP address is suspicious or is coming from unfamiliar IP service tags/location. In this sample, the severity is increased to high if it’s outside of Azure.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect22.png){: width="55%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect22.png){: width="45%" }
 
 The analytic rule logic is available for Azure Resource Manager and Microsoft Graph here:
 
