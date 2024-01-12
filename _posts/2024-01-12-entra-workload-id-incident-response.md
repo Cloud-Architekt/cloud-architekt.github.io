@@ -80,11 +80,11 @@ A similar playbook can be also created to execute the following Graph API call t
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir5.png)
 
-But this Graph API call requires to assign `Application.ReadWrite.All` application permissions to the Managed Identity of the playbook which is a highly sensitive permissions (includes credential management for every workload identity). Therefore, I’ve created a custom directory role which includes only the required action `[microsoft.directory/servicePrincipals/disable](http://microsoft.directory/servicePrincipals/disable)`. This custom role “Workload Identity Security Responder” can be also granted to particular service principals instead of assigning to directory-level.
+But this Graph API call requires to assign `Application.ReadWrite.All` application permissions to the Managed Identity of the playbook which is a highly sensitive permissions (includes credential management for every workload identity). Therefore, I’ve created a custom directory role which includes the required action [`microsoft.directory/servicePrincipals/disable`](http://microsoft.directory/servicePrincipals/disable), alongside of some read permissions on Application and Service Principal object. This custom role “Workload Identity Security Responder” can be also granted to particular service principals instead of assigning to directory-level.
 
 ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir6.png)
 
-Don’t forget to include also the permission `[microsoft.directory/servicePrincipals/enable](http://microsoft.directory/servicePrincipals/disable)` for creating also playbook if the service principal should be re-enabled.
+Don’t forget to create also playbook if the service principal should be re-enabled as result after the security issue has been mitigated.
 
 The playbook to disable a service principal can be deployed by using this ARM Template:
 
