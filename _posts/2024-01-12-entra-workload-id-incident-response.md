@@ -48,11 +48,11 @@ First, we need to make sure that the `ObjectId` of the Service Principal is avai
 
 Unfortunately, the Application Id was also not available in the Outputs of the Incident Playbook Trigger during my tests:
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir1.png){: width="40%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir1.png){: width="70%" }
 
 Therefore, I’ve decided to implement the following logic to get the custom alert details from each alert after the Sentinel Incident has been triggered. We have used this option before to enrich the alert with details from the `WorkloadIdentityInfo`.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir2.png){: width="40%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir2.png){: width="70%" }
 
 Next, the `ServicePrincipalId` from the “Custom Alert Details” will check whether the value is not empty. Additional “Custom Alert” fields can be also used in the condition, for example if the enriched information shows the application for `PrivilegedAccess` or as `IsFirstPartyApp` . This allows you to run the playbook on a particular scope only.
 
@@ -118,7 +118,7 @@ The sample application and the resource (Graph API) are supporting CAE.
 
 This is also visible from the Sign-in logs of Entra ID but seems not included in the `AADServicePrincipalSignInLogs` in Microsoft Sentinel. 
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir9.png){: width="30%" }
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-01-12-entra-workload-id-incident-response/workloadidautoir9.png){: width="50%" }
 
 The sample application uses a service principal which has been confirmed as compromised by the previously described Sentinel Playbook which raised the risk level to “high”. As we can see in the following `AADRiskyServicePrincipals` logs, the risk has been set on 2:22 PM (UTC+1).
 
