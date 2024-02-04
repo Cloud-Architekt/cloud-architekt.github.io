@@ -14,6 +14,8 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
+| 2024-02-01  | Cloud Technology Town Hall Tallinn | Demystify Entra Workload Identities | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2024-02-01%20CTTT%20-%20Demystify-Entra-Workload-Identities.pdf) |  |
+| 2024-02-01  | Cloud Technology Town Hall Tallinn | EntraOps: Deploying and Managing Conditional Access at Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2024-02-01%20CTTT%20-%20EntraOps-Deploying-Managing-CA-at-Scale.pdf) |  |
 | 2023-09-20  | The Experts Conference 2023 | Protecting Privileged User and Workload Identities in Microsoft Entra | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-09-20%20TEC-Protecting-Privileged-User-Workload-Identities-in-Microsoft%20-Entra.pdf) | |
 | 2023-06-29  | Azure Meetup Bonn | What's new in Microsoft Entra? (Q2/2023) | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-06-29%20AzureBonn-Microsoft-Entra-News.pdf) | |
 | 2023-06-20  | Experts Live Germany | Absicherung und Management von Microsoft Entra Workload Identities | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2023-06-20%20Experts%20Live%20DE%20-%20Absicherung-Management-Workload-Identities.pdf) | |
