@@ -137,7 +137,7 @@ GEM
       commonmarker (~> 0.22)
     jekyll-commonmark-ghpages (0.4.0)
       commonmarker (~> 0.23.7)
-      jekyll (~> 3.9.0)
+      jekyll (= 3.9.0)
       jekyll-commonmark (~> 1.4.0)
       rouge (>= 2.0, < 5.0)
     jekyll-default-layout (0.1.4)
