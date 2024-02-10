@@ -73,10 +73,12 @@ Use the pre-created Service Principal or Managed Identity (with Federated Creden
 ### **Implement Pipeline to ingest data to Microsoft Sentinel**
 
 1. Next, go back to the workflow file "AzADServicePrincipalInsights_OIDC.yaml" for changing variable of `IngestToLogAnalytics` to `true` and editing the following variables with the corresponding values of your environment:
+    - `ManagementGroupId`
     - `DataCollectionRuleSubscriptionId`
     - `DataCollectionRuleResourceGroup`
     - `DataCollectionRuleName`
-    - `LogAnalyticsCustomLogTableName` (e.g., AzADServicePrincipalInsights_CL.)
+    - `LogAnalyticsCustomLogTableName` (e.g., AzADServicePrincipalInsights_CL)
+    - `ThrottleLimitMonitor` (default value can be keep as it is) 
 
         ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect4.png)
 
