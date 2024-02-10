@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 
 # Temporary down grade to GitHub pages version 228
-gem "github-pages", "=228", group: :jekyll_plugins
-gem 'jekyll', '3.9.3'
+gem "github-pages", group: :jekyll_plugins
 
 gem "tzinfo-data"
 gem "wdm", "~> 0.1.0" if Gem.win_platform?
