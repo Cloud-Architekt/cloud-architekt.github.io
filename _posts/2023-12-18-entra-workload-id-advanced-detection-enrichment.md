@@ -32,9 +32,11 @@ This blog post is part of a series about Microsoft Entra Workload ID:
 
 In the first part of the blog post, I’ve already described "[AzADServicePrincipalInsights](https://github.com/JulianHayward/AzADServicePrincipalInsights)" (AzADSPI) from [Julian Hayward](https://github.com/JulianHayward). The tool allows to collect richfull insights and tracking changes of Workload Identities and export them as JSON in a repository. But we can use also the data to ingest them to Microsoft Sentinel for enrichment. Therefore, I’ve created a pipeline which ingest the data to a Microsoft Sentinel Workspace by using PowerShell scripts.
 
+_[**Update 2024-02-10**]: Option to ingest data to Log Analytics has been integrated to AzADSPI. Julian has also improved my previous script logic and has become part of the solution. I've updated the instruction to use the original repository instead of my forked version._
+
 ### Executing AzADServicePrincipalInsights in your GitHub repo
 
-1. First of all, create a private project/repository with the name "AzADServicePrincipalInsights" in GitHub and clone the forked version of AzADSPI from my repository [Cloud-Architekt/AzADServicePrincipalInsights](https://github.com/Cloud-Architekt/AzADServicePrincipalInsights). This repository includes the PowerShell script and workflow extensions to ingest the output to Microsoft Sentinel.
+1. First of all, create a private project/repository with the name "AzADServicePrincipalInsights" in GitHub and clone the forked version of AzADSPI from the repository [JulianHayward/AzADServicePrincipalInsights](https://github.com/JulianHayward/AzADServicePrincipalInsights). This repository includes also the PowerShell script and workflow extensions to ingest the output to Microsoft Sentinel.
 2. Create an app registration and add the [required permission](https://github.com/JulianHayward/AzADServicePrincipalInsights/tree/main#permissions) as Application Permission and Azure RBAC assignment. You can also create a user-assigned managed identity but in that case the Graph API permissions needs to be configured by API or PowerShell.
 
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect0.png)
@@ -71,14 +73,15 @@ Use the pre-created Service Principal or Managed Identity (with Federated Creden
 ### **Implement Pipeline to ingest data to Microsoft Sentinel**
 
 1. Next, go back to the workflow file "AzADServicePrincipalInsights_OIDC.yaml" for changing variable of `IngestToLogAnalytics` to `true` and editing the following variables with the corresponding values of your environment:
-    - `DataCollectionEndpointName`
-    - `DataCollectionResourceGroup`
-    - `DataCollectionSubscriptionId`
+    - `DataCollectionRuleSubscriptionId`
+    - `DataCollectionRuleResourceGroup`
+    - `DataCollectionRuleName`
+    - `LogAnalyticsCustomLogTableName` (e.g., AzADServicePrincipalInsights_CL.)
 
         ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect4.png)
 
-2. Copy the PowerShell Script "[AzADSPI_DataCollectionIngest.ps1](https://github.com/Cloud-Architekt/AzurePrivilegedIAM/blob/WiBlogPost/Scripts/AzADSPI/AzADSPI_DataCollectionIngest.ps1)" from my repository to the "pwsh" folder of the repository.
-3. Run the workflow and wait for 10-15 minutes to verify if the data has been successfully ingested. Check if any event entry exists on table `AzADServicePrincipalInsights_CL.`
+2. The logic for ingest the data to Log Analytics is defined in the PowerShell script "AzADSPI/AzADSPI_DataCollectionIngest.ps1" in the folder "pwsh". There's no further customizing needed by default.
+3. Run the workflow and wait for 10-15 minutes to verify if the data has been successfully ingested. Check if any event entry exists on the defined table name (e.g. `AzADServicePrincipalInsights_CL`).
 4. I’ve created a template for a KQL function with the name "AzADSPI" which will standardize the column names to my defined and preferred schema. This also supports me in sharing the same KQL query logic across other data sources that I’m using in my examples and detection queries. Follow the steps from Microsoft Learn article to [create and use functions in Microsoft Sentinel.](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/functions#use-a-function)
 
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect5.png)
