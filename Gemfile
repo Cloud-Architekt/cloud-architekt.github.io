@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-# Temporary down grade to GitHub pages version 228
 gem "github-pages", group: :jekyll_plugins
 
 gem "tzinfo-data"
