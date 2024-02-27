@@ -95,7 +95,7 @@ Together with my colleague [Fabian Bader](https://www.notion.so/Microsoft-Entra-
 
 We have published a PowerShell module named "[SentinelEnrichment](https://www.powershellgallery.com/packages/SentinelEnrichment)" which automates the process to create and update the WatchList. This module can be executed in a GitHub action workflow, Automation Account, Azure Function or any other environment which supports PowerShell.
 
-I’ve used some code from my EntraOps PoC project to gather various details about Workload Identities. The cmdlet can be found here and will provide the content for the WatchList which we like to upload in the following automation job. In this example, I will use an automation account for collecting the data and upload the WatchList to Sentinel.
+I’ve used some code from my EntraOps PoC project to gather various details about Workload Identities. The script can be found [here](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Scripts/WorkloadIdentityInfo.ps1) and will provide the content for the WatchList which we like to upload in the following automation job. In this example, I will use an automation account for collecting the data and upload the WatchList to Sentinel.
 
 *Side Note: This solution offers a different set of information compared to the AzADSPI. Some details such as Azure RBAC assignments or Delegated API Permissions are not part of the WatchList. The size of a row is limited and therefore just a subset can be provided in a single WatchList.*
 
@@ -155,7 +155,7 @@ I’ve used some code from my EntraOps PoC project to gather various details abo
 
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect8.png){: width="75%" }
 
-3. Copy the content of the script from my repository and past them into the runbook:
+3. Copy the content of the [script from my repository](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Scripts/WorkloadIdentityInfo.ps1) and past them into the runbook:
 
     ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2023-12-18-workload-id-advanced-detection-enrichment/workloadidadvdetect9.png)
 
