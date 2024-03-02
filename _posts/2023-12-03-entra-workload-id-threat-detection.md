@@ -25,7 +25,7 @@ This blog post is part of a series about Microsoft Entra Workload ID:
 - [Lifecycle Management and Operational Monitoring](https://www.cloud-architekt.net/entra-workload-id-lifecycle-management-monitoring/)
 - [Threat detection with Microsoft Defender XDR and Sentinel](https://www.cloud-architekt.net/entra-workload-id-threat-detection)
 - [Advanced Detection and Enrichment in Microsoft Sentinel](https://www.cloud-architekt.net/entra-workload-id-advanced-detection-enrichment)
-- Incident Response (coming soon)
+- [Incident Response](https://www.cloud-architekt.net/entra-workload-id-incident-response/)
 
 ## Overview of techniques and tactics
 
