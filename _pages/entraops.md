@@ -25,11 +25,11 @@ feature_row2:
     btn_label: "Classification templates"
     btn_class: "btn--primary"
 feature_row3:
-  - image_path: /assets/images/entraops/setup_2-cpupdate.png
+  - image_path: /assets/images/entraops/setup_2-cpupdate.gif
     title: "Automatic update on Control Plane resources and scope"
     excerpt: 'An optional feature allows you to collect data from other sources to identify high-privileged assets. For example, using classification of critical assets in Microsoft Security Exposure Management. The scope of the privileged principals with access to those assets will be identified as Control Plane and therefore any delegation in Microsoft Entra to manage them. This allows to identify critical scoped role assignments on Groups, Service Principals or Administrative Units.'
     url: "https://github.com/Cloud-Architekt/EntraOps?tab=readme-ov-file#entraops-integration-in-microsoft-sentinel"
-    btn_label: "Setup Integration to Microsoft Sentinel"
+    btn_label: "Details of Control Plane scope update"
     btn_class: "btn--primary"
 feature_row4:
   - image_path: /assets/images/entraops/4-visualize.png
