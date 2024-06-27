@@ -1,17 +1,19 @@
 main:
   - title: "About"
-    url: /about/  
+    url: /about/
   - title: "Blog"
     url: /blog/
   - title: "Categories"
     url: /categories/
+  - title: "EntraOps"
+    url: /entraops/
   - title: "Speaking"
     url: /speaking/
   - title: "Publications"
-    url: /publications/    
+    url: /publications/
   - title: "Links"
-    url: /links/      
+    url: /links/
   - title: "Disclosure"
     url: /disclosure/
   - title: "Privacy"
-    url: /privacy/                
+    url: /privacy/
