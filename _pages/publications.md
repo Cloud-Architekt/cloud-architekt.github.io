@@ -66,6 +66,9 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 | 2020-09-11  | Geeksprech Podcast          | [Folge 44: Azure AD Security](https://geeksprech.de/geeksprech-podcast-folge-44-azure-ad-security/)
 
 ## Guest on videocasts
+**SpecterOps Webinar: Defining the Undefined: What is Tier Zero Part III**
+{% include video id="ykrse1rsvy4" provider="youtube" %}
+
 **Trimarc Happy Hour: Talk about Entra ID Security and Workload Identities**
 {% include video id="v%253D0dLthL6gyx8" provider="youtube" %}
 
