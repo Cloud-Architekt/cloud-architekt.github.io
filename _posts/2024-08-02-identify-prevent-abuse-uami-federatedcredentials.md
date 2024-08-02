@@ -1,5 +1,5 @@
 ---
-title: "Identify and prevent abuse of  Managed Identities with Federated Credentials from unauthorized entities"
+title: "Identify and prevent abuse of Managed Identities with Federated Credentials from unauthorized entities"
 excerpt: "In this article, I would like to point out options to identify, monitor and avoid persistent access on Managed Identities privileges by adding federated credentials on User-Assigned Managed Identities (UAMI) from malicious or unauthorized entities. We will also have a quick look at attack paths and privileges which should be considered."
 header:
   overlay_image: /assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds1.png
@@ -47,7 +47,7 @@ _Comparison of using Federated Credentials by App Registrations or UAMI_
 ² requires Workload ID Premium
 
 
-# Required privileges and attack scenarios
+## Required privileges and attack scenarios
 
 As already described, privileges in Azure RBAC are required to add, update and remove the federated credentials on a UAMI. The resource actions `Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials/write` must be included in a built-in or custom role to be authorized for the associated operations.
 
@@ -74,7 +74,7 @@ In my recent community talks about Azure Governance and Workload Identities, I�
 
 **2) Compromising any security principal with access** to a managed identity. This can also include a CSP provider which has access to a subscription by Azure Lighthouse. Initial attack by phishing on developers with privileged access or compromised CI/CD are just a few other scenarios that seems certainly possible. In the past, this attack scenario has already existed and allows to gain access tokens from a Managed Identity. However, it was required to also gain workload access to the associated resource (e.g., Virtual Machine or Azure Function). A trust relationship was established between resources which exist within your Azure and your tenant boundary. By adding federated credential to any UAMI, it seems to be easier to add a kind of “backdoor” because of underrated impact of privileges and uncovered auditing and/or monitoring of this sensitive resources. Other sign-in activities or operations to the trusted entity of the federated credential could also be outside of your control and monitoring. Most of the trusted (external) entities (e.g., GitHub or any other 3rd Party IdP) are managed outside of the tenant boundary and may not be covered or visible by security operations.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%201.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds1.png)
 
 *Overview of attack paths to gain access to UAMI for adding or modify federated credentials*
 
@@ -82,9 +82,9 @@ Dirk-jan Mollema has written an [excellent blog post](https://dirkjanm.io/persis
 
 - [Persisting on Entra ID applications and User Managed Identities with Federated Credentials - dirkjanm.io](https://dirkjanm.io/persisting-with-federated-credentials-entra-apps-managed-identities/)
 
-# Analysis of existing UAMI with federated credentials
+## Analysis of existing UAMI with federated credentials
 
-## Creating inventory and detailed report
+### Creating inventory and detailed report
 
 There are a couple of ways to identify managed identities by building custom reports or queries.
 However, various request to Azure Resource Manager (ARM) or Azure Resource Graph API but also Microsoft Graph API are needed to get a full visibility of a user-assigned managed identity and their relation to federated credentials but also assigned privileges.
@@ -97,11 +97,11 @@ In my opinion, the most comprehensive solution offers the free community tool [A
 - Entra ID role assignment
 - Ownership to objects
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%202.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds2.png)
 
 *Detailed reporting of Federated Credentials by using AzADServicePrincipalInsights*
 
-## Ingest report data to Microsoft Sentinel/Log Analytics for enrichment and hunting
+### Ingest report data to Microsoft Sentinel/Log Analytics for enrichment and hunting
 
 I have implemented together with Julian also the capability to ingest the data to a custom table in Microsoft Sentinel. The required steps are described in my previous blog post about [Advanced Detections and Enrichment in Microsoft Sentinel](https://www.cloud-architekt.net/entra-workload-id-advanced-detection-enrichment/#integration-of-azadserviceprincipalinsights-as-custom-table) for Workload IDs.
 
@@ -117,7 +117,7 @@ AzADServicePrincipalInsights_CL
 | project ObjectId, SP[0].SPDisplayName, SPOwnedObjects, SPAADRoleAssignments, SPAppRoleAssignments, SPAppRoleAssignedTo, SPAzureRoleAssignments, ManagedIdentityFederatedIdentityCredentials
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%203.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds3.png)
 
 **Example 2: Get all UAMI Federated Credentials with access to Application Permissions, Azure or Entra ID Roles**
 
@@ -130,7 +130,7 @@ AzADServicePrincipalInsights_CL
 | project ObjectId, SP[0].SPDisplayName, SPOwnedObjects, SPAADRoleAssignments, SPAppRoleAssignments, SPAppRoleAssignedTo, SPAzureRoleAssignments, ManagedIdentityFederatedIdentityCredentials
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%204.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds4.png)
 
 **Example 3: Filtering critical Entra ID roles which are granted to UAMI with Federated Credentials**
 
@@ -145,18 +145,18 @@ AzADServicePrincipalInsights_CL
 | project SPAADRoleAssignments.roleDefinitionName, SPAADRoleAssignments.resourceScope, SPAADRoleAssignments.roleDefinitionDescription, SP = SP_0_SPDisplayName, ManagedIdentityFederatedIdentityCredentials.name, ManagedIdentityFederatedIdentityCredentials.id
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%205.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds5.png)
 
-## Auditing by built-in Azure Policy
+### Auditing by built-in Azure Policy
 
 You can also audit issued federated credentials by using a built-in Azure Policy set (in preview) with the name “Managed Identity Federated Credentials should be of approved types from approved federation sources”. This allows you to integrate natively the results as part of the security recommendations for your Azure environment. It provides you with a simple view on federated credentials which have been configured outside of “allowlisted” and trusted federated provider.
 I will explain how to use this policy for prevention later in this article.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%206.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds6.png)
 
 *Policy compliance with list of issued federated credentials and check on allowed issuer types*
 
-# Detection on authorized actors
+## Detection on authorized actors
 
 Operations to add federated credentials will be audited in the `AzureActivity` (Microsoft Sentinel/Diagnostic Logs), `CloudAppEvents` and `CloudAuditEvents` (both available in Microsoft Defender XDR). It seems there are no details included of the federated credentials (such as issuer, entity type or subject). Therefore, only related information about the actor which creates the federated credential can be used for alerting by default. In addition, enrichment or hunting could be used to identify if the trust relationship has been established to an unauthorized or malicious entity. This can be achieved by using a playbook to enrich data from Azure Resource Graph about the Managed Identity or include a query to (fresh updated) AzADSPI exported data.
 
@@ -166,25 +166,25 @@ The following analytics rule template is written for Microsoft Sentinel and offe
 
 The parameters will be defined in the query but can also be outsourced to a WatchList for better management of the allow list. A similar query can also be written for Microsoft Defender XDR because of the availability of audit events in the table of `CloudAppEvents` and `CloudAuditEvents`.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%207.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds7.png)
 
 *The result of the analytics rule in Microsoft Sentinel can be triggered in the following incident*
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%208.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds8.png)
 
 *Entity type “Azure Resource” shows the `federatedIdentityCredentials`  and allows to use a deep link to navigate to the resource page with essential properties.*
 
-# Detection of suspicious sign-ins by federated credentials
+## Detection of suspicious sign-ins by federated credentials
 
 Sign-in by using App Registrations with federated credentials will be audited in `AADServicePrincipalSignInLogs` and includes an ID for the federated credential ("FederatedCredentialId”). This allows us to get easily a list of all sign-ins by using federated credentials including the associated IP Address.
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%209.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds9.png)
 
 I was not able to find any similar property in the `AADManagedIdentitySignInLogs`.
 In general, the IP Address is also missing in the sign-in logs for Managed Identities.
 So in this case, we have only limited capabilities to write detections or start hunting on suspicious sign-ins for using federated credentials on UAMI.
 
-# Hunting of activities by compromised UAMI
+## Hunting of activities by compromised UAMI
 
 As already mentioned, access tokens of UAMI have a lifetime up to 24h. Removing federated credentials has not revoked issued tokens (for example, as trigger of CAE). It seems that CAE does not support Managed Identities as documented in [Microsoft Learn](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation-workload). The actor can still be used within the long-lived token even if a malicious federated credential has been  removed. However, you can use `UniqiueTokenIdentifier` from AADManagedIdentitySignInLogs to track the activities by valid tokens in other logs (e.g., AzureActivity).
 
@@ -196,11 +196,11 @@ AADManagedIdentitySignInLogs
 ) on UniqueTokenIdentifier
 ```
 
-![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%2010.png)
+![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds10.png)
 
 *Hunting of  activities by issued (long-lived) token by compromised UAMI*
 
-# Prevention by Azure Policies and Governance
+## Prevention by Azure Policies and Governance
 
 There are a few actions and steps that should be considered to avoid unauthorized trust relationships or usage of federated credentials
 
@@ -212,15 +212,15 @@ Microsoft already described in the “[considerations](https://learn.microsoft.c
 A [built-in Azure policy set](https://www.azadvertizer.net/azpolicyinitiativesadvertizer/5e4ee281-95a3-442a-bb2a-5ef68cf5181a.html) is available which allows us to provide a list of allowed issuers and deny any other assignments outside of these exceptions. I would recommend using this policy which allows fine-granted control of trusted issuer and federation provider types. This should also be a preferred option over the previously mentioned (simplified) policy to block any federated credential. This policy should also be run in “audit” to check compliance of already existing issued federated and discover usage of federated identity providers before enforcing “deny”.
 Enforcement of deny will only apply to any new or changed configuration of federated credentials. It will not block usage of existing credentials.
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%2011.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds11.png)
     
     *Configuration of parameters on built-in initiative “[Preview]: Managed Identity Federated Credentials should be of approved types from approved federation sources”*
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%2012.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds12.png)
     
     *Side Note: I was not able to configure the policy with the default provided parameters. The error message “Could not find a version of the policy set definition” appears which can be fixed by selecting the version and enable option “Include preview versions”.*
     
-    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds%2013.png)
+    ![Untitled]({{ site.url }}{{ site.baseurl }}/assets/images/2024-08-02-identify-prevent-abuse-uami-federatedcredentials/UamiFedCreds13.png)
     
     *“Deny” effect of Azure Policy will block adding federated credential outside of allow list by any operation to Azure Resource Manager API*
     
@@ -229,6 +229,6 @@ As already described, [AzADSPI](https://github.com/JulianHayward/AzADServicePrin
 - **Isolate critical user assigned identities from Landing Zones**
 Sensitive UAMIs should not be placed to a regular subscription. For example, UAMIs which are assigned to Azure Policies with sensitive permissions should be created and managed in a “Platform” Management Group with highly restricted access. Creating a “deny” role assignment by [Deployment Stacks on Managed Resources](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks?tabs=azure-powershell#protect-managed-resources) could also be an approach to block inheritance permissions.
 
-# Summary
+## Summary
 
 Independent of the previous remarks, Federated Credentials are a great and secure way to provide access to Entra ID-protected resources by trusting (authorized) workloads and 3rd party IdPs. They provide benefits over other authentication methods by reduced risks of leaked credentials, certificates expiring or maintenance. In addition, it allows to establish a kind of correlation of relationship between workload and identity. However, it should be considered, who can add the trust relationship and what is a valid and trustworthy relationship. Your governance, workload identity lifecycle processes and security policies should not only cover App Registration in Microsoft Entra ID. It is necessary to extend the view and take care of the identity resources in Microsoft Azure as well. Microsoft already provides built-in methods to identify and take control of Federated Credentials which avoids establishing access from malicious actors outside your (tenant) trust boundary. Additional efforts should be made to enrich data in your SOC for visibility of federated credentials and relation to trusted (federated) entities and subjects.
