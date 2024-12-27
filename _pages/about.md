@@ -21,7 +21,7 @@ I am pleased to be a active part of the Azure community and speak at meetups and
 You'll find also an overview about my sessions (including slides) and engagements on this blog.<br>
 I'm also part of the "Azure Meetup Bonn" and "Cloud Identity Summit" organization team.
 
-In 2020 I was awarded as "Most Valuable Professional" (MVP) in the category "Azure" for my community contributions by Microsoft.<br>
+In 2020 I was awarded as "Most Valuable Professional" (MVP) for my community contributions by Microsoft.<br>
 I was also recognized with the "Most Valuable Mentor" by Microsoft in October 2020.<br>
 This is my personal blog. Opinions are my own and possibly not the views of my employer.<br><br>	
 <span style="color:silver;font-style:italic;font-size:small">Photo by [Jonathan Grillenmeier](https://jonaphotography.de/)</span>
