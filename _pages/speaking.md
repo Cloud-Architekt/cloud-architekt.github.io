@@ -14,6 +14,9 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
+| 2025-02-06  | MC2MC Connect |  Mac-nificent - How Platform SSO empowers security and usability | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-02-07%20MC2MC%20Connect%20-%20Mac-nificent%20-%20Platform%20SSO%20UX%20and%20Security.pdf) |  |
+| 2024-11-13  | HIPConf 24 |  Defending Tier 0: Taking Control of Your Cloud’s Control Plane | [Session On Demand (available in March)](https://www.hipconf.com/) |  |
+| 2024-10-01  | TEC 2025 |  Fantastic Tokens in Microsoft Entra ID and How to Protect | [Recorded Webinar version](https://www.quest.com/webcast-ondemand/tec-talk-fantastic-tokens-in-microsoft-entra-id-and-how-to-protect-them-) |  |
 | 2024-06-04  | Experts Live Netherlands |  Azure Governance Best Practices and Enterprise Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2024-06-04%20Experts%20Live%20NL%20-%20Azure%20Governance%20Enterprise%20Scale.pdf) |  |
 | 2024-02-01  | Cloud Technology Town Hall Tallinn | Demystify Entra Workload Identities | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2024-02-01%20CTTT%20-%20Demystify-Entra-Workload-Identities.pdf) |  |
 | 2024-02-01  | Cloud Technology Town Hall Tallinn | EntraOps: Deploying and Managing Conditional Access at Scale | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2024-02-01%20CTTT%20-%20EntraOps-Deploying-Managing-CA-at-Scale.pdf) |  |
@@ -48,22 +51,24 @@ author_profile: false
 | 2021-02-08  | Global SCCC                 | Securing Your Privileged IAM in Microsoft Azure              | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2021-02-08%20GCC%20Securing-Privileged-Identity-and-Access.pdf) |
 | 2020-12-01  | aMS Germany                 | Design und Security Considerations eines Hybriden Azure AD   | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-12-01%20aMS%20Germany%20-%20Design-Security-hybriden-AzureAD.pdf) |
 | 2020-11-26  | GermanyClouds               | Azure Governance - Best Practices                            | [Slides](https://github.com/GregorReimling/Conferences/blob/master/1120%20Azure%20Governance%20Best%20Practice%20GermanyClouds%20with%20Thomas%20Naunheim.pdf) |
-| 2020-10-06  | Azure Meetup Bonn           | Ignite Recap H2/2020 - Azure AD                              | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-10-06%20AzureBonn-Ignite-Recap-AzureAD.pdf) | 
-| 2020-09-01  | Azure Meetup Bonn           | Azure Governance - Best Practices                            | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) | 
-| 2020-07-28  | TrustInTech Cologne         | Securing your Privileged IAM in Azure and Azure AD           | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-07-28-TrustInTech%20Securing-your-privileged-identity-and-access-Azure.pdf) | 
-| 2020-05-28  | M365 Virtual Marathon       | Securing and monitoring your Azure AD identities             | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-05-27%20M365VM%20-%20Securing-and-Monitoring-AzureAD-identities.pdf) | 
-| 2020-04-25  | Global Azure Virtual CGN    | Securing and monitoring your Azure AD accounts               | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-04-25%20Global-Azure-Securing-and-Monitoring-AzureAD-Identities.pdf) | 
-| 2020-01-23  | VCNRW                       | Design and Security Hybrid Azure AD                          | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-01-23%20vcnrw-Design-Security-hybriden-AzureAD.pdf) | 
-| 2020-01-16  | Azure Meetup Thueringen     | Design and Security Hybrid Azure AD                          | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-01-16%20Az-Thueringen-Design-Security-Hybrid-AzureAD.pdf) | 
+| 2020-10-06  | Azure Meetup Bonn           | Ignite Recap H2/2020 - Azure AD                              | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-10-06%20AzureBonn-Ignite-Recap-AzureAD.pdf) |
+| 2020-09-01  | Azure Meetup Bonn           | Azure Governance - Best Practices                            | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) |
+| 2020-07-28  | TrustInTech Cologne         | Securing your Privileged IAM in Azure and Azure AD           | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-07-28-TrustInTech%20Securing-your-privileged-identity-and-access-Azure.pdf) |
+| 2020-05-28  | M365 Virtual Marathon       | Securing and monitoring your Azure AD identities             | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-05-27%20M365VM%20-%20Securing-and-Monitoring-AzureAD-identities.pdf) |
+| 2020-04-25  | Global Azure Virtual CGN    | Securing and monitoring your Azure AD accounts               | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-04-25%20Global-Azure-Securing-and-Monitoring-AzureAD-Identities.pdf) |
+| 2020-01-23  | VCNRW                       | Design and Security Hybrid Azure AD                          | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-01-23%20vcnrw-Design-Security-hybriden-AzureAD.pdf) |
+| 2020-01-16  | Azure Meetup Thueringen     | Design and Security Hybrid Azure AD                          | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2020-01-16%20Az-Thueringen-Design-Security-Hybrid-AzureAD.pdf) |
 | 2019-09-14  | cim lingen                  | Design und Security eines hybriden Azure AD                  | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-09-14%20cimlingen-Design%20und%20Security%20eines%20hybriden%20Azure%20AD.pdf) |
-| 2019-08-28  | DNUG Koblenz                | Manage and secure customer identites with Azure AD B2C       | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-12-11%20DNUGKoblenz-Manage-and-securing-AzureAD-B2C.pdf) | 
-| 2019-08-28  | Glasgow Azure User Group    | Design and Security of Azure AD                              | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-28%20GAUG-Hybrid%20Identity%20design%20and%20security.pdf) | 
+| 2019-08-28  | DNUG Koblenz                | Manage and secure customer identites with Azure AD B2C       | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-12-11%20DNUGKoblenz-Manage-and-securing-AzureAD-B2C.pdf) |
+| 2019-08-28  | Glasgow Azure User Group    | Design and Security of Azure AD                              | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-28%20GAUG-Hybrid%20Identity%20design%20and%20security.pdf) |
 | 2019-08-20  | Azure Meetup Bonn           | Securing and monitoring of identities in Azure AD            | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf) |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
 
 ## Past and upcoming events
+
 <script type="text/javascript" src="https://sessionize.com/api/speaker/events/69a89ff8-d069-43d3-bb82-e545f29a17f1/0x0x3fb393x"></script>
 <br/>
 
 ## My Sessions
+
    <script type="text/javascript" src="https://sessionize.com/api/speaker/sessions/69a89ff8-d069-43d3-bb82-e545f29a17f1/0x0x3fb393x"></script>
