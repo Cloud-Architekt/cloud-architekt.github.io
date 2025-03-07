@@ -14,7 +14,7 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
-| 2025-03-06  | Yellowhat |  Hunt the Tokens- Uncovering Post-Authentication Attacks Across Your Environment! | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-03-06%20YellowHat%20-%20Token%20Hunting.pdf) [Hunting Queries](https://github.com/Cloud-Architekt/AzureSentinel/tree/Yellowhat/Hunting%20Queries/EID-TokenHunting) |  |
+| 2025-03-06  | Yellowhat |  Hunt the Tokens - Uncovering Post-Authentication Attacks Across Your Environment! | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-03-06%20YellowHat%20-%20Token%20Hunting.pdf) [Hunting Queries](https://github.com/Cloud-Architekt/AzureSentinel/tree/Yellowhat/Hunting%20Queries/EID-TokenHunting) |  |
 | 2025-02-06  | MC2MC Connect |  Mac-nificent - How Platform SSO empowers security and usability | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-02-07%20MC2MC%20Connect%20-%20Mac-nificent%20-%20Platform%20SSO%20UX%20and%20Security.pdf) |  |
 | 2024-11-13  | HIPConf 24 |  Defending Tier 0: Taking Control of Your Cloud’s Control Plane | [Session On Demand (available in March)](https://www.hipconf.com/) |  |
 | 2024-10-01  | TEC 2025 |  Fantastic Tokens in Microsoft Entra ID and How to Protect | [Recorded Webinar version](https://www.quest.com/webcast-ondemand/tec-talk-fantastic-tokens-in-microsoft-entra-id-and-how-to-protect-them-) |  |
