@@ -180,7 +180,7 @@ Therefore, I’ve created Microsoft Sentinel functions for AzADSPI and WorkloadI
 🔗 Function **"PrivilegedAzADSPI" for "AzADSPI" (Custom Table)**
 [AzureSentinel/Functions/AzADSPI_EnrichedByEntraOps.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/AzADSPI_EnrichedByEntraOps.yaml)
 🔗 Function **"PrivilegedWorkloadIdentity" for "WorkloadIdentityInfo" (WatchList)**
-[AzureSentinel/Functions/PrivilegedIdentityInfo.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/PrivilegedWorkloadIdentityInfo.yaml)
+[AzureSentinel/Functions/PrivilegedWorkloadIdentityInfo.yaml at main · Cloud-Architekt/AzureSentinel (github.com)](https://github.com/Cloud-Architekt/AzureSentinel/blob/main/Functions/PrivilegedWorkloadIdentityInfo.yaml)
 
 ### Classification of App Owner or Delegated Role Member
 
