@@ -14,7 +14,7 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
-| 2025-04-11  | Experts Live Germany        | Tokenbasierte Authentifizierung & Angriffe in Microsoft Entra | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2019-08-20%20AzBonn-Securing-and-monitoring-AAD.pdf)
+| 2025-04-11  | Experts Live Germany        | Tokenbasierte Authentifizierung & Angriffe in Microsoft Entra | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-04-11%20Experts%20Live%20DE%20-%20TokenbasierteAuthentifizierung-Angriffe-EntraID.pdf)
 | 2025-03-06  | Yellowhat |  Hunt the Tokens - Uncovering Post-Authentication Attacks Across Your Environment! | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-03-06%20YellowHat%20-%20Token%20Hunting.pdf) [Hunting Queries](https://github.com/Cloud-Architekt/AzureSentinel/tree/Yellowhat/Hunting%20Queries/EID-TokenHunting) |  |
 | 2025-02-06  | MC2MC Connect |  Mac-nificent - How Platform SSO empowers security and usability | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-02-07%20MC2MC%20Connect%20-%20Mac-nificent%20-%20Platform%20SSO%20UX%20and%20Security.pdf) |  |
 | 2024-11-13  | HIPConf 24 |  Defending Tier 0: Taking Control of Your Cloud’s Control Plane | [Session On Demand (available in March)](https://www.hipconf.com/) |  |
