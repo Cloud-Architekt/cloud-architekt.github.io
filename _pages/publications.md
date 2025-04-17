@@ -66,6 +66,15 @@ Available on my GitHub repository: [Cloud-Architekt/AzureAD-Attack-Defense](http
 | 2020-09-11  | Geeksprech Podcast          | [Folge 44: Azure AD Security](https://geeksprech.de/geeksprech-podcast-folge-44-azure-ad-security/)
 
 ## Guest on videocasts
+**Practical 365: Enhancing Identity Security in the Cloud with Thomas Nauheim**
+{% include video id="E6vMdXioxvc" provider="youtube" %}
+
+**glueckkanja - Managed Red Tenant: Stop Lateral Movement & Secure Privileged Access the Right Way**
+{% include video id="rO8q9UsDQxc" provider="youtube" %}
+
+**MC2MC Connect 2025: Podcast with Thomas Naunheim and Ugur Koc**
+{% include video id="sj7ILGCfgWU" provider="youtube" %}
+
 **TalkM365: Maester und Entra ID Security**
 {% include video id="nG06VX2dFzY" provider="youtube" %}
 
