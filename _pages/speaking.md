@@ -14,7 +14,7 @@ author_profile: false
 
 | Date        | Event                       | Session Title                                                | Content  |
 |-------------|-----------------------------|--------------------------------------------------------------|----------|
-| 2025-06-03  | Experts Live Netherlands | Exploring and Preventing Attack Paths with Defender for Cloud CSPM | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-05-20%20-%20SMSS%20-%20Fantastic%20Tokens.pdf)
+| 2025-06-03  | Experts Live Netherlands | Exploring and Preventing Attack Paths with Defender for Cloud CSPM | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-06-03%20-%20Experts%20Live%20NL%20-%20Exploring%20and%20Preventing%20Attack%20Paths%20with%20CSPM.pdf), [KQL queries](https://github.com/Cloud-Architekt/AzureSentinel/tree/main/Hunting%20Queries/MDC-CSPM-XSPM)
 | 2025-05-20  | Swiss Microsoft Security Summit | Fantastic Tokens (and Session Cookies) in Microsoft Entra ID and How to Protect | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-05-20%20-%20SMSS%20-%20Fantastic%20Tokens.pdf)
 | 2025-04-11  | Experts Live Germany        | Tokenbasierte Authentifizierung & Angriffe in Microsoft Entra | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-04-11%20Experts%20Live%20DE%20-%20TokenbasierteAuthentifizierung-Angriffe-EntraID.pdf)
 | 2025-03-06  | Yellowhat |  Hunt the Tokens - Uncovering Post-Authentication Attacks Across Your Environment! | [Slides](https://github.com/Cloud-Architekt/meetups/blob/master/2025-03-06%20YellowHat%20-%20Token%20Hunting.pdf) [Hunting Queries](https://github.com/Cloud-Architekt/AzureSentinel/tree/Yellowhat/Hunting%20Queries/EID-TokenHunting) |  |
